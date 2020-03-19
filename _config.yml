@@ -1,1 +1,21 @@
 theme: jekyll-theme-leap-day
+
+repository:            "goGPS-Project/gogps-project.github.io"
+url:                   https://gogps-project.github.io
+
+ang:                  it
+
+# The title of your blog. Used in the sidebar and the browser tab.
+title:                 COVID Guard
+
+description:           >
+  Lo scopo della pagina è di accrescere la consapevolezza 
+  sul covid-19 grazie a semplici grafici
+
+
+keywords:              [COVID coronavirus covid-19 coronavirusitalia data datavisualization]
+
+
+
+
+
