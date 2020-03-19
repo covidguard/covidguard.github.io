@@ -1,0 +1,110 @@
+1;Roma (Lazio);4353738;7.2%;5352;121;RM
+2;Milano (Lombardia);3218201;5.3%;1579;134;MI
+3;Napoli (Campania);3107006;5.1%;1171;92;NA
+4;Torino (Piemonte);2277857;3.8%;6831;315;TO
+5;Palermo (Sicilia);1268217;2.1%;4992;82;PA
+6;Brescia (Lombardia);1262318;2.1%;4784;205;BS
+7;Bari (Puglia);1260142;2.1%;3825;41;BA
+8;Catania (Sicilia);1113303;1.8%;3552;58;CT
+9;Bergamo (Lombardia);1109933;1.8%;2723;242;BG
+10;Salerno (Campania);1104731;1.8%;4917;158;SA
+11;Firenze (Toscana);1014423;1.7%;3514;42;FI
+12;Bologna (Emilia-Romagna);1009210;1.7%;3703;55;BO
+13;Padova (Veneto);936274;1.5%;2142;104;PD
+14;Caserta (Campania);924166;1.5%;2639;104;CE
+15;Verona (Veneto);921557;1.5%;3121;98;VR
+16;Varese (Lombardia);890043;1.5%;1199;139;VA
+17;Treviso (Veneto);885972;1.5%;2477;95;TV
+18;Monza e della Brianza (Lombardia);868859;1.4%;405;55;MB
+19;Vicenza (Veneto);865082;1.4%;2723;121;VI
+20;Venezia (Veneto);854275;1.4%;2462;44;VE
+21;Genova (Liguria);850071;1.4%;1839;67;GE
+22;Lecce (Puglia);802082;1.3%;2759;97;LE
+23;Cosenza (Calabria);711739;1.2%;6650;155;CS
+24;Modena (Emilia-Romagna);700862;1.2%;2689;47;MO
+25;Perugia (Umbria);660690;1.1%;6334;59;PG
+26;Messina (Sicilia);636653;1.1%;3247;108;ME
+27;Foggia (Puglia);628556;1.0%;6971;61;FG
+28;Como (Lombardia);600190;1.0%;1288;154;CO
+29;Cuneo (Piemonte);589108;1.0%;6903;250;CN
+30;Taranto (Puglia);583479;1.0%;2437;29;TA
+31;Latina (Lazio);574891;0.9%;2251;33;LT
+32;Cagliari (Sardegna);560373;0.9%;4570;71;CA
+33;Reggio Calabria (Calabria);553861;0.9%;3183;97;RC
+34;Pavia (Lombardia);547251;0.9%;2965;188;PV
+35;Trento (Trentino-Alto Adige);538604;0.9%;6207;177;TN
+36;Reggio Emilia (Emilia-Romagna);532483;0.9%;2293;42;RE
+37;Udine (Friuli-Venezia Giulia);531466;0.9%;4904;135;UD
+38;Bolzano (Trentino-Alto Adige);524256;0.9%;7400;116;BZ
+39;Frosinone (Lazio);493067;0.8%;3244;91;FR
+40;Ancona (Marche);474124;0.8%;1940;47;AN
+41;Parma (Emilia-Romagna);448899;0.7%;3449;45;PR
+42;Agrigento (Sicilia);442049;0.7%;3042;43;AG
+43;Trapani (Sicilia);434476;0.7%;2460;24;TP
+44;Alessandria (Piemonte);426658;0.7%;3562;190;AL
+45;Avellino (Campania);423506;0.7%;2792;118;AV
+46;Pisa (Toscana);421851;0.7%;2444;37;PI
+47;Mantova (Lombardia);412610;0.7%;2339;69;MN
+48;Siracusa (Sicilia);402822;0.7%;2109;21;SR
+49;Brindisi (Puglia);397083;0.7%;1839;20;BR
+50;Forlì-Cesena (Emilia-Romagna);394067;0.7%;2377;30;FC
+51;Barletta-Andria-Trani (Puglia);392546;0.6%;1539;10;BT
+52;Ravenna (Emilia-Romagna);391414;0.6%;1858;18;RA
+53;Lucca (Toscana);390042;0.6%;1773;33;LU
+54;Chieti (Abruzzo);389169;0.6%;2588;104;CH
+55;Potenza (Basilicata);370680;0.6%;6548;100;PZ
+56;Novara (Piemonte);370143;0.6%;1339;88;NO
+57;Catanzaro (Calabria);362343;0.6%;2391;80;CZ
+58;Pesaro e Urbino (Marche);360711;0.6%;2564;57;PU
+59;Cremona (Lombardia);359388;0.6%;1771;115;CR
+60;Ferrara (Emilia-Romagna);348362;0.6%;2631;24;FE
+61;Arezzo (Toscana);344374;0.6%;3235;37;AR
+62;Lecco (Lombardia);339238;0.6%;816;88;LC
+63;Livorno (Toscana);337334;0.6%;1211;20;LI
+64;Rimini (Emilia-Romagna);336786;0.6%;867;25;RN
+65;Sassari (Sardegna);333116;0.5%;4282;66;SS
+66;Ragusa (Sicilia);321359;0.5%;1614;12;RG
+67;Pescara (Abruzzo);321309;0.5%;1225;46;PE
+68;Viterbo (Lazio);319008;0.5%;3612;60;VT
+69;Macerata (Marche);318921;0.5%;2774;57;MC
+70;Pordenone (Friuli-Venezia Giulia);312051;0.5%;2273;50;PN
+71;Teramo (Abruzzo);309859;0.5%;1948;47;TE
+72;L'Aquila (Abruzzo);301910;0.5%;5034;108;AQ
+73;Pistoia (Toscana);291839;0.5%;965;22;PT
+74;Piacenza (Emilia-Romagna);286758;0.5%;2589;48;PC
+75;Benevento (Campania);279675;0.5%;2071;78;BN
+76;Savona (Liguria);279408;0.5%;1545;69;SV
+77;Caltanissetta (Sicilia);269710;0.4%;2125;22;CL
+78;Siena (Toscana);268341;0.4%;3821;36;SI
+79;Prato (Toscana);254608;0.4%;365;7;PO
+80;Rovigo (Veneto);238588;0.4%;1790;50;RO
+81;Trieste (Friuli-Venezia Giulia);234682;0.4%;212;6;TS
+82;Lodi (Lombardia);229338;0.4%;782;61;LO
+83;Terni (Umbria);228218;0.4%;2122;33;TR
+84;Campobasso (Molise);224644;0.4%;2909;84;CB
+85;Grosseto (Toscana);223045;0.4%;4504;28;GR
+86;La Spezia (Liguria);220698;0.4%;881;32;SP
+87;Asti (Piemonte);216677;0.4%;1511;118;AT
+88;Imperia (Liguria);215130;0.4%;1156;67;IM
+89;Ascoli Piceno (Marche);209450;0.3%;1228;33;AP
+90;Belluno (Veneto);205781;0.3%;3678;64;BL
+91;Matera (Basilicata);199685;0.3%;3446;31;MT
+92;Massa-Carrara (Toscana);196580;0.3%;1156;17;MS
+93;Sondrio (Lombardia);181437;0.3%;3212;77;SO
+94;Biella (Piemonte);178551;0.3%;914;79;BI
+95;Crotone (Calabria);175566;0.3%;1717;27;KR
+96;Fermo (Marche);174849;0.3%;860;40;FM
+97;Vercelli (Piemonte);173868;0.3%;2088;86;VC
+98;Enna (Sicilia);168052;0.3%;2562;20;EN
+99;Vibo Valentia (Calabria);161619;0.3%;1139;50;VV
+100;Oristano (Sardegna);160746;0.3%;3040;88;OR
+101;Olbia-Tempio (Sardegna);160672;0.3%;3399;26;OT
+102;Verbano-Cusio-Ossola (Piemonte);159664;0.3%;2255;76;VB
+103;Rieti (Lazio);157420;0.3%;2749;73;RI
+104;Nuoro (Sardegna);156096;0.3%;3934;52;NU
+105;Gorizia (Friuli-Venezia Giulia);139673;0.2%;466;25;GO
+106;Aosta (Valle d'Aosta);126883;0.2%;3263;74;AO
+107;Carbonia-Iglesias (Sardegna);126324;0.2%;1495;23;CI
+108;Medio Campidano (Sardegna);98623;0.2%;1516;28;VS
+109;Isernia (Molise);85805;0.1%;1524;52;IS
+110;Ogliastra (Sardegna);57185;0.1%;1854;23;OG
