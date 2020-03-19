@@ -1,9 +1,10 @@
-theme: jekyll-theme-leap-day
+remote_theme: pmarsceill/just-the-docs
+#theme: "just-the-docs"
 
-repository:            "goGPS-Project/gogps-project.github.io"
-url:                   https://gogps-project.github.io
+repository:            "covidguard/covidguard.github.io"
+url:                   https://covidguard.github.io
 
-ang:                  it
+lang:                  it
 
 # The title of your blog. Used in the sidebar and the browser tab.
 title:                 COVID Guard
@@ -14,8 +15,3 @@ description:           >
 
 
 keywords:              [COVID coronavirus covid-19 coronavirusitalia data datavisualization]
-
-
-
-
-
