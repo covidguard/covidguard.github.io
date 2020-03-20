@@ -260,6 +260,8 @@ Regione_lista = unique(dataReg.denominazione_regione);
 % RegioneTot={'Padova','Brescia'}
 
 normalizza_per_popolazione=0;
+normalizza_per_densita = 0;
+normalizza_per_superficie = 0;
 
 for reg = 1:size(Regione_lista)
     
@@ -298,6 +300,18 @@ for reg = 1:size(Regione_lista)
             catch
                 b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.number(idx_pop(h)))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
             end
+        elseif normalizza_per_densita==1
+            try
+                b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.number(idx_pop(h))*pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+            catch
+                b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+            end
+        elseif normalizza_per_superficie==1
+            try
+                b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+            catch
+                b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+            end
         else
             try
                 b(h)=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
@@ -316,6 +330,10 @@ for reg = 1:size(Regione_lista)
     set(code_axe, 'FontSize', 8);
     if normalizza_per_popolazione==1
         ylabel('Numero casi x1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    elseif normalizza_per_densita==1
+        ylabel('Numero casi / abitanti *kmq', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    elseif normalizza_per_superficie==1
+        ylabel('Numero casi / kmq', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     else
         ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
         t_lim=ylim;
@@ -342,7 +360,9 @@ for reg = 1:size(Regione_lista)
         'LineStyle','none',...
         'Color',[0 0 0]);
     if normalizza_per_popolazione==1
-        print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_norm',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);       
+        print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_norm',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);  
+    elseif normalizza_per_superficie==1    
+        print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_normSup',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);  
     else
         print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);       
     end
