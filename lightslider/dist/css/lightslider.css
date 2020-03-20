@@ -1,7 +1,7 @@
 /*! lightslider - v1.1.5 - 2015-10-31
 * https://github.com/sachinchoolur/lightslider
 * Copyright (c) 2015 Sachin N; Licensed MIT */
-/*! lightslider - v1.1.3 - 2015-04-14
+/*! lightslider - v1.1.3 - 2015-04-14 B
 * https://github.com/sachinchoolur/lightslider
 * Copyright (c) 2015 Sachin N; Licensed MIT */
 /** /!!! core css Should not edit !!!/**/ 
@@ -100,6 +100,9 @@
 }
 .lSSlideOuter .lSPager.lSpg > li:hover a, .lSSlideOuter .lSPager.lSpg > li.active a {
     background-color: #428bca;
+    width: 12px;
+    height: 12px;
+    #margin: -2px;
 }
 .lSSlideOuter .media {
     opacity: 0.8;
