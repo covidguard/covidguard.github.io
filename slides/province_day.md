@@ -2,7 +2,7 @@
 layout: iframe
 title: Province Giornalieri
 item: 1
-auto: true
+auto: false
 loop: true
 ---
 
