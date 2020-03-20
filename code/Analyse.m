@@ -59,6 +59,7 @@ dataReg = decodeJSON(json_oneRaw);
 
 regioni_tot = unique(dataReg.denominazione_regione);
 mediamobile_yn=0;
+%%
 for reg=1:size(regioni_tot,1)
     try
     regione = char(regioni_tot(reg,1));
@@ -126,8 +127,8 @@ for reg=1:size(regioni_tot,1)
     ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
     ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-    datetick('x', datetickFormat, 'keeplimits') ;
     ax.XTick = time_num;
+    datetick('x', datetickFormat, 'keepticks') ;
     set(gca,'XTickLabelRotation',53,'FontSize',7);
     ax.FontSize = font_size;
     
@@ -216,8 +217,8 @@ for reg=1:size(regioni_tot,1)
     ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
     ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-    datetick('x', datetickFormat, 'keeplimits') ;
     ax.XTick = time_num;
+    datetick('x', datetickFormat, 'keepticks') ;
     set(gca,'XTickLabelRotation',53,'FontSize',7);
     ax.FontSize = font_size;
     
@@ -381,8 +382,8 @@ for reg = 1:size(Regione_lista)
             end
     end
     set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-    datetick('x', datetickFormat, 'keeplimits') ;
     ax.XTick = time_num;
+    datetick('x', datetickFormat, 'keepticks') ;
     set(gca,'XTickLabelRotation',53,'FontSize',7);
     ax.FontSize = font_size;
     
@@ -496,8 +497,8 @@ for reg = 1:size(Regione_lista)
     ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
     ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
     set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
-    datetick('x', datetickFormat, 'keeplimits') ;
     ax.XTick = time_num;
+    datetick('x', datetickFormat, 'keepticks') ;
     set(gca,'XTickLabelRotation',53,'FontSize',7);
     ax.FontSize = font_size;
     
