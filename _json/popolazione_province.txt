@@ -29,7 +29,6 @@
 29;Cuneo (Piemonte);589108;1.0%;6903;250;CN
 30;Taranto (Puglia);583479;1.0%;2437;29;TA
 31;Latina (Lazio);574891;0.9%;2251;33;LT
-32;Cagliari (Sardegna);560373;0.9%;4570;71;CA
 33;Reggio Calabria (Calabria);553861;0.9%;3183;97;RC
 34;Pavia (Lombardia);547251;0.9%;2965;188;PV
 35;Trento (Trentino-Alto Adige);538604;0.9%;6207;177;TN
@@ -97,14 +96,17 @@
 97;Vercelli (Piemonte);173868;0.3%;2088;86;VC
 98;Enna (Sicilia);168052;0.3%;2562;20;EN
 99;Vibo Valentia (Calabria);161619;0.3%;1139;50;VV
-100;Oristano (Sardegna);160746;0.3%;3040;88;OR
-101;Olbia-Tempio (Sardegna);160672;0.3%;3399;26;OT
+100;Oristano (Sardegna);157707;0.3%;2990;87;OR
+101;Sud Sardegna (Sardegna);350725;0.3%;6530;107;SU
 102;Verbano-Cusio-Ossola (Piemonte);159664;0.3%;2255;76;VB
 103;Rieti (Lazio);157420;0.3%;2749;73;RI
-104;Nuoro (Sardegna);156096;0.3%;3934;52;NU
+104;Nuoro (Sardegna);208550;0.3%;5638;74;NU
 105;Gorizia (Friuli-Venezia Giulia);139673;0.2%;466;25;GO
 106;Aosta (Valle d'Aosta);126883;0.2%;3263;74;AO
-107;Carbonia-Iglesias (Sardegna);126324;0.2%;1495;23;CI
-108;Medio Campidano (Sardegna);98623;0.2%;1516;28;VS
+107;Sassari (Sardegna);491571;0.2%;1495;92;SS
+108;Cagliari (Sardegna);431038;0.2%;1248;17;CA
 109;Isernia (Molise);85805;0.1%;1524;52;IS
 110;Ogliastra (Sardegna);57185;0.1%;1854;23;OG
+
+
+
