@@ -22,14 +22,14 @@ style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></
 <iframe class="slideshow-iframe" src="/slides/province_cum.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
+### Dati giornalieri cumulati normalizzati per popolazione
+
+<iframe class="slideshow-iframe" src="/slides/province_norm.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+
 ### Progressione Giornaliera
 
 <iframe class="slideshow-iframe" src="/slides/province_day.html" 
-style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
-
-### Progressione Normalizzata per popolazione
-
-<iframe class="slideshow-iframe" src="/slides/province_norm.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 # Contatti
