@@ -4,30 +4,40 @@
 % mkdir('slides/img');
 % mkdir('slides/img/province');
 % mkdir('slides/img/regioni');
+if ismac
+    flag_download = false;
+else
+    flag_download = true;
+end
+    
 
+%% -------------------------
+if ismac
+    WORKroot = sprintf('/Users/Andrea/Repositories/covidguard.github.io/');
+else
+    WORKroot = sprintf('C:/Temp/Repo/covidguard');
+end
 
 %% download json from server
-%% -------------------------
-WORKroot = sprintf('C:/Temp/Repo/covidguard');
-delete(sprintf('%s/_json/*.json',WORKroot))
-
-
-serverAddress = 'https://raw.githubusercontent.com';
-
-command = sprintf('wget --no-check-certificate %s/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json', serverAddress);
-system(command);
-
-command = sprintf('wget --no-check-certificate %s/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json', serverAddress);
-system(command);
-
-movefile('dpc-covid19-ita-province.json',sprintf('%s/_json',WORKroot),'f');
-movefile('dpc-covid19-ita-regioni.json',sprintf('%s/_json',WORKroot)),'f';
-
+if flag_download
+    delete(sprintf('%s/_json/*.json',WORKroot))
+    
+    serverAddress = 'https://raw.githubusercontent.com';
+    
+    command = sprintf('wget --no-check-certificate %s/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json', serverAddress);
+    system(command);
+    
+    command = sprintf('wget --no-check-certificate %s/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json', serverAddress);
+    system(command);
+    
+    movefile('dpc-covid19-ita-province.json',sprintf('%s/_json',WORKroot),'f');
+    movefile('dpc-covid19-ita-regioni.json',sprintf('%s/_json',WORKroot)),'f';
+end
 
 %% load population
 %% ---------------
-filename = 'C:/Temp/COVID/json/popolazione_province.txt';
-[pop.id, pop.name, pop.number, pop.perc, pop.superf, pop.numCom, pop.sigla]=textread(filename,'%d%s%d%f%d%d%s','delimiter',';');
+filename = fullfile(WORKroot, '_json', 'popolazione_province.txt');
+[pop.id, pop.name, pop.number, pop.perc, pop.superf, pop.numCom, pop.sigla]=textread(filename,'%d%s%d%f%%%d%d%s','delimiter',';');
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,14 +66,14 @@ for reg=1:size(regioni_tot,1)
     time_num = fix(datenum(dataReg.data(index)));
     
     %% figura cumulata
-    datetickFormat = 'dd/mm';
+    datetickFormat = 'dd mmm';
     figure;
     id_f = gcf;
     set(id_f, 'Name', [regione ': dati cumulati']);
     if mediamobile_yn==0
-        title([regione ': dati cumulati'])
+        title(sprintf([regione ': dati cumulati\\fontsize{5}\n ']))
     else
-        title([regione ': dati cumulati (media mobile)'])
+        title(sprintf([regione ': dati cumulati (media mobile)\\fontsize{5}\n ']))
     end
     set(gcf,'NumberTitle','Off');
     set(gcf,'Position',[26 79 967 603]);
@@ -103,13 +113,23 @@ for reg=1:size(regioni_tot,1)
         h=plot(time_num,movmean(dataReg.totale_attualmente_positivi(index,1), 3, 'omitnan'),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
     end
 
+    if ismac
+        font_size = 9;
+    else
+        font_size = 8;
+    end
+    
+    ax = gca;
     code_axe = get(id_f, 'CurrentAxes');
     set(code_axe, 'FontName', 'Verdana');
-    set(code_axe, 'FontSize', 8);
+    set(code_axe, 'FontSize', font_size);
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
     ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
     datetick('x', datetickFormat, 'keeplimits') ;
+    ax.XTick = time_num;
     set(gca,'XTickLabelRotation',53,'FontSize',7);
+    ax.FontSize = font_size;
     
     t_lim=ylim;
     if t_lim(2)<100
@@ -119,9 +139,9 @@ for reg=1:size(regioni_tot,1)
     %     l=legend([a,b,c,d],'Ricoverati con sintomi','Totale Casi','Dimessi Guariti','Deceduti');
     l=legend([b,a,c,d,e,f,g,h],'Totale Casi','Ricoverati con sintomi','Dimessi Guariti','Deceduti','Terapia intensiva','Totale ospedalizzati','Isolamento domiciliare','Attualmente positivi');
     set(l,'Location','northwest')
-    %% overlap copyright info
+    % overlap copyright info
     datestr_now = datestr(now);
-    annotation(gcf,'textbox',[0.72342 0.01426 0.2381 0.04638],...
+    annotation(gcf,'textbox',[0.72342 0.00426 0.2381 0.04638],...
         'String',{['Fonte: https://github.com/pcm-dpc']},...
         'HorizontalAlignment','center',...
         'FontSize',6,...
@@ -130,21 +150,21 @@ for reg=1:size(regioni_tot,1)
         'LineStyle','none',...
         'Color',[0 0 0]);
     
-    
+    %%
 % %     cd([WORKroot,'/assets/img/regioni']);
     print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_cumulati.PNG']);
     close(gcf);
 %     cd([WORKroot,'/code']);
     
     %% figura giornaliera
-    datetickFormat = 'dd/mm';
+    datetickFormat = 'dd mmm';
     figure;
     id_f = gcf;
     set(id_f, 'Name', [regione ': dati cumulati']);
     if mediamobile_yn==0
-        title([regione ': progressione giornaliera'])
+        title(sprintf([regione ': progressione giornaliera\\fontsize{5}\n ']))
     else
-        title([regione ': progressione giornaliera (media mobile)'])
+        title(sprintf([regione ': progressione giornaliera (media mobile)\\fontsize{5}\n ']))
     end
     set(gcf,'NumberTitle','Off');
     set(gcf,'Position',[26 79 967 603]);
@@ -183,13 +203,23 @@ for reg=1:size(regioni_tot,1)
         h=plot(time_num(2:end),movmean(diff(dataReg.totale_attualmente_positivi(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));             
     end
     
+    if ismac
+        font_size = 9;
+    else
+        font_size = 8;
+    end
+    
+    ax = gca;
     code_axe = get(id_f, 'CurrentAxes');
     set(code_axe, 'FontName', 'Verdana');
-    set(code_axe, 'FontSize', 8);
+    set(code_axe, 'FontSize', font_size);
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
     ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-    set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
+    set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
     datetick('x', datetickFormat, 'keeplimits') ;
+    ax.XTick = time_num;
     set(gca,'XTickLabelRotation',53,'FontSize',7);
+    ax.FontSize = font_size;
     
     t_lim=ylim;
     if t_lim(2)<100
@@ -200,9 +230,9 @@ for reg=1:size(regioni_tot,1)
     l=legend([b,a,c,d,e,f,g,h],'Totale Casi','Ricoverati con sintomi','Dimessi Guariti','Deceduti','Terapia intensiva','Totale ospedalizzati','Isolamento domiciliare','Attualmente positivi');
     set(l,'Location','northwest')
     
-    %% overlap copyright info
+    % overlap copyright info
     datestr_now = datestr(now);
-    annotation(gcf,'textbox',[0.72342 0.01426 0.2381 0.04638],...
+    annotation(gcf,'textbox',[0.72342 0.00426 0.2381 0.04638],...
         'String',{['Fonte: https://github.com/pcm-dpc']},...
         'HorizontalAlignment','center',...
         'FontSize',6,...
@@ -264,7 +294,7 @@ normalizza_per_densita = 0;
 normalizza_per_superficie = 0;
 
 for reg = 1:size(Regione_lista)
-    
+    %%
     idx_reg=find(strcmp(dataReg.denominazione_regione,cell(Regione_lista(reg,:))));
     sigla_prov=dataReg.sigla_provincia(idx_reg);
     [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
@@ -279,11 +309,11 @@ for reg = 1:size(Regione_lista)
 %     RegioneTot={'Como','Bergamo','Brescia','Lecco'}'
     try
     %% figura cumulata
-    datetickFormat = 'dd/mm';
+    datetickFormat = 'dd mmm';
     figure;
     id_f = gcf;
     set(id_f, 'Name', ['Cumulati']);
-    title([char(Regione_lista(reg)), ': Casi totali cumulati'])
+    title(sprintf([char(Regione_lista(reg)), ': Casi totali cumulati\\fontsize{5}\n ']))
     set(gcf,'NumberTitle','Off');
     set(gcf,'Position',[26 79 967 603]);
     grid on
@@ -321,13 +351,22 @@ for reg = 1:size(Regione_lista)
         end
         regione_leg=regione;
         regione_leg(strfind(regione_leg,''''))=' ';
-        regione_leg(strfind(regione_leg,'ì'))='i';
+        regione_leg(strfind(regione_leg,'ï¿½'))='i';
         string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
     end
     string_legend=sprintf('%s);',string_legend);
+    
+    if ismac
+        font_size = 9;
+    else
+        font_size = 8;
+    end
+    
+    ax = gca;
     code_axe = get(id_f, 'CurrentAxes');
     set(code_axe, 'FontName', 'Verdana');
-    set(code_axe, 'FontSize', 8);
+    set(code_axe, 'FontSize', font_size);
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
     if normalizza_per_popolazione==1
         ylabel('Numero casi x1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     elseif normalizza_per_densita==1
@@ -343,15 +382,17 @@ for reg = 1:size(Regione_lista)
     end
     set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
     datetick('x', datetickFormat, 'keeplimits') ;
+    ax.XTick = time_num;
     set(gca,'XTickLabelRotation',53,'FontSize',7);
-
+    ax.FontSize = font_size;
+    
     eval(string_legend)
     
     % l=legend([b],'Totale Casi');
     set(l,'Location','northwest')
     %% overlap copyright info
     datestr_now = datestr(now);
-    annotation(gcf,'textbox',[0.72342 0.01426 0.2381 0.04638],...
+    annotation(gcf,'textbox',[0.72342 0.00426 0.2381 0.04638],...
         'String',{['Fonte: https://github.com/pcm-dpc']},...
         'HorizontalAlignment','center',...
         'FontSize',6,...
@@ -373,11 +414,11 @@ for reg = 1:size(Regione_lista)
     
     
     %% figura giornaliera
-    datetickFormat = 'dd/mm';
+    datetickFormat = 'dd mmm';
     figure;
     id_f = gcf;
     set(id_f, 'Name', ['Giornalieri']);
-    title([char(Regione_lista(reg)), ': Casi totali progressione giornaliera'])
+    title(sprintf([char(Regione_lista(reg)), ': Casi totali progressione giornaliera\\fontsize{5}\n ']))
     set(gcf,'NumberTitle','Off');
     set(gcf,'Position',[26 79 967 603]);
     grid on
@@ -438,17 +479,28 @@ for reg = 1:size(Regione_lista)
           text(time_num(end)+((time_num(end)-time_num(1)))*0.01, (testo.pos(indext(ll),2)),...
             ['------> ',testo.sigla(indext(ll),:)], 'HorizontalAlignment','left','FontSize',7','Color',[0 0 0]);  
         else
-          text(time_num(end)+((time_num(end)-time_num(1)))*0.01, (testo.pos(indext(ll),2)),...
-            ['-> ',testo.sigla(indext(ll),:)], 'HorizontalAlignment','left','FontSize',7','Color',[0 0 0]) ;    
+            text(time_num(end)+((time_num(end)-time_num(1)))*0.01, (testo.pos(indext(ll),2)),...
+            ['-> ',testo.sigla(indext(ll),:)], 'HorizontalAlignment','left','FontSize',7','Color',[0 0 0]) ;
         end
     end
     
+    if ismac
+        font_size = 9;
+    else
+        font_size = 8;
+    end
+    
+    ax = gca;
     set(code_axe, 'FontName', 'Verdana');
-    set(code_axe, 'FontSize', 8);
-    ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    set(code_axe, 'FontSize', font_size);
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+    ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
     set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
     datetick('x', datetickFormat, 'keeplimits') ;
+    ax.XTick = time_num;
     set(gca,'XTickLabelRotation',53,'FontSize',7);
+    ax.FontSize = font_size;
+    
     t_lim=ylim;
     if t_lim(2)<100
         ylim([t_lim(1) 100]);
@@ -458,7 +510,7 @@ for reg = 1:size(Regione_lista)
     
     %% overlap copyright info
     datestr_now = datestr(now);
-    annotation(gcf,'textbox',[0.72342 0.01426 0.2381 0.04638],...
+    annotation(gcf,'textbox',[0.72342 0.00426 0.2381 0.04638],...
         'String',{['Fonte: https://github.com/pcm-dpc']},...
         'HorizontalAlignment','center',...
         'FontSize',6,...
