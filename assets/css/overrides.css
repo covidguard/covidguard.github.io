@@ -1,0 +1,25 @@
+.slideshow-iframe {
+    height: calc(min(650px, 45vw) + 0px); }
+    @media (max-width: 50rem) {
+        .slideshow-iframe {
+            height: calc(65vw); }
+        }
+    }
+
+.lSPager a:not([class]):hover {
+    background-image: none;
+}
+
+.lSPager a:not([class]) {
+    background-image: none;
+}
+
+.lSSlideOuter .lSPager.lSpg > li a {
+    transition: all 0.1s linear 0s !important;
+}
+
+.lSSlideOuter .lSPager.lSpg > li:hover a, .lSSlideOuter .lSPager.lSpg > li.active a {
+    width: 12px;
+    height: 12px;
+    margin: -2px;
+}

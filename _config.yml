@@ -16,3 +16,14 @@ description:           >
 ga_tracking:           UA-161436899-1
 
 keywords:              [COVID coronavirus covid-19 coronavirusitalia data datavisualization]
+
+defaults:
+  -
+    scope:
+      path: "slides"  #__
+    values:
+      layout: "iframe"
+
+collections:
+  slides:
+    output: true

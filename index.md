@@ -1,3 +1,10 @@
+---
+layout: default
+title: COVID-19 Italia
+nav_order: 0
+has_toc: true
+---
+
 # COVID-19 Italia
 Lo scopo della pagina è di accrescere la consapevolezza sul covid-19 grazie a semplici grafici 
 
@@ -8,7 +15,7 @@ Lo scopo della pagina è di accrescere la consapevolezza sul covid-19 grazie a s
 ### Dati giornalieri cumulati
 
 <iframe class="slideshow-iframe" src="/slides/regioni_cum.html" 
-style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 ### Progressione Giornaliera
 
