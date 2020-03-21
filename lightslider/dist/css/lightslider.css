@@ -24,7 +24,8 @@
     margin: 0;
 }
 .lSSlideWrapper {
-    max-width: 100%;
+    width: calc(min(100vw, 150vh));
+    margin: auto;
     overflow: hidden;
     position: relative;
 }
