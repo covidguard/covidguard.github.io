@@ -61,7 +61,6 @@
 62;Lecco (Lombardia);339238;0.6%;816;88;LC
 63;Livorno (Toscana);337334;0.6%;1211;20;LI
 64;Rimini (Emilia-Romagna);336786;0.6%;867;25;RN
-65;Sassari (Sardegna);333116;0.5%;4282;66;SS
 66;Ragusa (Sicilia);321359;0.5%;1614;12;RG
 67;Pescara (Abruzzo);321309;0.5%;1225;46;PE
 68;Viterbo (Lazio);319008;0.5%;3612;60;VT
