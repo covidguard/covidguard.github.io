@@ -30,7 +30,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#progressione-giornaliera-1">Province Giornalieri</a> </li> 
 </ul>
 <hr>
-**Attenzione** Il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli standard CSS3 potrebbero non funzionare correttamente.
+**Attenzione**: per visualizzare correttamente il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli ultimi standard CSS3 potrebbero non funzionare correttamente.
 <hr>
 
 ## ITALIA Regioni
