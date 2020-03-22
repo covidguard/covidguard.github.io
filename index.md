@@ -20,7 +20,7 @@ Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri os
 * Ricoverati con sintomi
 * Terapia intensiva
 * Totale ospedalizzati
-* Idolamento domiciliare
+* Isolamento domiciliare
 * Totale attualmente positivi
 * Guariti dimessi
 * Deceduti
