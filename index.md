@@ -9,7 +9,7 @@ has_toc: true
 # COVID-19 Italia
 Lo scopo della pagina è di accrescere la consapevolezza sul covid-19 grazie a semplici grafici.
 
-Ogni giorno il sito verrà aggiornato tra le ore 18:30 e le 19:30.
+Ogni giorno il sito verrà aggiornato tra le ore 18:30 e le 19:30. Se la pagina non dovesse apparire aggiornata dopo quest'ora suggeriamo di provare a svuotare la cache del proprio browser.
 
 Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati ufficiali della Protezione Civile, per ogni informazione aggiuntiva si rimanda al loro [repository](https://github.com/pcm-dpc/COVID-19) disponibile su GitHub (fonte: [https://github.com/pcm-dpc/](https://github.com/pcm-dpc/)).
 
