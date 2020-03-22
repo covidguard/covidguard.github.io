@@ -1,6 +1,7 @@
 /* resize slideshow */
 .slideshow-iframe {
     padding-right: 10px;
+    height: calc(44vw);
     height: calc(min(650px, 44vw) + 0px); }
     @media (max-width: 50rem) {
         .slideshow-iframe {
