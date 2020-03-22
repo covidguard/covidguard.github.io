@@ -1,5 +1,5 @@
 .slideshow-iframe {
-    padding-right: 30px;
+    padding-right: 10px;
     height: calc(min(650px, 44vw) + 0px); }
     @media (max-width: 50rem) {
         .slideshow-iframe {
@@ -22,5 +22,10 @@
 .lSSlideOuter .lSPager.lSpg > li:hover a, .lSSlideOuter .lSPager.lSpg > li.active a {
     width: 12px;
     height: 12px;
-    margin: -2px;
+    margin: -4px -2px -2px -2px
+}
+
+/* reduce distance between dots (for small screens) */
+.lSSlideOuter .lSPager.lSpg > li {
+    padding: 0 4px !important;
 }
