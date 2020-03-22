@@ -287,14 +287,220 @@ for reg=1:size(regioni_tot,1)
         close(gcf);
     catch
     end
+    
+    
+    %% tamponi
+    regione = char(regioni_tot(reg,1));
+        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+        time_num = fix(datenum(dataReg.data(index)));
+        
+        datetickFormat = 'dd mmm';
+        figure;
+        id_f = gcf;
+        set(id_f, 'Name', [regione ': tamponi']);
+        title(sprintf([regione ': tamponi\\fontsize{5}\n ']))
+        set(gcf,'NumberTitle','Off');
+        set(gcf,'Position',[26 79 967 603]);
+        grid on
+        hold on
+        try
+            a=plot(time_num,dataReg.ricoverati_con_sintomi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
+            
+            dataReg.tamponi(index,1)
+            
+            b=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(2, 8));
+            c=plot(time_num,dataReg.dimessi_guariti(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(3, 8));
+            d=plot(time_num,dataReg.deceduti(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(4, 8));
+            e=plot(time_num,dataReg.terapia_intensiva(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
+            f=plot(time_num,dataReg.totale_ospedalizzati(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
+            g=plot(time_num,dataReg.isolamento_domiciliare(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
+            h=plot(time_num,dataReg.totale_attualmente_positivi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
+        catch
+            a=plot(time_num,str2double(dataReg.ricoverati_con_sintomi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
+            b=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(2, 8));
+            c=plot(time_num,str2double(dataReg.dimessi_guariti(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(3, 8));
+            d=plot(time_num,str2double(dataReg.deceduti(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(4, 8));
+            e=plot(time_num,str2double(dataReg.terapia_intensiva(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
+            f=plot(time_num,str2double(dataReg.totale_ospedalizzati(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
+            g=plot(time_num,str2double(dataReg.isolamento_domiciliare(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
+            h=plot(time_num,str2double(dataReg.totale_attualmente_positivi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
+            
+        end
+        
+        
+        if ismac
+            font_size = 9;
+        else
+            font_size = 6.5;
+        end
+        
+        ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+        ax.XTick = time_num;
+        datetick('x', datetickFormat, 'keepticks') ;
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        
+        t_lim=ylim;
+        if t_lim(2)<100
+            ylim([t_lim(1) 100]);
+        end
+        
+        %     l=legend([a,b,c,d],'Ricoverati con sintomi','Totale Casi','Dimessi Guariti','Deceduti');
+        l=legend([b,a,c,d,e,f,g,h],'Totale Casi','Ricoverati con sintomi','Dimessi Guariti','Deceduti','Terapia intensiva','Totale ospedalizzati','Isolamento domiciliare','Attualmente positivi');
+        set(l,'Location','northwest')
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        %%
+        % %     cd([WORKroot,'/assets/img/regioni']);
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_cumulati.PNG']);
+        close(gcf);
+    
+    
+    
+    
 end
 
 
 
 
 
-%% Regioni confronto
 
+
+
+
+%% interpolazione gaussiana regionale
+
+%% GRAFICI SINGOLA REGIONE
+for reg=9%1:size(regioni_tot,1)
+    try        
+        regione = char(regioni_tot(reg,1));
+        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+        time_num = fix(datenum(dataReg.data(index)));
+        
+        
+        for type=1:2
+        try
+            delete('testIn_gauss.txt');
+        catch
+        end
+        try
+            delete('testIn_gauss_fit.txt');
+        catch
+        end        
+        
+        if type==1 %gauss su attualmente positivi
+        data=dataReg.totale_attualmente_positivi(index,1);
+        elseif type==2 %sigmoide su totale casi
+            data=dataReg.totale_casi(index,1);
+%              data=dataReg.dimessi_guariti(index,1);
+        end
+%         data=dataReg.deceduti(index,1);
+
+        fout=fopen('testIn_gauss.txt','wt');
+        for i=1:size(data,1)
+            fprintf(fout,'%d;%d\n',time_num(i),data(i));
+        end        
+        
+        if type==1
+        command=sprintf('gauss_estim testIn_gauss.txt');system(command); pause(5); 
+        [t,a1,a2,a3]=textread('testIn_gauss_fit.txt','%d%f%f%f','delimiter',';');
+        
+       elseif type==2 
+        command=sprintf('sigm_estim testIn_gauss.txt');system(command); pause(5); 
+        [t,a1,a2,a3]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f','delimiter',';');
+        end 
+              
+        %% figura cumulata
+        datetickFormat = 'dd mmm';
+        figure;
+        id_f = gcf;
+          if type==1
+        set(id_f, 'Name', [regione ': attualmente positivi']);
+        title(sprintf([regione ': attualmente positivi\\fontsize{5}\n ']))
+        elseif type==2 
+       set(id_f, 'Name', [regione ': totale casi']);
+        title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
+             
+          end
+        set(gcf,'NumberTitle','Off');
+        set(gcf,'Position',[26 79 967 603]);
+        grid on
+        hold on
+          
+        b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+        c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+        d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+        a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);  
+
+        if ismac
+            font_size = 9;
+        else
+            font_size = 6.5;
+        end
+        
+        ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        if type==1
+        ylabel('Numero attualmente positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        elseif type==2 
+           ylabel('Numero totale casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8); 
+        end
+        datetick('x', datetickFormat, 'keepticks') ;
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+               
+        l=legend([a,b,c,d],'Dati Reali',sprintf('Stima al %s',datestr(time_num(end),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-1),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-2),'dd mmm')));
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        %%
+        % %     cd([WORKroot,'/assets/img/regioni']);
+        if type==1
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoAttPositivi_',regione, '_cumulati.PNG']);
+        elseif type==2 
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoTotaleCasi_',regione, '_cumulati.PNG']);    
+        end
+        close(gcf);
+        %     cd([WORKroot,'/code']);
+        end
+           catch
+    end
+end
+
+
+
+
+
+
+
+
+%% Regioni confronto
 regioni_conf=struct;
 for reg=1:size(regioni_tot,1)
     regione = char(regioni_tot(reg,1));
@@ -376,7 +582,19 @@ for type= 1: size(loop.var,1)
         set(gcf,'Position',[26 79 967 603]);
         grid on
         hold on
-        b=bar(x);
+        b=bar(x);        
+        for i1=1:numel(x)
+            if pesata==1
+            text(i1,x(i1),num2str(x(i1),'%.2f'),...
+                'HorizontalAlignment','center',...
+                'VerticalAlignment','bottom','fontsize',7)
+            else
+             text(i1,x(i1),num2str(x(i1),'%.0f'),...
+                'HorizontalAlignment','center',...
+                'VerticalAlignment','bottom','fontsize',7)               
+            end
+        end
+        
         hold on; grid minor
         set(gca,'XTick',1:size(regioni_tot,1))
         set(gca,'XTickLabel',tick_all)
@@ -767,9 +985,15 @@ for reg = 1:size(Regione_lista)
         else
             reduce_yn=0;
         end
-        
-        
+                
         b=bar(bar_all);
+%         for i1=1:numel(bar_all)
+%             text(i1,bar_all(i1),num2str(bar_all(i1),'%.0f'),...
+%                 'HorizontalAlignment','center',...
+%                 'VerticalAlignment','bottom','fontsize',7)
+%         end
+        
+        
         cmap = Cmap.get('winter', 5);
         try
             for iii=1:5
