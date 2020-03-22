@@ -2,7 +2,7 @@
 .slideshow-iframe {
     padding-right: 10px;
     height: 650px;
-    height: calc(min(650px, 44vw) + 0px); }
+    height: calc(min(650px, 45vw) + 10px); }
     @media (max-width: 50rem) {
         .slideshow-iframe {
             height: calc(66vw); 

@@ -46,8 +46,6 @@ Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri os
 * Tamponi
 * Totale casi
 
-<hr>
-
 ### Confronto Regioni
 Grafici comparativi di tutte le regioni
 
@@ -59,21 +57,21 @@ Grafici comparativi con dati normalizzati per 1000 abitanti
 <iframe class="slideshow-iframe" src="/slides/regioni_recap_norm.html" 
 style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-<hr>
+
 
 ### Dati giornalieri cumulati
 
 <iframe class="slideshow-iframe" src="/slides/regioni_cum.html" 
 style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-<hr>
+
 
 ### Progressione Giornaliera
 
 <iframe class="slideshow-iframe" src="/slides/regioni_day.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-<hr>
+
 
 ## ITALIA Province
 
@@ -86,21 +84,21 @@ Questi grafici permettono di osservare l'andamento percentuale di crescita (o de
 <iframe class="slideshow-iframe" src="/slides/province_prog.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-<hr>
+
 
 ### Dati giornalieri cumulati
 
 <iframe class="slideshow-iframe" src="/slides/province_cum.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-<hr>
+
 
 ### Dati giornalieri cumulati normalizzati per popolazione
 
 <iframe class="slideshow-iframe" src="/slides/province_norm.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-<hr>
+
 
 ### Progressione Giornaliera
 
