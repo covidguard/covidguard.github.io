@@ -24,7 +24,7 @@ Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri os
 * Totale attualmente positivi
 * Guariti dimessi
 * Deceduti
-* Totlae casi
+* Totale casi
 * Tamponi
 
 ### Confronto Regioni
