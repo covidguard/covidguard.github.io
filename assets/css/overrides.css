@@ -1,8 +1,9 @@
 .slideshow-iframe {
-    height: calc(min(650px, 45vw) + 0px); }
+    padding-right: 30px;
+    height: calc(min(650px, 44vw) + 0px); }
     @media (max-width: 50rem) {
         .slideshow-iframe {
-            height: calc(65vw); }
+            height: calc(66vw); }
         }
     }
 

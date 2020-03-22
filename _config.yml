@@ -17,6 +17,10 @@ ga_tracking:           UA-161436899-1
 
 keywords:              [COVID coronavirus covid-19 coronavirusitalia data datavisualization]
 
+aux_links:
+  "CovidGuard on GitHub":
+    - "//github.com/covidguard/covidguard.github.io"
+    
 defaults:
   -
     scope:

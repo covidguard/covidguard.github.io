@@ -2,6 +2,7 @@
 layout: default
 title: COVID-19 Italia
 nav_order: 0
+has_children: true
 has_toc: true
 ---
 
