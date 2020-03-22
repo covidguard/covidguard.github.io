@@ -17,15 +17,15 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 ## ITALIA Regioni
 Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri osservati:
 
+* Totale attualmente positivi
+* Totale ospedalizzati
 * Ricoverati con sintomi
 * Terapia intensiva
-* Totale ospedalizzati
-* Isolamento domiciliare
-* Totale attualmente positivi
-* Guariti dimessi
 * Deceduti
-* Totale casi
+* Isolamento domiciliare
+* Guariti dimessi
 * Tamponi
+* Totale casi
 
 ### Confronto Regioni
 Grafici comparativi di tutte le regioni
