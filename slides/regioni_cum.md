@@ -2,7 +2,7 @@
 layout: iframe
 title: Regioni Cumulati
 parent: COVID-19 Italia
-nav_order: 0
+nav_order: 2
 has_toc: true
 auto: false
 loop: true

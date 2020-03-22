@@ -2,7 +2,7 @@
 layout: iframe
 title: Regioni Giornalieri
 parent: COVID-19 Italia
-nav_order: 1
+nav_order: 3
 has_toc: true
 auto: false
 loop: true

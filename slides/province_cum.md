@@ -2,7 +2,7 @@
 layout: iframe
 title: Province Cumulati
 parent: COVID-19 Italia
-nav_order: 2
+nav_order: 5
 has_toc: true
 auto: false
 loop: true
