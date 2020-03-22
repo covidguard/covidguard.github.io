@@ -9,11 +9,14 @@ has_toc: false
 # COVID-19 Italia
 [![GitHub commit](https://img.shields.io/github/last-commit/covidguard/covidguard.github.io)](https://github.com/covidguard/covidguard.github.io/commits/master)
 
+
+![image-title-here](/assets/img/no_covid_299x400.png){:style="float: right; height: 200px; margin-top: -30px;"}
 Lo scopo della pagina è di accrescere la consapevolezza sul covid-19 grazie a semplici grafici.
 
 Ogni giorno il sito verrà aggiornato tra le ore 18:30 e le 19:30. Se la pagina non dovesse apparire aggiornata dopo quest'ora suggeriamo di provare a svuotare la cache del proprio browser.
 
 Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati ufficiali della Protezione Civile, per ogni informazione aggiuntiva si rimanda al loro [repository ufficiale](https://github.com/pcm-dpc/COVID-19) disponibile su GitHub (fonte: [https://github.com/pcm-dpc/](https://github.com/pcm-dpc/)).
+
 
 <hr>
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
