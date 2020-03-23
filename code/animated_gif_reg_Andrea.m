@@ -46,7 +46,7 @@ y_data_int=[];
 tmp = x_data;
 tmp(tmp == 0) = 1;
 step = 0.2;
-for i = 1:size(x_data,1)-1
+for i = 1:size(x_data,2)-1
     [~, ~, ~, x_data_int(:,i)] = splinerMat(1:size(x_data,1),tmp(:,i),3,0,1:step:size(x_data,1));
     [~, ~, ~, y_data_int(:,i)] = splinerMat(1:size(x_data,1),y_data(:,i),4,0,1:step:size(x_data,1));
 end
