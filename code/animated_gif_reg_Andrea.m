@@ -33,9 +33,9 @@ grid minor
 axis tight manual % this ensures that getframe() returns a consistent size
 set(gca,'yscale','log')
 ylim([1 1000000])
-xlim([-0.1 1.1])
-rectangle('Position',[0.6 100 0.4 110000])
-rectangle('Position',[0 70 0.2 110000])
+xlim([-10 110])
+rectangle('Position',[60 100 40 110000])
+rectangle('Position',[0 70 20 110000])
 %markers = {'+','o','*','.','x','v','>'};
 colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
 
@@ -78,14 +78,14 @@ l=1;
 x = x_data(1,:);
 y = y_data(1,:);
 clear lbl;
-hdate = text(-0.08, 1.5, datestr(days(1), 'dd mmm'), 'Color', [0.5 0.5 0.5],'fontsize',20,'FontWeight','bold');
+hdate = text(-8, 1.5, datestr(days(1), 'dd mmm'), 'Color', [0.5 0.5 0.5],'fontsize',20,'FontWeight','bold');
 hold on;
 for q=1:length(x)
     %plot(x(q)',y(q)',markers{l},'w')
     if q==12 || q==13
-        lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(6:8)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
+        lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(6:8)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
     else
-        lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(1:3)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
+        lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:3)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
         l=l+1;
         if l==7
             l=1;
@@ -93,10 +93,10 @@ for q=1:length(x)
     end
 end
 grid on
-text(0.6, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
+text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
 text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
 ylabel('Numero di casi totali')
-xlabel('Incremento settimanale di casi totali')
+xlabel('Incremento settimanale percentuale di casi totali')
 set(gcf,'color','w');
 
 fh = gcf; beautifyFig(fh);
@@ -109,7 +109,7 @@ for n = 1:size(x_data,1)
     hdate.String = datestr(days(n), 'dd mmm');
     for q=1:length(x)
         %plot(x(q)',y(q)',markers{l},'w')
-        lbl(q).Position(1:2) = [x(q), y(q)];
+        lbl(q).Position(1:2) = [x(q) * 100, y(q)];
     end
     %legend(regioni_tot,'Location', 'NorthEastOutside'
     %title()
@@ -129,8 +129,10 @@ for n = 1:size(x_data,1)
     end
 end
 
-% Pause on the last
-imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',3);
+% Pause on the last frame
+for n = 1 : 30
+    imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',0.1);
+end
 
 close all
 

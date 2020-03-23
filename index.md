@@ -34,6 +34,13 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 
 ## ITALIA Regioni
+Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d'Italia.
+
+![Andamento regioni](/code/Andamento_Regioni.gif)
+
+Nota: nella parte bassa del grafico il numero dei casi è troppo limitato percià la sua variabilità potrebbe essere maggiore.
+
+### Confronto Regioni
 Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri osservati:
 
 * Totale attualmente positivi
@@ -46,7 +53,6 @@ Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri os
 * Tamponi
 * Totale casi
 
-### Confronto Regioni
 Grafici comparativi di tutte le regioni
 
 <iframe class="slideshow-iframe" src="/slides/regioni_recap.html" 
