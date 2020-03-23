@@ -391,12 +391,14 @@ for reg=9%1:size(regioni_tot,1)
         regione = char(regioni_tot(reg,1));
         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
         time_num = fix(datenum(dataReg.data(index)));
-        
+%             dataReg=dataProv;
 %             RegioneTot={'Como'}'
+% RegioneTot={'Lecco'}'
 %            h=1 
 %             regione = char(RegioneTot(h));
 %             index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
 %             time_num = fix(datenum(dataReg.data(index)));
+%                type=2;
 
 %             
         for type=1:2
@@ -423,12 +425,12 @@ for reg=9%1:size(regioni_tot,1)
         end        
         
         if type==1
-        command=sprintf('gauss_estim testIn_gauss.txt');system(command); pause(5); 
+        command=sprintf('gauss_estim testIn_gauss.txt');system(command); 
         [t,a1,a2,a3]=textread('testIn_gauss_fit.txt','%d%f%f%f','delimiter',';');
         
        elseif type==2 
-        command=sprintf('sigm_estim testIn_gauss.txt');system(command); pause(5); 
-        [t,a1,a2,a3]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f','delimiter',';');
+        command=sprintf('sigm_estim testIn_gauss.txt');system(command);  
+        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
         end 
               
         %% figura cumulata
@@ -447,7 +449,7 @@ for reg=9%1:size(regioni_tot,1)
         set(gcf,'Position',[26 79 967 603]);
         grid on
         hold on
-          
+        shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
         b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
         c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
         d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
@@ -463,6 +465,10 @@ for reg=9%1:size(regioni_tot,1)
         code_axe = get(id_f, 'CurrentAxes');
         set(code_axe, 'FontName', 'Verdana');
         set(code_axe, 'FontSize', font_size);
+                if type==2 
+            ylimi=get(gca,'ylim');
+            set(gca,'ylim',([0,ylimi(2)]));
+        end
         ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
         if type==1
         ylabel('Numero attualmente positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
@@ -472,8 +478,12 @@ for reg=9%1:size(regioni_tot,1)
         datetick('x', datetickFormat, 'keepticks') ;
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
         ax.FontSize = font_size;
+        
+
                
         l=legend([a,b,c,d],'Dati Reali',sprintf('Stima al %s',datestr(time_num(end),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-1),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-2),'dd mmm')));
+        
+        set(l,'Location','northwest')    
         % overlap copyright info
         datestr_now = datestr(now);
         annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
@@ -688,7 +698,7 @@ for reg = 1:size(Regione_lista)
     %     RegioneTot={'Como','Bergamo','Brescia','Lecco'}'
     try
         %% figura cumulata
-        for tipoGraph=1:3
+        for tipoGraph=1:2
             if tipoGraph==1
                 normalizza_per_popolazione = 0;
             else
@@ -825,21 +835,18 @@ for reg = 1:size(Regione_lista)
             index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione)));
             time_num = fix(datenum(dataReg.data(index)));
             
-            %         if normalizza_per_popolazione==1
-            %             try
-            %                 b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-            %             catch
-            %                 bbbb=str2double(dataReg.totale_casi(index,1));
-            %                 b(h)=plot(time_num(2:end),diff(bbbb)/pop.number(idx_pop(h))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-            %             end
-            %         else
-            try
-                b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-            catch
-                bbbb=str2double(dataReg.totale_casi(index,1));
-                b(h)=plot(time_num(2:end),diff(bbbb),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+            if normalizza_per_popolazione==1
+                    b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+            else
+                try
+                    b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                catch
+                    bbbb=str2double(dataReg.totale_casi(index,1));
+                    b(h)=plot(time_num(2:end),diff(bbbb),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                end
+                %     
             end
-            %         end
+            
             regione_leg=regione;
             regione_leg(strfind(regione_leg,''''))=' ';
             regione_leg(strfind(regione_leg,'Ã'))='i';
@@ -847,13 +854,13 @@ for reg = 1:size(Regione_lista)
             string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
             code_axe = get(id_f, 'CurrentAxes');
             set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
-            
-            
-            try
+        
+            if normalizza_per_popolazione==1
+                sf=diff((dataReg.totale_casi(index,1)))/pop.number(idx_pop(h))*1000;
+            else
                 sf=diff((dataReg.totale_casi(index,1)));
-            catch
-                sf=diff(str2double(dataReg.totale_casi(index,1)));
             end
+            
             testo.sigla(h,:)=char(sigla_prov(h));
             testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
             testo.val(h,1)=sf(end);
@@ -885,18 +892,33 @@ for reg = 1:size(Regione_lista)
         ax = gca;
         set(code_axe, 'FontName', 'Verdana');
         set(code_axe, 'FontSize', font_size);
-        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-        ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+        if normalizza_per_popolazione==0
+          ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        end
+        if normalizza_per_popolazione==0
+            ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+        else
+            ylabel('Numero casi ogni 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+        end
         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
         ax.XTick = time_num;
         datetick('x', datetickFormat, 'keepticks') ;
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
         ax.FontSize = font_size;
         
-        t_lim=ylim;
-        if t_lim(2)<100
-            ylim([t_lim(1) 100]);
+        
+        if normalizza_per_popolazione==0
+            t_lim=ylim;
+            if t_lim(2)<100
+                ylim([t_lim(1) 100]);
+            end
         end
+        t_lim=ylim;
+        if normalizza_per_popolazione==1
+            ylim([0 t_lim(2)]);
+        end
+            
+            
         % l=legend([b],'Totale Casi');
         set(l,'Location','northwest')
         
@@ -910,7 +932,12 @@ for reg = 1:size(Regione_lista)
             'FitBoxToText','off',...
             'LineStyle','none',...
             'Color',[0 0 0]);
-        print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri.PNG']);
+        if normalizza_per_popolazione==1
+            print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_norm_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri.PNG']);
+        else
+            
+            print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri.PNG']);
+        end
         close(gcf);
     catch
     end
