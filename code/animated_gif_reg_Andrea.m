@@ -4,7 +4,7 @@ function animated_gif_reg(data)
     
     
 % data=load(path_mat_file);
-filename = 'out.gif';
+filename = 'Andamento_Regioni.gif';
 
 regioni_tot = unique(data.dataReg.denominazione_regione);
 y_data = zeros(length(data.dataReg.codice_regione)/size(regioni_tot,1)-6,size(regioni_tot,1));
@@ -123,11 +123,15 @@ for n = 1:size(x_data,1)
     [imind,cm] = rgb2ind(im,256);
     % Write to the GIF File
     if n == 1
-        imwrite(imind,cm,filename,'gif', 'Loopcount',1,'DelayTime',0.01);
+        imwrite(imind,cm,filename,'gif', 'Loopcount',1,'DelayTime',0.07);
     else
-        imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',0.01);
+        imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',0.05);
     end
 end
+
+% Pause on the last
+imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',3);
+
 close all
 
 end
