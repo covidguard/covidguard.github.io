@@ -61,6 +61,17 @@ dataReg = decodeJSON(json_oneRaw);
 regioni_tot = unique(dataReg.denominazione_regione);
 
 
+
+%% percorsi:
+data=struct;
+data.dataReg=dataReg;
+animated_gif_reg(data);
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Province
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -303,57 +314,46 @@ for reg=1:size(regioni_tot,1)
         set(gcf,'Position',[26 79 967 603]);
         grid on
         hold on
-        try
-            a=plot(time_num,dataReg.ricoverati_con_sintomi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
-            
-            dataReg.tamponi(index,1)
-            
-            b=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(2, 8));
-            c=plot(time_num,dataReg.dimessi_guariti(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(3, 8));
-            d=plot(time_num,dataReg.deceduti(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(4, 8));
-            e=plot(time_num,dataReg.terapia_intensiva(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
-            f=plot(time_num,dataReg.totale_ospedalizzati(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
-            g=plot(time_num,dataReg.isolamento_domiciliare(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
-            h=plot(time_num,dataReg.totale_attualmente_positivi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
-        catch
-            a=plot(time_num,str2double(dataReg.ricoverati_con_sintomi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
-            b=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(2, 8));
-            c=plot(time_num,str2double(dataReg.dimessi_guariti(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(3, 8));
-            d=plot(time_num,str2double(dataReg.deceduti(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(4, 8));
-            e=plot(time_num,str2double(dataReg.terapia_intensiva(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
-            f=plot(time_num,str2double(dataReg.totale_ospedalizzati(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
-            g=plot(time_num,str2double(dataReg.isolamento_domiciliare(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
-            h=plot(time_num,str2double(dataReg.totale_attualmente_positivi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
-            
-        end
-        
-        
+       
+        tamp_positivi = diff(dataReg.totale_casi(index,1));
+        a=bar([diff(dataReg.tamponi(index,1)),tamp_positivi],1);
+
         if ismac
             font_size = 9;
         else
             font_size = 6.5;
         end
         
-        ax = gca;
-        code_axe = get(id_f, 'CurrentAxes');
-        set(code_axe, 'FontName', 'Verdana');
-        set(code_axe, 'FontSize', font_size);
-        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-        ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-        set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-        ax.XTick = time_num;
-        datetick('x', datetickFormat, 'keepticks') ;
+        hold on; grid minor
+        a(1).FaceColor = [0.8 0.8 0.8];
+        a(2).FaceColor = [1 0.200000002980232 0.200000002980232];
+        
+        set(gca,'XTick',1:size(tamp_positivi,1))
+        set(gca,'XTickLabel',datestr(time_num(2:end),'dd mmm'))
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-        ax.FontSize = font_size;
+        set(gca,'XLim',[0.5,size(time_num,1)-0.5]);
+        yL=get(gca,'ylim');
+        set(gca,'ylim',[0 yL(2)]);
+        ax = gca;
+        set(ax, 'FontName', 'Verdana');
+        set(ax, 'FontSize', font_size);
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero tamponi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
         
-        t_lim=ylim;
-        if t_lim(2)<100
-            ylim([t_lim(1) 100]);
-        end
+
         
-        %     l=legend([a,b,c,d],'Ricoverati con sintomi','Totale Casi','Dimessi Guariti','Deceduti');
-        l=legend([b,a,c,d,e,f,g,h],'Totale Casi','Ricoverati con sintomi','Dimessi Guariti','Deceduti','Terapia intensiva','Totale ospedalizzati','Isolamento domiciliare','Attualmente positivi');
-        set(l,'Location','northwest')
+        
+        
+        yyaxis right
+        c=tamp_positivi./diff(dataReg.tamponi(index,1))*100;  c(c>100)=100; c(c<0)=0;
+        b=plot(1:size(tamp_positivi,1), c,'-k','LineWidth', 1.0);
+        ylim([0 100]);
+        set(gca,'YColor', [0 0 0]);
+        ylabel('Percentuale tamponi positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        
+        l=legend([a(1),a(2),b],'Tamponi effettuati','Tamponi positivi','Percent. tamponi positivi');
+        set(l,'Location','northwest')       
+        
         % overlap copyright info
         datestr_now = datestr(now);
         annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
@@ -367,7 +367,7 @@ for reg=1:size(regioni_tot,1)
         
         %%
         % %     cd([WORKroot,'/assets/img/regioni']);
-        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_cumulati.PNG']);
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_tamponi.PNG']);
         close(gcf);
     
     
@@ -392,7 +392,13 @@ for reg=9%1:size(regioni_tot,1)
         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
         time_num = fix(datenum(dataReg.data(index)));
         
-        
+%             RegioneTot={'Como'}'
+%            h=1 
+%             regione = char(RegioneTot(h));
+%             index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
+%             time_num = fix(datenum(dataReg.data(index)));
+
+%             
         for type=1:2
         try
             delete('testIn_gauss.txt');
