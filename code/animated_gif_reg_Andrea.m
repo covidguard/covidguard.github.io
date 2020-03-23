@@ -85,7 +85,7 @@ for q=1:length(x)
     if q==12 || q==13
         lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(6:8)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
     else
-        lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(1:3)),'Color', colors{l},'fontsize',14);
+        lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(1:3)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
         l=l+1;
         if l==7
             l=1;
@@ -125,7 +125,7 @@ for n = 1:size(x_data,1)
     if n == 1
         imwrite(imind,cm,filename,'gif', 'Loopcount',1,'DelayTime',0.07);
     else
-        imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',0.05);
+        imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',0.07);
     end
 end
 
