@@ -18,3 +18,5 @@ gauss_estim.exe
 *.asv
 
 code/gauss_estim_old.exe
+
+code/chi_estim_conf.exe
