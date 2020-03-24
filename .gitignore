@@ -20,3 +20,5 @@ gauss_estim.exe
 code/gauss_estim_old.exe
 
 code/chi_estim_conf.exe
+
+*.exe
