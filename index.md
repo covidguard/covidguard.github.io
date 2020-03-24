@@ -33,15 +33,21 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 **Attenzione**: per visualizzare correttamente il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli ultimi standard CSS3 potrebbero non funzionare correttamente.
 <hr>
 
-## LOMBARDIA Stima del numero totale di infetti
+## LOMBARDIA
+
+### Stima del numero totale di infetti
 L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
-Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sui dati della regione Lombardia.
+Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero totale di infetti della regione Lombardia.
 Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
 
-![Picco Lombardia](/slides/img/regioni/reg_stimapiccoTotaleCasi_Lombardia_cumulati.PNG)
+![Picco Lombardia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Lombardia_cumulati.PNG)
 
-Nota: nella parte bassa del grafico il numero dei casi è troppo limitato percià la sua variabilità potrebbe essere maggiore.
+### Stima del picco di attualmente positivi
+Il grafico mostra 3 funzioni chi-quadro (due giorni fa, ieri e odierna) fittati sul numero di attualmente positivi della regione Lombardia. Per il chi-quadro odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
+Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
+
+![Picco Lombardia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Lombardia_cumulati.PNG)
 
 ## ITALIA Regioni
 Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d'Italia.
