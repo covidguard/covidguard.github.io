@@ -33,7 +33,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 **Attenzione**: per visualizzare correttamente il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli ultimi standard CSS3 potrebbero non funzionare correttamente.
 <hr>
 
-## LOMBARDIA Stima del picco totale di infetti
+## LOMBARDIA Stima del numero totale di infetti
 L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
 Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sui dati della regione Lombardia.
 Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
