@@ -215,7 +215,7 @@ for reg=1:size(regioni_tot,1)
             'FitBoxToText','off',...
             'LineStyle','none',...
             'Color',[0 0 0]);
-        
+         
         %%
         % %     cd([WORKroot,'/assets/img/regioni']);
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_cumulati.PNG']);

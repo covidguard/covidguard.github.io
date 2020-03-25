@@ -1,6 +1,6 @@
 % mkdir([WORKroot,'/slides/img/regioni']);
 % mkdir([WORKroot,'/slides/img/province']);
-% mkdir('slides');
+% mkdir('slides'); 
 % mkdir('slides/img');
 % mkdir('slides/img/province');
 % mkdir('slides/img/regioni');
