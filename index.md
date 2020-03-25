@@ -99,11 +99,11 @@ style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></
 
 ## ITALIA Province
 
-Per le provincie di ogni regione Italiana al momento sono disponibili solo i casi infetti totali:
+Per le provincie di ogni regione Italiana al momento sono disponibili solo i casi positivi totali:
 
 ### Dati di progressione percentuale
 
-Questi grafici permettono di osservare l'andamento percentuale di crescita (o decrescita) del numero di infetti totali
+Questi grafici permettono di osservare l'andamento percentuale di crescita (o decrescita) del numero di positivi totali
 
 <iframe class="slideshow-iframe" src="/slides/province_prog.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
