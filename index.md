@@ -21,7 +21,9 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
-    <li> <a href="#confronto-regioni">Confronto Regioni</a> </li> 
+    <li> <a href="#stima-del-numero-cumulato-di-positivi">Lombardia: Stima Positivi Cumulata</a> </li> 
+    <li> <a href="#stima-del-picco-di-attualmente-positivi">Lombardia: Stima Positivi</a> </li> 
+    <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati">Regioni Cumulati</a> </li> 
     <li> <a href="#progressione-giornaliera">Regioni Giornalieri</a> </li> 
     <li> <a href="#dati-di-progressione-percentuale">Province Progressione</a> </li> 
@@ -35,9 +37,9 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 
 ## LOMBARDIA
 
-### Stima del numero totale di infetti
+### Stima del numero cumulato di positivi
 L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
-Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero totale di infetti della regione Lombardia.
+Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero cumulato di positivi della regione Lombardia.
 Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
 
@@ -54,7 +56,7 @@ Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d
 
 ![Andamento regioni](/code/Andamento_Regioni.gif)
 
-Nota: nella parte bassa del grafico il numero dei casi è troppo limitato percià la sua variabilità potrebbe essere maggiore.
+Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perciò la sua variabilità potrebbe essere maggiore.
 
 ### Confronto Regioni
 Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri osservati:
@@ -97,11 +99,11 @@ style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></
 
 ## ITALIA Province
 
-Per le provincie di ogni regione Italiana al momento sono disponibili solo i casi infetti totali:
+Per le provincie di ogni regione Italiana al momento sono disponibili solo i casi positivi totali:
 
 ### Dati di progressione percentuale
 
-Questi grafici permettono di osservare l'andamento percentuale di crescita (o decrescita) del numero di infetti totali
+Questi grafici permettono di osservare l'andamento percentuale di crescita (o decrescita) del numero di positivi totali
 
 <iframe class="slideshow-iframe" src="/slides/province_prog.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
