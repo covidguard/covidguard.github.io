@@ -57,7 +57,7 @@ json_oneRaw='';
 json_oneRaw(1:size(file_scan,1)*size(file_scan,2))=' ';
 for i=1:size(file_scan,1)
     json_oneRaw(1+(i-1)*size(file_scan,2):i*size(file_scan,2))=file_scan(i,:);
-%     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
+    %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
 end
 dataReg = decodeJSON(json_oneRaw);
 dataReg.dataa = char(dataReg.data);
@@ -415,11 +415,11 @@ for type=1:2
     end
     
     if type==1
-                        command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-                        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+        command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
         
-%         command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+        %         command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
+        %         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
     elseif type==2
         command=sprintf('sigm_estim testIn_gauss.txt');system(command);
         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
@@ -497,7 +497,7 @@ for type=1:2
     close(gcf);
     
     
-            
+    
     
 end
 
@@ -527,9 +527,9 @@ data_guariti=data_guariti(2:end)./data_guariti(1:end-1)*100-100;
 
 figure;
 id_f = gcf;
-    set(id_f, 'Name', 'Italia: correlazione temporale');
+set(id_f, 'Name', 'Italia: correlazione temporale');
 %     title(sprintf([regione ': totale Italia: correlazione temporale\\fontsize{5}\n ']))
-    
+
 
 set(gcf,'NumberTitle','Off');
 set(gcf,'Position',[26 79 967 603]);
@@ -538,7 +538,7 @@ hold on
 
 [ax,a,b] = plotxx(t,data_casiPositivi,t,data_deceduti);
 
-% 
+%
 % a=plot(t,data_casiPositivi,'-ob','LineWidth', 2.0,'color',[0 0.200000002980232 0.600000023841858]); set(a,'markersize',6,'MarkerFaceColor',[0 0.447058826684952 0.74117648601532],'Color',[0 0.447058826684952 0.74117648601532]);
 % b=plot(t-offset_dec,data_deceduti,'-ob','LineWidth', 2.0,'color',[1 0.200000002980232 0.600000023841858],'Parent',ax2); set(b,'markersize',6,'MarkerFaceColor',[0.850980401039124 0.325490206480026 0.0980392172932625],'Color',[0.850980401039124 0.325490206480026 0.0980392172932625]);
 
@@ -592,7 +592,7 @@ annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
     'LineStyle','none',...
     'Color',[0 0 0]);
 
- print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_correlazioneCasiDeceduti.PNG']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_correlazioneCasiDeceduti.PNG']);
 close(gcf);
 
 
@@ -616,7 +616,7 @@ close(gcf);
 %% GRAFICI SINGOLA REGIONE
 for reg=9%1:size(regioni_tot,1)
     
-   
+    
     try
         regione = char(regioni_tot(reg,1));
         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
@@ -661,8 +661,8 @@ for reg=9%1:size(regioni_tot,1)
                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
                 
-%                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-%                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                %                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
+                %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
             elseif type==2
                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
@@ -701,8 +701,8 @@ for reg=9%1:size(regioni_tot,1)
             code_axe = get(id_f, 'CurrentAxes');
             set(code_axe, 'FontName', 'Verdana');
             set(code_axe, 'FontSize', font_size);
-                ylimi=get(gca,'ylim');
-                set(gca,'ylim',([0,ylimi(2)]));
+            ylimi=get(gca,'ylim');
+            set(gca,'ylim',([0,ylimi(2)]));
             ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
             if type==1
                 ylabel('Numero attualmente positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
@@ -806,7 +806,7 @@ for type= 1: 1
         else
             pesata=1;
         end
-
+        
         
         figure;
         id_f = gcf;
@@ -827,18 +827,18 @@ for type= 1: 1
         end
         a=plot(time_num,x,'-','LineWidth', 2.0);
         
-            if ismac
+        if ismac
             font_size = 9;
         else
             font_size = 6.5;
-        end    
+        end
         
-         
+        
         ax = gca;
         set(ax, 'FontName', 'Verdana');
         set(ax, 'FontSize', font_size);
         ylabel('Casi totali ogni 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
-       
+        
         set(ax, 'Xlim', [time_num(1), time_num(end)]);
         ax.XTick = time_num;
         datetick('x', datetickFormat, 'keepticks') ;
@@ -866,8 +866,8 @@ for type= 1: 1
             end
         end
         
-
-       % l=legend([b],'Totale Casi');
+        
+        % l=legend([b],'Totale Casi');
         %set(l,'Location','northwest')
         
         %% overlap copyright info
@@ -880,7 +880,7 @@ for type= 1: 1
             'FitBoxToText','off',...
             'LineStyle','none',...
             'Color',[0 0 0]);
-
+        
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_confrontoPesatoAndamentoCasiTotali.PNG']);
         close(gcf);
     end
@@ -1023,9 +1023,9 @@ for type= 1: size(loop.var,1)
             'LineStyle','none',...
             'Color',[0 0 0]);
         if pesata==1
-            command = sprintf('print(gcf, ''-dpng'', [WORKroot,''/slides/img/regioni/regioni_pesata_'', num2str(type),''_'',char(loop.var(type)),''.png'']);');eval(command)
+            command = sprintf('print(gcf, ''-dpng'', [WORKroot,''/slides/img/regioni/regioni_pesata_'', num2str(type),''_'',char(loop.var(type)),''.PNG'']);');eval(command)
         else
-            command = sprintf('print(gcf, ''-dpng'', [WORKroot,''/slides/img/regioni/regioni_'', num2str(type),''_'',char(loop.var(type)),''.png'']);');eval(command)
+            command = sprintf('print(gcf, ''-dpng'', [WORKroot,''/slides/img/regioni/regioni_'', num2str(type),''_'',char(loop.var(type)),''.PNG'']);');eval(command)
         end
         close(gcf);
     end
@@ -1076,120 +1076,120 @@ for reg = 1:size(Regione_lista)
     
     %     RegioneTot={'Como','Lecco','Milano','Bergamo','Varese','Lodi','Monza e della Brianza'}';
     %     RegioneTot={'Como','Bergamo','Brescia','Lecco'}'
-    try
-        %% figura cumulata
-        for tipoGraph=1:2
-            if tipoGraph==1
-                normalizza_per_popolazione = 0;
-            else
-                normalizza_per_popolazione = 1;
-            end
-            
-            datetickFormat = 'dd mmm';
-            figure;
-            id_f = gcf;
-            set(id_f, 'Name', ['Cumulati']);
-            title(sprintf([char(Regione_lista(reg)), ': Casi totali cumulati\\fontsize{5}\n ']))
-            set(gcf,'NumberTitle','Off');
-            set(gcf,'Position',[26 79 967 603]);
-            grid on
-            hold on
-            b=[];
-            string_legend='l=legend([b]';
-            for h=1:size(RegioneTot,1)
-                regione = char(RegioneTot(h));
-                index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
-                time_num = fix(datenum(dataReg.data(index)));
-                if normalizza_per_popolazione==1
-                    try
-                        b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.number(idx_pop(h)))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                    catch
-                        b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.number(idx_pop(h)))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                    end
-                elseif normalizza_per_densita==1
-                    try
-                        b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.number(idx_pop(h))*pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                    catch
-                        b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                    end
-                elseif normalizza_per_superficie==1
-                    try
-                        b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                    catch
-                        b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                    end
-                else
-                    try
-                        b(h)=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                    catch
-                        b(h)=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                    end
-                end
-                regione_leg=regione;
-                regione_leg(strfind(regione_leg,''''))=' ';
-                regione_leg(strfind(regione_leg,'ì'))='i';
-                regione_leg(strfind(regione_leg,'Ã'))='i';
-                regione_leg(strfind(regione_leg,'¬'))='';
-                
-                
-                string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
-            end
-            string_legend=sprintf('%s);',string_legend);
-            
-            if ismac
-                font_size = 9;
-            else
-                font_size = 6.5;
-            end
-            
-            ax = gca;
-            code_axe = get(id_f, 'CurrentAxes');
-            set(code_axe, 'FontName', 'Verdana');
-            set(code_axe, 'FontSize', font_size);
-            ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-            if normalizza_per_popolazione==1
-                ylabel('Numero casi x1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-            elseif normalizza_per_densita==1
-                ylabel('Numero casi / abitanti *kmq', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-            elseif normalizza_per_superficie==1
-                ylabel('Numero casi / kmq', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-            else
-                ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-                t_lim=ylim;
-                if t_lim(2)<100
-                    ylim([t_lim(1) 100]);
-                end
-            end
-            set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-            ax.XTick = time_num;
-            datetick('x', datetickFormat, 'keepticks') ;
-            set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-            ax.FontSize = font_size;
-            
-            eval(string_legend)
-            
-            % l=legend([b],'Totale Casi');
-            set(l,'Location','northwest')
-            %% overlap copyright info
-            datestr_now = datestr(now);
-            annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
-                'String',{['Fonte: https://github.com/pcm-dpc']},...
-                'HorizontalAlignment','center',...
-                'FontSize',6,...
-                'FontName','Verdana',...
-                'FitBoxToText','off',...
-                'LineStyle','none',...
-                'Color',[0 0 0]);
-            if normalizza_per_popolazione==1
-                print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_norm_',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);
-            elseif normalizza_per_superficie==1
-                print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_normSup_',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);
-            else
-                print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);
-            end
-            
-            close(gcf);
+    
+    %% figura cumulata
+    for tipoGraph=1:2
+        if tipoGraph==1
+            normalizza_per_popolazione = 0;
+        else
+            normalizza_per_popolazione = 1;
         end
+        
+        datetickFormat = 'dd mmm';
+        figure;
+        id_f = gcf;
+        set(id_f, 'Name', ['Cumulati']);
+        title(sprintf([char(Regione_lista(reg)), ': Casi totali cumulati\\fontsize{5}\n ']))
+        set(gcf,'NumberTitle','Off');
+        set(gcf,'Position',[26 79 967 603]);
+        grid on
+        hold on
+        b=[];
+        string_legend='l=legend([b]';
+        for h=1:size(RegioneTot,1)
+            regione = char(RegioneTot(h));
+            index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
+            time_num = fix(datenum(dataReg.data(index)));
+            if normalizza_per_popolazione==1
+                try
+                    b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.number(idx_pop(h)))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                catch
+                    b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.number(idx_pop(h)))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                end
+            elseif normalizza_per_densita==1
+                try
+                    b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.number(idx_pop(h))*pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                catch
+                    b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                end
+            elseif normalizza_per_superficie==1
+                try
+                    b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                catch
+                    b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.superf(idx_pop(h))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                end
+            else
+                try
+                    b(h)=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                catch
+                    b(h)=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                end
+            end
+            regione_leg=regione;
+            regione_leg(strfind(regione_leg,''''))=' ';
+            regione_leg(strfind(regione_leg,'ì'))='i';
+            regione_leg(strfind(regione_leg,'Ã'))='i';
+            regione_leg(strfind(regione_leg,'¬'))='';
+            
+            
+            string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
+        end
+        string_legend=sprintf('%s);',string_legend);
+        
+        if ismac
+            font_size = 9;
+        else
+            font_size = 6.5;
+        end
+        
+        ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        if normalizza_per_popolazione==1
+            ylabel('Numero casi x1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        elseif normalizza_per_densita==1
+            ylabel('Numero casi / abitanti *kmq', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        elseif normalizza_per_superficie==1
+            ylabel('Numero casi / kmq', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        else
+            ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+            t_lim=ylim;
+            if t_lim(2)<100
+                ylim([t_lim(1) 100]);
+            end
+        end
+        set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+        ax.XTick = time_num;
+        datetick('x', datetickFormat, 'keepticks') ;
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        
+        eval(string_legend)
+        
+        % l=legend([b],'Totale Casi');
+        set(l,'Location','northwest')
+        %% overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        if normalizza_per_popolazione==1
+            print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_norm_',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);
+        elseif normalizza_per_superficie==1
+            print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_normSup_',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);
+        else
+            print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliCumulati.PNG']);
+        end
+        
+        close(gcf);
+        
         
         
         
@@ -1319,8 +1319,7 @@ for reg = 1:size(Regione_lista)
             print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri.PNG']);
         end
         close(gcf);
-    catch
-        keyboard
+        
     end
     
     
@@ -1330,133 +1329,123 @@ for reg = 1:size(Regione_lista)
     
     
     
+    %% progressione percentuale
+    datetickFormat = 'dd mmm';
+    figure;
+    id_f = gcf;
+    set(id_f, 'Name', ['Giornalieri']);
+    title(sprintf([char(Regione_lista(reg)), ': Casi totali - incremento percentuale\\fontsize{5}\n ']))
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    b=[];
+    string_legend='l=legend([b]';
+    
+    testo=struct;
+    
+    bar_all=[];
+    tick_all=cell('');
+    for h=1:size(RegioneTot,1)
+        regione = char(RegioneTot(h));
+        
+        regione_leg=char(RegioneTot(h));
+        regione_leg(strfind(regione_leg,''''))=' ';
+        regione_leg(strfind(regione_leg,'Ã'))='i';
+        regione_leg(strfind(regione_leg,'¬'))='';
+        tick_all(h,1)=cellstr(regione_leg);
+        
+        %         index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
+        index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione)));
+        time_num = fix(datenum(dataReg.data(index)));
+        
+        
+        a= dataReg.totale_casi(index,1);
+        prog=[];
+        for kkk=2:size(a,1)
+            prog(kkk,1)=a(kkk)/a(kkk-1)*100-100;
+        end
+        bar_all(h,:)=[prog(end-4),prog(end-3), prog(end-2), prog(end-1),prog(end)];
+        %             b(h)=bar(time_num,prog,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+        
+        regione_leg=regione;
+        regione_leg(strfind(regione_leg,''''))=' ';
+        string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
+        %             code_axe = get(id_f, 'CurrentAxes');
+        %             set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
+        
+        sf=prog;
+        testo.sigla(h,:)=char(sigla_prov(h));
+        testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
+        testo.val(h,1)=sf(end);
+        %          text(time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end),...
+        %             test, 'HorizontalAlignment','left','FontSize',7','Color',[.3 .3 .3])
+        
+    end
+    
+    if size(bar_all,1)==1
+        reduce_yn=1;
+        bar_all(2,:)=NaN;
+    else
+        reduce_yn=0;
+    end
+    
+    b=bar(bar_all);
+    %         for i1=1:numel(bar_all)
+    %             text(i1,bar_all(i1),num2str(bar_all(i1),'%.0f'),...
+    %                 'HorizontalAlignment','center',...
+    %                 'VerticalAlignment','bottom','fontsize',7)
+    %         end
     
     
-    
-    
-    
-    
-    
+    cmap = Cmap.get('winter', 5);
     try
-        %% progressione percentuale
-        datetickFormat = 'dd mmm';
-        figure;
-        id_f = gcf;
-        set(id_f, 'Name', ['Giornalieri']);
-        title(sprintf([char(Regione_lista(reg)), ': Casi totali - incremento percentuale\\fontsize{5}\n ']))
-        set(gcf,'NumberTitle','Off');
-        set(gcf,'Position',[26 79 967 603]);
-        grid on
-        hold on
-        
-        b=[];
-        string_legend='l=legend([b]';
-        
-        testo=struct;
-        
-        bar_all=[];
-        tick_all=cell('');
-        for h=1:size(RegioneTot,1)
-            regione = char(RegioneTot(h));
-            
-            regione_leg=char(RegioneTot(h));
-            regione_leg(strfind(regione_leg,''''))=' ';
-            regione_leg(strfind(regione_leg,'Ã'))='i';
-            regione_leg(strfind(regione_leg,'¬'))='';
-            tick_all(h,1)=cellstr(regione_leg);
-            
-            %         index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
-            index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione)));
-            time_num = fix(datenum(dataReg.data(index)));
-            
-            
-            a= dataReg.totale_casi(index,1);
-            prog=[];
-            for kkk=2:size(a,1)
-                prog(kkk,1)=a(kkk)/a(kkk-1)*100-100;
-            end
-            bar_all(h,:)=[prog(end-4),prog(end-3), prog(end-2), prog(end-1),prog(end)];
-            %             b(h)=bar(time_num,prog,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-            
-            regione_leg=regione;
-            regione_leg(strfind(regione_leg,''''))=' ';
-            string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
-            %             code_axe = get(id_f, 'CurrentAxes');
-            %             set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
-            
-            sf=prog;
-            testo.sigla(h,:)=char(sigla_prov(h));
-            testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
-            testo.val(h,1)=sf(end);
-            %          text(time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end),...
-            %             test, 'HorizontalAlignment','left','FontSize',7','Color',[.3 .3 .3])
-            
+        for iii=1:5
+            b(iii).FaceColor = cmap(6-iii,:);
         end
-        
-        if size(bar_all,1)==1
-            reduce_yn=1;
-            bar_all(2,:)=NaN;
-        else
-            reduce_yn=0;
-        end
-        
-        b=bar(bar_all);
-        %         for i1=1:numel(bar_all)
-        %             text(i1,bar_all(i1),num2str(bar_all(i1),'%.0f'),...
-        %                 'HorizontalAlignment','center',...
-        %                 'VerticalAlignment','bottom','fontsize',7)
-        %         end
-        
-        
-        cmap = Cmap.get('winter', 5);
-        try
-            for iii=1:5
-                b(iii).FaceColor = cmap(6-iii,:);
-            end
-        catch
-        end
-        
-        grid minor
-        ylabel('Incremento percentuale ultimi giorni', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
-        set(gca,'XTick',1:size(RegioneTot,1))
-        set(gca,'XTickLabel',tick_all)
-        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-        if reduce_yn
-            set(gca,'XLim',[0.5, size(RegioneTot,1)+0.5]);
-        else
-            set(gca,'XLim',[0.5, 1+0.5]);
-        end
-        set(gca,'XLim',[0.5, size(RegioneTot,1)+0.5]);
-        string_legend=sprintf('%s);',string_legend);
-        eval(string_legend)
-        
-        l=legend(b,datestr(time_num(end-4),'dd-mmm'),datestr(time_num(end-3),'dd-mmm'),datestr(time_num(end-2),'dd-mmm'),datestr(time_num(end-1),'dd-mmm'),datestr(time_num(end),'dd-mmm'));
-        set(l,'Location','northwest')
-        if ismac
-            font_size = 9;
-        else
-            font_size = 6.5;
-        end
-        
-        ax = gca;
-        set(ax, 'FontName', 'Verdana');
-        set(ax, 'FontSize', font_size);
-        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-        
-        %% overlap copyright info
-        datestr_now = datestr(now);
-        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
-            'String',{['Fonte: https://github.com/pcm-dpc']},...
-            'HorizontalAlignment','center',...
-            'FontSize',6,...
-            'FontName','Verdana',...
-            'FitBoxToText','off',...
-            'LineStyle','none',...
-            'Color',[0 0 0]);
-        print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_prog_perc_',char(Regione_lista(reg)) ,'_progressioneUltimoGiorno.PNG']);
-        close(gcf);
     catch
     end
+    
+    grid minor
+    ylabel('Incremento percentuale ultimi giorni', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+    set(gca,'XTick',1:size(RegioneTot,1))
+    set(gca,'XTickLabel',tick_all)
+    set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+    if reduce_yn
+        set(gca,'XLim',[0.5, size(RegioneTot,1)+0.5]);
+    else
+        set(gca,'XLim',[0.5, 1+0.5]);
+    end
+    set(gca,'XLim',[0.5, size(RegioneTot,1)+0.5]);
+    string_legend=sprintf('%s);',string_legend);
+    eval(string_legend)
+    
+    l=legend(b,datestr(time_num(end-4),'dd-mmm'),datestr(time_num(end-3),'dd-mmm'),datestr(time_num(end-2),'dd-mmm'),datestr(time_num(end-1),'dd-mmm'),datestr(time_num(end),'dd-mmm'));
+    set(l,'Location','northwest')
+    if ismac
+        font_size = 9;
+    else
+        font_size = 6.5;
+    end
+    
+    ax = gca;
+    set(ax, 'FontName', 'Verdana');
+    set(ax, 'FontSize', font_size);
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+    
+    %% overlap copyright info
+    datestr_now = datestr(now);
+    annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+        'String',{['Fonte: https://github.com/pcm-dpc']},...
+        'HorizontalAlignment','center',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off',...
+        'LineStyle','none',...
+        'Color',[0 0 0]);
+    print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_prog_perc_',char(Regione_lista(reg)) ,'_progressioneUltimoGiorno.PNG']);
+    close(gcf);
     
     
     
