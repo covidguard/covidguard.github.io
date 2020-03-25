@@ -38,7 +38,10 @@ rectangle('Position',[60 100 40 110000])
 rectangle('Position',[0 70 20 110000])
 %markers = {'+','o','*','.','x','v','>'};
 colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
-
+colors={};
+for k=1:size(regioni_tot,1)
+    colors{k}=Cmap.getColor(k, size(regioni_tot,1));
+end
 
 x_data_int=[];
 y_data_int=[];
@@ -84,10 +87,13 @@ for q=1:length(x)
     %plot(x(q)',y(q)',markers{l},'w')
     if q==12 || q==13
         lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(6:8)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
+    elseif q==20
+        lbl(q) = text(x(q) * 100,y(q), 'VDA','Color', colors{l},'fontsize',14,'FontWeight','bold');
     else
+        
         lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:3)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
         l=l+1;
-        if l==7
+        if l==size(colors,2)
             l=1;
         end
     end
