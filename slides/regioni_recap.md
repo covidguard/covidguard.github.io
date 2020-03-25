@@ -8,14 +8,14 @@ auto: false
 loop: true
 ---
 
-* ![Totale attualmente positivi](img/regioni/regioni_5_totale_attualmente_positivi.png)
-* ![Totale ospedalizzati](img/regioni/regioni_3_totale_ospedalizzati.png)
-* ![Ricoverati con sintomi](img/regioni/regioni_1_ricoverati_con_sintomi.png)
-* ![Terapia intensiva](img/regioni/regioni_2_terapia_intensiva.png)
-* ![Deceduti](img/regioni/regioni_7_deceduti.png)
-* ![Isolamento domiciliare](img/regioni/regioni_4_isolamento_domiciliare.png)
-* ![Guariti dimessi](img/regioni/regioni_6_dimessi_guariti.png)
-* ![Tamponi](img/regioni/regioni_9_tamponi.png)
-* ![Totale casi](img/regioni/regioni_8_totale_casi.png)
+* ![Totale attualmente positivi](img/regioni/regioni_5_totale_attualmente_positivi.PNG)
+* ![Totale ospedalizzati](img/regioni/regioni_3_totale_ospedalizzati.PNG)
+* ![Ricoverati con sintomi](img/regioni/regioni_1_ricoverati_con_sintomi.PNG)
+* ![Terapia intensiva](img/regioni/regioni_2_terapia_intensiva.PNG)
+* ![Deceduti](img/regioni/regioni_7_deceduti.PNG)
+* ![Isolamento domiciliare](img/regioni/regioni_4_isolamento_domiciliare.PNG)
+* ![Guariti dimessi](img/regioni/regioni_6_dimessi_guariti.PNG)
+* ![Tamponi](img/regioni/regioni_9_tamponi.PNG)
+* ![Totale casi](img/regioni/regioni_8_totale_casi.PNG)
 
 
