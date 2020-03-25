@@ -60,6 +60,9 @@ for i=1:size(file_scan,1)
 %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
 end
 dataReg = decodeJSON(json_oneRaw);
+dataReg.dataa = char(dataReg.data);
+dataReg.dataa(:,11)=' ';
+dataReg.data=cellstr(dataReg.dataa);
 regioni_tot = unique(dataReg.denominazione_regione);
 
 
@@ -67,7 +70,10 @@ regioni_tot = unique(dataReg.denominazione_regione);
 %% percorsi:
 data=struct;
 data.dataReg=dataReg;
-animated_gif_reg_Andrea(data);
+animated_gif_reg_Andrea(data,'A');
+animated_gif_reg_Andrea(data,'N');
+animated_gif_reg_Andrea(data,'C');
+animated_gif_reg_Andrea(data,'S');
 
 
 
@@ -92,6 +98,10 @@ for i=1:size(file_scan,1)
 end
 
 dataProv = decodeJSON(json_oneRaw);
+dataProv = decodeJSON(json_oneRaw);
+dataProv.dataa = char(dataProv.data);
+dataProv.dataa(:,11)=' ';
+dataProv.data=cellstr(dataProv.dataa);
 Regione_lista = unique(dataProv.denominazione_regione);
 
 
@@ -492,6 +502,115 @@ for type=1:2
 end
 
 
+
+%% analisi nazionale sulla correlazione casi-deceduti
+offset_dec = 7;
+offset_guar = 0;
+
+day_unique = unique(dataReg.data);
+data_casiPositivi=NaN(size(day_unique,1),1);
+data_deceduti=NaN(size(day_unique,1),1);
+data_guariti=NaN(size(day_unique,1),1);
+for k = 1: size(day_unique,1)
+    index = find(strcmp(dataReg.data,day_unique(k)));
+    data_casiPositivi(k)=sum(dataReg.totale_casi(index));
+    data_deceduti(k)=sum(dataReg.deceduti(index));
+    data_guariti(k)=sum(dataReg.dimessi_guariti(index));
+end
+time_num = fix(datenum(day_unique));
+regione = 'Italia';
+
+t=time_num(2:end);
+data_casiPositivi=data_casiPositivi(2:end)./data_casiPositivi(1:end-1)*100-100;
+data_deceduti=data_deceduti(2:end)./data_deceduti(1:end-1)*100-100;
+data_guariti=data_guariti(2:end)./data_guariti(1:end-1)*100-100;
+
+figure;
+id_f = gcf;
+    set(id_f, 'Name', 'Italia: correlazione temporale');
+%     title(sprintf([regione ': totale Italia: correlazione temporale\\fontsize{5}\n ']))
+    
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+[ax,a,b] = plotxx(t,data_casiPositivi,t,data_deceduti);
+
+% 
+% a=plot(t,data_casiPositivi,'-ob','LineWidth', 2.0,'color',[0 0.200000002980232 0.600000023841858]); set(a,'markersize',6,'MarkerFaceColor',[0 0.447058826684952 0.74117648601532],'Color',[0 0.447058826684952 0.74117648601532]);
+% b=plot(t-offset_dec,data_deceduti,'-ob','LineWidth', 2.0,'color',[1 0.200000002980232 0.600000023841858],'Parent',ax2); set(b,'markersize',6,'MarkerFaceColor',[0.850980401039124 0.325490206480026 0.0980392172932625],'Color',[0.850980401039124 0.325490206480026 0.0980392172932625]);
+
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+set(a,'marker','o','markersize',6,'MarkerFaceColor',[0 0.447058826684952 0.74117648601532],'Color',[0 0.447058826684952 0.74117648601532],'LineWidth', 2.0);
+set(b,'marker','o','markersize',6,'MarkerFaceColor',[0.850980401039124 0.325490206480026 0.0980392172932625],'Color',[0.850980401039124 0.325490206480026 0.0980392172932625],'LineWidth', 2.0);
+
+
+
+
+ax1 = ax(1);
+ax2 = ax(2);
+
+set(gcf,'CurrentAxes',ax1)
+ylabel('Incremento percentuale giornaliero', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+set(ax1, 'FontName', 'Verdana');
+set(ax1, 'FontSize', font_size);
+set(ax1,'xlim',([t(1),t(end)]));
+set(ax1,'ylim',([0,80]));
+ax1.XTick = time_num;
+datetick('x', 'dd mmm', 'keepticks') ;
+set(ax1,'XTickLabelRotation',53,'FontSize',6.5);
+
+set(gcf,'CurrentAxes',ax2)
+set(ax2, 'FontName', 'Verdana');
+set(ax2, 'FontSize', font_size);
+ax2.XTick = time_num;
+set(ax2,'ylim',([0,80]));
+datetick('x', 'dd mmm', 'keepticks') ;
+set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec]));
+set(ax2,'XTickLabelRotation',53,'FontSize',6.5);
+
+
+l=legend([a,b],'Casi totali','Deceduti');
+
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+ print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_correlazioneCasiDeceduti.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %% interpolazione gaussiana regionale
 
 %% GRAFICI SINGOLA REGIONE
@@ -539,11 +658,11 @@ for reg=9%1:size(regioni_tot,1)
             end
             
             if type==1
-%                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-%                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
-%                 
-                command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                
+%                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
+%                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
             elseif type==2
                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');

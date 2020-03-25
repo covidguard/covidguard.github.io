@@ -1,15 +1,48 @@
 % function animated_gif_reg(path_mat_file,gif_filename)
-function animated_gif_reg(data)
+function animated_gif_reg_Andrea(data,regions)
     
-    
-    
+% regions: 'A': all regions, 'N': north, 'C': center, 'S': south
+regioni_tot_geog = ['C';'S';'S';'S';'N';'N';'C';'N';'N';'C';'S';'N';'N';'N';'S';'S';'S';'C';'C';'N';'N'];
+
 % data=load(path_mat_file);
 filename = 'Andamento_Regioni.gif';
 
 regioni_tot = unique(data.dataReg.denominazione_regione);
+index_regioni=1:size(regioni_tot,1);
+try
+    if ~strcmp(regions,'A')
+        index_regioni = find(strcmp(cellstr(regioni_tot_geog),cellstr(regions)));
+        idx=[];
+        for id = 1:size(index_regioni,1)
+            idx=[idx;find(strcmp(data.dataReg.denominazione_regione,regioni_tot(index_regioni(id))))];
+        end
+        data.dataReg.stato = data.dataReg.stato(idx);
+        data.dataReg.codice_regione = data.dataReg.codice_regione(idx);
+        data.dataReg.denominazione_regione = data.dataReg.denominazione_regione(idx);
+        data.dataReg.lat = data.dataReg.lat(idx);
+        data.dataReg.long = data.dataReg.long(idx);
+        data.dataReg.ricoverati_con_sintomi = data.dataReg.ricoverati_con_sintomi(idx);
+        data.dataReg.terapia_intensiva = data.dataReg.terapia_intensiva(idx);
+        data.dataReg.totale_ospedalizzati = data.dataReg.totale_ospedalizzati(idx);
+        data.dataReg.isolamento_domiciliare = data.dataReg.isolamento_domiciliare(idx);
+        data.dataReg.totale_attualmente_positivi = data.dataReg.totale_attualmente_positivi(idx);
+        data.dataReg.nuovi_attualmente_positivi = data.dataReg.nuovi_attualmente_positivi(idx);
+        data.dataReg.dimessi_guariti = data.dataReg.dimessi_guariti(idx);
+        data.dataReg.deceduti=data.dataReg.deceduti(idx);
+        data.dataReg.totale_casi = data.dataReg.totale_casi(idx);
+        data.dataReg.tamponi = data.dataReg.tamponi(idx);
+        regioni_tot=regioni_tot(index_regioni);
+        filename = ['Andamento_Regioni_',regions,'.gif'];
+    end
+catch
+end
+
+
+
+
 y_data = zeros(length(data.dataReg.codice_regione)/size(regioni_tot,1)-6,size(regioni_tot,1));
 x_data = zeros(length(data.dataReg.codice_regione)/size(regioni_tot,1)-6,size(regioni_tot,1));
-for reg=1:size(regioni_tot,1)
+for reg=1:size(regioni_tot,1)  
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(data.dataReg.denominazione_regione,cellstr(regione)));
     y_data(:,reg) = data.dataReg.totale_casi(index(7:end));
@@ -49,7 +82,7 @@ y_data_int=[];
 tmp = x_data;
 tmp(tmp == 0) = 1;
 step = 0.2;
-for i = 1:size(x_data,2)-1
+for i = 1:size(x_data,2)
     [~, ~, ~, x_data_int(:,i)] = splinerMat(1:size(x_data,1),tmp(:,i),3,0,1:step:size(x_data,1));
     [~, ~, ~, y_data_int(:,i)] = splinerMat(1:size(x_data,1),y_data(:,i),4,0,1:step:size(x_data,1));
 end
@@ -83,21 +116,40 @@ y = y_data(1,:);
 clear lbl;
 hdate = text(-8, 1.5, datestr(days(1), 'dd mmm'), 'Color', [0.5 0.5 0.5],'fontsize',20,'FontWeight','bold');
 hold on;
+fontsize=10;
 for q=1:length(x)
     %plot(x(q)',y(q)',markers{l},'w')
-    if q==12 || q==13
-        lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(6:8)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
-    elseif q==20
-        lbl(q) = text(x(q) * 100,y(q), 'VDA','Color', colors{l},'fontsize',14,'FontWeight','bold');
-    else
-        
-        lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:3)),'Color', colors{l},'fontsize',14,'FontWeight','bold');
-        l=l+1;
-        if l==size(colors,2)
-            l=1;
+    try
+        if ~strcmp(regions,'A')
+            lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(:))','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+        else
+            if strcmp('P.A. Bolzano',regioni_tot{q})
+                lbl(q) = text(x(q) * 100,y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            elseif strcmp('P.A. Trento',regioni_tot{q})
+                lbl(q) = text(x(q) * 100,y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            elseif strcmp('Valle d Aosta',regioni_tot{q})
+                lbl(q) = text(x(q) * 100,y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            else
+                lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            end
+        end
+    catch
+        if strcmp('P.A. Bolzano',regioni_tot{q})
+            lbl(q) = text(x(q) * 100,y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+        elseif strcmp('P.A. Trento',regioni_tot{q})
+            lbl(q) = text(x(q) * 100,y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+        elseif strcmp('Valle d Aosta',regioni_tot{q})
+            lbl(q) = text(x(q) * 100,y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+        else
+            lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
         end
     end
+    l=l+1;
+    if l==size(colors,2)
+        l=1;
+    end
 end
+
 grid on
 text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
 text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
