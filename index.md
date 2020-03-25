@@ -21,7 +21,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
-    <li> <a href="#stima-del-numero-totale-di-infetti">Lombardia: Stima Positivi Cumulata</a> </li> 
+    <li> <a href="#stima-del-numero-cumulato-di-positivi">Lombardia: Stima Positivi Cumulata</a> </li> 
     <li> <a href="#stima-del-picco-di-attualmente-positivi">Lombardia: Stima Positivi</a> </li> 
     <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati">Regioni Cumulati</a> </li> 
