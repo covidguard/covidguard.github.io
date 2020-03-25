@@ -21,7 +21,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
-    <li> <a href="#stima-del-numero-totale-di-infetti">Lombardia: Stima Infetti</a> </li> 
+    <li> <a href="#stima-del-numero-totale-di-infetti">Lombardia: Stima Positivi Cumulata</a> </li> 
     <li> <a href="#stima-del-picco-di-attualmente-positivi">Lombardia: Stima Positivi</a> </li> 
     <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati">Regioni Cumulati</a> </li> 
@@ -37,9 +37,9 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 
 ## LOMBARDIA
 
-### Stima del numero totale di infetti
+### Stima del numero cumulato di positivi
 L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
-Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero totale di infetti della regione Lombardia.
+Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero cumulato di positivi della regione Lombardia.
 Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
 
