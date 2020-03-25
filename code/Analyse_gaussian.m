@@ -798,7 +798,7 @@ loop.title={'Ricoverati con sintomi';...
     };
 
 
-for type= 1: size(loop.var,1)
+for type= 1: 1
     
     for kk=2
         if kk==1
@@ -851,14 +851,18 @@ for type= 1: size(loop.var,1)
         
         for ll=1:size(idx_sort,1)
             lab=upper(char(regioni.name(idx_sort(ll))));
+            llab=6;
+            if length(lab)<6
+                llab=length(lab);
+            end
             if ll/2==fix(ll/2)
                 
                 
                 text(time_num(end)+((time_num(end)-time_num(1)))*0.01, sort_x(ll),...
-                    ['------> ',lab(1:6)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]);
+                    ['------> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]);
             else
                 text(time_num(end)+((time_num(end)-time_num(1)))*0.01, sort_x(ll),...
-                    ['-> ',lab(1:6)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]) ;
+                    ['-> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]) ;
             end
         end
         
@@ -878,6 +882,7 @@ for type= 1: size(loop.var,1)
             'Color',[0 0 0]);
 
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_confrontoPesatoAndamentoCasiTotali.PNG']);
+        close(gcf);
     end
 end
 
@@ -1315,6 +1320,7 @@ for reg = 1:size(Regione_lista)
         end
         close(gcf);
     catch
+        keyboard
     end
     
     
