@@ -21,7 +21,9 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
-    <li> <a href="#confronto-regioni">Confronto Regioni</a> </li> 
+    <li> <a href="#stima-del-numero-totale-di-infetti">Lombardia: Stima Infetti</a> </li> 
+    <li> <a href="#stima-del-picco-di-attualmente-positivi">Lombardia: Stima Positivi</a> </li> 
+    <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati">Regioni Cumulati</a> </li> 
     <li> <a href="#progressione-giornaliera">Regioni Giornalieri</a> </li> 
     <li> <a href="#dati-di-progressione-percentuale">Province Progressione</a> </li> 
@@ -54,7 +56,7 @@ Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d
 
 ![Andamento regioni](/code/Andamento_Regioni.gif)
 
-Nota: nella parte bassa del grafico il numero dei casi è troppo limitato percià la sua variabilità potrebbe essere maggiore.
+Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perciò la sua variabilità potrebbe essere maggiore.
 
 ### Confronto Regioni
 Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri osservati:
