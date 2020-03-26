@@ -53,6 +53,12 @@ Nell'interpretare questo grafico, ricordiamoci sempre che "non c'√® nulla di pi√
 
 ![Picco Italia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Italia_cumulati.PNG)
 
+
+### Casi vs Decessi
+Tra i primi sintomi (tampone positivo) e il decesso trascorrono circa 7-8 giorni.
+
+![Casi Vs Decessi](/slides/img/regioni/ita_correlazioneCasiDeceduti.PNG)
+
 ## LOMBARDIA
 
 ### Stima del numero cumulato di positivi
