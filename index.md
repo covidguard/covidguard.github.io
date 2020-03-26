@@ -21,8 +21,10 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
-    <li> <a href="#stima-del-numero-cumulato-di-positivi">Lombardia: Stima Positivi Cumulata</a> </li> 
-    <li> <a href="#stima-del-picco-di-attualmente-positivi">Lombardia: Stima Positivi</a> </li> 
+    <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Italia: Stima Positivi Cumulata</a> </li> 
+    <li> <a href="#stima-del-picco-di-attualmente-positivi-1">Italia: Stima Positivi</a> </li> 
+    <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Lombardia: Stima Positivi Cumulata</a> </li> 
+    <li> <a href="#stima-del-picco-di-attualmente-positivi-1">Lombardia: Stima Positivi</a> </li> 
     <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati">Regioni Cumulati</a> </li> 
     <li> <a href="#progressione-giornaliera">Regioni Giornalieri</a> </li> 
@@ -34,6 +36,22 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 **Attenzione**: per visualizzare correttamente il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli ultimi standard CSS3 potrebbero non funzionare correttamente.
 <hr>
+
+## ITALIA
+
+### Stima del numero cumulato di positivi
+L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
+Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero cumulato di positivi d'Italia.
+Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
+Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
+
+![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
+
+### Stima del picco di attualmente positivi
+Il grafico mostra 3 funzioni chi-quadro (due giorni fa, ieri e odierna) fittati sul numero di attualmente positivi d'Italia. Per il chi-quadro odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
+Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
+
+![Picco Italia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Italia_cumulati.PNG)
 
 ## LOMBARDIA
 
