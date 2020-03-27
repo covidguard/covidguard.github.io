@@ -2,7 +2,7 @@
 layout: iframe
 title: Confronto Regioni (normalizzato)
 parent: COVID-19 Italia
-nav_order: 1
+nav_order: 2
 has_toc: true
 auto: false
 loop: true

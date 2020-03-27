@@ -28,6 +28,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati">Regioni Cumulati</a> </li> 
     <li> <a href="#progressione-giornaliera">Regioni Giornalieri</a> </li> 
+    <li> <a href="#tamponi">Regioni Tamponi</a> </li> 
     <li> <a href="#dati-di-progressione-percentuale">Province Progressione</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati-1">Province Cumulati</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati-normalizzati-per-popolazione">Province Normalizzati</a> </li> 
@@ -119,6 +120,12 @@ style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"><
 <iframe class="slideshow-iframe" src="/slides/regioni_day.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
+
+### Tamponi
+Numero di tamponi vs numero risultati positivi
+
+<iframe class="slideshow-iframe" src="/slides/regioni_tamponi.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 
 ## ITALIA Province
