@@ -123,6 +123,95 @@ end
 
 
 
+
+
+%% calcolo lombardia senza bergamo, brescia, milano, 
+% 
+% lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
+% idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'MI') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO'));
+% 
+% idx_lombResto = setdiff(lombardia_idx,idx_BBL);
+% 
+% listaRegioniTot = unique(dataProv.denominazione_regione);
+% 
+% casiTotaliReg=[];
+% for k = 1:size(listaRegioniTot,1)
+%     idx = find(strcmp(dataProv.denominazione_regione,listaRegioniTot(k,:)));
+%     casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx))];
+% end
+% 
+% listaRegioniTot = [listaRegioniTot;'BG-BR-MI-CR-LO'];
+% listaRegioniTot = [listaRegioniTot;'Lombardia - BG-BR-MI-CR-LO'];
+% casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx_BBL))];
+% casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx_lombResto))];
+%                    
+% 
+% [x,idx]=sort(casiTotaliReg,'descend');
+% tick_all=listaRegioniTot(idx);
+%     
+%     figure;
+%     id_f = gcf;
+%     title(sprintf('Totale Casi\\fontsize{5}\n'));
+%     set(gcf,'NumberTitle','Off');
+%     set(gcf,'Position',[26 79 967 603]);
+%     grid on
+%     hold on
+%     b=bar(x);
+%     for i1=1:numel(x)
+%             text(i1,x(i1),num2str(x(i1),'%.0f'),...
+%                 'HorizontalAlignment','center',...
+%                 'VerticalAlignment','bottom','fontsize',7)
+%     end
+%     
+%     hold on; grid minor
+%     set(gca,'XTick',1:size(listaRegioniTot,1))
+%     set(gca,'XTickLabel',tick_all)
+%     set(gca,'XLim',[0.5,size(listaRegioniTot,1)+0.5])
+%     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+%     ylabel('Totale Casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+%     if ismac
+%         font_size = 9;
+%     else
+%         font_size = 6.5;
+%     end
+%     
+%     ax = gca;
+%     set(ax, 'FontName', 'Verdana');
+%     set(ax, 'FontSize', font_size);
+%     
+%     ylimit=ylim;
+%     if ylimit(2)<20
+%         ylim([0 20]);
+%     end
+%     
+%     ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+%     
+%     
+%     
+%     %% overlap copyright info
+%     datestr_now = datestr(now);
+%     annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+%         'String',{['Fonte: https://github.com/pcm-dpc']},...
+%         'HorizontalAlignment','center',...
+%         'FontSize',6,...
+%         'FontName','Verdana',...
+%         'FitBoxToText','off',...
+%         'LineStyle','none',...
+%         'Color',[0 0 0]);
+%     if type==1
+%         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/regioni_deced_su_totali.PNG']);
+%     else
+%         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/regioni_deced_senzacura.PNG']);
+%     end
+%     
+%     close(gcf);                          
+%                           
+%                           
+%                           
+
+
+
+
 %% GRAFICI SINGOLA REGIONE
 mediamobile_yn=0;
 for reg=1:size(regioni_tot,1)
@@ -1034,7 +1123,95 @@ end
 
 
 
-
+%% rapporto deceduti/casitotali
+for type=1:2
+    if type==1
+        [x,idx]=sort(regioni_conf.deceduti./regioni_conf.totale_casi*100,'descend');
+    else
+        [x,idx]=sort((regioni_conf.deceduti./regioni_conf.totale_casi.*regioni_conf.totale_casi./sum(regioni_conf.totale_casi)*100)./(regioni_conf.deceduti./regioni_conf.totale_casi*100)*100,'descend');
+    end
+    
+    
+    tick_all=regioni_tot(idx);
+    
+    idx1=[];
+    for ll=1:length(tick_all)
+        idx1(ll) = find(strcmp(pop.popolazioneRegioniNome, tick_all(ll)));
+    end
+    
+    
+    figure;
+    id_f = gcf;
+    if type==1
+        title(sprintf(['Rapporto deceduti/totale casi (al ', datestr(time_num(end),'dd/mm'), ') \\fontsize{5}\n ']))
+    else
+        title(sprintf(['% deceduti senza cure - stima! (al ', datestr(time_num(end),'dd/mm'), ') \\fontsize{5}\n ']))
+    end
+    
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    b=bar(x);
+    for i1=1:numel(x)
+        if pesata==1
+            text(i1,x(i1),num2str(x(i1),'%.2f'),...
+                'HorizontalAlignment','center',...
+                'VerticalAlignment','bottom','fontsize',7)
+        else
+            text(i1,x(i1),num2str(x(i1),'%.0f'),...
+                'HorizontalAlignment','center',...
+                'VerticalAlignment','bottom','fontsize',7)
+        end
+    end
+    
+    hold on; grid minor
+    set(gca,'XTick',1:size(regioni_tot,1))
+    set(gca,'XTickLabel',tick_all)
+    set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
+    set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+    if type==1
+    ylabel('Percentuale deceduti/casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+    else
+     ylabel('Percentuale deceduti senza cure appropriate - stima!', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);    
+    end
+    if ismac
+        font_size = 9;
+    else
+        font_size = 6.5;
+    end
+    
+    ax = gca;
+    set(ax, 'FontName', 'Verdana');
+    set(ax, 'FontSize', font_size);
+    
+    ylimit=ylim;
+    if ylimit(2)<20
+        ylim([0 20]);
+    end
+    
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+    
+    
+    
+    %% overlap copyright info
+    datestr_now = datestr(now);
+    annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+        'String',{['Fonte: https://github.com/pcm-dpc']},...
+        'HorizontalAlignment','center',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off',...
+        'LineStyle','none',...
+        'Color',[0 0 0]);
+    if type==1
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/regioni_deced_su_totali.PNG']);
+    else
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/regioni_deced_senzacura.PNG']);
+    end
+    
+    close(gcf);
+end
 
 
 
