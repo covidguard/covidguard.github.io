@@ -68,7 +68,7 @@ dataReg = decodeJSON(json_oneRaw);
 regioni_tot = unique(dataReg.denominazione_regione);
 mediamobile_yn=0;
 %%
-for reg=[]%1:size(regioni_tot,1)
+for reg=1:size(regioni_tot,1)
     try
         regione = char(regioni_tot(reg,1));
         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
