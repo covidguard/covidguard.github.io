@@ -24,3 +24,5 @@ code/chi_estim_conf.exe
 *.exe
 
 code/testIn_gauss_fit.txt
+
+code/testIn_gauss_sigm_fit.txt
