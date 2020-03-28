@@ -42,7 +42,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 ## ITALIA
 
 ### Diffusione spazio-temporale
-Mappa che mostra la diffusione nel tempo del virus nelle province italiane.
+Mappa che mostra la diffusione nel tempo del virus nelle varie province italiane.
 ![Mappa Italia](/code/mappaProv.gif)
 
 ### Stima del numero cumulato di positivi
@@ -118,6 +118,10 @@ style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"><
 <iframe class="slideshow-iframe" src="/slides/regioni_cum.html" 
 style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
+### Dati giornalieri cumulati - rappresentazione alternativa
+
+<iframe class="slideshow-iframe" src="/slides/regioni_cum_bars.html" 
+style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 
 ### Progressione Giornaliera
