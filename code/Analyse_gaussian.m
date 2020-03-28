@@ -220,6 +220,144 @@ for reg=1:size(regioni_tot,1)
         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
         time_num = fix(datenum(dataReg.data(index)));
         
+       
+        %% bar stacked: totale casi
+        datetickFormat = 'dd mmm';
+        figure;
+        id_f = gcf;
+        set(id_f, 'Name', [regione ': dati cumulati']);
+        if mediamobile_yn==0
+            title(sprintf([regione ': dati cumulati\\fontsize{5}\n ']))
+        else
+            title(sprintf([regione ': dati cumulati (media mobile)\\fontsize{5}\n ']))
+        end
+        set(gcf,'NumberTitle','Off');
+        set(gcf,'Position',[26 79 967 603]);
+        grid minor
+        hold on
+        
+        bbb=[dataReg.deceduti(index,1)';dataReg.terapia_intensiva(index,1)';dataReg.totale_ospedalizzati(index,1)'-dataReg.terapia_intensiva(index,1)';dataReg.isolamento_domiciliare(index,1)';dataReg.dimessi_guariti(index,1)'];
+        
+        bbbar = bar(bbb','stacked'); hold on        
+        set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
+        set(bbbar(2),'FaceColor',[1 0 0]);
+        set(bbbar(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
+        set(bbbar(4),'FaceColor',[1 1 0.400000005960464]);
+        set(bbbar(5),'FaceColor',[0 0.800000011920929 0.200000002980232]);
+        
+        if ismac
+            font_size = 9;
+        else
+            font_size = 6.5;
+        end
+        
+        
+        set(gca,'XTick',1:size(time_num,1));
+        set(gca,'XTickLabel',datestr(time_num,'dd mmm'));
+        set(gca,'XLim',[0.5,size(time_num,1)+0.5]);
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax=gca;
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        
+        ax = gca;
+        set(ax, 'FontName', 'Verdana');
+        set(ax, 'FontSize', font_size);
+        
+        l=legend([bbbar(5), bbbar(4),bbbar(3),bbbar(2),bbbar(1)],'Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
+        set(l,'Location','northwest')
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+         
+        %%
+        % %     cd([WORKroot,'/assets/img/regioni']);
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_cumulati.PNG']);
+        close(gcf);
+        
+        
+        
+        
+        
+        %% bar stacked: giornalieri
+        datetickFormat = 'dd mmm';
+        figure;
+        id_f = gcf;
+        set(id_f, 'Name', [regione ': dati giornalieri']);
+        if mediamobile_yn==0
+            title(sprintf([regione ': dati giornalieri\\fontsize{5}\n ']))
+        else
+            title(sprintf([regione ': dati giornalieri (media mobile)\\fontsize{5}\n ']))
+        end
+        set(gcf,'NumberTitle','Off');
+        set(gcf,'Position',[26 79 967 603]);
+        grid minor
+        hold on
+        
+        bbb=[diff(dataReg.deceduti(index,1))';diff(dataReg.terapia_intensiva(index,1))';diff(dataReg.totale_ospedalizzati(index,1))'-diff(dataReg.terapia_intensiva(index,1))';diff(dataReg.isolamento_domiciliare(index,1))';diff(dataReg.dimessi_guariti(index,1))'];
+        
+        bbbar = bar(bbb','stacked'); hold on        
+        set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
+        set(bbbar(2),'FaceColor',[1 0 0]);
+        set(bbbar(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
+        set(bbbar(4),'FaceColor',[1 1 0.400000005960464]);
+        set(bbbar(5),'FaceColor',[0 0.800000011920929 0.200000002980232]);
+        
+        if ismac
+            font_size = 9;
+        else
+            font_size = 6.5;
+        end
+        
+        
+        set(gca,'XTick',1:size(time_num(2:end),1));
+        set(gca,'XTickLabel',datestr(time_num(2:end),'dd mmm'));
+        set(gca,'XLim',[0.5,size(time_num(2:end),1)+0.5]);
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax=gca;
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        
+        set(ax, 'FontName', 'Verdana');
+        set(ax, 'FontSize', font_size);
+       
+        l=legend([bbbar(5), bbbar(4),bbbar(3),bbbar(2),bbbar(1)],'Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
+        set(l,'Location','northwest')
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+         
+        %%
+        % %     cd([WORKroot,'/assets/img/regioni']);
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_giornalieri.PNG']);
+        close(gcf);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         %% figura cumulata
         datetickFormat = 'dd mmm';
         figure;
@@ -233,7 +371,8 @@ for reg=1:size(regioni_tot,1)
         set(gcf,'NumberTitle','Off');
         set(gcf,'Position',[26 79 967 603]);
         grid on
-        hold on
+        hold on      
+        
         if mediamobile_yn==0
             try
                 a=plot(time_num,dataReg.ricoverati_con_sintomi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
@@ -280,6 +419,11 @@ for reg=1:size(regioni_tot,1)
         set(code_axe, 'FontSize', font_size);
         ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
         ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+        
+        
+        
+        
+        
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         ax.XTick = time_num;
         datetick('x', datetickFormat, 'keepticks') ;
