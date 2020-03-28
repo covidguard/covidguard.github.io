@@ -118,11 +118,6 @@ style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"><
 <iframe class="slideshow-iframe" src="/slides/regioni_cum.html" 
 style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-### Dati giornalieri cumulati - rappresentazione alternativa
-
-<iframe class="slideshow-iframe" src="/slides/regioni_cum_bars.html" 
-style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
-
 
 ### Progressione Giornaliera
 
