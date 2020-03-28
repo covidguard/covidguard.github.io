@@ -2,7 +2,7 @@
 layout: iframe
 title: Province Giornalieri
 parent: COVID-19 Italia
-nav_order: 9
+nav_order: 10
 has_toc: true
 auto: false
 loop: true
