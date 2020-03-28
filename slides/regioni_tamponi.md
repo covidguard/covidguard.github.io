@@ -2,7 +2,7 @@
 layout: iframe
 title: Regioni Tamponi
 parent: COVID-19 Italia
-nav_order: 5
+nav_order: 6
 has_toc: true
 auto: false
 loop: true
