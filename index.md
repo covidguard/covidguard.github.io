@@ -21,7 +21,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
-    <li> <a href="#diffusione spazio-temporale">Italia: Diffusione spazio-temporale</a> </li> 
+    <li> <a href="#diffusione-spazio-temporale">Italia: Diffusione spazio-temporale</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Italia: Stima Positivi Cumulata</a> </li> 
     <li> <a href="#stima-del-picco-di-attualmente-positivi-1">Italia: Stima Positivi</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Lombardia: Stima Positivi Cumulata</a> </li> 
