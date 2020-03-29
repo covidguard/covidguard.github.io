@@ -311,124 +311,124 @@ animated_gif_reg_Andrea(data,'S');
 % close(gcf);
 
 %% logistica per provincia
-
-lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
-[listaProv, id] = unique(dataProv.denominazione_provincia(lombardia_idx));
-listaProv=setdiff(listaProv,'In fase di definizione/aggiornamento');
-
-dateT= unique(dataProv.data);
-
-
-a=[]; b=[]; x=[]; sigTot=cellstr('');
-
-datetickFormat = 'dd mmm';
-figure;
-id_f = gcf;
-
-set(id_f, 'Name', ['Lombardia: totale casi']);
-title(sprintf(['Lombardia: totale casi\\fontsize{5}\n ']))
-
-set(gcf,'NumberTitle','Off');
-set(gcf,'Position',[26 79 967 603]);
-grid on
-hold on
-
-
-for pv = 1:size(listaProv,1)    
-    provName = listaProv(pv);
-    sigla = find(strcmp(dataProv.denominazione_provincia,provName));provSigla=dataProv.sigla_provincia(sigla(1));
-    idx_prov = find(strcmp(dataProv.sigla_provincia,provSigla));
-   
-    dataset = dataProv.totale_casi(idx_prov);    
-    index_pop = find(strcmp(pop.sigla,provSigla));
-    
-    
-    
-    fout=fopen('testIn_gauss.txt','wt');
-    for i=1:length(data)
-        fprintf(fout,'%d;%.2f\n',fix(datenum(dateT(i))),dataset(i)./pop.number(index_pop)*1000);
-    end
-    command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-    [t,a0,a1,a2,a3,a4]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-    
-    b(pv)=plot(t,a1,'-b','LineWidth', 2.0);
-    a(pv)=plot(datenum(dateT),dataset./pop.number(index_pop)*1000,'.b','markersize',14);
-    drawnow
-    
-    x(pv)=a1(end); sigTot(pv)=cellstr(provSigla);
-end
-
-for pv = 1:size(listaProv,1)   
-    set(a(pv),'color',Cmap.getColor(pv, size(listaProv,1)),'markersize',8);
-    set(b(pv),'color',Cmap.getColor(pv, size(listaProv,1)));
-end
-
-
-
-        
-
-last_value= x(:);
-[sort_x, idx_sort] = sort(last_value,'descend');
-
-for ll=1:size(idx_sort,1)
-    lab=upper(char(sigTot(idx_sort(ll))));
-    llab=6;
-    if length(lab)<6
-        llab=length(lab);
-    end
-    if ll/2==fix(ll/2)
-
-        text(t(end)+((t(end)-t(1)))*0.01, sort_x(ll),...
-            ['------> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]);
-    else
-        text(t(end)+((t(end)-t(1)))*0.01, sort_x(ll),...
-            ['-> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]) ;
-    end
-end
-
-
-
-
-if ismac
-    font_size = 9;
-else
-    font_size = 6.5;
-end
-
-ax = gca;
-code_axe = get(id_f, 'CurrentAxes');
-set(code_axe, 'FontName', 'Verdana');
-set(code_axe, 'FontSize', font_size);
-ylimi=get(gca,'ylim');
-set(gca,'ylim',([0,ylimi(2)]));
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-ylabel('Numero totale casi / 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-
-datetick('x', datetickFormat, 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-ax.FontSize = font_size;
-
-
-% set(l,'Location','northwest')
-% overlap copyright info
-datestr_now = datestr(now);
-annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
-    'String',{['Fonte: https://github.com/pcm-dpc']},...
-    'HorizontalAlignment','center',...
-    'FontSize',6,...
-    'FontName','Verdana',...
-    'FitBoxToText','off',...
-    'LineStyle','none',...
-    'Color',[0 0 0]);
-
-%%
-% %     cd([WORKroot,'/assets/img/regioni']);
-
-print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoLombardia_2fasce_cumulati.PNG']);
-close(gcf);
-    
-    
-    
+% 
+% lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
+% [listaProv, id] = unique(dataProv.denominazione_provincia(lombardia_idx));
+% listaProv=setdiff(listaProv,'In fase di definizione/aggiornamento');
+% 
+% dateT= unique(dataProv.data);
+% 
+% 
+% a=[]; b=[]; x=[]; sigTot=cellstr('');
+% 
+% datetickFormat = 'dd mmm';
+% figure;
+% id_f = gcf;
+% 
+% set(id_f, 'Name', ['Lombardia: totale casi']);
+% title(sprintf(['Lombardia: totale casi\\fontsize{5}\n ']))
+% 
+% set(gcf,'NumberTitle','Off');
+% set(gcf,'Position',[26 79 967 603]);
+% grid on
+% hold on
+% 
+% 
+% for pv = 1:size(listaProv,1)    
+%     provName = listaProv(pv);
+%     sigla = find(strcmp(dataProv.denominazione_provincia,provName));provSigla=dataProv.sigla_provincia(sigla(1));
+%     idx_prov = find(strcmp(dataProv.sigla_provincia,provSigla));
+%    
+%     dataset = dataProv.totale_casi(idx_prov);    
+%     index_pop = find(strcmp(pop.sigla,provSigla));
+%     
+%     
+%     
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:length(data)
+%         fprintf(fout,'%d;%.2f\n',fix(datenum(dateT(i))),dataset(i)./pop.number(index_pop)*1000);
+%     end
+%     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%     [t,a0,a1,a2,a3,a4]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%     
+%     b(pv)=plot(t,a1,'-b','LineWidth', 2.0);
+%     a(pv)=plot(datenum(dateT),dataset./pop.number(index_pop)*1000,'.b','markersize',14);
+%     drawnow
+%     
+%     x(pv)=a1(end); sigTot(pv)=cellstr(provSigla);
+% end
+% 
+% for pv = 1:size(listaProv,1)   
+%     set(a(pv),'color',Cmap.getColor(pv, size(listaProv,1)),'markersize',8);
+%     set(b(pv),'color',Cmap.getColor(pv, size(listaProv,1)));
+% end
+% 
+% 
+% 
+%         
+% 
+% last_value= x(:);
+% [sort_x, idx_sort] = sort(last_value,'descend');
+% 
+% for ll=1:size(idx_sort,1)
+%     lab=upper(char(sigTot(idx_sort(ll))));
+%     llab=6;
+%     if length(lab)<6
+%         llab=length(lab);
+%     end
+%     if ll/2==fix(ll/2)
+% 
+%         text(t(end)+((t(end)-t(1)))*0.01, sort_x(ll),...
+%             ['------> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]);
+%     else
+%         text(t(end)+((t(end)-t(1)))*0.01, sort_x(ll),...
+%             ['-> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]) ;
+%     end
+% end
+% 
+% 
+% 
+% 
+% if ismac
+%     font_size = 9;
+% else
+%     font_size = 6.5;
+% end
+% 
+% ax = gca;
+% code_axe = get(id_f, 'CurrentAxes');
+% set(code_axe, 'FontName', 'Verdana');
+% set(code_axe, 'FontSize', font_size);
+% ylimi=get(gca,'ylim');
+% set(gca,'ylim',([0,ylimi(2)]));
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+% ylabel('Numero totale casi / 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+% 
+% datetick('x', datetickFormat, 'keepticks') ;
+% set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+% ax.FontSize = font_size;
+% 
+% 
+% % set(l,'Location','northwest')
+% % overlap copyright info
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+%     'String',{['Fonte: https://github.com/pcm-dpc']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% %%
+% % %     cd([WORKroot,'/assets/img/regioni']);
+% 
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoLombardia_2fasce_cumulati.PNG']);
+% close(gcf);
+%     
+%     
+%     
     
     
     
