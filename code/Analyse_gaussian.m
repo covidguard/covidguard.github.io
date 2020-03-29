@@ -1772,8 +1772,13 @@ end
 
 
 %% spline sui casi provinciali giornalieri
+dataReg=dataProv;
+
 [ListaProvince]= unique(dataReg.denominazione_provincia);
 ListaProvince = setdiff(ListaProvince,'In fase di definizione/aggiornamento');
+
+tabellone=struct;
+
 
 fout=fopen('province_daily_spline.csv','wt');
 for p =1 : size(ListaProvince,1)
@@ -1792,15 +1797,49 @@ for p =1 : size(ListaProvince,1)
    end
    
    
-   figure
-   plot(datenum(dataTime_diff),dataProv_diff,'-b');
-   hold on
-   plot(datenum(dataTime_diff),dataProv_diff_int,'.-r');
+%    figure
+%    plot(datenum(dataTime_diff),dataProv_diff,'-b');
+%    hold on
+%    plot(datenum(dataTime_diff),dataProv_diff_int,'.-r');
+%    
    
+   
+   tabellone.casi(:,p)=dataProv_diff_int;
+   tabellone.coord(p,:)=[dataReg.lat(idx(1)) dataReg.long(idx(1))];
+   idx_prov = find(strcmp(pop.sigla, dataReg.sigla_provincia(idx(k))));
+   tabellone.popolazione(p,1)=pop.number(idx_prov);
    
 end
 
 fclose(fout);
+% 
+% fh=figure;
+% hold on
+% filename='provascatter.gif';
+% for k=1:size(tabellone.casi,1)
+%    
+%     
+%     kk=scatter(tabellone.coord(:,2), tabellone.coord(:,1),tabellone.casi(k,:)+1,'filled','MarkerFaceColor',[1 0 0]);
+% %     kk=scatter(tabellone.coord(:,2), tabellone.coord(:,1),tabellone.casi(k,:)./tabellone.popolazione'*1000000,'filled','MarkerFaceColor',[1 0 0]);
+%     frame = getframe(fh);
+%     im_frame = frame2im(frame);
+%     
+%     drawnow
+%     [imind,cm] = rgb2ind(im_frame,256);
+%     %     imind = imind(1:1250, 450:1700); % cut the bottom
+%     % Write to the GIF File
+%     if k == 1
+%         imwrite(imind,cm,filename,'gif', 'Loopcount',1,'DelayTime',0.40);
+%     else
+%         imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',0.40);
+%     end
+%     delete(kk)
+% end
+
+
+
+
+
 
 
 
@@ -1810,7 +1849,7 @@ fclose(fout);
 
 %% MAPPE
 mappeprovincia;
-
+mappeprovincia_var;
 
 
 

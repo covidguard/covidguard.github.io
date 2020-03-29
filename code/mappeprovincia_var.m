@@ -1,16 +1,18 @@
 if ismac
-    folder_maps = '../slides/img/mappe800x1040';
+%     folder_maps = '../slides/img/mappe800x1040';
 else
-    folder_maps = 'C:\Temp\Repo\covidguard\slides\img\mappe800x1040';
+
+    folder_maps = 'C:\Temp\Repo\covidguard\slides\img\mappe_var';
 end
-mapsList = dir(sprintf('%s/prov*n.png', folder_maps));
+
+mapsList = dir(sprintf('%s/prov*.png', folder_maps));
 
 
-filename = 'mappaProv.gif';
+filename = 'mappaProv_var.gif';
 fh = figure;
 fh.Units = 'pixels';
-lgn = imread(fullfile(folder_maps, 'legenda.png'));
 
+lgn = imread(fullfile(folder_maps, 'legenda_var.png'));
 figure(fh); clf;
 i = 1;
 imag = imread(sprintf('%s/%s', folder_maps, mapsList(i).name));
@@ -57,7 +59,7 @@ c = annotation(gcf,'textbox',...
     'FontName','Helvetica',...
     'FitBoxToText','off');
 
-delete(a)
+% delete(a)
 a = annotation(gcf,'textbox',...
     [0.715 0.795 0.2 0.1],...
     'String', sprintf('Casi totali /\n100000 abitanti'), ...
