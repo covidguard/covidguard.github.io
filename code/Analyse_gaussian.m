@@ -67,18 +67,6 @@ regioni_tot = unique(dataReg.denominazione_regione);
 
 
 
-%% percorsi:
-data=struct;
-data.dataReg=dataReg;
-animated_gif_reg_Andrea(data,'A');
-animated_gif_reg_Andrea(data,'N');
-animated_gif_reg_Andrea(data,'C');
-animated_gif_reg_Andrea(data,'S');
-
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Province
@@ -122,7 +110,13 @@ for kk = 1:size(Regione_lista,1)
 end
 
 
-
+%% percorsi:
+data=struct;
+data.dataReg=dataReg;
+animated_gif_reg_Andrea(data,'A');
+animated_gif_reg_Andrea(data,'N');
+animated_gif_reg_Andrea(data,'C');
+animated_gif_reg_Andrea(data,'S');
 
 
 %% calcolo lombardia senza bergamo, brescia, milano, 
@@ -1772,6 +1766,43 @@ for reg = 1:size(Regione_lista)
     
     
 end
+
+
+
+
+
+%% spline sui casi provinciali giornalieri
+[ListaProvince]= unique(dataReg.denominazione_provincia);
+ListaProvince = setdiff(ListaProvince,'In fase di definizione/aggiornamento');
+
+fout=fopen('province_daily_spline.csv','wt');
+for p =1 : size(ListaProvince,1)
+   idx = find(strcmp(dataReg.denominazione_provincia,ListaProvince(p)));
+   dateTime = dataReg.data(idx);
+   dataProv = dataReg.totale_casi(idx);
+   
+   dataTime_diff = dateTime(2:end);
+   dataProv_diff = diff(dataProv);
+    
+   [~, ~, ~, dataProv_diff_int] = splinerMat(1:size(dataTime_diff,1),dataProv_diff,3,0,1:size(dataTime_diff,1));
+   dataProv_diff_int(dataProv_diff_int<0)=0;
+   
+   for k = 1:size(dataTime_diff,1)
+      fprintf(fout,'%s;%s;%.2f\n', char(dataTime_diff(k)), char(dataReg.sigla_provincia(idx(k))), dataProv_diff_int(k));
+   end
+   
+   
+   figure
+   plot(datenum(dataTime_diff),dataProv_diff,'-b');
+   hold on
+   plot(datenum(dataTime_diff),dataProv_diff_int,'.-r');
+   
+   
+end
+
+fclose(fout);
+
+
 
 
 
