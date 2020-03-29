@@ -14278,5 +14278,25 @@
         "tamponi": 89380,
         "note_it": "",
         "note_en": ""
+    },
+    {
+        "data": "2020-03-29T17:00:00",
+        "stato": "ITA",
+        "codice_regione": 3,
+        "denominazione_regione": "Lombardia",
+        "lat": 45.46679409,
+        "long": 9.190347404,
+        "ricoverati_con_sintomi": NaN,
+        "terapia_intensiva": NaN,
+        "totale_ospedalizzati": NaN,
+        "isolamento_domiciliare": NaN,
+        "totale_attualmente_positivi": NaN,
+        "nuovi_attualmente_positivi": NaN,
+        "dimessi_guariti": NaN,
+           "deceduti": 6360,
+           "totale_casi": 41007,
+        "tamponi": NaN,
+        "note_it": "",
+        "note_en": ""
     }
 ]

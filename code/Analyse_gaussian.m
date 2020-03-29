@@ -120,22 +120,22 @@ animated_gif_reg_Andrea(data,'S');
 
 
 %% calcolo lombardia senza bergamo, brescia, milano, 
-% 
+
 % lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
 % idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'MI') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO'));
+% idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO') | strcmp(dataProv.sigla_provincia,'MI'));
 % 
 % idx_lombResto = setdiff(lombardia_idx,idx_BBL);
 % 
-% listaRegioniTot = unique(dataProv.denominazione_regione);
-% 
 % casiTotaliReg=[];
+% casiTotaliReg_BGBS = [];
 % for k = 1:size(listaRegioniTot,1)
 %     idx = find(strcmp(dataProv.denominazione_regione,listaRegioniTot(k,:)));
 %     casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx))];
 % end
 % 
-% listaRegioniTot = [listaRegioniTot;'BG-BR-MI-CR-LO'];
-% listaRegioniTot = [listaRegioniTot;'Lombardia - BG-BR-MI-CR-LO'];
+% listaRegioniTot = [listaRegioniTot;'BG-BS-MI-CR-LO'];
+% listaRegioniTot = [listaRegioniTot;'Lombardia - BG-BS-MI'];
 % casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx_BBL))];
 % casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx_lombResto))];
 %                    
@@ -200,8 +200,253 @@ animated_gif_reg_Andrea(data,'S');
 %     
 %     close(gcf);                          
 %                           
-%                           
-%                           
+%               
+
+% %% logistica a cluster
+% 
+% lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
+% idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'MI') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO'));
+% idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO') | strcmp(dataProv.sigla_provincia,'MI'));
+% 
+% idx_lombResto = setdiff(lombardia_idx,idx_BBL);
+% 
+% 
+% dateT= unique(dataProv.data(idx_lombResto));
+% dataset = dataProv.totale_casi(idx_lombResto);
+% datasetT = dataProv.data(idx_lombResto);
+% 
+% datasetTBG = dataProv.data(idx_BBL);
+% datasetBG = dataProv.totale_casi(idx_BBL);
+% 
+% dataSet_LombBG = [];
+% dataSet_LombResto = [];
+% for k = 1 :size(unique(datasetT),1)
+%     idx =  find(strcmp(datasetT,dateT(k)));
+%     dataSet_LombResto(k) = sum(dataset(idx));
+%     idx =  find(strcmp(datasetTBG,dateT(k)));
+%     dataSet_LombBG(k) = sum(datasetBG(idx));
+% end
+% 
+% data = dataSet_LombResto;
+% time_num = fix(datenum(dateT));
+% regione = 'Lombardia (no BG-BS-CR-LO-MI)';
+% 
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:length(data)
+%     fprintf(fout,'%d;%d\n',time_num(i),data(i));
+% end
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+% 
+% 
+% data1 = dataSet_LombBG;
+% time_num = fix(datenum(dateT));
+% regione1 = 'Lombardia (BG-BR-CR-LO)';
+% 
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:length(data)
+%     fprintf(fout,'%d;%d\n',time_num(i),data1(i));
+% end
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [tl,a1l,a2l,a3l,a4l,a5l]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+% 
+% 
+% datetickFormat = 'dd mmm';
+% figure;
+% id_f = gcf;
+% 
+% set(id_f, 'Name', [regione ': totale casi']);
+% title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
+% 
+% set(gcf,'NumberTitle','Off');
+% set(gcf,'Position',[26 79 967 603]);
+% grid on
+% hold on
+% %     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+% %     d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+% %     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+% b=plot(t,a1,'-b','LineWidth', 2.0);
+% a=plot(time_num,data,'.b','markersize',14);
+% 
+% bl=plot(tl,a1l,'-r','LineWidth', 2.0);
+% al=plot(time_num,data1,'.r','markersize',14);
+% 
+% if ismac
+%     font_size = 9;
+% else
+%     font_size = 6.5;
+% end
+% 
+% ax = gca;
+% code_axe = get(id_f, 'CurrentAxes');
+% set(code_axe, 'FontName', 'Verdana');
+% set(code_axe, 'FontSize', font_size);
+% ylimi=get(gca,'ylim');
+% set(gca,'ylim',([0,ylimi(2)]));
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+% ylabel('Numero totale casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+% 
+% datetick('x', datetickFormat, 'keepticks') ;
+% set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+% ax.FontSize = font_size;
+% 
+% l=legend([al,bl,a,b],'Dati Reali BG-BS-LO-CR-MI','Stima BG-BS-LO-CR-MI','Dati Reali resto della Lombardia','Stima resto della Lombardia');
+% 
+% set(l,'Location','northwest')
+% % overlap copyright info
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+%     'String',{['Fonte: https://github.com/pcm-dpc']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% %%
+% % %     cd([WORKroot,'/assets/img/regioni']);
+% 
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoLombardia_2fasce_cumulati.PNG']);
+% close(gcf);
+
+%% logistica per provincia
+
+% lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
+% [listaProv, id] = unique(dataProv.denominazione_provincia(lombardia_idx));
+% listaProv=setdiff(listaProv,'In fase di definizione/aggiornamento');
+% 
+% dateT= unique(dataProv.data);
+% 
+% 
+% a=[]; b=[]; x=[]; sigTot=cellstr('');
+% 
+% datetickFormat = 'dd mmm';
+% figure;
+% id_f = gcf;
+% 
+% set(id_f, 'Name', ['Lombardia: totale casi']);
+% title(sprintf(['Lombardia: totale casi\\fontsize{5}\n ']))
+% 
+% set(gcf,'NumberTitle','Off');
+% set(gcf,'Position',[26 79 967 603]);
+% grid on
+% hold on
+% 
+% 
+% for pv = 1:size(listaProv,1)    
+%     provName = listaProv(pv);
+%     sigla = find(strcmp(dataProv.denominazione_provincia,provName));provSigla=dataProv.sigla_provincia(sigla(1));
+%     idx_prov = find(strcmp(dataProv.sigla_provincia,provSigla));
+%    
+%     dataset = dataProv.totale_casi(idx_prov);    
+%     index_pop = find(strcmp(pop.sigla,provSigla));
+%     
+%     
+%     
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:length(data)
+%         fprintf(fout,'%d;%d\n',time_num(i),dataset(i)./pop.number(index_pop)*1000);
+%     end
+%     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%     [t,a0,a1,a2,a3,a4]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%     
+%     b(pv)=plot(t,a1,'-b','LineWidth', 2.0);
+%     a(pv)=plot(time_num,dataset./pop.number(index_pop)*1000,'.b','markersize',14);
+%     drawnow
+%     
+%     x(pv)=a1(end); sigTot(pv)=cellstr(provSigla);
+% end
+% 
+% for pv = 1:size(listaProv,1)   
+%     set(a(pv),'color',Cmap.getColor(pv, size(listaProv,1)),'markersize',8);
+%     set(b(pv),'color',Cmap.getColor(pv, size(listaProv,1)));
+% end
+% 
+% 
+% 
+%         
+% 
+% last_value= x(:);
+% [sort_x, idx_sort] = sort(last_value,'descend');
+% 
+% for ll=1:size(idx_sort,1)
+%     lab=upper(char(sigTot(idx_sort(ll))));
+%     llab=6;
+%     if length(lab)<6
+%         llab=length(lab);
+%     end
+%     if ll/2==fix(ll/2)
+% 
+%         text(t(end)+((t(end)-t(1)))*0.01, sort_x(ll),...
+%             ['------> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]);
+%     else
+%         text(t(end)+((t(end)-t(1)))*0.01, sort_x(ll),...
+%             ['-> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]) ;
+%     end
+% end
+% 
+% 
+% 
+% 
+% if ismac
+%     font_size = 9;
+% else
+%     font_size = 6.5;
+% end
+% 
+% ax = gca;
+% code_axe = get(id_f, 'CurrentAxes');
+% set(code_axe, 'FontName', 'Verdana');
+% set(code_axe, 'FontSize', font_size);
+% ylimi=get(gca,'ylim');
+% set(gca,'ylim',([0,ylimi(2)]));
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+% ylabel('Numero totale casi / 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+% 
+% datetick('x', datetickFormat, 'keepticks') ;
+% set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+% ax.FontSize = font_size;
+% 
+% 
+% % set(l,'Location','northwest')
+% % overlap copyright info
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+%     'String',{['Fonte: https://github.com/pcm-dpc']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% %%
+% % %     cd([WORKroot,'/assets/img/regioni']);
+% 
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoLombardia_2fasce_cumulati.PNG']);
+% close(gcf);
+%     
+%     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                          
 
 
 
