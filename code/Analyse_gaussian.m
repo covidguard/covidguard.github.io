@@ -915,6 +915,13 @@ for type=1:2
     set(gcf,'Position',[26 79 967 603]);
     grid on
     hold on
+    
+%                 shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
+%             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+%             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+%     
+%     
+    
     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
     d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
@@ -1162,6 +1169,12 @@ for reg=9%1:size(regioni_tot,1)
             c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
             b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
             a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+            
+%             shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
+%             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+%             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+%             
+            
             
             if ismac
                 font_size = 9;
