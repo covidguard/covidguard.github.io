@@ -842,7 +842,12 @@ for reg=1:size(regioni_tot,1)
     hold on
     
     tamp_positivi = diff(dataReg.totale_casi(index,1));
-    a=bar([diff(dataReg.tamponi(index,1)),tamp_positivi],1);
+%     a=bar([diff(dataReg.tamponi(index,1)),tamp_positivi],1,'stacked');
+     yy =diff(dataReg.tamponi(index,1))-tamp_positivi; yy(yy<0)=0;
+     
+    a=bar([tamp_positivi, yy],1,'stacked');
+    
+    
     
     if ismac
         font_size = 9;
@@ -851,9 +856,12 @@ for reg=1:size(regioni_tot,1)
     end
     
     hold on; grid minor
-    a(1).FaceColor = [0.8 0.8 0.8];
-    a(2).FaceColor = [1 0.200000002980232 0.200000002980232];
-    
+%     a(1).FaceColor = [0.8 0.8 0.8];
+%     a(2).FaceColor = [1 0.200000002980232 0.200000002980232];
+    a(2).FaceColor = [0.8 0.8 0.8];
+    a(1).FaceColor = [1 0.200000002980232 0.200000002980232];
+
+
     set(gca,'XTick',1:size(tamp_positivi,1))
     set(gca,'XTickLabel',datestr(time_num(2:end),'dd mmm'))
     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
@@ -871,13 +879,13 @@ for reg=1:size(regioni_tot,1)
     
     
     yyaxis right
-    c=tamp_positivi./diff(dataReg.tamponi(index,1))*100;  c(c>100)=100; c(c<0)=0;
-    b=plot(1:size(tamp_positivi,1), c,'-k','LineWidth', 1.0);
+    c=tamp_positivi./diff(dataReg.tamponi(index,1))*100;  c(c>100)=NaN; c(c<0)=NaN;
+    b=plot(1:size(tamp_positivi,1), c,'-b','LineWidth', 2.0);
     ylim([0 100]);
     set(gca,'YColor', [0 0 0]);
     ylabel('Percentuale tamponi positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     
-    l=legend([a(1),a(2),b],'Tamponi effettuati','Tamponi positivi','Percent. tamponi positivi');
+    l=legend([a(2),a(1),b],'Tamponi negativi','Tamponi positivi','Percent. tamponi positivi');
     set(l,'Location','northwest')
     
     % overlap copyright info
