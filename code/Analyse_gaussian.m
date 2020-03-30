@@ -1149,14 +1149,23 @@ close(gcf);
 
 %% tasso mortalità regionale
 mort=[];
+mort_it = [0 0];
 for reg=1:size(regioni_tot,1)
         regione = char(regioni_tot(reg,1));
         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
 
         mort(reg,1) = dataReg.deceduti(index(end))/dataReg.totale_casi(index(end))*100;
+        
+        mort_it(1) = mort_it(1)+dataReg.deceduti(index(end));
+        mort_it(2) = mort_it(2)+dataReg.totale_casi(index(end));
 end
 
+mort=[mort;mort_it(1)/mort_it(2)*100];
+regioni_tot1 = [regioni_tot;cellstr('Italia totale')];
 [mort_1, idx] = sort(mort,'descend');
+
+idx_italiaTot = find(strcmp(regioni_tot1(idx), cellstr('Italia totale')));
+
 
 
 figure;
@@ -1177,11 +1186,12 @@ for i1=1:numel(mort_1)
         'VerticalAlignment','bottom','fontsize',7)
     
 end
+b1 = bar(idx_italiaTot, mort_1(idx_italiaTot),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
 
 hold on; grid minor
-set(gca,'XTick',1:size(regioni_tot,1))
-set(gca,'XTickLabel',regioni_tot(idx))
-set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
+set(gca,'XTick',1:size(regioni_tot1,1))
+set(gca,'XTickLabel',regioni_tot1(idx))
+set(gca,'XLim',[0.5,size(regioni_tot1,1)+0.5])
 set(gca,'XTickLabelRotation',53,'FontSize',6.5);
     ylabel('Percentuale deceduti/casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
 if ismac
@@ -1195,8 +1205,8 @@ set(ax, 'FontName', 'Verdana');
 set(ax, 'FontSize', font_size);
 
 ylimit=ylim;
-if ylimit(2)<40
-    ylim([0 40]);
+if ylimit(2)<25
+    ylim([0 25]);
 end
 
 ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
@@ -1230,8 +1240,94 @@ close(gcf);
 
 
 
+%% tamponi totali Italia
+tamponiIta=[];
+totalePosIta=[];
+for reg=1:size(regioni_tot,1)
+        regione = char(regioni_tot(reg,1));
+        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+        tamponiIta(:,reg)=dataReg.tamponi(index);
+        totalePosIta(:,reg)=dataReg.totale_casi(index);
+end
+
+time_num = unique(dataReg.data);
 
 
+tamponiIta=diff(sum(tamponiIta')');
+totalePosIta=diff(sum(totalePosIta')');
+perTampPos=totalePosIta./tamponiIta*100;
+
+figure;
+id_f = gcf;
+set(id_f, 'Name', 'Italia: tamponi totali');
+title(sprintf(['Italia: tamponi totali \\fontsize{5}\n ']))
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+b=bar([totalePosIta,tamponiIta-totalePosIta],'stacked');
+set(b(1),'FaceColor',[1 0 0]);
+set(b(2),'FaceColor',[0.200000002980232 0.600000023841858 1]);
+
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+       
+set(gca,'XTick',1:size(time_num(2:end),1));
+set(gca,'XTickLabel',datestr(time_num(2:end),'dd mmm'));
+set(gca,'XLim',[0.5,size(time_num(2:end),1)+0.5]);
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax=gca;
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Numero tamponi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+
+
+yyaxis right
+c=plot(perTampPos,'-b','LineWidth', 1.5);
+ylim([0 100]);
+set(gca,'YColor', [0 0 1]);
+ylabel('Percentuale tamponi positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+grid minor
+
+l=legend([b(2),b(1),c],'Tamponi negativi','Tamponi positivi','Percent. tamponi positivi');
+set(l,'Location','northwest')
+
+    
+    
+        set(l,'Location','northwest')
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_tamponi.PNG']);
+close(gcf);  
 
 
 
