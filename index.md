@@ -22,6 +22,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
     <li> <a href="#diffusione-spazio-temporale">Italia: Diffusione spazio-temporale</a> </li> 
+    <li> <a href="#tasso-di-mortalita">Tasso di mortalità</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Italia: Stima Positivi Cumulata</a> </li> 
     <li> <a href="#stima-del-picco-di-attualmente-positivi-1">Italia: Stima Positivi</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Lombardia: Stima Positivi Cumulata</a> </li> 
@@ -44,6 +45,14 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 ### Diffusione spazio-temporale
 Mappa che mostra la diffusione nel tempo del virus nelle varie province italiane.
 ![Mappa Italia](/code/mappaProv.gif)
+
+### Tasso di mortalità 
+Tasso di mortalità calcolato sui casi totali, ovviamente il valore reale è molto più basso, i casi totali conteggiati sono solamente dati dal totale delle persone a cui un tampone è risultato positivo, come noto i casi sommersi sono molti. I valori del grafico sono quindi molto dipendenti dal numero di tamponi effettuati regione per regione.
+![Tasso di mortalità](slides/img/regioni/ita_mortalita.PNG)
+
+### Tamponi totali
+Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale e test risultati effettivamente positivi.
+![Tasso di mortalità](slides/img/regioni/ita_tamponi.PNG)
 
 ### Stima del numero cumulato di positivi
 L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
