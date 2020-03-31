@@ -114,9 +114,12 @@ end
 data=struct;
 data.dataReg=dataReg;
 animated_gif_reg_Andrea(data,'A');
-animated_gif_reg_Andrea(data,'N');
-animated_gif_reg_Andrea(data,'C');
-animated_gif_reg_Andrea(data,'S');
+try
+    animated_gif_reg_Andrea(data,'N');
+    animated_gif_reg_Andrea(data,'C');
+    animated_gif_reg_Andrea(data,'S');
+catch
+end
 
 
 %% calcolo lombardia senza bergamo, brescia, milano,
@@ -642,7 +645,7 @@ for reg=1:size(regioni_tot,1)
                 e=plot(time_num,dataReg.terapia_intensiva(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
                 f=plot(time_num,dataReg.totale_ospedalizzati(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
                 g=plot(time_num,dataReg.isolamento_domiciliare(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
-                h=plot(time_num,dataReg.totale_attualmente_positivi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
+                h=plot(time_num,dataReg.totale_positivi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
             catch
                 a=plot(time_num,str2double(dataReg.ricoverati_con_sintomi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
                 b=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(2, 8));
@@ -651,7 +654,7 @@ for reg=1:size(regioni_tot,1)
                 e=plot(time_num,str2double(dataReg.terapia_intensiva(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
                 f=plot(time_num,str2double(dataReg.totale_ospedalizzati(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
                 g=plot(time_num,str2double(dataReg.isolamento_domiciliare(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
-                h=plot(time_num,str2double(dataReg.totale_attualmente_positivi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
+                h=plot(time_num,str2double(dataReg.totale_positivi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
                 
             end
         else
@@ -664,7 +667,7 @@ for reg=1:size(regioni_tot,1)
             e=plot(time_num,movmean(dataReg.terapia_intensiva(index,1), 3, 'omitnan'),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
             f=plot(time_num,movmean(dataReg.totale_ospedalizzati(index,1), 3, 'omitnan'),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
             g=plot(time_num,movmean(dataReg.isolamento_domiciliare(index,1), 3, 'omitnan'),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
-            h=plot(time_num,movmean(dataReg.totale_attualmente_positivi(index,1), 3, 'omitnan'),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
+            h=plot(time_num,movmean(dataReg.totale_positivi(index,1), 3, 'omitnan'),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
         end
         
         if ismac
@@ -748,7 +751,7 @@ for reg=1:size(regioni_tot,1)
                 e=plot(time_num(2:end),diff(dataReg.terapia_intensiva(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(5, 8));
                 f=plot(time_num(2:end),diff(dataReg.totale_ospedalizzati(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(6, 8));
                 g=plot(time_num(2:end),diff(dataReg.isolamento_domiciliare(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(7, 8));
-                h=plot(time_num(2:end),diff(dataReg.totale_attualmente_positivi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
+                h=plot(time_num(2:end),diff(dataReg.totale_positivi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
             catch
                 
                 a=plot(time_num(2:end),diff(str2double(dataReg.ricoverati_con_sintomi(index,1))),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
@@ -758,7 +761,7 @@ for reg=1:size(regioni_tot,1)
                 e=plot(time_num(2:end),diff(str2double(dataReg.terapia_intensiva(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(5, 8));
                 f=plot(time_num(2:end),diff(str2double(dataReg.totale_ospedalizzati(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(6, 8));
                 g=plot(time_num(2:end),diff(str2double(dataReg.isolamento_domiciliare(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(7, 8));
-                h=plot(time_num(2:end),diff(str2double(dataReg.totale_attualmente_positivi(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
+                h=plot(time_num(2:end),diff(str2double(dataReg.totale_positivi(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
             end
             
         else
@@ -769,7 +772,7 @@ for reg=1:size(regioni_tot,1)
             e=plot(time_num(2:end),movmean(diff(dataReg.terapia_intensiva(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(5, 8));
             f=plot(time_num(2:end),movmean(diff(dataReg.totale_ospedalizzati(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(6, 8));
             g=plot(time_num(2:end),movmean(diff(dataReg.isolamento_domiciliare(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(7, 8));
-            h=plot(time_num(2:end),movmean(diff(dataReg.totale_attualmente_positivi(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
+            h=plot(time_num(2:end),movmean(diff(dataReg.totale_positivi(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
         end
         
         if ismac
@@ -933,7 +936,7 @@ for type=1:3
     for k = 1: size(day_unique,1)
         index = find(strcmp(dataReg.data,day_unique(k)));
         if type==1
-            data(k)=sum(dataReg.totale_attualmente_positivi(index));
+            data(k)=sum(dataReg.totale_positivi(index));
         elseif type==2 || type==3
             data(k)=sum(dataReg.totale_casi(index));
         end
@@ -1439,7 +1442,7 @@ for reg=9%1:size(regioni_tot,1)
             end
             
             if type==1 %gauss su attualmente positivi
-                data=dataReg.totale_attualmente_positivi(index,1);
+                data=dataReg.totale_positivi(index,1);
                 %         data=dataReg.totale_casi(index,1);
                 %          data=diff(data);
                 
@@ -1643,8 +1646,8 @@ for reg=1:size(regioni_tot,1)
     regioni_conf.terapia_intensiva(reg,:) = dataReg.terapia_intensiva(index);
     regioni_conf.totale_ospedalizzati(reg,:) = dataReg.totale_ospedalizzati(index);
     regioni_conf.isolamento_domiciliare(reg,:) = dataReg.isolamento_domiciliare(index);
-    regioni_conf.totale_attualmente_positivi(reg,:) = dataReg.totale_attualmente_positivi(index);
-    regioni_conf.nuovi_attualmente_positivi(reg,:) = dataReg.nuovi_attualmente_positivi(index);
+    regioni_conf.totale_positivi(reg,:) = dataReg.totale_positivi(index);
+    regioni_conf.nuovi_positivi(reg,:) = dataReg.nuovi_positivi(index);
     regioni_conf.dimessi_guariti(reg,:) = dataReg.dimessi_guariti(index);
     regioni_conf.deceduti(reg,:) = dataReg.deceduti(index);
     regioni_conf.totale_casi(reg,:) = dataReg.totale_casi(index);
@@ -1657,7 +1660,7 @@ loop.var={'ricoverati_con_sintomi';...
     'terapia_intensiva';...
     'totale_ospedalizzati';...
     'isolamento_domiciliare';...
-    'totale_attualmente_positivi';...
+    'totale_positivi';...
     'dimessi_guariti';...
     'deceduti';...
     'totale_casi';...
@@ -1794,8 +1797,8 @@ for reg=1:size(regioni_tot,1)
     regioni_conf.terapia_intensiva(reg) = dataReg.terapia_intensiva(index(end));
     regioni_conf.totale_ospedalizzati(reg) = dataReg.totale_ospedalizzati(index(end));
     regioni_conf.isolamento_domiciliare(reg) = dataReg.isolamento_domiciliare(index(end));
-    regioni_conf.totale_attualmente_positivi(reg) = dataReg.totale_attualmente_positivi(index(end));
-    regioni_conf.nuovi_attualmente_positivi(reg) = dataReg.nuovi_attualmente_positivi(index(end));
+    regioni_conf.totale_positivi(reg) = dataReg.totale_positivi(index(end));
+    regioni_conf.nuovi_positivi(reg) = dataReg.nuovi_positivi(index(end));
     regioni_conf.dimessi_guariti(reg) = dataReg.dimessi_guariti(index(end));
     regioni_conf.deceduti(reg) = dataReg.deceduti(index(end));
     regioni_conf.totale_casi(reg) = dataReg.totale_casi(index(end));
@@ -1808,7 +1811,7 @@ loop.var={'ricoverati_con_sintomi';...
     'terapia_intensiva';...
     'totale_ospedalizzati';...
     'isolamento_domiciliare';...
-    'totale_attualmente_positivi';...
+    'totale_positivi';...
     'dimessi_guariti';...
     'deceduti';...
     'totale_casi';...

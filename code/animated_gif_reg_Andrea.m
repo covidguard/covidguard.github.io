@@ -25,8 +25,8 @@ try
         data.dataReg.terapia_intensiva = data.dataReg.terapia_intensiva(idx);
         data.dataReg.totale_ospedalizzati = data.dataReg.totale_ospedalizzati(idx);
         data.dataReg.isolamento_domiciliare = data.dataReg.isolamento_domiciliare(idx);
-        data.dataReg.totale_attualmente_positivi = data.dataReg.totale_attualmente_positivi(idx);
-        data.dataReg.nuovi_attualmente_positivi = data.dataReg.nuovi_attualmente_positivi(idx);
+        data.dataReg.totale_positivi = data.dataReg.totale_attualmente_positivi(idx);
+        data.dataReg.nuovi_positivi = data.dataReg.nuovi_attualmente_positivi(idx);
         data.dataReg.dimessi_guariti = data.dataReg.dimessi_guariti(idx);
         data.dataReg.deceduti=data.dataReg.deceduti(idx);
         data.dataReg.totale_casi = data.dataReg.totale_casi(idx);
