@@ -119,30 +119,30 @@ animated_gif_reg_Andrea(data,'C');
 animated_gif_reg_Andrea(data,'S');
 
 
-%% calcolo lombardia senza bergamo, brescia, milano, 
+%% calcolo lombardia senza bergamo, brescia, milano,
 
 % lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
 % idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'MI') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO'));
 % idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO') | strcmp(dataProv.sigla_provincia,'MI'));
-% 
+%
 % idx_lombResto = setdiff(lombardia_idx,idx_BBL);
-% 
+%
 % casiTotaliReg=[];
 % casiTotaliReg_BGBS = [];
 % for k = 1:size(listaRegioniTot,1)
 %     idx = find(strcmp(dataProv.denominazione_regione,listaRegioniTot(k,:)));
 %     casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx))];
 % end
-% 
+%
 % listaRegioniTot = [listaRegioniTot;'BG-BS-MI-CR-LO'];
 % listaRegioniTot = [listaRegioniTot;'Lombardia - BG-BS-MI'];
 % casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx_BBL))];
 % casiTotaliReg=[casiTotaliReg;sum(dataProv.totale_casi(idx_lombResto))];
-%                    
-% 
+%
+%
 % [x,idx]=sort(casiTotaliReg,'descend');
 % tick_all=listaRegioniTot(idx);
-%     
+%
 %     figure;
 %     id_f = gcf;
 %     title(sprintf('Totale Casi\\fontsize{5}\n'));
@@ -156,7 +156,7 @@ animated_gif_reg_Andrea(data,'S');
 %                 'HorizontalAlignment','center',...
 %                 'VerticalAlignment','bottom','fontsize',7)
 %     end
-%     
+%
 %     hold on; grid minor
 %     set(gca,'XTick',1:size(listaRegioniTot,1))
 %     set(gca,'XTickLabel',tick_all)
@@ -168,20 +168,20 @@ animated_gif_reg_Andrea(data,'S');
 %     else
 %         font_size = 6.5;
 %     end
-%     
+%
 %     ax = gca;
 %     set(ax, 'FontName', 'Verdana');
 %     set(ax, 'FontSize', font_size);
-%     
+%
 %     ylimit=ylim;
 %     if ylimit(2)<20
 %         ylim([0 20]);
 %     end
-%     
+%
 %     ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-%     
-%     
-%     
+%
+%
+%
 %     %% overlap copyright info
 %     datestr_now = datestr(now);
 %     annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
@@ -197,27 +197,27 @@ animated_gif_reg_Andrea(data,'S');
 %     else
 %         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/regioni_deced_senzacura.PNG']);
 %     end
-%     
-%     close(gcf);                          
-%                           
-%               
+%
+%     close(gcf);
+%
+%
 
 % %% logistica a cluster
-% 
+%
 % lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
 % idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'MI') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO'));
 % idx_BBL = find(strcmp(dataProv.sigla_provincia,'BG') | strcmp(dataProv.sigla_provincia,'BS') | strcmp(dataProv.sigla_provincia,'CR') | strcmp(dataProv.sigla_provincia,'LO') | strcmp(dataProv.sigla_provincia,'MI'));
-% 
+%
 % idx_lombResto = setdiff(lombardia_idx,idx_BBL);
-% 
-% 
+%
+%
 % dateT= unique(dataProv.data(idx_lombResto));
 % dataset = dataProv.totale_casi(idx_lombResto);
 % datasetT = dataProv.data(idx_lombResto);
-% 
+%
 % datasetTBG = dataProv.data(idx_BBL);
 % datasetBG = dataProv.totale_casi(idx_BBL);
-% 
+%
 % dataSet_LombBG = [];
 % dataSet_LombResto = [];
 % for k = 1 :size(unique(datasetT),1)
@@ -226,38 +226,38 @@ animated_gif_reg_Andrea(data,'S');
 %     idx =  find(strcmp(datasetTBG,dateT(k)));
 %     dataSet_LombBG(k) = sum(datasetBG(idx));
 % end
-% 
+%
 % data = dataSet_LombResto;
 % time_num = fix(datenum(dateT));
 % regione = 'Lombardia (no BG-BS-CR-LO-MI)';
-% 
+%
 % fout=fopen('testIn_gauss.txt','wt');
 % for i=1:length(data)
 %     fprintf(fout,'%d;%d\n',time_num(i),data(i));
 % end
 % command=sprintf('sigm_estim testIn_gauss.txt');system(command);
 % [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-% 
-% 
+%
+%
 % data1 = dataSet_LombBG;
 % time_num = fix(datenum(dateT));
 % regione1 = 'Lombardia (BG-BR-CR-LO)';
-% 
+%
 % fout=fopen('testIn_gauss.txt','wt');
 % for i=1:length(data)
 %     fprintf(fout,'%d;%d\n',time_num(i),data1(i));
 % end
 % command=sprintf('sigm_estim testIn_gauss.txt');system(command);
 % [tl,a1l,a2l,a3l,a4l,a5l]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-% 
-% 
+%
+%
 % datetickFormat = 'dd mmm';
 % figure;
 % id_f = gcf;
-% 
+%
 % set(id_f, 'Name', [regione ': totale casi']);
 % title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
-% 
+%
 % set(gcf,'NumberTitle','Off');
 % set(gcf,'Position',[26 79 967 603]);
 % grid on
@@ -267,16 +267,16 @@ animated_gif_reg_Andrea(data,'S');
 % %     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
 % b=plot(t,a1,'-b','LineWidth', 2.0);
 % a=plot(time_num,data,'.b','markersize',14);
-% 
+%
 % bl=plot(tl,a1l,'-r','LineWidth', 2.0);
 % al=plot(time_num,data1,'.r','markersize',14);
-% 
+%
 % if ismac
 %     font_size = 9;
 % else
 %     font_size = 6.5;
 % end
-% 
+%
 % ax = gca;
 % code_axe = get(id_f, 'CurrentAxes');
 % set(code_axe, 'FontName', 'Verdana');
@@ -285,13 +285,13 @@ animated_gif_reg_Andrea(data,'S');
 % set(gca,'ylim',([0,ylimi(2)]));
 % ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 % ylabel('Numero totale casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-% 
+%
 % datetick('x', datetickFormat, 'keepticks') ;
 % set(gca,'XTickLabelRotation',53,'FontSize',6.5);
 % ax.FontSize = font_size;
-% 
+%
 % l=legend([al,bl,a,b],'Dati Reali BG-BS-LO-CR-MI','Stima BG-BS-LO-CR-MI','Dati Reali resto della Lombardia','Stima resto della Lombardia');
-% 
+%
 % set(l,'Location','northwest')
 % % overlap copyright info
 % datestr_now = datestr(now);
@@ -303,73 +303,73 @@ animated_gif_reg_Andrea(data,'S');
 %     'FitBoxToText','off',...
 %     'LineStyle','none',...
 %     'Color',[0 0 0]);
-% 
+%
 % %%
 % % %     cd([WORKroot,'/assets/img/regioni']);
-% 
+%
 % print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoLombardia_2fasce_cumulati.PNG']);
 % close(gcf);
 
 %% logistica per provincia
-% 
+%
 % lombardia_idx = find(strcmp(dataProv.denominazione_regione,'Lombardia'));
 % [listaProv, id] = unique(dataProv.denominazione_provincia(lombardia_idx));
 % listaProv=setdiff(listaProv,'In fase di definizione/aggiornamento');
-% 
+%
 % dateT= unique(dataProv.data);
-% 
-% 
+%
+%
 % a=[]; b=[]; x=[]; sigTot=cellstr('');
-% 
+%
 % datetickFormat = 'dd mmm';
 % figure;
 % id_f = gcf;
-% 
+%
 % set(id_f, 'Name', ['Lombardia: totale casi']);
 % title(sprintf(['Lombardia: totale casi\\fontsize{5}\n ']))
-% 
+%
 % set(gcf,'NumberTitle','Off');
 % set(gcf,'Position',[26 79 967 603]);
 % grid on
 % hold on
-% 
-% 
-% for pv = 1:size(listaProv,1)    
+%
+%
+% for pv = 1:size(listaProv,1)
 %     provName = listaProv(pv);
 %     sigla = find(strcmp(dataProv.denominazione_provincia,provName));provSigla=dataProv.sigla_provincia(sigla(1));
 %     idx_prov = find(strcmp(dataProv.sigla_provincia,provSigla));
-%    
-%     dataset = dataProv.totale_casi(idx_prov);    
+%
+%     dataset = dataProv.totale_casi(idx_prov);
 %     index_pop = find(strcmp(pop.sigla,provSigla));
-%     
-%     
-%     
+%
+%
+%
 %     fout=fopen('testIn_gauss.txt','wt');
 %     for i=1:length(data)
 %         fprintf(fout,'%d;%.2f\n',fix(datenum(dateT(i))),dataset(i)./pop.number(index_pop)*1000);
 %     end
 %     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
 %     [t,a0,a1,a2,a3,a4]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-%     
+%
 %     b(pv)=plot(t,a1,'-b','LineWidth', 2.0);
 %     a(pv)=plot(datenum(dateT),dataset./pop.number(index_pop)*1000,'.b','markersize',14);
 %     drawnow
-%     
+%
 %     x(pv)=a1(end); sigTot(pv)=cellstr(provSigla);
 % end
-% 
-% for pv = 1:size(listaProv,1)   
+%
+% for pv = 1:size(listaProv,1)
 %     set(a(pv),'color',Cmap.getColor(pv, size(listaProv,1)),'markersize',8);
 %     set(b(pv),'color',Cmap.getColor(pv, size(listaProv,1)));
 % end
-% 
-% 
-% 
-%         
-% 
+%
+%
+%
+%
+%
 % last_value= x(:);
 % [sort_x, idx_sort] = sort(last_value,'descend');
-% 
+%
 % for ll=1:size(idx_sort,1)
 %     lab=upper(char(sigTot(idx_sort(ll))));
 %     llab=6;
@@ -377,7 +377,7 @@ animated_gif_reg_Andrea(data,'S');
 %         llab=length(lab);
 %     end
 %     if ll/2==fix(ll/2)
-% 
+%
 %         text(t(end)+((t(end)-t(1)))*0.01, sort_x(ll),...
 %             ['------> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]);
 %     else
@@ -385,16 +385,16 @@ animated_gif_reg_Andrea(data,'S');
 %             ['-> ',lab(1:llab)], 'HorizontalAlignment','left','FontSize',5','Color',[0 0 0]) ;
 %     end
 % end
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % if ismac
 %     font_size = 9;
 % else
 %     font_size = 6.5;
 % end
-% 
+%
 % ax = gca;
 % code_axe = get(id_f, 'CurrentAxes');
 % set(code_axe, 'FontName', 'Verdana');
@@ -403,12 +403,12 @@ animated_gif_reg_Andrea(data,'S');
 % set(gca,'ylim',([0,ylimi(2)]));
 % ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 % ylabel('Numero totale casi / 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-% 
+%
 % datetick('x', datetickFormat, 'keepticks') ;
 % set(gca,'XTickLabelRotation',53,'FontSize',6.5);
 % ax.FontSize = font_size;
-% 
-% 
+%
+%
 % % set(l,'Location','northwest')
 % % overlap copyright info
 % datestr_now = datestr(now);
@@ -420,33 +420,33 @@ animated_gif_reg_Andrea(data,'S');
 %     'FitBoxToText','off',...
 %     'LineStyle','none',...
 %     'Color',[0 0 0]);
-% 
+%
 % %%
 % % %     cd([WORKroot,'/assets/img/regioni']);
-% 
+%
 % print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoLombardia_2fasce_cumulati.PNG']);
 % close(gcf);
-%     
-%     
-%     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-                          
+%
+%
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -459,7 +459,7 @@ for reg=1:size(regioni_tot,1)
         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
         time_num = fix(datenum(dataReg.data(index)));
         
-       
+        
         %% bar stacked: totale casi
         datetickFormat = 'dd mmm';
         figure;
@@ -477,7 +477,7 @@ for reg=1:size(regioni_tot,1)
         
         bbb=[dataReg.deceduti(index,1)';dataReg.terapia_intensiva(index,1)';dataReg.totale_ospedalizzati(index,1)'-dataReg.terapia_intensiva(index,1)';dataReg.isolamento_domiciliare(index,1)';dataReg.dimessi_guariti(index,1)'];
         
-        bbbar = bar(bbb','stacked'); hold on        
+        bbbar = bar(bbb','stacked'); hold on
         set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
         set(bbbar(2),'FaceColor',[1 0 0]);
         set(bbbar(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
@@ -524,9 +524,9 @@ for reg=1:size(regioni_tot,1)
             'FontSize',6,...
             'FontName','Verdana',...
             'FitBoxToText','off');
-
-
-         
+        
+        
+        
         %%
         % %     cd([WORKroot,'/assets/img/regioni']);
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_cumulati.PNG']);
@@ -553,7 +553,7 @@ for reg=1:size(regioni_tot,1)
         
         bbb=[diff(dataReg.deceduti(index,1))';diff(dataReg.terapia_intensiva(index,1))';diff(dataReg.totale_ospedalizzati(index,1))'-diff(dataReg.terapia_intensiva(index,1))';diff(dataReg.isolamento_domiciliare(index,1))';diff(dataReg.dimessi_guariti(index,1))'];
         
-        bbbar = bar(bbb','stacked'); hold on        
+        bbbar = bar(bbb','stacked'); hold on
         set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
         set(bbbar(2),'FaceColor',[1 0 0]);
         set(bbbar(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
@@ -577,7 +577,7 @@ for reg=1:size(regioni_tot,1)
         
         set(ax, 'FontName', 'Verdana');
         set(ax, 'FontSize', font_size);
-       
+        
         l=legend([bbbar(5), bbbar(4),bbbar(3),bbbar(2),bbbar(1)],'Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
         set(l,'Location','northwest')
         % overlap copyright info
@@ -599,8 +599,8 @@ for reg=1:size(regioni_tot,1)
             'FontSize',6,...
             'FontName','Verdana',...
             'FitBoxToText','off');
-
-         
+        
+        
         %%
         % %     cd([WORKroot,'/assets/img/regioni']);
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_giornalieri.PNG']);
@@ -631,7 +631,7 @@ for reg=1:size(regioni_tot,1)
         set(gcf,'NumberTitle','Off');
         set(gcf,'Position',[26 79 967 603]);
         grid on
-        hold on      
+        hold on
         
         if mediamobile_yn==0
             try
@@ -842,9 +842,9 @@ for reg=1:size(regioni_tot,1)
     hold on
     
     tamp_positivi = diff(dataReg.totale_casi(index,1));
-%     a=bar([diff(dataReg.tamponi(index,1)),tamp_positivi],1,'stacked');
-     yy =diff(dataReg.tamponi(index,1))-tamp_positivi; yy(yy<0)=0;
-     
+    %     a=bar([diff(dataReg.tamponi(index,1)),tamp_positivi],1,'stacked');
+    yy =diff(dataReg.tamponi(index,1))-tamp_positivi; yy(yy<0)=0;
+    
     a=bar([tamp_positivi, yy],1,'stacked');
     
     
@@ -856,12 +856,12 @@ for reg=1:size(regioni_tot,1)
     end
     
     hold on; grid minor
-%     a(1).FaceColor = [0.8 0.8 0.8];
-%     a(2).FaceColor = [1 0.200000002980232 0.200000002980232];
+    %     a(1).FaceColor = [0.8 0.8 0.8];
+    %     a(2).FaceColor = [1 0.200000002980232 0.200000002980232];
     a(2).FaceColor = [0.8 0.8 0.8];
     a(1).FaceColor = [1 0.200000002980232 0.200000002980232];
-
-
+    
+    
     set(gca,'XTick',1:size(tamp_positivi,1))
     set(gca,'XTickLabel',datestr(time_num(2:end),'dd mmm'))
     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
@@ -927,18 +927,28 @@ end
 %% interpolazione Nazionale
 day_unique = unique(dataReg.data);
 
-for type=1:2
+for type=1:3
     
     data=NaN(size(day_unique,1),1);
     for k = 1: size(day_unique,1)
         index = find(strcmp(dataReg.data,day_unique(k)));
         if type==1
             data(k)=sum(dataReg.totale_attualmente_positivi(index));
-        else
+        elseif type==2 || type==3
             data(k)=sum(dataReg.totale_casi(index));
         end
     end
+    
+    
+    
     time_num = fix(datenum(day_unique));
+    
+    if type==3
+        data=diff(data);
+        time_num=time_num(2:end);
+    end
+    
+    
     regione = 'Italia';
     
     fout=fopen('testIn_gauss.txt','wt');
@@ -946,7 +956,7 @@ for type=1:2
         fprintf(fout,'%d;%d\n',time_num(i),data(i));
     end
     
-    if type==1
+    if type==1 || type==3
         command=sprintf('gauss_estim testIn_gauss.txt');system(command);
         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
         
@@ -969,24 +979,72 @@ for type=1:2
     elseif type==2
         set(id_f, 'Name', [regione ': totale casi']);
         title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
-        
+    elseif type==3
+        set(id_f, 'Name', [regione ': casi giornalieri']);
+        title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
     end
     set(gcf,'NumberTitle','Off');
     set(gcf,'Position',[26 79 967 603]);
     grid on
     hold on
     
-%                 shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
-%             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
-%             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
-%     
-%     
+    %                 shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
+    %             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+    %             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+    %
+    %
     
     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
     d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
     b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
     a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+    
+    if type==1 || type==3
+        [max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
+        
+        idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=idxMina1(1);
+        idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
+        idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
+        
+        piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+        piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+        
+        zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
+        zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
+        
+        if piccoMin<piccoMax
+            picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
+        else
+            picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
+        end
+        
+        if piccoMin<piccoMax
+            zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
+        else
+            zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
+        end
+        
+        annotation(gcf,'textbox',...
+            [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
+            'String',{picco},...
+            'LineStyle','none',...
+            'HorizontalAlignment','right',...
+            'FontSize',10,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+        annotation(gcf,'textbox',...
+            [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
+            'String',{zero},...
+            'LineStyle','none',...
+            'HorizontalAlignment','right',...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+    end
+    
+    
     
     if ismac
         font_size = 9;
@@ -1005,7 +1063,10 @@ for type=1:2
         ylabel('Numero attualmente positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     elseif type==2
         ylabel('Numero totale casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    elseif type==3
+        ylabel('Numero nuovi casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     end
+    
     datetick('x', datetickFormat, 'keepticks') ;
     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
     ax.FontSize = font_size;
@@ -1044,6 +1105,8 @@ for type=1:2
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoAttPositivi_',regione, '_cumulati.PNG']);
     elseif type==2
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoTotaleCasi_',regione, '_cumulati.PNG']);
+    elseif type==3
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_',regione, '_cumulati.PNG']);
     end
     close(gcf);
     
@@ -1159,13 +1222,13 @@ close(gcf);
 mort=[];
 mort_it = [0 0];
 for reg=1:size(regioni_tot,1)
-        regione = char(regioni_tot(reg,1));
-        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
-
-        mort(reg,1) = dataReg.deceduti(index(end))/dataReg.totale_casi(index(end))*100;
-        
-        mort_it(1) = mort_it(1)+dataReg.deceduti(index(end));
-        mort_it(2) = mort_it(2)+dataReg.totale_casi(index(end));
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    
+    mort(reg,1) = dataReg.deceduti(index(end))/dataReg.totale_casi(index(end))*100;
+    
+    mort_it(1) = mort_it(1)+dataReg.deceduti(index(end));
+    mort_it(2) = mort_it(2)+dataReg.totale_casi(index(end));
 end
 
 mort=[mort;mort_it(1)/mort_it(2)*100];
@@ -1201,7 +1264,7 @@ set(gca,'XTick',1:size(regioni_tot1,1))
 set(gca,'XTickLabel',regioni_tot1(idx))
 set(gca,'XLim',[0.5,size(regioni_tot1,1)+0.5])
 set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-    ylabel('Percentuale deceduti/casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+ylabel('Percentuale deceduti/casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
 if ismac
     font_size = 9;
 else
@@ -1241,8 +1304,8 @@ annotation(gcf,'textbox',...
     'FitBoxToText','off');
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_mortalita.PNG']);
-close(gcf);    
-        
+close(gcf);
+
 
 
 
@@ -1252,10 +1315,10 @@ close(gcf);
 tamponiIta=[];
 totalePosIta=[];
 for reg=1:size(regioni_tot,1)
-        regione = char(regioni_tot(reg,1));
-        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
-        tamponiIta(:,reg)=dataReg.tamponi(index);
-        totalePosIta(:,reg)=dataReg.totale_casi(index);
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    tamponiIta(:,reg)=dataReg.tamponi(index);
+    totalePosIta(:,reg)=dataReg.totale_casi(index);
 end
 
 time_num = unique(dataReg.data);
@@ -1286,7 +1349,7 @@ if ismac
 else
     font_size = 6.5;
 end
-       
+
 set(gca,'XTick',1:size(time_num(2:end),1));
 set(gca,'XTickLabel',datestr(time_num(2:end),'dd mmm'));
 set(gca,'XLim',[0.5,size(time_num(2:end),1)+0.5]);
@@ -1309,33 +1372,33 @@ grid minor
 l=legend([b(2),b(1),c],'Tamponi negativi','Tamponi positivi','Percent. tamponi positivi');
 set(l,'Location','northwest')
 
-    
-    
-        set(l,'Location','northwest')
-        % overlap copyright info
-        datestr_now = datestr(now);
-        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
-            'String',{['Fonte: https://github.com/pcm-dpc']},...
-            'HorizontalAlignment','center',...
-            'FontSize',6,...
-            'FontName','Verdana',...
-            'FitBoxToText','off',...
-            'LineStyle','none',...
-            'Color',[0 0 0]);
-        
-        annotation(gcf,'textbox',...
-            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
-            'String',{'https://covidguard.github.io/#covid-19-italia'},...
-            'LineStyle','none',...
-            'HorizontalAlignment','left',...
-            'FontSize',6,...
-            'FontName','Verdana',...
-            'FitBoxToText','off');
+
+
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
 
 
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_tamponi.PNG']);
-close(gcf);  
+close(gcf);
 
 
 
@@ -1365,7 +1428,7 @@ for reg=9%1:size(regioni_tot,1)
         %                type=2;
         
         %
-        for type=1:2
+        for type=1:3
             try
                 delete('testIn_gauss.txt');
             catch
@@ -1380,18 +1443,24 @@ for reg=9%1:size(regioni_tot,1)
                 %         data=dataReg.totale_casi(index,1);
                 %          data=diff(data);
                 
-            elseif type==2 %sigmoide su totale casi
+            elseif type==2  || type==3 %sigmoide su totale casi
                 data=dataReg.totale_casi(index,1);
                 %              data=dataReg.dimessi_guariti(index,1);
             end
             %         data=dataReg.deceduti(index,1);
+            if type==3
+                data=diff(data);
+                time_num=time_num(2:end);
+            end
+            
+            
             
             fout=fopen('testIn_gauss.txt','wt');
             for i=1:size(data,1)
                 fprintf(fout,'%d;%d\n',time_num(i),data(i));
             end
             
-            if type==1
+            if type==1 || type==3
                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
                 
@@ -1404,32 +1473,86 @@ for reg=9%1:size(regioni_tot,1)
             end
             
             %% figura cumulata
-            datetickFormat = 'dd mmm';
-            figure;
-            id_f = gcf;
-            if type==1
-                set(id_f, 'Name', [regione ': attualmente positivi']);
-                title(sprintf([regione ': attualmente positivi\\fontsize{5}\n ']))
-            elseif type==2
-                set(id_f, 'Name', [regione ': totale casi']);
-                title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
+
+            
+    datetickFormat = 'dd mmm';
+    figure;
+    id_f = gcf;
+    if type==1
+        set(id_f, 'Name', [regione ': attualmente positivi']);
+        title(sprintf([regione ': attualmente positivi\\fontsize{5}\n ']))
+    elseif type==2
+        set(id_f, 'Name', [regione ': totale casi']);
+        title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
+    elseif type==3
+        set(id_f, 'Name', [regione ': casi giornalieri']);
+        title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+    end
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    %                 shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
+    %             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+    %             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+    %
+    %
+    
+    shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+    d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+    c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+    b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+    a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+            
+            
+            
+            if type==1 || type==3
+                [max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
+                piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+                piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+                
+                
+                idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=idxMina1(1);
+                idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
+                idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
+                
+                
+                zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
+                zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
+                
+                if piccoMin<piccoMax
+                    picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
+                else
+                    picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
+                end
+                
+                if piccoMin<piccoMax
+                    zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
+                else
+                    zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
+                end
+                
+                annotation(gcf,'textbox',...
+                    [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
+                    'String',{picco},...
+                    'LineStyle','none',...
+                    'HorizontalAlignment','right',...
+                    'FontSize',10,...
+                    'FontName','Verdana',...
+                    'FitBoxToText','off');
+                
+                annotation(gcf,'textbox',...
+                    [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
+                    'String',{zero},...
+                    'LineStyle','none',...
+                    'HorizontalAlignment','right',...
+                    'FontName','Verdana',...
+                    'FitBoxToText','off');
+                
+                
                 
             end
-            set(gcf,'NumberTitle','Off');
-            set(gcf,'Position',[26 79 967 603]);
-            grid on
-            hold on
-            shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
-            d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
-            c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
-            b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
-            a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
-            
-%             shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
-%             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
-%             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
-%             
-            
             
             if ismac
                 font_size = 9;
@@ -1448,6 +1571,8 @@ for reg=9%1:size(regioni_tot,1)
                 ylabel('Numero attualmente positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
             elseif type==2
                 ylabel('Numero totale casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+            elseif type==3
+                ylabel('Numero nuovi casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
             end
             datetick('x', datetickFormat, 'keepticks') ;
             set(gca,'XTickLabelRotation',53,'FontSize',6.5);
@@ -1486,6 +1611,8 @@ for reg=9%1:size(regioni_tot,1)
                 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoAttPositivi_',regione, '_cumulati.PNG']);
             elseif type==2
                 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoTotaleCasi_',regione, '_cumulati.PNG']);
+            elseif type==3
+                print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_',regione, '_cumulati.PNG']);
             end
             close(gcf);
             %     cd([WORKroot,'/code']);
@@ -1854,9 +1981,9 @@ for type=1:2
     set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
     if type==1
-    ylabel('Percentuale deceduti/casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+        ylabel('Percentuale deceduti/casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
     else
-     ylabel('Percentuale deceduti senza cure appropriate - stima!', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);    
+        ylabel('Percentuale deceduti senza cure appropriate - stima!', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
     end
     if ismac
         font_size = 9;
@@ -2370,48 +2497,48 @@ tabellone=struct;
 
 fout=fopen('province_daily_spline.csv','wt');
 for p =1 : size(ListaProvince,1)
-   idx = find(strcmp(dataReg.denominazione_provincia,ListaProvince(p)));
-   dateTime = dataReg.data(idx);
-   dataProv = dataReg.totale_casi(idx);
-   
-   dataTime_diff = dateTime(2:end);
-   dataProv_diff = diff(dataProv);
+    idx = find(strcmp(dataReg.denominazione_provincia,ListaProvince(p)));
+    dateTime = dataReg.data(idx);
+    dataProv = dataReg.totale_casi(idx);
     
-   [~, ~, ~, dataProv_diff_int] = splinerMat(1:size(dataTime_diff,1),dataProv_diff,3,0,1:size(dataTime_diff,1));
-   dataProv_diff_int(dataProv_diff_int<0)=0;
-   
-   for k = 1:size(dataTime_diff,1)
-      fprintf(fout,'%s;%s;%.2f\n', char(dataTime_diff(k)), char(dataReg.sigla_provincia(idx(k))), dataProv_diff_int(k));
-   end
-   
-   
-%    figure
-%    plot(datenum(dataTime_diff),dataProv_diff,'-b');
-%    hold on
-%    plot(datenum(dataTime_diff),dataProv_diff_int,'.-r');
-%    
-   
-   
-   tabellone.casi(:,p)=dataProv_diff_int;
-   tabellone.coord(p,:)=[dataReg.lat(idx(1)) dataReg.long(idx(1))];
-   idx_prov = find(strcmp(pop.sigla, dataReg.sigla_provincia(idx(k))));
-   tabellone.popolazione(p,1)=pop.number(idx_prov);
-   
+    dataTime_diff = dateTime(2:end);
+    dataProv_diff = diff(dataProv);
+    
+    [~, ~, ~, dataProv_diff_int] = splinerMat(1:size(dataTime_diff,1),dataProv_diff,3,0,1:size(dataTime_diff,1));
+    dataProv_diff_int(dataProv_diff_int<0)=0;
+    
+    for k = 1:size(dataTime_diff,1)
+        fprintf(fout,'%s;%s;%.2f\n', char(dataTime_diff(k)), char(dataReg.sigla_provincia(idx(k))), dataProv_diff_int(k));
+    end
+    
+    
+    %    figure
+    %    plot(datenum(dataTime_diff),dataProv_diff,'-b');
+    %    hold on
+    %    plot(datenum(dataTime_diff),dataProv_diff_int,'.-r');
+    %
+    
+    
+    tabellone.casi(:,p)=dataProv_diff_int;
+    tabellone.coord(p,:)=[dataReg.lat(idx(1)) dataReg.long(idx(1))];
+    idx_prov = find(strcmp(pop.sigla, dataReg.sigla_provincia(idx(k))));
+    tabellone.popolazione(p,1)=pop.number(idx_prov);
+    
 end
 
 fclose(fout);
-% 
+%
 % fh=figure;
 % hold on
 % filename='provascatter.gif';
 % for k=1:size(tabellone.casi,1)
-%    
-%     
+%
+%
 %     kk=scatter(tabellone.coord(:,2), tabellone.coord(:,1),tabellone.casi(k,:)+1,'filled','MarkerFaceColor',[1 0 0]);
 % %     kk=scatter(tabellone.coord(:,2), tabellone.coord(:,1),tabellone.casi(k,:)./tabellone.popolazione'*1000000,'filled','MarkerFaceColor',[1 0 0]);
 %     frame = getframe(fh);
 %     im_frame = frame2im(frame);
-%     
+%
 %     drawnow
 %     [imind,cm] = rgb2ind(im_frame,256);
 %     %     imind = imind(1:1250, 450:1700); % cut the bottom
