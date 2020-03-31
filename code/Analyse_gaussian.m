@@ -927,6 +927,106 @@ end
 
 
 
+
+
+
+
+
+%% bars Nazionale
+day_unique = unique(dataReg.data);
+time_num=datenum(day_unique);
+data=NaN(size(day_unique,1),5);
+for k = 1: size(day_unique,1)
+    index = find(strcmp(dataReg.data,day_unique(k)));
+    data(k,1)=sum(dataReg.deceduti(index));
+    data(k,2)=sum(dataReg.terapia_intensiva(index));
+    data(k,3)=sum(dataReg.totale_ospedalizzati(index));
+    data(k,4)=sum(dataReg.isolamento_domiciliare(index));
+    data(k,5)=sum(dataReg.dimessi_guariti(index));
+end
+
+
+%% bar stacked: totale casi
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+regione = 'Italia';
+set(id_f, 'Name', [regione ': dati cumulati']);
+title(sprintf([regione ': dati cumulati\\fontsize{5}\n ']))
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+
+
+bbb=[data(:,1)';data(:,2)';data(:,3)'-data(:,1)';data(:,4)';data(:,5)'];
+
+bbbar = bar(bbb','stacked'); hold on
+set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
+set(bbbar(2),'FaceColor',[1 0 0]);
+set(bbbar(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
+set(bbbar(4),'FaceColor',[1 1 0.400000005960464]);
+set(bbbar(5),'FaceColor',[0 0.800000011920929 0.200000002980232]);
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+
+set(gca,'XTick',1:size(time_num,1));
+set(gca,'XTickLabel',datestr(time_num,'dd mmm'));
+set(gca,'XLim',[0.5,size(time_num,1)+0.5]);
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax=gca;
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+
+l=legend([bbbar(5), bbbar(4),bbbar(3),bbbar(2),bbbar(1)],'Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+
+%%
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_cumulati.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
 %% interpolazione Nazionale
 day_unique = unique(dataReg.data);
 
