@@ -8,7 +8,7 @@ auto: false
 loop: true
 ---
 
-* ![Totale attualmente positivi](img/regioni/regioni_pesata_5_totale_attualmente_positivi.PNG)
+* ![Totale positivi](img/regioni/regioni_pesata_5_totale_positivi.PNG)
 * ![Totale ospedalizzati](img/regioni/regioni_pesata_3_totale_ospedalizzati.PNG)
 * ![Ricoverati con sintomi](img/regioni/regioni_pesata_1_ricoverati_con_sintomi.PNG)
 * ![Terapia intensiva](img/regioni/regioni_pesata_2_terapia_intensiva.PNG)
