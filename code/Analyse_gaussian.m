@@ -936,6 +936,7 @@ end
 day_unique = unique(dataReg.data);
 time_num=datenum(day_unique);
 data=NaN(size(day_unique,1),5);
+totaleCasi=NaN(size(day_unique,1),1);  
 for k = 1: size(day_unique,1)
     index = find(strcmp(dataReg.data,day_unique(k)));
     data(k,1)=sum(dataReg.deceduti(index));
@@ -943,6 +944,8 @@ for k = 1: size(day_unique,1)
     data(k,3)=sum(dataReg.totale_ospedalizzati(index));
     data(k,4)=sum(dataReg.isolamento_domiciliare(index));
     data(k,5)=sum(dataReg.dimessi_guariti(index));
+    totaleCasi(k,1)=sum(dataReg.totale_casi(index));
+    
 end
 
 
@@ -974,7 +977,6 @@ if ismac
 else
     font_size = 6.5;
 end
-
 
 set(gca,'XTick',1:size(time_num,1));
 set(gca,'XTickLabel',datestr(time_num,'dd mmm'));
@@ -1012,10 +1014,162 @@ annotation(gcf,'textbox',...
 
 
 
-%%
 % %     cd([WORKroot,'/assets/img/regioni']);
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_cumulati.PNG']);
 close(gcf);
+
+
+%%
+data_interp=[];
+% interpolazione di ogni serie
+% 1: deceduti
+fout=fopen('testIn_gauss.txt','wt');
+for i=1:size(data,1)
+    fprintf(fout,'%f;%d\n',time_num(i),data(i,1));
+end
+fclose(fout);
+command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+[t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+
+% 2: terapia_intensiva
+fout=fopen('testIn_gauss.txt','wt');
+for i=1:size(data,1)
+    fprintf(fout,'%f;%d\n',time_num(i),data(i,2));
+end
+fclose(fout);
+command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+[t,data_interp(:,2),a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+        
+% 3: ospedalizzati
+fout=fopen('testIn_gauss.txt','wt');
+for i=1:size(data,1)
+    fprintf(fout,'%f;%d\n',time_num(i),data(i,3)-data(i,1));
+end
+fclose(fout);
+command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+[t,data_interp(:,3),a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+        
+% 4: isolamento_domiciliare
+fout=fopen('testIn_gauss.txt','wt');
+for i=1:size(data,1)
+    fprintf(fout,'%f;%d\n',time_num(i),data(i,4));
+end
+fclose(fout);
+command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+[t,data_interp(:,4),a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');        
+        
+
+% 5: dimessiGuariti
+fout=fopen('testIn_gauss.txt','wt');
+for i=1:size(data,1)
+    fprintf(fout,'%f;%d\n',time_num(i),data(i,5));
+end
+fclose(fout);
+command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+[t,data_interp(:,5),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+
+% % 5: totaleCasi
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:size(data,1)
+%     fprintf(fout,'%f;%d\n',time_num(i),totaleCasi(i,1));
+% end
+% fclose(fout);
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,totaleCasi_interp,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% 
+% %dimessi guariti
+% dimessi_guariti = totaleCasi_interp-data_interp(:,3)-data_interp(:,4)-data_interp(:,1);
+
+
+%% bar stacked: totale casi
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+regione = 'Italia';
+set(id_f, 'Name', [regione ': dati cumulati']);
+title(sprintf([regione ': dati cumulati\\fontsize{5}\n ']))
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+
+
+bbb=[data(:,1)';data(:,2)';data(:,3)'-data(:,1)';data(:,4)';data(:,5)'];
+bbb1=[data_interp(:,1)';data_interp(:,2)';data_interp(:,3)';data_interp(:,4)';data_interp(:,5)'];
+% bbb1=[data_interp(:,1)';data_interp(:,2)';data_interp(:,3)';data_interp(:,4)';dimessi_guariti'];
+
+bbb1(:,1:size(time_num,1))=NaN;
+
+bbbar = bar(bbb','stacked'); hold on
+set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
+set(bbbar(2),'FaceColor',[1 0 0]);
+set(bbbar(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
+set(bbbar(4),'FaceColor',[1 1 0.400000005960464]);
+set(bbbar(5),'FaceColor',[0 0.800000011920929 0.200000002980232]);
+
+bbbar1 = bar(bbb1','stacked'); hold on
+set(bbbar1(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464],'FaceAlpha',0.2);
+set(bbbar1(2),'FaceColor',[1 0 0],'FaceAlpha',0.2);
+set(bbbar1(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794],'FaceAlpha',0.2);
+set(bbbar1(4),'FaceColor',[1 1 0.400000005960464],'FaceAlpha',0.2);
+set(bbbar1(5),'FaceColor',[0 0.800000011920929 0.200000002980232],'FaceAlpha',0.2);
+
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+set(gca,'XTick',1:2:size(t,1));
+set(gca,'XTickLabel',datestr(t(1:2:end),'dd mmm'));
+set(gca,'XLim',[0.5,size(t,1)+0.5]);
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax=gca;
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+
+l=legend([bbbar(5), bbbar(4),bbbar(3),bbbar(2),bbbar(1)],'Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+%%
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_cumulatiPrevisione.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1063,8 +1217,8 @@ for type=1:3
         command=sprintf('gauss_estim testIn_gauss.txt');system(command);
         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
         
-        %         command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-        %         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
+%                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
     elseif type==2
         command=sprintf('sigm_estim testIn_gauss.txt');system(command);
         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
@@ -1564,11 +1718,11 @@ for reg=9%1:size(regioni_tot,1)
             end
             
             if type==1 || type==3
-                command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
-                
-                %                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-                %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+%                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%                 
+                                command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
+                                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
             elseif type==2
                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
