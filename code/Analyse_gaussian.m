@@ -1718,12 +1718,16 @@ for reg=9%1:size(regioni_tot,1)
             end
             
             if type==1 || type==3
-%                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-%                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
-%                 
-                                command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-                                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+% %                 
+%                                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
+%                                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
             elseif type==2
+                
+                %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
+                
+                
                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
                 
