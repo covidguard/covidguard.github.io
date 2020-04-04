@@ -1675,14 +1675,14 @@ for reg=9%1:size(regioni_tot,1)
         regione = char(regioni_tot(reg,1));
         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
         time_num = fix(datenum(dataReg.data(index)));
-        %             dataReg=dataProv;
-        %             RegioneTot={'Como'}'
+        %             dataReg=dataProv;RegioneTot={'Como'}'; h=1;regione = char(RegioneTot(h));index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));time_num = fix(datenum(dataReg.data(index)));type=2;
+        %             
         % RegioneTot={'Lecco'}'
-        %            h=1
-        %             regione = char(RegioneTot(h));
-        %             index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
-        %             time_num = fix(datenum(dataReg.data(index)));
-        %                type=2;
+        %           
+        %             
+        %             
+        %             
+        %                
         
         %
         for type=1:3
