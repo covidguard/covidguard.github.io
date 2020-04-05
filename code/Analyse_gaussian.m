@@ -2756,7 +2756,7 @@ ListaProvince = setdiff(ListaProvince,'In fase di definizione/aggiornamento');
 tabellone=struct;
 
 
-fout=fopen('province_daily_spline.csv','wt');
+fout=fopen('C:/Temp/Repo/covidguard/_json/province_daily_spline.csv','wt');
 for p =1 : size(ListaProvince,1)
     idx = find(strcmp(dataReg.denominazione_provincia,ListaProvince(p)));
     dateTime = dataReg.data(idx);
