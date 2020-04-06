@@ -1720,9 +1720,9 @@ for reg=9%1:size(regioni_tot,1)
             if type==1 || type==3
                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
-% %                 
-%                                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-%                                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                % %
+                %                                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
+                %                                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
             elseif type==2
                 
                 %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
@@ -1734,37 +1734,37 @@ for reg=9%1:size(regioni_tot,1)
             end
             
             %% figura cumulata
-
             
-    datetickFormat = 'dd mmm';
-    figure;
-    id_f = gcf;
-    if type==1
-        set(id_f, 'Name', [regione ': attualmente positivi']);
-        title(sprintf([regione ': attualmente positivi\\fontsize{5}\n ']))
-    elseif type==2
-        set(id_f, 'Name', [regione ': totale casi']);
-        title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
-    elseif type==3
-        set(id_f, 'Name', [regione ': casi giornalieri']);
-        title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
-    end
-    set(gcf,'NumberTitle','Off');
-    set(gcf,'Position',[26 79 967 603]);
-    grid on
-    hold on
-    
-    %                 shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
-    %             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
-    %             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
-    %
-    %
-    
-    shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
-    d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
-    c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
-    b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
-    a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+            
+            datetickFormat = 'dd mmm';
+            figure;
+            id_f = gcf;
+            if type==1
+                set(id_f, 'Name', [regione ': attualmente positivi']);
+                title(sprintf([regione ': attualmente positivi\\fontsize{5}\n ']))
+            elseif type==2
+                set(id_f, 'Name', [regione ': totale casi']);
+                title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
+            elseif type==3
+                set(id_f, 'Name', [regione ': casi giornalieri']);
+                title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+            end
+            set(gcf,'NumberTitle','Off');
+            set(gcf,'Position',[26 79 967 603]);
+            grid on
+            hold on
+            
+            %                 shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
+            %             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+            %             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+            %
+            %
+            
+            shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+            d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+            c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+            b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+            a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
             
             
             
