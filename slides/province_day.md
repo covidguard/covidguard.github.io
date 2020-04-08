@@ -11,7 +11,7 @@ loop: true
 * ![Province Basilicata](img/province/Province_Basilicata_casiTotaliGiornalieri.PNG)
 * ![Province Calabria](img/province/Province_Calabria_casiTotaliGiornalieri.PNG)
 * ![Province Campania](img/province/Province_Campania_casiTotaliGiornalieri.PNG)
-* ![Province Emilia Romagna](img/province/Province_Emilia Romagna_casiTotaliGiornalieri.PNG)
+* ![Province Emilia Romagna](img/province/Province_Emilia-Romagna_casiTotaliGiornalieri.PNG)
 * ![Province Friuli Venezia](img/province/Province_Friuli Venezia Giulia_casiTotaliGiornalieri.PNG)
 * ![Province Lazio](img/province/Province_Lazio_casiTotaliGiornalieri.PNG)
 * ![Province Liguria](img/province/Province_Liguria_casiTotaliGiornalieri.PNG)

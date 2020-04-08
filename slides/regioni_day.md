@@ -12,7 +12,7 @@ loop: true
 * ![Regione Basilicata](img/regioni/reg_Basilicata_giornalieri.PNG)
 * ![Regione Calabria](img/regioni/reg_Calabria_giornalieri.PNG)
 * ![Regione Campania](img/regioni/reg_Campania_giornalieri.PNG)
-* ![Regione Emilia Romagna](img/regioni/reg_Emilia Romagna_giornalieri.PNG)
+* ![Regione Emilia Romagna](img/regioni/reg_Emilia-Romagna_giornalieri.PNG)
 * ![Regione Friuli Venezia](img/regioni/reg_Friuli Venezia Giulia_giornalieri.PNG)
 * ![Regione Lazio](img/regioni/reg_Lazio_giornalieri.PNG)
 * ![Regione Liguria](img/regioni/reg_Liguria_giornalieri.PNG)

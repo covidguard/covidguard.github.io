@@ -12,7 +12,7 @@ loop: true
 * ![Province Basilicata](img/province/Province_Basilicata_casiTotaliCumulati.PNG)
 * ![Province Calabria](img/province/Province_Calabria_casiTotaliCumulati.PNG)
 * ![Province Campania](img/province/Province_Campania_casiTotaliCumulati.PNG)
-* ![Province Emilia Romagna](img/province/Province_Emilia Romagna_casiTotaliCumulati.PNG)
+* ![Province Emilia Romagna](img/province/Province_Emilia-Romagna_casiTotaliCumulati.PNG)
 * ![Province Friuli Venezia](img/province/Province_Friuli Venezia Giulia_casiTotaliCumulati.PNG)
 * ![Province Lazio](img/province/Province_Lazio_casiTotaliCumulati.PNG)
 * ![Province Liguria](img/province/Province_Liguria_casiTotaliCumulati.PNG)

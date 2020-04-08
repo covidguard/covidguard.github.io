@@ -12,7 +12,7 @@ loop: true
 * ![Regione Basilicata Cum](img/regioni/reg_Basilicata_bars_cumulati.PNG)
 * ![Regione Calabria Cum](img/regioni/reg_Calabria_bars_cumulati.PNG)
 * ![Regione Campania Cum](img/regioni/reg_Campania_bars_cumulati.PNG)
-* ![Regione Emilia Romagna Cum](img/regioni/reg_Emilia Romagna_bars_cumulati.PNG)
+* ![Regione Emilia Romagna Cum](img/regioni/reg_Emilia-Romagna_bars_cumulati.PNG)
 * ![Regione Friuli Venezia  Cum](img/regioni/reg_Friuli Venezia Giulia_bars_cumulati.PNG)
 * ![Regione Lazio Cum](img/regioni/reg_Lazio_bars_cumulati.PNG)
 * ![Regione Liguria Cum](img/regioni/reg_Liguria_bars_cumulati.PNG)

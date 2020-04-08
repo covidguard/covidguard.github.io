@@ -12,7 +12,7 @@ loop: true
 * ![Regione Basilicata](img/regioni/reg_Basilicata_tamponi.PNG)
 * ![Regione Calabria](img/regioni/reg_Calabria_tamponi.PNG)
 * ![Regione Campania](img/regioni/reg_Campania_tamponi.PNG)
-* ![Regione Emilia Romagna](img/regioni/reg_Emilia Romagna_tamponi.PNG)
+* ![Regione Emilia Romagna](img/regioni/reg_Emilia-Romagna_tamponi.PNG)
 * ![Regione Friuli Venezia ](img/regioni/reg_Friuli Venezia Giulia_tamponi.PNG)
 * ![Regione Lazio](img/regioni/reg_Lazio_tamponi.PNG)
 * ![Regione Liguria](img/regioni/reg_Liguria_tamponi.PNG)

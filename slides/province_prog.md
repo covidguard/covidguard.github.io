@@ -12,7 +12,7 @@ loop: true
 * ![Province Basilicata](img/province/Province_prog_perc_Basilicata_progressioneUltimoGiorno.PNG)
 * ![Province Calabria](img/province/Province_prog_perc_Calabria_progressioneUltimoGiorno.PNG)
 * ![Province Campania](img/province/Province_prog_perc_Campania_progressioneUltimoGiorno.PNG)
-* ![Province Emilia Romagna](img/province/Province_prog_perc_Emilia Romagna_progressioneUltimoGiorno.PNG)
+* ![Province Emilia Romagna](img/province/Province_prog_perc_Emilia-Romagna_progressioneUltimoGiorno.PNG)
 * ![Province Friuli Venezia](img/province/Province_prog_perc_Friuli Venezia Giulia_progressioneUltimoGiorno.PNG)
 * ![Province Lazio](img/province/Province_prog_perc_Lazio_progressioneUltimoGiorno.PNG)
 * ![Province Liguria](img/province/Province_prog_perc_Liguria_progressioneUltimoGiorno.PNG)
