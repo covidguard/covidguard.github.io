@@ -12,7 +12,7 @@ has_toc: false
 
 
 ![image-title-here](/assets/img/no_covid_299x400.png){:style="float: right; height: 200px; margin-top: -30px;"}
-Lo scopo della pagina è di accrescere la consapevolezza sul covid-19 grazie a semplici grafici.
+Lo scopo della pagina è di accrescere la consapevolezza sul covid-19 grazie a semplici analisi grafiche.
 
 Ogni giorno il sito verrà aggiornato tra le ore 18:30 e le 19:30. Se la pagina non dovesse apparire aggiornata dopo quest'ora suggeriamo di provare a svuotare la cache del proprio browser.
 
@@ -23,6 +23,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <ul> 
     <li> <a href="#diffusione-spazio-temporale">Italia: Diffusione spazio-temporale</a> </li> 
     <li> <a href="#andamento-italiano-regione-per-regione">Italia: Andamento Italiano regione per regione</a> </li> 
+    <li> <a href="#trend-giorno-per-giorno">Italia: Trend giorno per giorno</a> </li> 
     <li> <a href="#tasso-di-mortalita">Italia: Tasso di mortalità regione per regione</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Italia: Stima Positivi Cumulata</a> </li> 
     <li> <a href="#stima-del-picco-di-attualmente-positivi-1">Italia: Stima Positivi</a> </li> 
@@ -54,6 +55,12 @@ Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d
 
 Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perciò la sua variabilità potrebbe essere maggiore.
 
+
+### Trend giorno per giorno 
+Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domiciliare, ricoverati con sintomi, terapie intensive e deceduti, in due rappresentazioni differenti.
+![Andamento Italia Grafico a Barre](slides/img/regioni/reg_Italia_bars_cumulati.PNG)
+![Andamento Italia Grafico a Linee](slides/img/regioni/reg_Italia_linee_cumulati.PNG)
+
 ### Tasso di mortalità 
 Tasso di mortalità calcolato sui casi totali, ovviamente il valore reale è molto più basso, i casi totali conteggiati sono solamente dati dal totale delle persone a cui un tampone è risultato positivo, come noto i casi sommersi sono molti. I valori del grafico sono quindi molto dipendenti dal numero di tamponi effettuati regione per regione.
 ![Tasso di mortalità](slides/img/regioni/ita_mortalita.PNG)
@@ -71,7 +78,7 @@ Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di pi�
 ![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
 
 ### Stima del picco di attualmente positivi
-Il grafico mostra 3 funzioni chi-quadro (due giorni fa, ieri e odierna) fittati sul numero di attualmente positivi d'Italia. Per il chi-quadro odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
+Il grafico mostra 3 funzioni gaussiane (due giorni fa, ieri e odierna) fittati sul numero di attualmente positivi d'Italia. Per la gaussiana odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
 
 ![Picco Italia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Italia_cumulati.PNG)
@@ -93,7 +100,7 @@ Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di pi�
 ![Picco Lombardia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Lombardia_cumulati.PNG)
 
 ### Stima del picco di attualmente positivi
-Il grafico mostra 3 funzioni chi-quadro (due giorni fa, ieri e odierna) fittati sul numero di attualmente positivi della regione Lombardia. Per il chi-quadro odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
+Il grafico mostra 3 funzioni gaussiane (due giorni fa, ieri e odierna) fittati sul numero di attualmente positivi della regione Lombardia. Per la gaussiana odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
 
 ![Picco Lombardia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Lombardia_cumulati.PNG)
