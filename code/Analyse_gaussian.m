@@ -2210,46 +2210,43 @@ for reg=9%1:size(regioni_tot,1)
     end
     
     
-    %comodaily
-    data=dataReg.totale_casi(index,1);
-    data=diff(data);   time_num=time_num(2:end);
-    fout=fopen('testIn_gauss.txt','wt');
-    for i=1:size(data,1)
-        fprintf(fout,'%d;%d\n',time_num(i),data(i));
-    end
-    command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-    [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
-    id_f = gcf;
-    set(id_f, 'Name', [regione ': casi giornalieri']);
-    title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
-    set(gcf,'NumberTitle','Off');
-    set(gcf,'Position',[26 79 967 603]);
-    grid on; hold on; grid minor
-    shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
-    d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
-    c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
-    b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
-    a=plot(time_num,data,'-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
-    
-    ax = gca;
-    code_axe = get(id_f, 'CurrentAxes');
-    set(code_axe, 'FontName', 'Verdana');
-    set(code_axe, 'FontSize', font_size);
-    ylimi=get(gca,'ylim');
-    set(gca,'ylim',([0,ylimi(2)]));
-    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-    ylabel('Numero nuovi casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-    datetick('x', datetickFormat, 'keepticks') ;
-    set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-    ax.FontSize = font_size;
-    print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_',regione, '_giornalieri.PNG']);
-   close(gcf);
-        % %
-        %                                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-        %                                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
-    
-    
-    
+%     %comodaily
+%     data=dataReg.totale_casi(index,1);
+%     data=diff(data);   time_num=time_num(2:end);
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:size(data,1)
+%         fprintf(fout,'%d;%d\n',time_num(i),data(i));
+%     end
+%     command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+%     [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%     id_f = gcf;
+%     set(id_f, 'Name', [regione ': casi giornalieri']);
+%     title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+%     set(gcf,'NumberTitle','Off');
+%     set(gcf,'Position',[26 79 967 603]);
+%     grid on; hold on; grid minor
+%     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+%     d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+%     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+%     b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+%     a=plot(time_num,data,'-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+%     
+%     ax = gca;
+%     code_axe = get(id_f, 'CurrentAxes');
+%     set(code_axe, 'FontName', 'Verdana');
+%     set(code_axe, 'FontSize', font_size);
+%     ylimi=get(gca,'ylim');
+%     set(gca,'ylim',([0,ylimi(2)]));
+%     ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+%     ylabel('Numero nuovi casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+%     datetick('x', datetickFormat, 'keepticks') ;
+%     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+%     ax.FontSize = font_size;
+%     print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_',regione, '_giornalieri.PNG']);
+%    close(gcf);
+% 
+%     
+%     
     
 end
 
