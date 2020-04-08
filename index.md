@@ -44,9 +44,13 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 
 ## ITALIA
 
-### Diffusione spazio-temporale
+### Diffusione spazio-temporale: cumulata
 Mappa che mostra la diffusione nel tempo del virus nelle varie province italiane.
 ![Mappa Italia](/code/mappaProv.gif)
+
+### Diffusione spazio-temporale: variazione giornaliera
+Mappa che mostra come varia la diffusione nel tempo del virus nelle varie province italiane.
+![Mappa Italia](/code/mappaProv_spl.gif)
 
 ### Andamento Italiano regione per regione
 Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d'Italia.
