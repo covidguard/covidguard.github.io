@@ -89,7 +89,13 @@ Tra i primi sintomi (tampone positivo) e il decesso trascorrono circa 7-8 giorni
 
 ![Casi Vs Decessi](/slides/img/regioni/ita_correlazioneCasiDeceduti.PNG)
 
+
 ## LOMBARDIA
+
+### Trend giorno per giorno 
+Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domiciliare, ricoverati con sintomi, terapie intensive e deceduti, in due rappresentazioni differenti.
+![Andamento Lombardia Grafico a Barre](slides/img/regioni/reg_Lombardia_bars_cumulati.PNG)
+![Andamento Lombardia Grafico a Linee](slides/img/regioni/reg_Lombardia_linee_cumulati.PNG)
 
 ### Stima del numero cumulato di positivi
 L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
@@ -104,6 +110,8 @@ Il grafico mostra 3 funzioni gaussiane (due giorni fa, ieri e odierna) fittati s
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
 
 ![Picco Lombardia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Lombardia_cumulati.PNG)
+
+
 
 ## ITALIA Regioni
 
