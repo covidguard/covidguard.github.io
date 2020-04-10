@@ -2209,8 +2209,8 @@ for reg=9%1:size(regioni_tot,1)
     catch
     end
     
-%     
-%     %comodaily
+    
+    %comodaily
 %     data=dataReg.totale_casi(index,1);
 %     data=diff(data);   time_num=time_num(2:end);
 %     fout=fopen('testIn_gauss.txt','wt');
@@ -2244,8 +2244,8 @@ for reg=9%1:size(regioni_tot,1)
 %     ax.FontSize = font_size;
 %     print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_',regione, '_giornalieri.PNG']);
 %    close(gcf);
-
-    
+% 
+%     
 %     
     
 end
