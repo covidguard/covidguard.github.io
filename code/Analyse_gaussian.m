@@ -1459,6 +1459,391 @@ close(gcf);
 
 
 
+%% Decorrelazione con numero tamponi: Lombardia
+
+day_unique = unique(dataReg.data);
+
+reg=9;
+n_tamponi=NaN(size(day_unique,1),1);
+n_totaleCasi =NaN(size(day_unique,1),1);
+n_deceduti = NaN(size(day_unique,1),1);
+n_guariti = NaN(size(day_unique,1),1);
+for k = 1: size(day_unique,1)
+    index = find(strcmp(dataReg.data,day_unique(k)) & strcmp(dataReg.denominazione_regione,'Lombardia'));
+%     index = find(strcmp(dataReg.data,day_unique(k)) & strcmp(dataReg.denominazione_regione,'Liguria'));
+    n_tamponi(k)=sum(dataReg.tamponi(index));
+    n_totaleCasi(k)=sum(dataReg.totale_casi(index));
+    n_deceduti(k)=sum(dataReg.deceduti(index));
+    n_guariti(k)=sum(dataReg.dimessi_guariti(index));
+end
+
+time_num = fix(datenum(day_unique));
+regione = 'Lombardia';
+% regione = 'Liguria';
+
+% % model numero tamponi
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:size(data,1)
+%     fprintf(fout,'%d;%d\n',time_num(i),n_tamponi(i));
+% end
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%
+%% figura cumulata
+datetickFormat = 'dd mmm';
+%     figure;
+%     id_f = gcf;
+%     set(id_f, 'Name', [regione ': numero totale tamponi']);
+%     title(sprintf([regione ': numero totale tamponi\\fontsize{5}\n ']))
+%     set(gcf,'NumberTitle','Off');
+%     set(gcf,'Position',[26 79 967 603]);
+%     grid on
+%     hold on
+%     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+%     d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+%     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+%     b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+%     a=plot(time_num,n_tamponi,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+
+%
+
+P = polyfit(time_num,n_tamponi,3)  ;
+PP = polyval(P,time_num);
+corr_factor=(n_tamponi./PP);
+
+n_totaleCasiCorretti=n_totaleCasi./corr_factor;
+% % 
+% id_f=figure;
+% hold on
+% plot(time_num,n_tamponi,'*-b');
+% plot(time_num,PP,'*-r');
+% grid on
+% ylabel('numero tamponi')
+% ax = gca;
+% code_axe = get(id_f, 'CurrentAxes');
+% set(code_axe, 'FontName', 'Verdana');
+% set(code_axe, 'FontSize', font_size);
+% 
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+% datetick('x', datetickFormat, 'keepticks') ;
+% set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+% ax.FontSize = font_size;
+
+
+
+
+% interpolazione casi corretti
+fout=fopen('testIn_gauss.txt','wt');
+for i=1:size(n_totaleCasiCorretti,1)
+    fprintf(fout,'%d;%d\n',time_num(i),n_totaleCasiCorretti(i));
+end
+command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+datetickFormat = 'dd mmm';
+
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': numero totale casi (corretti col numero tamponi)']);
+title(sprintf([regione ': numero totale casi (corretti col numero tamponi)\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+a=plot(time_num,n_totaleCasiCorretti,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Casi Totali (corretti con il numero tamponi)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+
+
+
+l=legend([a,b,c,d],'Dati Reali',sprintf('Stima al %s',datestr(time_num(end),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-1),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-2),'dd mmm')));
+
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoTotaleCasiCorretti_',regione, '_cumulati.PNG']);
+close(gcf);
+
+
+
+
+% attualmente positivi corretti
+n_attualmetePositivi_corretti=n_totaleCasiCorretti-n_deceduti-n_guariti;
+fout=fopen('testIn_gauss.txt','wt');
+for i=1:size(time_num,1)
+    fprintf(fout,'%d;%d\n',time_num(i),n_attualmetePositivi_corretti(i));
+end
+command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+datetickFormat = 'dd mmm';
+
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': attualmente positivi (corretti col numero tamponi)']);
+title(sprintf([regione ': attualmente positivi (corretti col numero tamponi)\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+a=plot(time_num,n_attualmetePositivi_corretti,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+[max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
+
+idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=idxMina1(1);
+idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
+idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
+
+piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+
+zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
+zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
+
+if piccoMin<piccoMax
+    picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
+else
+    picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
+end
+
+if piccoMin<piccoMax
+    zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
+else
+    zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
+end
+
+annotation(gcf,'textbox',...
+    [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
+    'String',{picco},...
+    'LineStyle','none',...
+    'HorizontalAlignment','right',...
+    'FontSize',10,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+annotation(gcf,'textbox',...
+    [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
+    'String',{zero},...
+    'LineStyle','none',...
+    'HorizontalAlignment','right',...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Attualmente positivi (corretti con il numero tamponi)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+
+
+
+l=legend([a,b,c,d],'Dati Reali',sprintf('Stima al %s',datestr(time_num(end),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-1),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-2),'dd mmm')));
+
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoAttualmentePositiviCorretti_',regione, '_cumulati.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+% interpolazione totale casi corretti giornalieri
+fout=fopen('testIn_gauss.txt','wt');
+time_num1= time_num(2:end);
+n_totaleCasiCorretti1 = diff(n_totaleCasiCorretti);
+for i=1:size(time_num1,1)
+    fprintf(fout,'%d;%d\n',time_num1(i),n_totaleCasiCorretti1(i));
+end
+command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+datetickFormat = 'dd mmm';
+
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': totale casi giornalieri (corretti col numero tamponi)']);
+title(sprintf([regione ': totale casi giornalieri (corretti col numero tamponi)\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+a=plot(time_num1,n_totaleCasiCorretti1,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+[max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
+
+idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=idxMina1(1);
+idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
+idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
+
+piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+
+zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
+zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
+
+if piccoMin<piccoMax
+    picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
+else
+    picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
+end
+
+if piccoMin<piccoMax
+    zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
+else
+    zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
+end
+
+annotation(gcf,'textbox',...
+    [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
+    'String',{picco},...
+    'LineStyle','none',...
+    'HorizontalAlignment','right',...
+    'FontSize',10,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+annotation(gcf,'textbox',...
+    [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
+    'String',{zero},...
+    'LineStyle','none',...
+    'HorizontalAlignment','right',...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Nuovi casi giornalieri (corretti con il numero tamponi)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+
+
+
+l=legend([a,b,c,d],'Dati Reali',sprintf('Stima al %s',datestr(time_num(end),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-1),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-2),'dd mmm')));
+
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoTotaleCasiGiornalieriCorretti_',regione, '_cumulati.PNG']);
+close(gcf);
+
+
+
 
 
 
@@ -1699,6 +2084,261 @@ for type=1:3
     
     
 end
+
+
+
+%% Decorrelazione con numero tamponi
+
+%% interpolazione Nazionale
+
+day_unique = unique(dataReg.data);
+
+
+n_tamponi=NaN(size(day_unique,1),1);
+n_totaleCasi =NaN(size(day_unique,1),1);
+for k = 1: size(day_unique,1)
+    index = find(strcmp(dataReg.data,day_unique(k)));
+    n_tamponi(k)=sum(dataReg.tamponi(index));
+    n_totaleCasi(k)=sum(dataReg.totale_casi(index))
+end
+
+time_num = fix(datenum(day_unique));
+regione = 'Italia';
+
+% % model numero tamponi
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:size(data,1)
+%     fprintf(fout,'%d;%d\n',time_num(i),n_tamponi(i));
+% end
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%
+%% figura cumulata
+datetickFormat = 'dd mmm';
+%     figure;
+%     id_f = gcf;
+%     set(id_f, 'Name', [regione ': numero totale tamponi']);
+%     title(sprintf([regione ': numero totale tamponi\\fontsize{5}\n ']))
+%     set(gcf,'NumberTitle','Off');
+%     set(gcf,'Position',[26 79 967 603]);
+%     grid on
+%     hold on
+%     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+%     d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+%     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+%     b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+%     a=plot(time_num,n_tamponi,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+%
+%
+
+P = polyfit(time_num,n_tamponi,3)  ;
+PP = polyval(P,time_num);
+corr_factor=(n_tamponi./PP);
+
+n_totaleCasiCorretti=n_totaleCasi./corr_factor;
+
+
+% interpolazione casi corretti
+fout=fopen('testIn_gauss.txt','wt');
+for i=1:size(data,1)
+    fprintf(fout,'%d;%d\n',time_num(i),n_totaleCasiCorretti(i));
+end
+command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+datetickFormat = 'dd mmm';
+
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': numero totale casi (corretti col numero tamponi)']);
+title(sprintf([regione ': numero totale casi (corretti col numero tamponi)\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+a=plot(time_num,n_totaleCasiCorretti,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Casi Totali (corretti con il numero tamponi)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+
+
+
+l=legend([a,b,c,d],'Dati Reali',sprintf('Stima al %s',datestr(time_num(end),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-1),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-2),'dd mmm')));
+
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoTotaleCasiCorretti_',regione, '_cumulati.PNG']);
+close(gcf);
+
+
+% interpolazione casi corretti giornalieri
+fout=fopen('testIn_gauss.txt','wt');
+time_num1= time_num(2:end);
+n_totaleCasiCorretti1 = diff(n_totaleCasiCorretti);
+for i=1:size(time_num1,1)
+    fprintf(fout,'%d;%d\n',time_num1(i),n_totaleCasiCorretti1(i));
+end
+command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+datetickFormat = 'dd mmm';
+
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': totale casi giornalieri (corretti col numero tamponi)']);
+title(sprintf([regione ': totale casi giornalieri (corretti col numero tamponi)\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+a=plot(time_num1,n_totaleCasiCorretti1,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+[max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
+
+idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=idxMina1(1);
+idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
+idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
+
+piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+
+zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
+zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
+
+if piccoMin<piccoMax
+    picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
+else
+    picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
+end
+
+if piccoMin<piccoMax
+    zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
+else
+    zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
+end
+
+annotation(gcf,'textbox',...
+    [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
+    'String',{picco},...
+    'LineStyle','none',...
+    'HorizontalAlignment','right',...
+    'FontSize',10,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+annotation(gcf,'textbox',...
+    [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
+    'String',{zero},...
+    'LineStyle','none',...
+    'HorizontalAlignment','right',...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Nuovi casi giornalieri (corretti con il numero tamponi)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+
+
+
+l=legend([a,b,c,d],'Dati Reali',sprintf('Stima al %s',datestr(time_num(end),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-1),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-2),'dd mmm')));
+
+set(l,'Location','northwest')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoTotaleCasiGiornalieriCorretti_',regione, '_cumulati.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2210,7 +2850,7 @@ for reg=9%1:size(regioni_tot,1)
     end
     
     
-    %comodaily
+% %     comodaily
 %     data=dataReg.totale_casi(index,1);
 %     data=diff(data);   time_num=time_num(2:end);
 %     fout=fopen('testIn_gauss.txt','wt');
@@ -2244,9 +2884,9 @@ for reg=9%1:size(regioni_tot,1)
 %     ax.FontSize = font_size;
 %     print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_',regione, '_giornalieri.PNG']);
 %    close(gcf);
-% 
-%     
-%     
+
+    
+    
     
 end
 
