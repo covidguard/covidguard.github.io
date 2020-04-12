@@ -1977,12 +1977,21 @@ for type=1:3
         idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
         idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
         
+        piccoMin=[];
+        piccoMax=[];
+        zeroMin=[];
+        zeroMax=[];
+        try
         piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
         piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
         
         zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
         zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
-        
+        catch
+            
+            
+        end
+        try
         if piccoMin<piccoMax
             picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
         else
@@ -2011,7 +2020,8 @@ for type=1:3
             'HorizontalAlignment','right',...
             'FontName','Verdana',...
             'FitBoxToText','off');
-        
+        catch
+        end
     end
     
     
