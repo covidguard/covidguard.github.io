@@ -1634,12 +1634,18 @@ idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=
 idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
 idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
 
+piccoMin=[];
+piccoMax=[];
+zeroMin=[];
+zeroMax=[];
+try
 piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
 piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
 
 zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
 zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
-
+catch
+end
 if piccoMin<piccoMax
     picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
 else
@@ -1973,9 +1979,12 @@ for type=1:3
     if type==1 || type==3
         [max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
         
+        try
         idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=idxMina1(1);
         idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
         idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
+        catch
+        end
         
         piccoMin=[];
         piccoMax=[];
@@ -2879,7 +2888,7 @@ for reg=9%1:size(regioni_tot,1)
 %     d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
 %     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
 %     b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
-%     a=plot(time_num,data,'-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+%     a=plot(time_num,data,'.-b','markersize',14,'linewidth',1);
 %     
 %     ax = gca;
 %     code_axe = get(id_f, 'CurrentAxes');
