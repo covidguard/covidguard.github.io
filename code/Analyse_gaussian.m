@@ -1908,6 +1908,9 @@ for type=1:3
     data=NaN(size(day_unique,1),1);
     for k = 1: size(day_unique,1)
         index = find(strcmp(dataReg.data,day_unique(k)));
+%         index = find(strcmp(dataReg.data,day_unique(k)) & ~strcmp(dataReg.denominazione_regione,'Lombardia') & ~strcmp(dataReg.denominazione_regione,'Veneto') & ~strcmp(dataReg.denominazione_regione,'Emilia-Romagna')...
+%             & ~strcmp(dataReg.denominazione_regione,'Piemonte') & ~strcmp(dataReg.denominazione_regione,'Valle d Aosta') & ~strcmp(dataReg.denominazione_regione,'P.A. Trento') & ~strcmp(dataReg.denominazione_regione,'P.A. Bolzano') ...
+%             & ~strcmp(dataReg.denominazione_regione,'Friuli Venezia Giulia') & ~strcmp(dataReg.denominazione_regione,'Liguria'));
         if type==1
             data(k)=sum(dataReg.totale_positivi(index));
         elseif type==2 || type==3
@@ -1926,6 +1929,7 @@ for type=1:3
     
     
     regione = 'Italia';
+%     regione = 'Italia-noNord';
     
     fout=fopen('testIn_gauss.txt','wt');
     for i=1:size(data,1)
