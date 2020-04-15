@@ -2920,8 +2920,6 @@ end
 
 
 
-
-
 %% Regioni confronto
 
 % andamento normalizzato casi totali
@@ -3337,6 +3335,263 @@ end
 
 
 
+
+
+
+%% COMO
+for reg=9%1:size(regioni_tot,1)
+    
+    
+    try
+        regione = char(regioni_tot(reg,1));
+        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+        time_num = fix(datenum(dataReg.data(index)));
+        dataReg=dataProv;RegioneTot={'Como'}'; h=1;regione = char(RegioneTot(h));index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));time_num = fix(datenum(dataReg.data(index)));type=2;
+        %             
+        % RegioneTot={'Lecco'}'
+        %           
+        %             
+        %             
+        %             
+        %                
+        
+        %
+%         for type=1:3
+            try
+                delete('testIn_gauss.txt');
+            catch
+            end
+            try
+                delete('testIn_gauss_fit.txt');
+            catch
+            end
+            
+            if type==1 %gauss su attualmente positivi
+                data=dataReg.totale_positivi(index,1);
+                %         data=dataReg.totale_casi(index,1);
+                %          data=diff(data);
+                
+            elseif type==2  || type==3 %sigmoide su totale casi
+                data=dataReg.totale_casi(index,1);
+                %              data=dataReg.dimessi_guariti(index,1);
+            end
+            %         data=dataReg.deceduti(index,1);
+            if type==3
+                data=diff(data);
+                time_num=time_num(2:end);
+            end
+            
+            
+            
+            fout=fopen('testIn_gauss.txt','wt');
+            for i=1:size(data,1)
+                fprintf(fout,'%d;%d\n',time_num(i),data(i));
+            end
+            
+            if type==1 || type==3
+                command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                % %
+                %                                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
+                %                                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+            elseif type==2
+                
+                %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
+                
+                
+                command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                
+            end
+            
+            %% figura cumulata
+            
+            
+            datetickFormat = 'dd mmm';
+            figure;
+            id_f = gcf;
+            if type==1
+                set(id_f, 'Name', [regione ': attualmente positivi']);
+                title(sprintf([regione ': attualmente positivi\\fontsize{5}\n ']))
+            elseif type==2
+                set(id_f, 'Name', [regione ': totale casi']);
+                title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
+            elseif type==3
+                set(id_f, 'Name', [regione ': casi giornalieri']);
+                title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+            end
+            set(gcf,'NumberTitle','Off');
+            set(gcf,'Position',[26 79 967 603]);
+            grid on
+            hold on
+            
+            %                 shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
+            %             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+            %             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+            %
+            %
+            
+            shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+            d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+            c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+            b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+            a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+            
+            
+            
+            if type==1 || type==3
+                [max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
+                piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+                piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+                
+                
+                idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=idxMina1(1);
+                idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
+                idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
+                
+                
+                zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
+                zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
+                
+                if piccoMin<piccoMax
+                    picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
+                else
+                    picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
+                end
+                
+                if piccoMin<piccoMax
+                    zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
+                else
+                    zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
+                end
+                
+                annotation(gcf,'textbox',...
+                    [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
+                    'String',{picco},...
+                    'LineStyle','none',...
+                    'HorizontalAlignment','right',...
+                    'FontSize',10,...
+                    'FontName','Verdana',...
+                    'FitBoxToText','off');
+                
+                annotation(gcf,'textbox',...
+                    [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
+                    'String',{zero},...
+                    'LineStyle','none',...
+                    'HorizontalAlignment','right',...
+                    'FontName','Verdana',...
+                    'FitBoxToText','off');
+                
+                
+                
+            end
+            
+            if ismac
+                font_size = 9;
+            else
+                font_size = 6.5;
+            end
+            
+            ax = gca;
+            code_axe = get(id_f, 'CurrentAxes');
+            set(code_axe, 'FontName', 'Verdana');
+            set(code_axe, 'FontSize', font_size);
+            ylimi=get(gca,'ylim');
+            set(gca,'ylim',([0,ylimi(2)]));
+            ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+            if type==1
+                ylabel('Numero attualmente positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+            elseif type==2
+                ylabel('Numero totale casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+            elseif type==3
+                ylabel('Numero nuovi casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+            end
+            datetick('x', datetickFormat, 'keepticks') ;
+            set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+            ax.FontSize = font_size;
+            
+            
+            
+            l=legend([a,b,c,d],'Dati Reali',sprintf('Stima al %s',datestr(time_num(end),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-1),'dd mmm')),sprintf('Stima al %s',datestr(time_num(end-2),'dd mmm')));
+            
+            set(l,'Location','northwest')
+            % overlap copyright info
+            datestr_now = datestr(now);
+            annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+                'String',{['Fonte: https://github.com/pcm-dpc']},...
+                'HorizontalAlignment','center',...
+                'FontSize',6,...
+                'FontName','Verdana',...
+                'FitBoxToText','off',...
+                'LineStyle','none',...
+                'Color',[0 0 0]);
+            
+            
+            annotation(gcf,'textbox',...
+                [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+                'String',{'https://covidguard.github.io/#covid-19-italia'},...
+                'LineStyle','none',...
+                'HorizontalAlignment','left',...
+                'FontSize',6,...
+                'FontName','Verdana',...
+                'FitBoxToText','off');
+            
+            
+            %%
+            % %     cd([WORKroot,'/assets/img/regioni']);
+            if type==1
+                print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoAttPositivi_',regione, '_cumulati.PNG']);
+            elseif type==2
+                print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoTotaleCasi_',regione, '_cumulati.PNG']);
+            elseif type==3
+                print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_',regione, '_cumulati.PNG']);
+            end
+            close(gcf);
+            %     cd([WORKroot,'/code']);
+        end
+%     catch
+%     end
+    
+    
+% %     comodaily
+    data=dataReg.totale_casi(index,1);
+    data=diff(data);   time_num=time_num(2:end);
+    fout=fopen('testIn_gauss.txt','wt');
+    for i=1:size(data,1)
+        fprintf(fout,'%d;%d\n',time_num(i),data(i));
+    end
+    command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+    [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
+    id_f = gcf;
+    set(id_f, 'Name', [regione ': casi giornalieri']);
+    title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on; hold on; grid minor
+    shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+    d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+    c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+    b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+    a=plot(time_num,data,'.-b','markersize',14,'linewidth',1);
+    
+    ax = gca;
+    code_axe = get(id_f, 'CurrentAxes');
+    set(code_axe, 'FontName', 'Verdana');
+    set(code_axe, 'FontSize', font_size);
+    ylimi=get(gca,'ylim');
+    set(gca,'ylim',([0,ylimi(2)]));
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+    ylabel('Numero nuovi casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    datetick('x', datetickFormat, 'keepticks') ;
+    set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+    ax.FontSize = font_size;
+    print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_',regione, '_giornalieri.PNG']);
+   close(gcf);
+
+    
+    
+    
+end
 
 
 
