@@ -2802,11 +2802,15 @@ for reg=9%1:size(regioni_tot,1)
                 piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
                 piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
                 
-                
+                try
                 idxMina1=find(round(a1(fix(size(a1,1)/2):end))<100)+fix(size(a1,1)/2); idxMina1=idxMina1(1);
                 idxMina2=find(round(a2(fix(size(a2,1)/2):end))<100)+fix(size(a2,1)/2); idxMina2=idxMina2(1);
                 idxMina3=find(round(a3(fix(size(a3,1)/2):end))<100)+fix(size(a3,1)/2); idxMina3=idxMina3(1);
-                
+                catch
+                    idxMina1=[];
+                    idxMina2=[];
+                    idxMina3=[];
+                end
                 
                 zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
                 zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
@@ -3799,6 +3803,8 @@ for reg = 1:size(Regione_lista)
         string_legend='l=legend([b]';
         
         testo=struct;
+        
+        RegioneTot=setdiff(RegioneTot,cellstr('Forl\u201c-Cesena'));
         
         for h=1:size(RegioneTot,1)
             regione = char(RegioneTot(h));
