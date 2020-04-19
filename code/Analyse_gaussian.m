@@ -930,7 +930,7 @@ end
 
 
 %% lombardia andamenti con previsioni
-for reg = [5 9 21];
+for reg = [9];
     regione = char(regioni_tot(reg,1));
     index0 = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     time_num = fix(datenum(dataReg.data(index)));
@@ -961,9 +961,12 @@ for reg = [5 9 21];
         fprintf(fout,'%f;%d\n',time_num(i),data(i,1));
     end
     fclose(fout);
-    command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-    [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%     [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
     
+    command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+    [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');       
+  
     % 2: terapia_intensiva
     fout=fopen('testIn_gauss.txt','wt');
     for i=1:size(data,1)
@@ -998,9 +1001,10 @@ for reg = [5 9 21];
         fprintf(fout,'%f;%d\n',time_num(i),data(i,5));
     end
     fclose(fout);
-    command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-    [t,data_interp(:,5),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
-    
+%     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%     [t,data_interp(:,5),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+    command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+    [t,data_interp(:,5),a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');   
     
     % 6: CasiTotali
     fout=fopen('testIn_gauss.txt','wt');
@@ -1009,8 +1013,12 @@ for reg = [5 9 21];
         fprintf(fout,'%f;%d\n',time_num(i),data6(i,1));
     end
     fclose(fout);
-    command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-    [t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%     [t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+    
+    command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+    [t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');   
+    
     
     
     datetickFormat = 'dd mmm';
@@ -1221,8 +1229,13 @@ for i=1:size(data,1)
     fprintf(fout,'%f;%d\n',time_num(i),data(i,1));
 end
 fclose(fout);
-command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-[t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+
+command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+[t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');   
+
+
 
 % 2: terapia_intensiva
 fout=fopen('testIn_gauss.txt','wt');
@@ -1258,9 +1271,14 @@ for i=1:size(data,1)
     fprintf(fout,'%f;%d\n',time_num(i),data(i,5));
 end
 fclose(fout);
-command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-[t,data_interp(:,5),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,data_interp(:,5),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
 
+command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+[t,data_interp(:,5),a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');   
+    
+    
+    
 % % 5: totaleCasi
 % fout=fopen('testIn_gauss.txt','wt');
 % for i=1:size(data,1)
@@ -1366,10 +1384,14 @@ for i=1:size(data,1)
     fprintf(fout,'%f;%d\n',time_num(i),data6(i,1));
 end
 fclose(fout);
-command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-[t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
 
-
+command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+[t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');   
+    
+    
+    
 datetickFormat = 'dd mmm';
 figure;
 id_f = gcf;
@@ -1537,8 +1559,13 @@ fout=fopen('testIn_gauss.txt','wt');
 for i=1:size(n_totaleCasiCorretti,1)
     fprintf(fout,'%d;%d\n',time_num(i),n_totaleCasiCorretti(i));
 end
-command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+
+command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');   
+
+
 datetickFormat = 'dd mmm';
 
 figure;
@@ -1964,11 +1991,20 @@ for type=1:3
         command=sprintf('gauss_estim testIn_gauss.txt');system(command);
         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%d%f%f%f%f%f','delimiter',';');
         
+%         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%d%f%f%f%f%f','delimiter',';');
+        
         %                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
     elseif type==2
-        command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%         command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+        
+        command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');       
+        
+        
+        
         
     end
     
@@ -2077,6 +2113,7 @@ for type=1:3
     set(code_axe, 'FontName', 'Verdana');
     set(code_axe, 'FontSize', font_size);
     ylimi=get(gca,'ylim');
+    set(gca,'xlim',([time_num(1),time_num(end)+50]));
     set(gca,'ylim',([0,ylimi(2)]));
     ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
     if type==1
@@ -2193,8 +2230,14 @@ fout=fopen('testIn_gauss.txt','wt');
 for i=1:size(data,1)
     fprintf(fout,'%d;%d\n',time_num(i),n_totaleCasiCorretti(i));
 end
-command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+% command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+
+command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+[t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');  
+
+
+
 datetickFormat = 'dd mmm';
 
 figure;
@@ -2757,8 +2800,10 @@ for reg=9%1:size(regioni_tot,1)
                 %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
                 
                 
-                command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+                %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+                command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');
                 
             end
             
@@ -3437,9 +3482,10 @@ for reg=9%1:size(regioni_tot,1)
         %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
         
         
-        command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-        
+%         command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+        command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%d%f%f%f%f%f','delimiter',';');  
     end
     
     %% figura cumulata
