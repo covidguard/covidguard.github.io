@@ -81,7 +81,12 @@ Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di pi�
 
 ![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
 
-### Stima del picco di attualmente positivi
+### Stima del picco dei nuovi casi positivi
+La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sull'andamento
+
+![Picco Italia NuoviPositivi](/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_Italia_cumulati.PNG)
+
+### Stima del picco degli attualmente positivi
 Il grafico mostra 3 curve di Gompertz (due giorni fa, ieri e odierna) fittate sul numero di attualmente positivi d'Italia. Per la curva odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
 
