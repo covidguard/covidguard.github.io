@@ -45,32 +45,31 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 ## ITALIA
 
 ### Diffusione spazio-temporale: cumulata
-Mappa che mostra la diffusione nel tempo del virus nelle varie province italiane.
+Mappa che mostra la diffusione nel tempo del virus nelle varie province italiane:
 ![Mappa Italia](/code/mappaProv.gif)
 
 ### Diffusione spazio-temporale: variazione giornaliera
-Mappa che mostra come varia la diffusione nel tempo del virus nelle varie province italiane.
+Mappa che mostra come varia la diffusione nel tempo del virus nelle varie province italiane:
 ![Mappa Italia](/code/mappaProv_spl.gif)
 
 ### Andamento Italiano regione per regione
-Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d'Italia.
-
+Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d'Italia:
 ![Andamento regioni](/code/Andamento_Regioni.gif)
 
 Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perciò la sua variabilità potrebbe essere maggiore.
 
 
 ### Trend giorno per giorno 
-Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domiciliare, ricoverati con sintomi, terapie intensive e deceduti, in due rappresentazioni differenti.
+Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domiciliare, ricoverati con sintomi, terapie intensive e deceduti, in due rappresentazioni differenti:
 ![Andamento Italia Grafico a Barre](slides/img/regioni/reg_Italia_bars_cumulati.PNG)
 ![Andamento Italia Grafico a Linee](slides/img/regioni/reg_Italia_linee_cumulati.PNG)
 
 ### Tasso di mortalità 
-Tasso di mortalità calcolato sui casi totali, ovviamente il valore reale è molto più basso, i casi totali conteggiati sono solamente dati dal totale delle persone a cui un tampone è risultato positivo, come noto i casi sommersi sono molti. I valori del grafico sono quindi molto dipendenti dal numero di tamponi effettuati regione per regione.
+Tasso di mortalità calcolato sui casi totali, ovviamente il valore reale è molto più basso, i casi totali conteggiati sono solamente dati dal totale delle persone a cui un tampone è risultato positivo, come noto i casi sommersi sono molti. I valori del grafico sono quindi molto dipendenti dal numero di tamponi effettuati regione per regione:
 ![Tasso di mortalità](slides/img/regioni/ita_mortalita.PNG)
 
 ### Tamponi totali
-Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale e test risultati effettivamente positivi.
+Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale e test risultati effettivamente positivi:
 ![Tasso di mortalità](slides/img/regioni/ita_tamponi.PNG)
 
 ### Stima del numero cumulato di positivi
@@ -78,31 +77,27 @@ L'evolversi nel tempo di una epidemia può essere descritto da una funzione chia
 Il grafico mostra 3 curve di Gompertz (quella di due giorni fa, quella di ieri e quella odierno) fittate sul numero cumulato di positivi d'Italia.
 Per la curva odierna è riportata anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
-
 ![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
 
 ### Stima del picco dei nuovi casi positivi
-La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sull'andamento
-
+La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
 ![Picco Italia NuoviPositivi](/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_Italia_cumulati.PNG)
 
 ### Stima del picco degli attualmente positivi
 Il grafico mostra 3 curve di Gompertz (due giorni fa, ieri e odierna) fittate sul numero di attualmente positivi d'Italia. Per la curva odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
-Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
-
+Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza":
 ![Picco Italia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Italia_cumulati.PNG)
 
 
 ### Casi vs Decessi
-Tra i primi sintomi (tampone positivo) e il decesso trascorrono circa 7-8 giorni.
-
+Tra i primi sintomi (tampone positivo) e il decesso trascorrono circa 7-8 giorni:
 ![Casi Vs Decessi](/slides/img/regioni/ita_correlazioneCasiDeceduti.PNG)
 
 
 ## LOMBARDIA
 
 ### Trend giorno per giorno 
-Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domiciliare, ricoverati con sintomi, terapie intensive e deceduti, in due rappresentazioni differenti.
+Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domiciliare, ricoverati con sintomi, terapie intensive e deceduti, in due rappresentazioni differenti:
 ![Andamento Lombardia Grafico a Barre](slides/img/regioni/reg_Lombardia_bars_cumulati.PNG)
 ![Andamento Lombardia Grafico a Linee](slides/img/regioni/reg_Lombardia_linee_cumulati.PNG)
 
@@ -110,14 +105,16 @@ Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domicilia
 LL'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata Logistica. All'interno della famiglia di funzioni Logistiche, la Legge di Gompertz viene utilizzata per popolazioni poco numerose rispetto alle risorse presenti nell'ambiente che mostrano una crescita inizialmente esponenziale che in seguito si stabilizza, rallentando fino a diventare quasi lineare una volta che la popolazione si avvicina asintoticamente ad un valore di equilibrio.
 Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero cumulato di positivi della regione Lombardia.
 Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
-Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
-
+Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza":
 ![Picco Lombardia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Lombardia_cumulati.PNG)
+
+### Stima del picco dei nuovi casi positivi
+La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
+![Picco Italia NuoviPositivi](/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_Lombardia_cumulati.PNG)
 
 ### Stima del picco di attualmente positivi
 Il grafico mostra 3 curve di Gompertz (due giorni fa, ieri e odierna) fittate sul numero di attualmente positivi della regione Lombardia. Per la curva odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
-Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
-
+Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza":
 ![Picco Lombardia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Lombardia_cumulati.PNG)
 
 
