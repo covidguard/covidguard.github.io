@@ -74,15 +74,15 @@ Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale 
 ![Tasso di mortalità](slides/img/regioni/ita_tamponi.PNG)
 
 ### Stima del numero cumulato di positivi
-L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
-Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero cumulato di positivi d'Italia.
-Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
+L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata Logistica. All'interno della famiglia di funzioni Logistiche, la Legge di Gompertz viene utilizzata per popolazioni poco numerose rispetto alle risorse presenti nell'ambiente che mostrano una crescita inizialmente esponenziale che in seguito si stabilizza, rallentando fino a diventare quasi lineare una volta che la popolazione si avvicina asintoticamente ad un valore di equilibrio.
+Il grafico mostra 3 curve di Gompertz (quella di due giorni fa, quella di ieri e quella odierno) fittate sul numero cumulato di positivi d'Italia.
+Per la curva odierna è riportata anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
 
 ![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
 
 ### Stima del picco di attualmente positivi
-Il grafico mostra 3 funzioni gaussiane (due giorni fa, ieri e odierna) fittati sul numero di attualmente positivi d'Italia. Per la gaussiana odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
+Il grafico mostra 3 curve di Gompertz (due giorni fa, ieri e odierna) fittate sul numero di attualmente positivi d'Italia. Per la curva odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
 
 ![Picco Italia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Italia_cumulati.PNG)
@@ -102,7 +102,7 @@ Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domicilia
 ![Andamento Lombardia Grafico a Linee](slides/img/regioni/reg_Lombardia_linee_cumulati.PNG)
 
 ### Stima del numero cumulato di positivi
-L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata sigmoide.
+LL'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata Logistica. All'interno della famiglia di funzioni Logistiche, la Legge di Gompertz viene utilizzata per popolazioni poco numerose rispetto alle risorse presenti nell'ambiente che mostrano una crescita inizialmente esponenziale che in seguito si stabilizza, rallentando fino a diventare quasi lineare una volta che la popolazione si avvicina asintoticamente ad un valore di equilibrio.
 Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero cumulato di positivi della regione Lombardia.
 Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
@@ -110,7 +110,7 @@ Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di pi�
 ![Picco Lombardia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Lombardia_cumulati.PNG)
 
 ### Stima del picco di attualmente positivi
-Il grafico mostra 3 funzioni gaussiane (due giorni fa, ieri e odierna) fittati sul numero di attualmente positivi della regione Lombardia. Per la gaussiana odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
+Il grafico mostra 3 curve di Gompertz (due giorni fa, ieri e odierna) fittate sul numero di attualmente positivi della regione Lombardia. Per la curva odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza"
 
 ![Picco Lombardia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Lombardia_cumulati.PNG)
