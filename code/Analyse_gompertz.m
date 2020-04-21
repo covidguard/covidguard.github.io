@@ -3859,6 +3859,11 @@ normalizza_per_densita = 0;
 normalizza_per_superficie = 0;
 
 dataReg=dataProv;
+
+splined_yn=0;
+
+
+
 for reg = 1:size(Regione_lista)
     %%
     idx_reg=find(strcmp(dataReg.denominazione_regione,cell(Regione_lista(reg,:))));
@@ -3917,9 +3922,9 @@ for reg = 1:size(Regione_lista)
                 end
             else
                 try
-                    b(h)=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                    b(h)=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));
                 catch
-                    b(h)=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                    b(h)=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));
                 end
             end
             regione_leg=regione;
@@ -4025,13 +4030,46 @@ for reg = 1:size(Regione_lista)
             time_num = fix(datenum(dataReg.data(index)));
             
             if normalizza_per_popolazione==1
-                b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                if splined_yn == 0
+                    b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                    testo.sigla(h,:)=char(sigla_prov(h));
+                    testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
+                    testo.val(h,1)=sf(end);
+                else
+                    [ySplined, xSpline, sWeights, ySplined_ext] = splinerMat(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,7)
+                    plot(time_num(2:end),ySplined,'-r');
+                    b(h)=plot(time_num(2:end),ySplined,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));
+                    
+                    testo.sigla(h,:)=char(sigla_prov(h));
+                    testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, ySplined(end)];
+                    testo.val(h,1)=ySplined(end);
+                end
+                
+                
+                
+                
             else
                 try
-                    b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                    if splined_yn == 0
+                        b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));                        
+                        testo.sigla(h,:)=char(sigla_prov(h));
+                        testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
+                        testo.val(h,1)=sf(end);
+
+                    else
+                        [ySplined, xSpline, sWeights, ySplined_ext] = splinerMat(time_num(2:end),diff(dataReg.totale_casi(index,1)),7)
+                        plot(time_num(2:end),ySplined,'-r');
+                        b(h)=plot(time_num(2:end),ySplined,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));
+                        
+                        testo.sigla(h,:)=char(sigla_prov(h));
+                        testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, ySplined(end)];
+                        testo.val(h,1)=ySplined(end);
+                        
+                    end
+                    
                 catch
-                    bbbb=str2double(dataReg.totale_casi(index,1));
-                    b(h)=plot(time_num(2:end),diff(bbbb),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+%                     bbbb=str2double(dataReg.totale_casi(index,1));
+%                     b(h)=plot(time_num(2:end),diff(bbbb),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));
                 end
                 %
             end
@@ -4044,17 +4082,16 @@ for reg = 1:size(Regione_lista)
             code_axe = get(id_f, 'CurrentAxes');
             set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
             
-            if normalizza_per_popolazione==1
-                sf=diff((dataReg.totale_casi(index,1)))/pop.number(idx_pop(h))*1000;
-            else
-                sf=diff((dataReg.totale_casi(index,1)));
-            end
+%             if normalizza_per_popolazione==1
+%                 sf=diff((dataReg.totale_casi(index,1)))/pop.number(idx_pop(h))*1000;
+%             else
+%                 sf=diff((dataReg.totale_casi(index,1)));
+%             end
             
-            testo.sigla(h,:)=char(sigla_prov(h));
-            testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
-            testo.val(h,1)=sf(end);
-            %          text(time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end),...
-            %             test, 'HorizontalAlignment','left','FontSize',7','Color',[.3 .3 .3])
+%             testo.sigla(h,:)=char(sigla_prov(h));
+%             testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
+%             testo.val(h,1)=sf(end);
+
             
         end
         string_legend=sprintf('%s);',string_legend);
@@ -4081,13 +4118,38 @@ for reg = 1:size(Regione_lista)
         ax = gca;
         set(code_axe, 'FontName', 'Verdana');
         set(code_axe, 'FontSize', font_size);
+        
+        if normalizza_per_popolazione==0
+            t_lim=ylim;
+            if t_lim(2)<100
+                ylim([0 100]);
+            else
+                ylim([0 t_lim(2)]);
+            end
+        end
+        t_lim=ylim;
+        if normalizza_per_popolazione==1
+            ylim([0 t_lim(2)]);
+        end
+        
+        
+        
+        
         if normalizza_per_popolazione==0
             ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
         end
         if normalizza_per_popolazione==0
-            ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            if splined_yn == 0
+                ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            else
+                ylabel('Numero casi (smoothed)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            end
         else
-            ylabel('Numero casi ogni 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            if splined_yn == 0
+                ylabel('Numero casi ogni 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            else
+                ylabel('Numero casi ogni 1000 abitanti (smoothed)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);    
+            end
         end
         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
         ax.XTick = time_num;
@@ -4096,17 +4158,7 @@ for reg = 1:size(Regione_lista)
         ax.FontSize = font_size;
         
         
-        if normalizza_per_popolazione==0
-            t_lim=ylim;
-            if t_lim(2)<100
-                ylim([t_lim(1) 100]);
-            end
-        end
-        t_lim=ylim;
-        if normalizza_per_popolazione==1
-            ylim([0 t_lim(2)]);
-        end
-        
+
         
         % l=legend([b],'Totale Casi');
         set(l,'Location','northwest')
@@ -4132,12 +4184,23 @@ for reg = 1:size(Regione_lista)
             'FitBoxToText','off');
         
         
+        if splined_yn == 0
+            
         if normalizza_per_popolazione==1
             print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_norm_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri.PNG']);
         else
-            
             print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri.PNG']);
         end
+        
+        else
+            
+        if normalizza_per_popolazione==1
+            print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_norm_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri_smooth.PNG']);
+        else
+            print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri_smooth.PNG']);
+        end
+        end
+        
         close(gcf);
         
     end
