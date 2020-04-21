@@ -977,8 +977,7 @@ for reg = [9];
     end
     fclose(fout);   
 %     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-%     [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
-    
+%     [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');    
     command=sprintf('gomp_estim testIn_gauss.txt');system(command);
     [t_temp,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');  
     [t_1, idx1]= intersect(t_temp, t);    
@@ -987,16 +986,15 @@ for reg = [9];
     
     % 3: ospedalizzati
     fout=fopen('testIn_gauss.txt','wt');
-    for i=1:size(a,1)
-        fprintf(fout,'%f;%d\n',time_num(i),data(i,3)-data(i,2));
+    for i=1:size(data,1)
+        fprintf(fout,'%f;%d\n',time_num(i),data(i,3));
     end
     fclose(fout);
 %     command=sprintf('gauss_estim testIn_gauss.txt');system(command);
 %     [t,data_interp(:,3),a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
     command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
     [t,data_interp(:,3),a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');    
-    
-
+   
     % 4: isolamento_domiciliare
     fout=fopen('testIn_gauss.txt','wt');
     for i=1:size(data,1)
@@ -1034,13 +1032,15 @@ for reg = [9];
 %     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
 %     [t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
     
-    command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+    command=sprintf('gomp_estim testIn_gauss.txt');system(command);      
     [t_temp,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');   
     [t_1, idx1]= intersect(t_temp, t);    
     data_interp(:,6)=data_interpTemp(idx1);    
-    
 
-    
+
+
+
+
     t_min = time_num(1);
     t_max = time_num(end)+30;
     
@@ -1059,7 +1059,7 @@ for reg = [9];
     hold on
     grid minor; grid on
     
-    bbb1=[data_interp(idx,1)';data_interp(idx,2)';data_interp(idx,3)'+data_interp(idx,2)';data_interp(idx,4)';data_interp(idx,5)';data_interp(idx,6)';data_interp(idx,3)'+data_interp(idx,4)'+data_interp(idx,2)'];
+    bbb1=[data_interp(idx,1)';data_interp(idx,2)';data_interp(idx,3)';data_interp(idx,4)';data_interp(idx,5)';data_interp(idx,6)';data_interp(idx,3)'+data_interp(idx,4)'+data_interp(idx,2)'];
     bbb1(:,1:size(time_num,1)-3)=NaN;
     bbbar1 = plot(bbb1','--'); hold on
     set(bbbar1(1),'Color',[0.400000005960464 0.400000005960464 0.400000005960464],'linewidth',1);
@@ -1072,7 +1072,7 @@ for reg = [9];
     
     hold on
     
-    bbb=[data(:,1)';data(:,2)';data(:,3)';data(:,4)';data(:,5)';data6';data(:,3)'+data(:,4)'];
+    bbb=[data(:,1)';data(:,2)';data(:,3)';data(:,4)';data(:,5)';data6';data(:,3)'+data(:,4)'+data(:,2)'];
     
     bbbar = plot(bbb','-'); hold on
     set(bbbar(1),'Color',[0.400000005960464 0.400000005960464 0.400000005960464],'linewidth',3);
@@ -1082,7 +1082,6 @@ for reg = [9];
     set(bbbar(5),'Color',[0 0.800000011920929 0.200000002980232],'linewidth',3);
     set(bbbar(6),'Color',[0.23137255012989 0.443137258291245 0.337254911661148],'linewidth',3);
     set(bbbar(7),'Color',[0.301960796117783 0.745098054409027 0.933333337306976],'linewidth',3);
-    
     
     
     
@@ -1253,6 +1252,10 @@ close(gcf);
     data_interp=[];
     % interpolazione di ogni serie
     
+%%
+    data_interp=[];
+    % interpolazione di ogni serie
+    
     % 2: terapia_intensiva
     fout=fopen('testIn_gauss.txt','wt');
     for i=1:size(data,1)
@@ -1274,8 +1277,7 @@ close(gcf);
     end
     fclose(fout);   
 %     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-%     [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
-    
+%     [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');    
     command=sprintf('gomp_estim testIn_gauss.txt');system(command);
     [t_temp,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');  
     [t_1, idx1]= intersect(t_temp, t);    
@@ -1284,16 +1286,15 @@ close(gcf);
     
     % 3: ospedalizzati
     fout=fopen('testIn_gauss.txt','wt');
-    for i=1:size(a,1)
-        fprintf(fout,'%f;%d\n',time_num(i),data(i,3)-data(i,2));
+    for i=1:size(data,1)
+        fprintf(fout,'%f;%d\n',time_num(i),data(i,3));
     end
     fclose(fout);
 %     command=sprintf('gauss_estim testIn_gauss.txt');system(command);
 %     [t,data_interp(:,3),a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
     command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
     [t,data_interp(:,3),a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');    
-    
-
+   
     % 4: isolamento_domiciliare
     fout=fopen('testIn_gauss.txt','wt');
     for i=1:size(data,1)
@@ -1331,13 +1332,15 @@ close(gcf);
 %     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
 %     [t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
     
-    command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+    command=sprintf('gomp_estim testIn_gauss.txt');system(command);      
     [t_temp,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');   
     [t_1, idx1]= intersect(t_temp, t);    
     data_interp(:,6)=data_interpTemp(idx1);    
-    
 
-    
+
+
+
+
     t_min = time_num(1);
     t_max = time_num(end)+60;
     
@@ -1347,6 +1350,7 @@ close(gcf);
     datetickFormat = 'dd mmm';
     figure;
     id_f = gcf;
+    regione = 'Italia';
     set(id_f, 'Name', [regione ': dati cumulati']);
     title(sprintf([regione ': dati cumulati\\fontsize{5}\n ']))
     
@@ -1355,7 +1359,7 @@ close(gcf);
     hold on
     grid minor; grid on
     
-    bbb1=[data_interp(idx,1)';data_interp(idx,2)';data_interp(idx,3)'+data_interp(idx,2)';data_interp(idx,4)';data_interp(idx,5)';data_interp(idx,6)';data_interp(idx,3)'+data_interp(idx,4)'+data_interp(idx,2)'];
+    bbb1=[data_interp(idx,1)';data_interp(idx,2)';data_interp(idx,3)';data_interp(idx,4)';data_interp(idx,5)';data_interp(idx,6)';data_interp(idx,3)'+data_interp(idx,4)'+data_interp(idx,2)'];
     bbb1(:,1:size(time_num,1)-3)=NaN;
     bbbar1 = plot(bbb1','--'); hold on
     set(bbbar1(1),'Color',[0.400000005960464 0.400000005960464 0.400000005960464],'linewidth',1);
@@ -1368,7 +1372,7 @@ close(gcf);
     
     hold on
     
-    bbb=[data(:,1)';data(:,2)';data(:,3)';data(:,4)';data(:,5)';data6';data(:,3)'+data(:,4)'];
+    bbb=[data(:,1)';data(:,2)';data(:,3)';data(:,4)';data(:,5)';data6';data(:,3)'+data(:,4)'+data(:,2)'];
     
     bbbar = plot(bbb','-'); hold on
     set(bbbar(1),'Color',[0.400000005960464 0.400000005960464 0.400000005960464],'linewidth',3);
@@ -1378,7 +1382,6 @@ close(gcf);
     set(bbbar(5),'Color',[0 0.800000011920929 0.200000002980232],'linewidth',3);
     set(bbbar(6),'Color',[0.23137255012989 0.443137258291245 0.337254911661148],'linewidth',3);
     set(bbbar(7),'Color',[0.301960796117783 0.745098054409027 0.933333337306976],'linewidth',3);
-    
     
     
     
