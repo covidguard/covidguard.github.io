@@ -1191,7 +1191,7 @@ hold on
 grid minor; grid on
 
 
-bbb=[data(:,1)';data(:,2)';data(:,3)'-data(:,1)';data(:,4)';data(:,5)'];
+bbb=[data(:,1)';data(:,2)';data(:,3)'-data(:,2)';data(:,4)';data(:,5)'];
 
 bbbar = bar(bbb','stacked'); hold on
 set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
