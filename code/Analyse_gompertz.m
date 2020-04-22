@@ -4033,6 +4033,7 @@ for reg = 1:size(Regione_lista)
                 if splined_yn == 0
                     b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
                     testo.sigla(h,:)=char(sigla_prov(h));
+                    sf=diff((dataReg.totale_casi(index,1)))/pop.number(idx_pop(h))*1000;
                     testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
                     testo.val(h,1)=sf(end);
                 else
@@ -4053,6 +4054,7 @@ for reg = 1:size(Regione_lista)
                     if splined_yn == 0
                         b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));                        
                         testo.sigla(h,:)=char(sigla_prov(h));
+                        sf=diff((dataReg.totale_casi(index,1)));
                         testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
                         testo.val(h,1)=sf(end);
 
@@ -4083,9 +4085,9 @@ for reg = 1:size(Regione_lista)
             set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
             
 %             if normalizza_per_popolazione==1
-%                 sf=diff((dataReg.totale_casi(index,1)))/pop.number(idx_pop(h))*1000;
+%                 
 %             else
-%                 sf=diff((dataReg.totale_casi(index,1)));
+%                 
 %             end
             
 %             testo.sigla(h,:)=char(sigla_prov(h));
