@@ -114,6 +114,7 @@ end
 data=struct;
 data.dataReg=dataReg;
 animated_gif_reg_Andrea(data,'A');
+animated_gif_reg_Andrea_fase2(data,'A');
 try
     animated_gif_reg_Andrea(data,'N');
     animated_gif_reg_Andrea(data,'C');
