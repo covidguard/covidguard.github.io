@@ -834,7 +834,7 @@ for reg=1:size(regioni_tot,1)
     end
     
     
-    %% tamponi
+    %% tamponi totali
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     time_num = fix(datenum(dataReg.data(index)));
@@ -853,6 +853,15 @@ for reg=1:size(regioni_tot,1)
     %     a=bar([diff(dataReg.tamponi(index,1)),tamp_positivi],1,'stacked');
     yy =diff(dataReg.tamponi(index,1))-tamp_positivi; yy(yy<0)=0;
     
+
+    casiTestati =  diff(dataReg.casi_testati(index,1));
+    casiTestati(casiTestati<0)=nan; casiTestati(casiTestati==0)=nan;
+    
+    totaleTamponi = diff(dataReg.tamponi(index,1)); totaleTamponi(totaleTamponi<0)=nan;
+    
+    
+%     a=bar([tamp_positivi, casiTestati-tamp_positivi, totaleTamponi-casiTestati-tamp_positivi],1,'stacked');
+    
     a=bar([tamp_positivi, yy],1,'stacked');
     
     
@@ -866,6 +875,7 @@ for reg=1:size(regioni_tot,1)
     hold on; grid minor
     %     a(1).FaceColor = [0.8 0.8 0.8];
     %     a(2).FaceColor = [1 0.200000002980232 0.200000002980232];
+    
     a(2).FaceColor = [0.8 0.8 0.8];
     a(1).FaceColor = [1 0.200000002980232 0.200000002980232];
     
@@ -923,8 +933,199 @@ for reg=1:size(regioni_tot,1)
     close(gcf);
     
     
+   %% tamponi totali e casi testati
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    time_num = fix(datenum(dataReg.data(index)));
+    
+    datetickFormat = 'dd mmm';
+    figure;
+    id_f = gcf;
+    set(id_f, 'Name', [regione ': tamponi']);
+    title(sprintf([regione ': tamponi\\fontsize{5}\n ']))
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    tamp_positivi = diff(dataReg.totale_casi(index,1));
+    %     a=bar([diff(dataReg.tamponi(index,1)),tamp_positivi],1,'stacked');
+    yy =diff(dataReg.tamponi(index,1))-tamp_positivi; yy(yy<0)=0;
+    
+
+    casiTestati =  diff(dataReg.casi_testati(index,1));
+    casiTestati(casiTestati<0)=nan; casiTestati(casiTestati==0)=nan;
+    
+    totaleTamponi = diff(dataReg.tamponi(index,1)); totaleTamponi(totaleTamponi<0)=nan;
     
     
+    a=bar([tamp_positivi, casiTestati-tamp_positivi, totaleTamponi-casiTestati-tamp_positivi],1,'stacked');
+    
+%     a=bar([tamp_positivi, yy],1,'stacked');
+    
+    
+    
+    if ismac
+        font_size = 9;
+    else
+        font_size = 6.5;
+    end
+    
+    hold on; grid minor
+    %     a(1).FaceColor = [0.8 0.8 0.8];
+    %     a(2).FaceColor = [1 0.200000002980232 0.200000002980232];
+    
+    a(3).FaceColor = [0.8 0.8 0.8];
+    a(2).FaceColor = [0.678431391716003 0.921568632125854 1];
+    a(1).FaceColor = [1 0.200000002980232 0.200000002980232];
+    
+    
+    set(gca,'XTick',1:size(tamp_positivi,1))
+    set(gca,'XTickLabel',datestr(time_num(2:end),'dd mmm'))
+    set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+    set(gca,'XLim',[0.5,size(time_num,1)-0.5]);
+    yL=get(gca,'ylim');
+    set(gca,'ylim',[0 yL(2)]);
+    ax = gca;
+    set(ax, 'FontName', 'Verdana');
+    set(ax, 'FontSize', font_size);
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+    ylabel('Numero tamponi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    
+    
+    
+    
+    
+    yyaxis right
+    c=tamp_positivi./diff(dataReg.tamponi(index,1))*100;  c(c>100)=NaN; c(c<0)=NaN;
+    b=plot(1:size(tamp_positivi,1), c,'-b','LineWidth', 2.0,'Color',[0.313725501298904 0.313725501298904 0.313725501298904]);
+    
+    d = tamp_positivi./diff(dataReg.casi_testati(index,1))*100;  d(d>100)=NaN; d(d<0)=NaN;
+    e=plot(1:size(tamp_positivi,1), d,'-b','LineWidth', 2.0);
+    
+    
+    ylim([0 100]);
+    set(gca,'YColor', [0 0 0]);
+    ylabel('Percentuale tamponi positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    
+    l=legend([a(3),a(2),a(1),b, e],'Tamponi a casi ripetuti','Tamponi a casi nuovi','Tamponi positivi','Percent. tamponi totali positivi', 'Percent. tamponi nuovi testati positivi');
+    set(l,'Location','northwest')
+    
+    % overlap copyright info
+    datestr_now = datestr(now);
+    annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+        'String',{['Fonte: https://github.com/pcm-dpc']},...
+        'HorizontalAlignment','center',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off',...
+        'LineStyle','none',...
+        'Color',[0 0 0]);
+    
+    
+    annotation(gcf,'textbox',...
+        [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+        'String',{'https://covidguard.github.io/#covid-19-italia'},...
+        'LineStyle','none',...
+        'HorizontalAlignment','left',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off');
+    
+    %%
+    % %     cd([WORKroot,'/assets/img/regioni']);
+    print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_tamponi_misti.PNG']);
+    close(gcf);
+    
+    
+    
+    %% casi testati
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    time_num = fix(datenum(dataReg.data(index)));
+    
+    datetickFormat = 'dd mmm';
+    figure;
+    id_f = gcf;
+    set(id_f, 'Name', [regione ': casi testati']);
+    title(sprintf([regione ': casi testati\\fontsize{5}\n ']))
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    tamp_positivi = diff(dataReg.totale_casi(index,1));
+    %     a=bar([diff(dataReg.tamponi(index,1)),tamp_positivi],1,'stacked');
+    yy =diff(dataReg.casi_testati(index,1))-tamp_positivi; yy(yy<0)=0;
+    
+    a=bar([tamp_positivi, yy],1,'stacked');
+    
+    
+    
+    if ismac
+        font_size = 9;
+    else
+        font_size = 6.5;
+    end
+    
+    hold on; grid minor
+    %     a(1).FaceColor = [0.8 0.8 0.8];
+    %     a(2).FaceColor = [1 0.200000002980232 0.200000002980232];
+    a(2).FaceColor = [0.8 0.8 0.8];
+    a(1).FaceColor = [1 0.200000002980232 0.200000002980232];
+    
+    
+    set(gca,'XTick',1:size(tamp_positivi,1))
+    set(gca,'XTickLabel',datestr(time_num(2:end),'dd mmm'))
+    set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+    set(gca,'XLim',[0.5,size(time_num,1)-0.5]);
+    yL=get(gca,'ylim');
+    set(gca,'ylim',[0 yL(2)]);
+    ax = gca;
+    set(ax, 'FontName', 'Verdana');
+    set(ax, 'FontSize', font_size);
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+    ylabel('Casi testati', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    
+    
+    
+    
+    
+    yyaxis right
+    c=tamp_positivi./diff(dataReg.casi_testati(index,1))*100;  c(c>100)=NaN; c(c<0)=NaN;
+    b=plot(1:size(tamp_positivi,1), c,'-b','LineWidth', 2.0);
+    ylim([0 100]);
+    set(gca,'YColor', [0 0 0]);
+    ylabel('Percentuale casi testati positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    
+    l=legend([a(2),a(1),b],'Casi testati negativi','Tamponi positivi','Percent. tamponi positivi');
+    set(l,'Location','northwest')
+    
+    % overlap copyright info
+    datestr_now = datestr(now);
+    annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+        'String',{['Fonte: https://github.com/pcm-dpc']},...
+        'HorizontalAlignment','center',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off',...
+        'LineStyle','none',...
+        'Color',[0 0 0]);
+    
+    
+    annotation(gcf,'textbox',...
+        [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+        'String',{'https://covidguard.github.io/#covid-19-italia'},...
+        'LineStyle','none',...
+        'HorizontalAlignment','left',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off');
+    
+    %%
+    % %     cd([WORKroot,'/assets/img/regioni']);
+    print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_casitestati.PNG']);
+    close(gcf);
 end
 
 
