@@ -172,7 +172,7 @@ style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></
 ### Tamponi: Casi testati
 Numero di tamponi testati vs numero risultati positivi
 
-<iframe class="slideshow-iframe" src="/slides/regioni_tamponi_testati.html" 
+<iframe class="slideshow-iframe" src="/slides/regioni_tamponi-testati.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 
