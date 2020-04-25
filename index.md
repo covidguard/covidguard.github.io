@@ -179,7 +179,15 @@ style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></
 
 ## ITALIA Province
 
-Per le provincie di ogni regione Italiana al momento sono disponibili solo i casi positivi totali:
+Per le provincie di ogni regione Italiana al momento sono disponibili solo i casi positivi totali.
+
+
+### Le 15 Province con più contagi negli ultimi 7 giorni
+![Province con più contagi](slides/img/regioni/ita_worstProv7Day.PNG)
+
+### Le 15 Province con meno contagi negli ultimi 7 giorni
+![Province con meno contagi](slides/img/regioni/ita_bestProv7Day.PNG)
+
 
 ### Dati di progressione percentuale
 
