@@ -2824,6 +2824,33 @@ data_casiPositivi=data_casiPositivi(2:end)./data_casiPositivi(1:end-1)*100-100;
 data_deceduti=data_deceduti(2:end)./data_deceduti(1:end-1)*100-100;
 data_guariti=data_guariti(2:end)./data_guariti(1:end-1)*100-100;
 
+y1=data_casiPositivi;
+y2=data_deceduti;
+
+[a1_1] = splinerMat(t,y1,10);
+% figure;hold on
+% plot(t,y1,'.b');
+% plot(t,a1_1,'-r');
+
+
+[a1_2] = splinerMat(t,y2,10);
+% figure;hold on
+
+
+
+
+corrcoef_d=[];
+for dd=0:15
+   temp=corrcoef(a1_1(1:end-dd),a1_2(dd+1:end)); 
+   corrcoef_d(dd+1)=temp(1,2);
+end
+[coerrcoeff_max, idx]=max(corrcoef_d);
+offset_dec=idx-1;
+
+
+
+
+
 figure;
 id_f = gcf;
 set(id_f, 'Name', 'Italia: correlazione temporale');
@@ -3210,7 +3237,7 @@ set(ax2, 'FontSize', font_size);
 % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
 % ax2.XTick = t(1:2:end)+offset_dec-1
 % set(ax2,'ylim',([0,80]));
-ax2.XTick = datestr(time_num(1:2:end))+offset_dec;
+ax2.XTick = datenum(time_num(1:2:end))+offset_dec;
 set(ax2,'xlim',([t(1)+offset_dec,t(end)+offset_dec]));
 ax2.XTickLabel = datestr(datenum(time_num(1:2:end))+offset_dec);
 datetick('x', 'dd mmm', 'keepticks') ;
@@ -4211,6 +4238,9 @@ for reg=9%1:size(regioni_tot,1)
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     time_num = fix(datenum(dataReg.data(index)));
     dataReg=dataProv;RegioneTot={'Como'}'; h=1;regione = char(RegioneTot(h));index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));time_num = fix(datenum(dataReg.data(index)));type=2;
+    
+%     RegioneTot={'In fase di definizione/aggiornamento';
+    
     %
     % RegioneTot={'Lecco'}'
     %
