@@ -90,8 +90,14 @@ Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di pi�
 
 
 ### Casi vs Decessi
-Tra i primi sintomi (tampone positivo) e il decesso trascorrono circa 7-8 giorni:
+Tra i primi sintomi (tampone positivo) e il decesso trascorrono da 4 a 8 giorni. 
+Di seguito due rappresentazioni: 
+- correlazione tra nuovi casi giornalieri e deceduti gionalieri:
+![Casi Vs Decessi2](/slides/img/regioni/ita_correlazioneCasiDeceduti_v2.PNG)
+
+- correlazione tra i relativi incrementi percentuali:
 ![Casi Vs Decessi](/slides/img/regioni/ita_correlazioneCasiDeceduti.PNG)
+
 
 
 ## LOMBARDIA
@@ -101,21 +107,32 @@ Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domicilia
 ![Andamento Lombardia Grafico a Barre](slides/img/regioni/reg_Lombardia_bars_cumulati.PNG)
 ![Andamento Lombardia Grafico a Linee](slides/img/regioni/reg_Lombardia_linee_cumulati.PNG)
 
-### Stima del numero cumulato di positivi
-LL'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata Logistica. All'interno della famiglia di funzioni Logistiche, la Legge di Gompertz viene utilizzata per popolazioni poco numerose rispetto alle risorse presenti nell'ambiente che mostrano una crescita inizialmente esponenziale che in seguito si stabilizza, rallentando fino a diventare quasi lineare una volta che la popolazione si avvicina asintoticamente ad un valore di equilibrio.
-Il grafico mostra 3 sigmoidi (quello di due giorni fa, quello di ieri e quello odierno) fittati sul numero cumulato di positivi della regione Lombardia.
-Per il sigmoide odierno è riportato anche l'intervallo di confidenza al 95% dei parametri.
-Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza":
+### Modellazione del numero cumulato di positivi
+L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata Logistica. All'interno della famiglia di funzioni Logistiche, la Legge di Gompertz viene utilizzata per popolazioni poco numerose rispetto alle risorse presenti nell'ambiente che mostrano una crescita inizialmente esponenziale che in seguito si stabilizza, rallentando fino a diventare quasi lineare una volta che la popolazione si avvicina asintoticamente ad un valore di equilibrio.
+Il grafico mostra 3 Gompertz (quella di due giorni fa, quella di ieri e quella odierno) fittati sul numero cumulato di positivi della Regione Lombardia. Per la Gompertz odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
+Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
 ![Picco Lombardia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Lombardia_cumulati.PNG)
+
+Il dato giornaliero è fortemente influenzato dalle modalità relative alla sua raccolta; in particolare il numero di casi positivi è dipendente dal numero di tamponi analizzati. Al fine di omogeneizzare le misure, i dati giornalieri sono stati corretti attraverso una funzione che cerca di stimare l'effetto del numero di tamponi giornalieri. La modellazione di questa serie è riportata nella seguente figura:
+![Picco Lombardia TotaleCorretto](/slides/img/regioni/reg_stimapiccoTotaleCasiCorretti_Lombardia_cumulati.PNG)
+
 
 ### Stima del picco dei nuovi casi positivi
 La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
 ![Picco Italia NuoviPositivi](/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_Lombardia_cumulati.PNG)
 
+Come per il totale di casi positivi, è stato applicato il modello di correzione per il numero di tamponi:
+![Picco Italia NuoviPositiviCorretto](/slides/img/regioni/reg_stimapiccoTotaleCasiGiornalieriCorretti_Lombardia_cumulati.PNG)
+
+
 ### Stima del picco di attualmente positivi
 Il grafico mostra 3 curve di Gompertz (due giorni fa, ieri e odierna) fittate sul numero di attualmente positivi della regione Lombardia. Per la curva odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza":
 ![Picco Lombardia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Lombardia_cumulati.PNG)
+
+Come per il totale di casi positivi, è stato applicato il modello di correzione per il numero di tamponi:
+![Picco Lombardia PositiviCorretto](/slides/img/regioni/reg_stimapiccoAttualmentePositiviCorretti_Lombardia_cumulati.PNG)
+
 
 
 
