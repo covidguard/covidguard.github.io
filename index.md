@@ -22,9 +22,10 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
     <li> <a href="#diffusione-spazio-temporale">Italia: Diffusione spazio-temporale</a> </li> 
-    <li> <a href="#andamento-italiano-regione-per-regione">Italia: Andamento Italiano regione per regione</a> </li> 
+    <li> <a href="#Diffusione spazio-temporale: variazione giornaliera">Italia: Diffusione spazio-temporale giornaliera</a> </li> 
+    <li> <a href="#andamento-italiano-regione-per-regione">Italia: Andamento Italiano Regione per Regione</a> </li> 
     <li> <a href="#trend-giorno-per-giorno">Italia: Trend giorno per giorno</a> </li> 
-    <li> <a href="#tasso-di-mortalita">Italia: Tasso di mortalità regione per regione</a> </li> 
+    <li> <a href="#Tasso di mortalità ">Italia: Tasso di mortalità regione per regione</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Italia: Stima Positivi Cumulata</a> </li> 
     <li> <a href="#stima-del-picco-di-attualmente-positivi-1">Italia: Stima Positivi</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi-1">Lombardia: Stima Positivi Cumulata</a> </li> 
@@ -44,7 +45,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 
 ## ITALIA
 
-### Diffusione spazio-temporale: cumulata
+### Diffusione spazio-temporale
 Mappa che mostra la diffusione nel tempo del virus nelle varie province italiane:
 ![Mappa Italia](/code/mappaProv.gif)
 
@@ -238,17 +239,17 @@ Come per il totale di casi positivi, è stato applicato il modello di correzione
 
 
 ### Dati comunali: totale casi
-Per ogni Provincia lombarda vengono riportati i 15 Comuni con numero maggiore di casi
+Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di casi
 <iframe class="slideshow-iframe" src="/slides/lombardia-comuni-totali.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 ### Dati comunali: totale casi pesati per popolazione
-Per ogni Provincia lombarda vengono riportati i 15 Comuni con numero maggiore di casi in rapporto alla popolazione comunale
+Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di casi in rapporto alla popolazione comunale
 <iframe class="slideshow-iframe" src="/slides/lombardia-comuni-totali-pesati.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 ### Dati comunali: progressione giornaliera
-Per ogni Provincia lombarda vengono riportati i 15 Comuni con numero maggiore di nuovi casi giornalieri (si noti che l'aggiornamento non è smepre per giorni consecutivi).
+Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di nuovi casi giornalieri (si noti che l'aggiornamento non è smepre per giorni consecutivi).
 <iframe class="slideshow-iframe" src="/slides/lombardia-comuni-nuovi.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
