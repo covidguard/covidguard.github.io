@@ -34,13 +34,22 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <!-- <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> -->
     <li> <a href="#confronto-regioni">Regioni: confronto</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati">Regioni: dati giornalieri cumulati</a> </li>     
-    <li> <a href="#progressione-giornaliera">Regioni: progressione giornalieri</a> </li> 
+    <li> <a href="#progressione-giornaliera">Regioni: progressione giornaliera</a> </li> 
     <li> <a href="#tamponi-totali-1">Regioni: Tamponi totali</a> </li> 
     <li> <a href="#tamponi-casi-testati">Regioni: Tamponi casi testati</a> </li> 
-    <li> <a href="#dati-di-progressione-percentuale">Province Progressione</a> </li> 
-    <li> <a href="#dati-giornalieri-cumulati-1">Province Cumulati</a> </li> 
-    <li> <a href="#dati-giornalieri-cumulati-normalizzati-per-popolazione">Province Normalizzati</a> </li> 
-    <li> <a href="#progressione-giornaliera-1">Province Giornalieri</a> </li> 
+    <li> <a href="#le-15-province-con-più-contagi-negli-ultimi-7-giorni">Province: 15 Province con più contagi negli ultimi 7 giorni</a> </li> 
+    <li> <a href="#le-15-province-con-meno-contagi-negli-ultimi-7-giorni">Province: 15 Province con meno contagi negli ultimi 7 giorni</a> </li> 
+<li> <a href="#dati-di-progressione-percentuale">Province: Dati di progressione percentuale</a> </li> 
+    <li> <a href="#dati-giornalieri-cumulati-1">Province: Dati giornalieri cumulati</a> </li> 
+    <li> <a href="#dati-giornalieri-cumulati-normalizzati-per-popolazione">Province: Dati giornalieri cumulati normalizzati per popolazione</a> </li> 
+    <li> <a href="#progressione-giornaliera-1">Province: Progressione Giornaliera</a> </li> 
+    <li> <a href="#trend-regionale-giorno-per-giorno">Lombardia: Trend regionale giorno per giorno</a> </li> 
+    <li> <a href="#modellazione-del-numero-cumulato-di-positivi-regionale">Lombardia: Modellazione del numero cumulato di positivi</a> </li> 
+    <li> <a href="#stima-del-picco-dei-nuovi-casi-positivi-regionale">Lombardia: Stima del picco dei nuovi casi</a> </li> 
+    <li> <a href="#stima-del-picco-di-attualmente-positivi regionale">Lombardia: Stima del picco degli attualmente positivi</a> </li> 
+    <li> <a href="#dati-comunali-totale-casi">Lombardia: Dati comunali totale casi</a> </li> 
+    <li> <a href="#dati-comunali-totale-casi-pesati-per-popolazione">Lombardia: Dati comunali totale casi pesati per popolazione</a> </li>
+    <li> <a href="#dati-comunali-progressione-giornaliera">Lombardia: Dati comunali progressione giornaliera</a> </li>
 </ul>
 <hr>
 **Attenzione**: per visualizzare correttamente il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli ultimi standard CSS3 potrebbero non funzionare correttamente.
