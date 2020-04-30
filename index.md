@@ -242,9 +242,15 @@ Per ogni Provincia lombarda vengono riportati i 15 Comuni con numero maggiore di
 <iframe class="slideshow-iframe" src="/slides/lombardia-comuni-totali.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
+### Dati comunali: totale casi pesati per popolazione
+Per ogni Provincia lombarda vengono riportati i 15 Comuni con numero maggiore di casi in rapporto alla popolazione comunale
+<iframe class="slideshow-iframe" src="/slides/lombardia-comuni-totali-pesati.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-
-
+### Dati comunali: progressione giornaliera
+Per ogni Provincia lombarda vengono riportati i 15 Comuni con numero maggiore di nuovi casi giornalieri (si noti che l'aggiornamento non è smepre per giorni consecutivi).
+<iframe class="slideshow-iframe" src="/slides/lombardia-comuni-nuovi.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 
 <hr>
