@@ -32,9 +32,11 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#stima-del-picco-degli-attualmente-positivi">Italia: Stima del picco degli attualmente positivi</a> </li>   
     <li> <a href="#casi-vs-decessi">Italia: Relazione Casi vs Decessi</a> </li> 
     <!-- <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> -->
-    <li> <a href="#dati-giornalieri-cumulati">Regioni Cumulati</a> </li> 
-    <li> <a href="#progressione-giornaliera">Regioni Giornalieri</a> </li> 
-    <li> <a href="#tamponi">Regioni Tamponi</a> </li> 
+    <li> <a href="#confronto-regioni">Regioni: confronto</a> </li> 
+    <li> <a href="#dati-giornalieri-cumulati">Regioni: dati giornalieri cumulati</a> </li>     
+    <li> <a href="#progressione-giornaliera">Regioni: progressione giornalieri</a> </li> 
+    <li> <a href="#tamponi-totali-1">Regioni: Tamponi totali</a> </li> 
+    <li> <a href="#tamponi-casi-testati">Regioni: Tamponi casi testati</a> </li> 
     <li> <a href="#dati-di-progressione-percentuale">Province Progressione</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati-1">Province Cumulati</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati-normalizzati-per-popolazione">Province Normalizzati</a> </li> 
