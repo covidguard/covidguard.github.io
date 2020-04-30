@@ -22,7 +22,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
     <li> <a href="#diffusione-spazio-temporale">Italia: Diffusione spazio-temporale</a> </li> 
-    <li> <a href="#Diffusione spazio-temporale: variazione giornaliera">Italia: Diffusione spazio-temporale giornaliera</a> </li> 
+    <li> <a href="#Diffusione-spazio-temporale:-variazione-giornaliera">Italia: Diffusione spazio-temporale giornaliera</a> </li> 
     <li> <a href="#andamento-italiano-regione-per-regione">Italia: Andamento Italiano Regione per Regione</a> </li> 
     <li> <a href="#trend-giorno-per-giorno">Italia: Trend giorno per giorno</a> </li> 
     <li> <a href="#Tasso di mortalità ">Italia: Tasso di mortalità regione per regione</a> </li> 
