@@ -28,9 +28,8 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#tasso-di-mortalità">Italia: Tasso di mortalità Regione per Regione</a> </li> 
     <li> <a href="#tamponi-totali">Italia: Tamponi totali</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi">Italia: Stima Totale Positivi</a> </li> 
-    <li> <a href="#stima-del-picco-di-attualmente-positivi">Italia: Stima del picco dei nuovi casi</a> </li> 
+    <li> <a href="#stima-del-picco-dei-nuovi-casi-positivi">Italia: Stima del picco dei nuovi casi positivi</a> </li> 
     <li> <a href="#stima-del-picco-degli-attualmente-positivi">Italia: Stima del picco degli attualmente positivi</a> </li>   
-    <li> <a href="#stima-del-picco-dei-nuovi-casi-positivi">Italia: Stima Positivi Cumulata</a> </li> 
     <li> <a href="#casi-vs-decessi">Italia: Relazione Casi vs Decessi</a> </li> 
     <!-- <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> -->
     <li> <a href="#dati-giornalieri-cumulati">Regioni Cumulati</a> </li> 
