@@ -121,27 +121,27 @@ for q=1:length(x)
     %plot(x(q)',y(q)',markers{l},'w')
     try
         if ~strcmp(regions,'A')
-            lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(:))','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(:))','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
         else
             if strcmp('P.A. Bolzano',regioni_tot{q})
-                lbl(q) = text(x(q) * 100,y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+                lbl(q) = text(x(q) * 100,y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
             elseif strcmp('P.A. Trento',regioni_tot{q})
-                lbl(q) = text(x(q) * 100,y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+                lbl(q) = text(x(q) * 100,y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
             elseif strcmp('Valle d Aosta',regioni_tot{q})
-                lbl(q) = text(x(q) * 100,y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+                lbl(q) = text(x(q) * 100,y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
             else
-                lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+                lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
             end
         end
     catch
         if strcmp('P.A. Bolzano',regioni_tot{q})
-            lbl(q) = text(x(q) * 100,y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            lbl(q) = text(x(q) * 100,y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
         elseif strcmp('P.A. Trento',regioni_tot{q})
-            lbl(q) = text(x(q) * 100,y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            lbl(q) = text(x(q) * 100,y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
         elseif strcmp('Valle d Aosta',regioni_tot{q})
-            lbl(q) = text(x(q) * 100,y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            lbl(q) = text(x(q) * 100,y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
         else
-            lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+            lbl(q) = text(x(q) * 100,y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
         end
     end
     l=l+1;

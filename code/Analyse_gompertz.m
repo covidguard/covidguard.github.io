@@ -116,11 +116,12 @@ data.dataReg=dataReg;
 animated_gif_reg_Andrea(data,'A');
 % animated_gif_reg_Andrea_fase2(data,'A');
 try
-    animated_gif_reg_Andrea(data,'N');
-    animated_gif_reg_Andrea(data,'C');
-    animated_gif_reg_Andrea(data,'S');
+%     animated_gif_reg_Andrea(data,'N');
+%     animated_gif_reg_Andrea(data,'C');
+%     animated_gif_reg_Andrea(data,'S');
 catch
 end
+animated_gif_reg_fase2(data,pop,'A');
 
 
 %% calcolo lombardia senza bergamo, brescia, milano,
