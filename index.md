@@ -24,7 +24,8 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#diffusione-spazio-temporale">Italia: Diffusione spazio-temporale</a> </li> 
     <li> <a href="#diffusione-spazio-temporale-variazione-giornaliera">Italia: Diffusione spazio-temporale giornaliera</a> </li> 
     <li> <a href="#andamento-italiano-regione-per-regione">Italia: Andamento Italiano Regione per Regione</a> </li> 
-    <li> <a href="#trend-giorno-per-giorno">Italia: Trend giorno per giorno</a> </li> 
+    <li> <a href="#stato-attuale-delle-regioni">Italia: Stato attuale delle Regioni</a> </li> 
+    <li> <a href="#trend-giorno-per-giorno">Italia: Trend giorno per giorno</a> </li>         
     <li> <a href="#tasso-di-mortalità">Italia: Tasso di mortalità Regione per Regione</a> </li> 
     <li> <a href="#tamponi-totali">Italia: Tamponi totali</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi">Italia: Stima Totale Positivi</a> </li> 
@@ -65,11 +66,15 @@ Mappa che mostra la diffusione nel tempo del virus nelle varie province italiane
 Mappa che mostra come varia la diffusione nel tempo del virus nelle varie province italiane:
 ![Mappa Italia](/code/mappaProv_spl.gif)
 
-### Andamento Italiano regione per regione
+### Andamento Italiano Regione per Regione
 Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d'Italia:
 ![Andamento regioni](/code/Andamento_Regioni.gif)
 
 Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perciò la sua variabilità potrebbe essere maggiore.
+
+### Stato attuale delle Regioni
+Il grafico cerca di valutare empiricamente la situazione di ciascuna Regione nel quadro italiano riguardo l'attuale prontezza ad affrontare le fasi successive dell'epidemia. N.B.: l'analisi è puramente indicativa.
+![Andamento Italia Grafico a Barre](slides/img/regioni/_status.PNG)
 
 
 ### Trend giorno per giorno 
