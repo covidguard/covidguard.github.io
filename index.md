@@ -62,9 +62,11 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 Mappa che mostra la diffusione nel tempo del virus nelle varie province italiane:
 ![Mappa Italia](/code/mappaProv.gif)
 
+
 ### Diffusione spazio-temporale: variazione giornaliera
 Mappa che mostra come varia la diffusione nel tempo del virus nelle varie province italiane:
 ![Mappa Italia](/code/mappaProv_spl.gif)
+
 
 ### Andamento Italiano Regione per Regione
 Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d'Italia:
@@ -72,8 +74,9 @@ Animazione riassuntiva dell'andamento di diffusione del COVID-19 nelle Regioni d
 
 Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perciò la sua variabilità potrebbe essere maggiore.
 
+
 ### Stato attuale delle Regioni
-Il grafico cerca di valutare empiricamente la situazione di ciascuna Regione nel quadro italiano riguardo l'attuale prontezza ad affrontare le fasi successive dell'epidemia. N.B.: l'analisi è puramente indicativa.
+Per ogni Regione il grafico mira a valutare empiricamente l'attuale possibilità di un'adeguata ed efficace risposta alle fasi successive dell'epidemia. N.B.: le conclusioni sono puramente indicative.
 ![Andamento regioni1](slides/img/regioni/status.PNG)
 
 
@@ -82,13 +85,16 @@ Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domicilia
 ![Andamento Italia Grafico a Barre](slides/img/regioni/reg_Italia_bars_cumulati.PNG)
 ![Andamento Italia Grafico a Linee](slides/img/regioni/reg_Italia_linee_cumulati.PNG)
 
+
 ### Tasso di mortalità 
 Tasso di mortalità calcolato sui casi totali, ovviamente il valore reale è molto più basso, i casi totali conteggiati sono solamente dati dal totale delle persone a cui un tampone è risultato positivo, come noto i casi sommersi sono molti. I valori del grafico sono quindi molto dipendenti dal numero di tamponi effettuati regione per regione:
 ![Tasso di mortalità](slides/img/regioni/ita_mortalita.PNG)
 
+
 ### Tamponi totali
 Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale e test risultati effettivamente positivi:
 ![Tasso di mortalità](slides/img/regioni/ita_tamponi.PNG)
+
 
 ### Stima del numero cumulato di positivi
 L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata Logistica. All'interno della famiglia di funzioni Logistiche, la Legge di Gompertz viene utilizzata per popolazioni poco numerose rispetto alle risorse presenti nell'ambiente che mostrano una crescita inizialmente esponenziale che in seguito si stabilizza, rallentando fino a diventare quasi lineare una volta che la popolazione si avvicina asintoticamente ad un valore di equilibrio.
@@ -97,9 +103,11 @@ Per la curva odierna è riportata anche l'intervallo di confidenza al 95% dei pa
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza".
 ![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
 
+
 ### Stima del picco dei nuovi casi positivi
 La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
 ![Picco Italia NuoviPositivi](/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_Italia_cumulati.PNG)
+
 
 ### Stima del picco degli attualmente positivi
 Il grafico mostra 3 curve di Gompertz (due giorni fa, ieri e odierna) fittate sul numero di attualmente positivi d'Italia. Per la curva odierna è riportato anche l'intervallo di confidenza al 95% dei parametri.
