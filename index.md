@@ -261,7 +261,7 @@ Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 ### Dati comunali: progressione giornaliera
-Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di nuovi casi giornalieri (si noti che l'aggiornamento non è smepre per giorni consecutivi).
+Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di nuovi casi giornalieri (si noti che l'aggiornamento non avviene sempre giornalmente).
 <iframe class="slideshow-iframe" src="/slides/lombardia-comuni-nuovi.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
