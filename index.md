@@ -74,7 +74,7 @@ Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perci�
 
 ### Stato attuale delle Regioni
 Il grafico cerca di valutare empiricamente la situazione di ciascuna Regione nel quadro italiano riguardo l'attuale prontezza ad affrontare le fasi successive dell'epidemia. N.B.: l'analisi è puramente indicativa.
-![Andamento Italia Grafico a Barre](slides/img/regioni/_status.PNG)
+![Andamento Stato attuale](slides/img/regioni/_status.PNG)
 
 
 ### Trend giorno per giorno 
