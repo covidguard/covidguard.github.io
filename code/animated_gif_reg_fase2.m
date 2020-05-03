@@ -54,9 +54,10 @@ end
 
 
 %% confronto tra regioni: casi totali allineato da 10 casi su 100.000
+date_s=datenum(unique(data.dataReg.data));
 h = figure;
 set(h,'NumberTitle','Off');
-title('Andamento epidemia per Regioni: casi totali')
+title(sprintf('Andamento epidemia per Regioni: casi totali al %s',datestr(date_s(end),'dd/mm/yyyy')));
 set(h,'Position',[26 79 967 603]);
 
 hold on; grid on; grid minor;
@@ -64,7 +65,7 @@ xlabel('Giorni dal caso 10/100.000 ab');
 ylabel('Casi totali per 100.000 abitanti')
 
 
-date_s=datenum(unique(data.dataReg.data));
+
 
 a=[];
 for reg = 1:size(regioni_tot,1)

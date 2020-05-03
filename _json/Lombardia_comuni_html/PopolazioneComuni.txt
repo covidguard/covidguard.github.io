@@ -648,6 +648,7 @@ Ghisalba	6173.00	582.74
 Gianico	2132.00	160.83
 Giussago	5304.00	209.76
 Giussano	26066.00	2523.59
+Godiasco Salice Terme	3299.00	158.09
 Godiasco	3299.00	158.09
 Goito	10191.00	129.03
 Golasecca	2699.00	366.95
@@ -1346,7 +1347,9 @@ Torre Pallavicina	1082.00	100.43
 Torrevecchia Pia	3519.00	214.10
 Torricella del Pizzo	584.00	25.36
 Torricella Verzate	833.00	227.18
+Toscolano Maderno	7881.00	134.70
 Toscolano-Maderno	7881.00	134.70
+Toscolano	7881.00	134.70
 Tovo di Sant'Agata	640.00	56.61
 Tradate	18983.00	878.15
 Traona	2798.00	437.01

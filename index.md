@@ -25,6 +25,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#diffusione-spazio-temporale-variazione-giornaliera">Italia: Diffusione spazio-temporale giornaliera</a> </li> 
     <li> <a href="#andamento-italiano-regione-per-regione">Italia: Andamento Italiano Regione per Regione</a> </li> 
     <li> <a href="#stato-attuale-delle-regioni">Italia: Stato attuale delle Regioni</a> </li> 
+    <li> <a href="#andamento-epidemia-confronto-tra-regioni">Italia: Andamento epidemia-confronto tra Regioni</a> </li> 
     <li> <a href="#trend-giorno-per-giorno">Italia: Trend giorno per giorno</a> </li>         
     <li> <a href="#tasso-di-mortalità">Italia: Tasso di mortalità Regione per Regione</a> </li> 
     <li> <a href="#tamponi-totali">Italia: Tamponi totali</a> </li> 
@@ -78,6 +79,11 @@ Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perci�
 ### Stato attuale delle Regioni
 Per ogni Regione il grafico mira a valutare empiricamente l'attuale possibilità di un'adeguata ed efficace risposta alle fasi successive dell'epidemia. N.B.: le conclusioni sono puramente indicative.
 ![Andamento regioni1](slides/img/regioni/status.PNG)
+
+
+### Andamento epidemia: confronto tra Regioni
+Il grafico riporta l'andamento dei casi totali per abitante di ogni regione allineati temporalmente a partire dal caso 10/100.000 di ogni Regione.
+![Andamento regioni2](slides/img/regioni/confrontoReg_casiTotali.PNG)
 
 
 ### Trend giorno per giorno 
