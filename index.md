@@ -33,6 +33,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#stima-del-picco-dei-nuovi-casi-positivi">Italia: Stima del picco dei nuovi casi positivi</a> </li> 
     <li> <a href="#stima-del-picco-degli-attualmente-positivi">Italia: Stima del picco degli attualmente positivi</a> </li>   
     <li> <a href="#casi-vs-decessi">Italia: Relazione Casi vs Decessi</a> </li> 
+    <li> <a href="#controlli-denunce-e-sanzioni">Italia: Controlli, denunce e sanzioni</a> </li> 
     <!-- <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> -->
     <li> <a href="#confronto-regioni">Regioni: confronto</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati">Regioni: dati giornalieri cumulati</a> </li>     
@@ -131,6 +132,15 @@ Di seguito due rappresentazioni:
 ![Casi Vs Decessi](/slides/img/regioni/ita_correlazioneCasiDeceduti.PNG)
 
 
+### Controlli, denunce e sanzioni
+Numero ed esisto complessivo dei controlli:
+![controlliPopolazione](/slides/img/regioni/controlli_popolazione.PNG)
+
+Andamento giornaliero delle denunce:
+![controlliPopolazioneGiornalieri](/slides/img/regioni/controlli_persone_daily.PNG)
+
+Andamento giornaliero delle numero di denunce rispetto ai controlli totali:
+![controlliPopolazioneGiornalieri](/slides/img/regioni/controlli_persone_daily_percentuale.PNG)
 
 
 
