@@ -46,6 +46,75 @@ catch
 end
 
 
+colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+colors={};
+for k=1:size(regioni_tot,1)
+    colors{k}=Cmap.getColor(k, size(regioni_tot,1));
+end
+
+
+%% confronto tra regioni: casi totali allineato da 10 casi su 100.000
+h = figure;
+set(h,'NumberTitle','Off');
+title('Andamento epidemia per Regioni: casi totali')
+set(h,'Position',[26 79 967 603]);
+
+hold on; grid on; grid minor;
+xlabel('Giorni dal caso 10/100.000 ab');
+ylabel('Casi totali per 100.000 abitanti')
+
+
+date_s=datenum(unique(data.dataReg.data));
+
+a=[];
+for reg = 1:size(regioni_tot,1)
+    regione = char(regioni_tot(reg,1));
+    index = strcmp(data.dataReg.denominazione_regione,cellstr(regione));
+    y=data.dataReg.totale_casi(index)./pop.popolazioneRegioniPop(reg)*100000;
+    idx=find(y>10);y=y(idx(1):end);
+    a(reg)=plot(y,'LineWidth', 2.0, 'Color', colors{reg});
+    i = round(numel(y)/1)-1;
+    
+    % Get the local slope
+    d = (y(i+1)-y(i-3))/4;
+    X = diff(get(gca, 'xlim'));
+    Y = diff(get(gca, 'ylim'));
+    p = pbaspect;
+    a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+    
+    
+    % Display the text
+%     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+    text(i+1.2, y(i)+d, sprintf('%s', regione), 'rotation', a,'fontSize',7);
+end
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/confrontoReg_casiTotali.PNG']);
+close(gcf);
+
+
+
+   
+
 x_data = NaN(size(regioni_tot,1), size(unique(data.dataReg.data),1)-6);
 y_data = NaN(size(regioni_tot,1), size(unique(data.dataReg.data),1)-6);
 
@@ -76,11 +145,7 @@ axis tight manual % this ensures that getframe() returns a consistent size
 ylim([0 10])
 xlim([0 500])
 
-colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
-colors={};
-for k=1:size(regioni_tot,1)
-    colors{k}=Cmap.getColor(k, size(regioni_tot,1));
-end
+
 days = (datenum(unique(data.dataReg.data)));
 
 
@@ -221,7 +286,24 @@ for q=1:size(x_data,1)
 end
 lbl(q+1) = text(x_data_ita,y_data_ita, 'ITALIA','Color', [0 0 0],'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center', 'verticalAlignment','bottom');
 
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
 
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
 
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/status.PNG']);
