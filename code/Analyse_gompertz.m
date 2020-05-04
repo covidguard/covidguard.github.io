@@ -56,14 +56,18 @@ if flag_download_1
         catch
         end
     end
+    
+    % analise report pdf
+    fileDir = dir(sprintf('%s/_json/Report_PDF/*.pdf',WORKroot));
+    for i = size(fileDir,1): size(fileDir,1)
+        command = sprintf('cd %s/_json/Report_PDF && extractPDFText %s',WORKroot, fileDir(i).name);
+        system(command);
+    end
+
+
 end
 
-% analise report pdf
-fileDir = dir(sprintf('%s/_json/Report_PDF/*.pdf',WORKroot));
-for i = size(fileDir,1): size(fileDir,1)
-    command = sprintf('cd %s/_json/Report_PDF && extractPDFText %s',WORKroot, fileDir(i).name);
-    system(command);
-end
+
 
 fileDir = dir(sprintf('%s/_json/Report_PDF/*.txt',WORKroot));
 

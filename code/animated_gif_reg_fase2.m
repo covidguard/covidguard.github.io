@@ -124,17 +124,23 @@ for reg=1:size(regioni_tot,1)
     index = find(strcmp(data.dataReg.denominazione_regione,cellstr(regione)));
     for t = 7: size(unique(data.dataReg.data),1)
         x_data(reg,t) = data.dataReg.nuovi_positivi(index(t))/pop.popolazioneRegioniPop(reg)*100000;
+        x_data(reg,t) = data.dataReg.totale_casi(index(t))/pop.popolazioneRegioniPop(reg)*100000;
         y_data(reg,t) = (data.dataReg.totale_casi(index(t))-data.dataReg.totale_casi(index(t-6)))/data.dataReg.totale_casi(index(t-6))*100;
     end
 end
 
 lastDay=unique(data.dataReg.data); lastDay=lastDay(end);
 lastWeek=unique(data.dataReg.data); lastWeek=lastWeek(end-6);
+lastThree=unique(data.dataReg.data); lastThree=lastThree(end-2);
+
 
 idx = find(strcmp(data.dataReg.data,lastDay));
 idx2 = find(strcmp(data.dataReg.data,lastWeek));
+idx3 = find(strcmp(data.dataReg.data,lastThree));
 
-x_data_ita=sum(data.dataReg.nuovi_positivi(idx))/sum(pop.popolazioneRegioniPop)*100000;
+
+x_data_ita=(sum(data.dataReg.nuovi_positivi(idx))-sum(data.dataReg.nuovi_positivi(idx3)))/3/sum(pop.popolazioneRegioniPop)*100000;
+x_data_ita=(sum(data.dataReg.totale_casi(idx))-sum(data.dataReg.totale_casi(idx3)))/3/sum(pop.popolazioneRegioniPop)*100000;
 y_data_ita=(sum(data.dataReg.totale_casi(idx))-sum(data.dataReg.totale_casi(idx2)))/sum(data.dataReg.totale_casi(idx2))*100;
 
 
@@ -205,7 +211,7 @@ end
 grid on
 % text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
 % text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
-xlabel('nuovi positivi x 100.000 ab');
+xlabel('Media nuovi casi ultimi 3 giorni / 100.000 ab');
 ylabel('Incremento settimanale percentuale di casi totali')
 set(gcf,'color','w');
 
@@ -215,8 +221,9 @@ fh = gcf;
 hold on
 
 for n = size(x_data,2):size(x_data,2)
-    x = x_data(:,n);
+    x = x_data(:,n)-x_data(:,n-2);
     y = y_data(:,n);
+     
 end
 xlim([0 max(x)*1.1]);
 ylim([0 max(y)*1.1]);
