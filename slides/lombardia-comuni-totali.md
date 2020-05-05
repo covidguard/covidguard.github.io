@@ -18,6 +18,7 @@ loop: true
 * ![Provincia Milano](img/comuniLombardia/MI_casiTotali.PNG)
 * ![Provincia Mantova](img/comuniLombardia/MN_casiTotali.PNG)
 * ![Provincia Pavia](img/comuniLombardia/PV_casiTotali.PNG)
+* ![Provincia Sondrio](img/comuniLombardia/SO_casiTotali.PNG)
 * ![Provincia Varese](img/comuniLombardia/VA_casiTotali.PNG)
 
 

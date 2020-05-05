@@ -83,8 +83,17 @@ Per ogni Regione il grafico mira a valutare empiricamente l'attuale possibilità
 
 
 ### Andamento epidemia: confronto tra Regioni
-Il grafico riporta l'andamento dei casi totali per abitante di ogni regione allineati temporalmente a partire dal caso 10/100.000 di ogni Regione.
+Il grafico riporta l'andamento del numero dei casi totali di ogni Regione allineati temporalmente a partire dal caso 10/100.000 di ogni Regione.
 ![Andamento regioni2](slides/img/regioni/confrontoReg_casiTotali.PNG)
+
+Il grafico riporta l'andamento del numero degli attualmente positivi di ogni Regione allineati temporalmente a partire dal caso 10/100.000 di ogni Regione.
+![Andamento regioni3](slides/img/regioni/confrontoReg_attualmentePositivi.PNG)
+
+Il grafico riporta l'andamento del numero dei deceduti di ogni Regione allineati temporalmente a partire dal caso 10/100.000 di ogni Regione.
+![Andamento regioni4](slides/img/regioni/confrontoReg_deceduti.PNG)
+
+Il grafico riporta l'andamento del numero dei dimessi/guariti di ogni Regione allineati temporalmente a partire dal caso 10/100.000 di ogni Regione.
+![Andamento regioni5](slides/img/regioni/confrontoReg_dimessi.PNG)
 
 
 ### Trend giorno per giorno 

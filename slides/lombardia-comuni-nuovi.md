@@ -18,6 +18,7 @@ loop: true
 * ![Provincia Milano](img/comuniLombardia/newgiornalieri_MI.PNG)
 * ![Provincia Mantova](img/comuniLombardia/newgiornalieri_MN.PNG))
 * ![Provincia Pavia](img/comuniLombardia/newgiornalieri_PV.PNG)
+* ![Provincia Sondrio](img/comuniLombardia/newgiornalieri_SO.PNG)
 * ![Provincia Varese](img/comuniLombardia/newgiornalieri_VA.PNG)
 
 
