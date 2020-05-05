@@ -21,40 +21,9 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
 <hr>
 <h2 id="table-of-contents" class="text-delta">Table of contents</h2>
 <ul> 
-    <li> <a href="#diffusione-spazio-temporale">Italia: Diffusione spazio-temporale</a> </li> 
-    <li> <a href="#diffusione-spazio-temporale-variazione-giornaliera">Italia: Diffusione spazio-temporale giornaliera</a> </li> 
-    <li> <a href="#andamento-italiano-regione-per-regione">Italia: Andamento Italiano Regione per Regione</a> </li> 
-    <li> <a href="#stato-attuale-delle-regioni">Italia: Stato attuale delle Regioni</a> </li> 
-    <li> <a href="#andamento-epidemia-confronto-tra-regioni">Italia: Andamento epidemia-confronto tra Regioni</a> </li> 
-    <li> <a href="#trend-giorno-per-giorno">Italia: Trend giorno per giorno</a> </li>         
-    <li> <a href="#esito">Italia: Relazione tra deceduti e dimessi/guariti</a> </li> 
-    <li> <a href="#tamponi-totali">Italia: Tamponi totali</a> </li> 
-    <li> <a href="#stima-del-numero-cumulato-di-positivi">Italia: Stima Totale Positivi</a> </li> 
-    <li> <a href="#stima-del-picco-dei-nuovi-casi-positivi">Italia: Stima del picco dei nuovi casi positivi</a> </li> 
-    <li> <a href="#stima-del-picco-degli-attualmente-positivi">Italia: Stima del picco degli attualmente positivi</a> </li>   
-    <li> <a href="#casi-vs-decessi">Italia: Relazione Casi vs Decessi</a> </li> 
-    <li> <a href="#controlli-denunce-e-sanzioni">Italia: Controlli, denunce e sanzioni</a> </li> 
-    <!-- <li> <a href="#italia-regioni">Regioni d'Italia</a> </li> -->
-    <li> <a href="#confronto-regioni">Regioni: confronto</a> </li> 
-    <li> <a href="#dati-giornalieri-cumulati">Regioni: dati giornalieri cumulati</a> </li>     
-    <li> <a href="#progressione-giornaliera">Regioni: progressione giornaliera</a> </li> 
-    <li> <a href="#tamponi-totali-1">Regioni: Tamponi totali</a> </li> 
-    <li> <a href="#tamponi-casi-testati">Regioni: Tamponi casi testati</a> </li> 
-    <li> <a href="#esito-1">Regioni: Esito</a> </li> 
-    <li> <a href="#indice-di-mortalità">Italia: Indice di mortalità Regione per Regione</a> </li> 
-    <li> <a href="#le-15-province-con-più-contagi-negli-ultimi-7-giorni">Province: 15 Province con più contagi negli ultimi 7 giorni</a> </li> 
-    <li> <a href="#le-15-province-con-meno-contagi-negli-ultimi-7-giorni">Province: 15 Province con meno contagi negli ultimi 7 giorni</a> </li> 
-    <li> <a href="#dati-di-progressione-percentuale">Province: Dati di progressione percentuale</a> </li> 
-    <li> <a href="#dati-giornalieri-cumulati-1">Province: Dati giornalieri cumulati</a> </li> 
-    <li> <a href="#dati-giornalieri-cumulati-normalizzati-per-popolazione">Province: Dati giornalieri cumulati normalizzati per popolazione</a> </li> 
-    <li> <a href="#progressione-giornaliera-1">Province: Progressione Giornaliera</a> </li> 
-    <li> <a href="#trend-regionale-giorno-per-giorno">Lombardia: Trend regionale giorno per giorno</a> </li> 
-    <li> <a href="#modellazione-del-numero-cumulato-di-positivi-regionale">Lombardia: Modellazione del numero cumulato di positivi</a> </li> 
-    <li> <a href="#stima-del-picco-dei-nuovi-casi-positivi-regionale">Lombardia: Stima del picco dei nuovi casi</a> </li> 
-    <li> <a href="#stima-del-picco-di-attualmente-positivi regionale">Lombardia: Stima del picco degli attualmente positivi</a> </li> 
-    <li> <a href="#dati-comunali-totale-casi">Lombardia: Dati comunali totale casi</a> </li> 
-    <li> <a href="#dati-comunali-totale-casi-pesati-per-popolazione">Lombardia: Dati comunali totale casi pesati per popolazione</a> </li>
-    <li> <a href="#dati-comunali-progressione-giornaliera">Lombardia: Dati comunali progressione giornaliera</a> </li>
+    <li> <a href="#italia">Italia</a> </li> 
+    <li> <a href="#italia-regioni">Italia: Regioni</a> </li> 
+    <li> <a href="#italia-province">Italia: Province</a> </li> 
 </ul>
 <hr>
 **Attenzione**: per visualizzare correttamente il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli ultimi standard CSS3 potrebbero non funzionare correttamente.
@@ -104,11 +73,6 @@ Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domicilia
 ![Andamento Italia Grafico a Linee](slides/img/regioni/reg_Italia_linee_cumulati.PNG)
 
 
-### Esito
-Relazione tra deceduti e dimessi/guariti:
-![Esito Italia](slides/img/regioni/reg_Italia_esito.PNG)
-
-
 ### Tamponi totali
 Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale e test risultati effettivamente positivi:
 ![Tamponi totali](slides/img/regioni/ita_tamponi.PNG)
@@ -132,6 +96,10 @@ Il grafico mostra 3 curve di Gompertz (due giorni fa, ieri e odierna) fittate su
 Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di più certo dell'incertezza":
 ![Picco Italia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Italia_cumulati.PNG)
 
+
+### Esito
+Relazione tra deceduti e dimessi/guariti:
+![Esito Italia](slides/img/regioni/reg_Italia_esito.PNG)
 
 ### Casi vs Decessi
 Tra i primi sintomi (tampone positivo) e il decesso trascorrono da 4 a 8 giorni. 
