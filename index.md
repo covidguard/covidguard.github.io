@@ -27,7 +27,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#stato-attuale-delle-regioni">Italia: Stato attuale delle Regioni</a> </li> 
     <li> <a href="#andamento-epidemia-confronto-tra-regioni">Italia: Andamento epidemia-confronto tra Regioni</a> </li> 
     <li> <a href="#trend-giorno-per-giorno">Italia: Trend giorno per giorno</a> </li>         
-    <li> <a href="#tasso-di-mortalità">Italia: Tasso di mortalità Regione per Regione</a> </li> 
+    <li> <a href="#esito">Italia: Relazione tra deceduti e dimessi/guariti</a> </li> 
     <li> <a href="#tamponi-totali">Italia: Tamponi totali</a> </li> 
     <li> <a href="#stima-del-numero-cumulato-di-positivi">Italia: Stima Totale Positivi</a> </li> 
     <li> <a href="#stima-del-picco-dei-nuovi-casi-positivi">Italia: Stima del picco dei nuovi casi positivi</a> </li> 
@@ -40,9 +40,11 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#progressione-giornaliera">Regioni: progressione giornaliera</a> </li> 
     <li> <a href="#tamponi-totali-1">Regioni: Tamponi totali</a> </li> 
     <li> <a href="#tamponi-casi-testati">Regioni: Tamponi casi testati</a> </li> 
+    <li> <a href="#esito-1">Regioni: Esito</a> </li> 
+    <li> <a href="#indice-di-mortalità">Italia: Indice di mortalità Regione per Regione</a> </li> 
     <li> <a href="#le-15-province-con-più-contagi-negli-ultimi-7-giorni">Province: 15 Province con più contagi negli ultimi 7 giorni</a> </li> 
     <li> <a href="#le-15-province-con-meno-contagi-negli-ultimi-7-giorni">Province: 15 Province con meno contagi negli ultimi 7 giorni</a> </li> 
-<li> <a href="#dati-di-progressione-percentuale">Province: Dati di progressione percentuale</a> </li> 
+    <li> <a href="#dati-di-progressione-percentuale">Province: Dati di progressione percentuale</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati-1">Province: Dati giornalieri cumulati</a> </li> 
     <li> <a href="#dati-giornalieri-cumulati-normalizzati-per-popolazione">Province: Dati giornalieri cumulati normalizzati per popolazione</a> </li> 
     <li> <a href="#progressione-giornaliera-1">Province: Progressione Giornaliera</a> </li> 
@@ -96,20 +98,20 @@ Il grafico riporta l'andamento del numero dei dimessi/guariti di ogni Regione.
 ![Andamento regioni5](slides/img/regioni/confrontoReg_dimessi.PNG)
 
 
-### Trend giorno per giorno 
+### Trend giorno per giorno
 Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domiciliare, ricoverati con sintomi, terapie intensive e deceduti, in due rappresentazioni differenti:
 ![Andamento Italia Grafico a Barre](slides/img/regioni/reg_Italia_bars_cumulati.PNG)
 ![Andamento Italia Grafico a Linee](slides/img/regioni/reg_Italia_linee_cumulati.PNG)
 
 
-### Tasso di mortalità 
-Tasso di mortalità calcolato sui casi totali, ovviamente il valore reale è molto più basso, i casi totali conteggiati sono solamente dati dal totale delle persone a cui un tampone è risultato positivo, come noto i casi sommersi sono molti. I valori del grafico sono quindi molto dipendenti dal numero di tamponi effettuati regione per regione:
-![Tasso di mortalità](slides/img/regioni/ita_mortalita.PNG)
+### Esito
+Relazione tra deceduti e dimessi/guariti:
+![Esito Italia](slides/img/regioni/reg_Italia_esito.PNG)
 
 
 ### Tamponi totali
 Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale e test risultati effettivamente positivi:
-![Tasso di mortalità](slides/img/regioni/ita_tamponi.PNG)
+![Tamponi totali](slides/img/regioni/ita_tamponi.PNG)
 
 
 ### Stima del numero cumulato di positivi
@@ -155,6 +157,7 @@ Andamento giornaliero delle numero di denunce rispetto ai controlli totali:
 
 ## ITALIA Regioni
 
+
 ### Confronto Regioni
 Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri osservati:
 
@@ -178,6 +181,12 @@ Grafici comparativi con dati normalizzati per 1000 abitanti
 <iframe class="slideshow-iframe" src="/slides/regioni_recap_norm.html" 
 style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
+
+<iframe class="slideshow-iframe" src="/slides/italia-regioni-confronto-day.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+
+<iframe class="slideshow-iframe" src="/slides/italia-regioni-confronto-week.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 
 ### Dati giornalieri cumulati
@@ -208,6 +217,23 @@ Numero di tamponi testati vs numero risultati positivi
 
 <iframe class="slideshow-iframe" src="/slides/regioni_tamponi-testati.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+
+
+### Esito
+Percentuale dei dimessi/guariti sui casi che hanno avuto un esito.
+![Esito regioni](slides/img/regioni/regioni_esito.PNG)
+
+<iframe class="slideshow-iframe" src="/slides/regioni_esito.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+
+### Indice di mortalità 
+Indice di mortalità calcolato sui casi totali, ovviamente il valore reale è molto più basso, i casi totali conteggiati sono solamente dati dal totale delle persone a cui un tampone è risultato positivo, come noto i casi sommersi sono molti. I valori del grafico sono quindi molto dipendenti dal numero di tamponi effettuati regione per regione:
+![Indice di mortalità](slides/img/regioni/ita_mortalita.PNG)
+
+Rapporto deceduti su casi totali:
+![Rapporto decedutiCasiTotali](slides/img/regioni/regioni_deced_su_totali.PNG)
+
+
 
 
 
