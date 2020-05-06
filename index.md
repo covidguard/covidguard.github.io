@@ -24,6 +24,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#italia">Italia</a> </li> 
     <li> <a href="#italia-regioni">Italia: Regioni</a> </li> 
     <li> <a href="#italia-province">Italia: Province</a> </li> 
+    <li> <a href="#lombardia">Lombardia</a> </li> 
 </ul>
 <hr>
 **Attenzione**: per visualizzare correttamente il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli ultimi standard CSS3 potrebbero non funzionare correttamente.

@@ -5926,7 +5926,7 @@ for reg = [5,9]
         set(id_f, 'Name', ['Giornalieri']);
         title(sprintf([char(Regione_lista(reg)), ': andamento epidemia delle Province\\fontsize{5}\n ']))
         set(gcf,'NumberTitle','Off');
-        set(gcf,'Position',[55 187 1784 758]);
+        set(gcf,'Position',[26 79 967 603]);
         grid on
         hold on
         
@@ -6074,8 +6074,7 @@ for reg = [5,9]
 %         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
         ax.FontSize = font_size;
 
-        
-        
+
         for h=1:size(RegioneTot,1)
             idx_max=find(a1_tot(h,:)==max(a1_tot(h,:)))-3;
             i = idx_max;
@@ -6091,7 +6090,7 @@ for reg = [5,9]
             Y = diff(get(gca, 'ylim'));
             p = pbaspect;
             a = atan(d*p(2)*X/p(1)/Y)*180/pi;
-            text(t(i), a1_tot(h,i), char(sigla_prov(h)),'HorizontalAlignment','center', 'rotation', a, 'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(RegioneTot,1)));
+            text(t(i), a1_tot(h,i), char(sigla_prov(h)),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(RegioneTot,1)));
         end
         
         
