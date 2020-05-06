@@ -5968,7 +5968,7 @@ for reg = [5,9]
                 for i=1:size(time_num,1)-1
                     fprintf(fout,'%d;%d\n',time_num(i)+1,y(i));
                 end
-                
+                fclose(fout);
                 command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
                 
