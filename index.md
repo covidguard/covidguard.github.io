@@ -250,10 +250,12 @@ style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></
 ## LOMBARDIA
 La Regione Lombardia è il territorio più colpito dall'epidemia. Nei grafici seguenti si riportano gli andamenti per questa particolare Regione.
 
+
 ### Trend regionale giorno per giorno 
 Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domiciliare, ricoverati con sintomi, terapie intensive e deceduti, in due rappresentazioni differenti:
 ![Andamento Lombardia Grafico a Barre](slides/img/regioni/reg_Lombardia_bars_cumulati.PNG)
 ![Andamento Lombardia Grafico a Linee](slides/img/regioni/reg_Lombardia_linee_cumulati.PNG)
+
 
 ### Modellazione del numero cumulato di positivi regionale
 L'evolversi nel tempo di una epidemia può essere descritto da una funzione chiamata Logistica. All'interno della famiglia di funzioni Logistiche, la Legge di Gompertz viene utilizzata per popolazioni poco numerose rispetto alle risorse presenti nell'ambiente che mostrano una crescita inizialmente esponenziale che in seguito si stabilizza, rallentando fino a diventare quasi lineare una volta che la popolazione si avvicina asintoticamente ad un valore di equilibrio.
@@ -281,6 +283,13 @@ Nell'interpretare questo grafico, ricordiamoci sempre che "non c'è nulla di pi�
 Come per il totale di casi positivi, è stato applicato il modello di correzione per il numero di tamponi:
 ![Picco Lombardia PositiviCorretto](/slides/img/regioni/reg_stimapiccoAttualmentePositiviCorretti_Lombardia_cumulati.PNG)
 
+
+### Curve epidemiche provinciali
+L'interpolazione delle serie di crescita dei nuovi casi provinciali permette di valutare gli andamenti Provincia per Provincia della Regione.
+Le curve soffrono ovviamente della estrema variabilità delle condizioni di rilevamento dei dati (tamponi, tipologia di persone analizzate, ...) e sono poco rappresentative nella parte di crescita, tuttavia mostrano inequivolcabilmente come, in praticolare in Provincia di Lodi ma anche nelle Province di Cremona e Pavia, l'epidemia fosse iniziata un periodo molto antecedente il primo caso ufficiale.
+In particolare il caso 1 italiano (circa 20 febbraio) era in corrispondenza quasi del picco di contagi della Provincia lodigiana.
+![Curva Epidemica Lombardia 1](/slides/img/province/Province_Lombardia_casiTotaliGiornalieri_gomp.PNG)
+![Curva Epidemica Lombardia 2](/slides/img/province/_norm_Lombardia_casiTotaliGiornalieri_gomp.PNG)
 
 ### Dati comunali: totale casi
 Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di casi

@@ -1397,7 +1397,7 @@ end
 
 
 %% lombardia andamenti con previsioni
-for reg = [9];
+for reg = [5,9];
     regione = char(regioni_tot(reg,1));
     index0 = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     time_num = fix(datenum(dataReg.data(index0)));
@@ -5353,6 +5353,7 @@ for reg = 1:size(Regione_lista)
                 end
             else
                 try
+                    
                     y=(dataReg.totale_casi(index,1));
                     b(h)=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));                    
                     % Get the local slope
@@ -5476,6 +5477,7 @@ for reg = 1:size(Regione_lista)
             
             if normalizza_per_popolazione==1
                 if splined_yn == 0
+                   
                     b1(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,':','LineWidth', 1.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
                     window=7;
                     b(h)=plot(time_num(2:end),movmean(diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000, window, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
@@ -5496,10 +5498,22 @@ for reg = 1:size(Regione_lista)
             else
                 try
                     if splined_yn == 0
-                        b1(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),':','LineWidth', 1.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
-                         window=7;
-                        b(h)=plot(time_num(2:end),movmean(diff(dataReg.totale_casi(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
                         
+%                         y=diff(dataReg.totale_casi(index,1));
+%                         fout=fopen('testIn_gauss.txt','wt');
+%                         for i=1:size(time_num,1)-1
+%                             fprintf(fout,'%d;%d\n',time_num(i)+1,y(i));
+%                         end
+%                         
+%                         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%                         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%                         
+%                         
+%                         b1(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),':','LineWidth', 1.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+%                         window=7;
+%                         b(h)=plot(t,a1,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                        
+                        b(h)=plot(time_num(2:end),movmean(diff(dataReg.totale_casi(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
                         testo.sigla(h,:)=char(sigla_prov(h));
                         sf=movmean(diff(dataReg.totale_casi(index,1)), window, 'omitnan');
                         testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
@@ -5600,6 +5614,8 @@ for reg = 1:size(Regione_lista)
                 ylabel('Numero casi ogni 1000 abitanti (smoothed)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
             end
         end
+        
+        
         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
         ax.XTick = time_num(2):2:time_num(end);
         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
@@ -5607,7 +5623,7 @@ for reg = 1:size(Regione_lista)
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
         ax.FontSize = font_size;
         
-        
+
         
         
         % l=legend([b],'Totale Casi');
@@ -5863,6 +5879,280 @@ fclose(fout);
 %     end
 %     delete(kk)
 % end
+
+
+
+
+
+
+
+% analisi di Gompertz sulla Lombardia
+
+
+for reg = [5,9]
+% for reg = 1:size(Regione_lista,1);
+    
+    %%
+    idx_reg=find(strcmp(dataReg.denominazione_regione,cell(Regione_lista(reg,:))));
+    sigla_prov=dataReg.sigla_provincia(idx_reg);
+    [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
+    sigla_prov=sigla_prov(ixs);
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
+    sigla_prov=sigla_prov(ixs);
+    
+    % find population
+    [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));
+    
+    %     RegioneTot={'Como','Lecco','Milano','Bergamo','Varese','Lodi','Monza e della Brianza'}';
+    %     RegioneTot={'Como','Bergamo','Brescia','Lecco'}'
+    
+ 
+    for tipoGraph=1:2
+        
+        try
+        if tipoGraph==1
+            normalizza_per_popolazione = 0;
+        else
+            normalizza_per_popolazione = 1;
+        end
+        
+        datetickFormat = 'dd mmm';
+        
+        
+        %% figura giornaliera
+        datetickFormat = 'dd mmm';
+        figure;
+        id_f = gcf;
+        set(id_f, 'Name', ['Giornalieri']);
+        title(sprintf([char(Regione_lista(reg)), ': andamento epidemia delle Province\\fontsize{5}\n ']))
+        set(gcf,'NumberTitle','Off');
+        set(gcf,'Position',[55 187 1784 758]);
+        grid on
+        hold on
+        
+        b=[];
+        string_legend='l=legend([b]';
+        
+        testo=struct;
+        
+        RegioneTot=setdiff(RegioneTot,cellstr('Forl\u201c-Cesena'));
+        a1_tot=[];
+        
+        for h=1:size(RegioneTot,1)
+            regione = char(RegioneTot(h));
+            index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione)));
+            time_num = fix(datenum(dataReg.data(index)));
+            
+            if normalizza_per_popolazione==1
+                y=diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000;
+                fout=fopen('testIn_gauss.txt','wt');
+                for i=1:size(time_num,1)-1
+                    fprintf(fout,'%d;%d\n',time_num(i)+1,y(i));
+                end
+                
+                command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+                
+                
+                b1(h)=plot(time_num(2:end),y,':','LineWidth', 1.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                window=7;
+                b(h)=plot(t,a1,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));                
+                testo.sigla(h,:)=char(sigla_prov(h));
+  
+                testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
+                testo.val(h,1)=sf(end);
+                a1_tot(h,:)=a1;
+            else
+                y=diff(dataReg.totale_casi(index,1));
+                fout=fopen('testIn_gauss.txt','wt');
+                for i=1:size(time_num,1)-1
+                    fprintf(fout,'%d;%d\n',time_num(i)+1,y(i));
+                end
+                
+                command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+                [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+                
+                
+                b1(h)=plot(time_num(2:end),y,':','LineWidth', 1.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                window=7;
+                b(h)=plot(t,a1,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));                
+                testo.sigla(h,:)=char(sigla_prov(h));
+  
+                testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
+                testo.val(h,1)=sf(end);
+                a1_tot(h,:)=a1;
+            end
+            
+            
+            regione_leg=regione;
+            regione_leg(strfind(regione_leg,''''))=' ';
+            regione_leg(strfind(regione_leg,'Ã'))='i';
+            regione_leg(strfind(regione_leg,'¬'))='';
+            string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
+            code_axe = get(id_f, 'CurrentAxes');
+            set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
+            
+            %             if normalizza_per_popolazione==1
+            %
+            %             else
+            %
+            %             end
+            
+            %             testo.sigla(h,:)=char(sigla_prov(h));
+            %             testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
+            %             testo.val(h,1)=sf(end);
+            
+            
+        end
+        string_legend=sprintf('%s);',string_legend);
+        eval(string_legend)
+        
+%         
+%         [~,indext]=sort(testo.pos(:,2));
+%         for ll=1:size(indext,1)
+%             if ll/2==fix(ll/2)
+%                 text(time_num(end)+((time_num(end)-time_num(1)))*0.01, (testo.pos(indext(ll),2)),...
+%                     ['------> ',testo.sigla(indext(ll),:)], 'HorizontalAlignment','left','FontSize',7','Color',[0 0 0]);
+%             else
+%                 text(time_num(end)+((time_num(end)-time_num(1)))*0.01, (testo.pos(indext(ll),2)),...
+%                     ['-> ',testo.sigla(indext(ll),:)], 'HorizontalAlignment','left','FontSize',7','Color',[0 0 0]) ;
+%             end
+%         end
+        
+        if ismac
+            font_size = 9;
+        else
+            font_size = 6.5;
+        end
+        
+        ax = gca;
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        
+        if normalizza_per_popolazione==0
+            t_lim=ylim;
+            if t_lim(2)<100
+                ylim([0 100]);
+            else
+                ylim([0 t_lim(2)]);
+            end
+        end
+        t_lim=ylim;
+        if normalizza_per_popolazione==1
+            ylim([0 t_lim(2)]);
+        end
+        
+        t_lim=ylim;
+        ylim([0 max(a1_tot(:))*1.1]);    
+        
+        
+        
+        
+        if normalizza_per_popolazione==0
+            ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        end
+        if normalizza_per_popolazione==0
+            if splined_yn == 0
+                ylabel('Numero casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            else
+                ylabel('Numero casi (smoothed)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            end
+        else
+            if splined_yn == 0
+                ylabel('Numero casi giornalieri ogni 1000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            else
+                ylabel('Numero casi ogni 1000 abitanti (smoothed)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+            end
+        end
+        
+        
+        set(code_axe, 'Xlim', [time_num(1)-50, time_num(end)+100]);
+%         ax.XTick = time_num(2):2:time_num(end);
+%         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
+        datetick('x', datetickFormat) ;
+        set(code_axe, 'Xlim', [time_num(1)-50, time_num(end)+100]);
+%         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+
+        
+        
+        for h=1:size(RegioneTot,1)
+            idx_max=find(a1_tot(h,:)==max(a1_tot(h,:)))-3;
+            i = idx_max;
+            
+            plot(t(i),a1_tot(h,i),'*')
+                % Get the local slope
+                dy=a1_tot(h,i+1)-a1_tot(h,i-1);
+                dx=t(i+1)-t(i-1);
+                d = dy/dx;
+             
+            
+            X = diff(get(gca, 'xlim'));
+            Y = diff(get(gca, 'ylim'));
+            p = pbaspect;
+            a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+            text(t(i), a1_tot(h,i), char(sigla_prov(h)),'HorizontalAlignment','center', 'rotation', a, 'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(RegioneTot,1)));
+        end
+        
+        
+        
+        
+        
+        
+        % l=legend([b],'Totale Casi');
+        set(l,'Location','northwest')
+        
+        %% overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+
+            if normalizza_per_popolazione==1
+                print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_norm_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri_gomp.PNG']);
+            else
+                print(gcf, '-dpng', [WORKroot,'/slides/img/province/Province_',char(Regione_lista(reg)) ,'_casiTotaliGiornalieri_gomp.PNG']);
+            end
+
+        
+        close(gcf);
+        catch
+            close all
+        end
+    end
+    
+    
+    
+    
+    
+    
+    
+    
+end
+
+
+
+
+
+
+
+
+
+
 
 
 
