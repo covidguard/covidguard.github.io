@@ -885,23 +885,23 @@ for reg=1:size(regioni_tot,1)
         
         if mediamobile_yn==0
             try
-                a=plot(time_num,dataReg.ricoverati_con_sintomi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
-                b=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(2, 8));
-                c=plot(time_num,dataReg.dimessi_guariti(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(3, 8));
-                d=plot(time_num,dataReg.deceduti(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(4, 8));
-                e=plot(time_num,dataReg.terapia_intensiva(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
-                f=plot(time_num,dataReg.totale_ospedalizzati(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
-                g=plot(time_num,dataReg.isolamento_domiciliare(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
-                h=plot(time_num,dataReg.totale_positivi(index,1),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
+                a=plot(time_num,dataReg.ricoverati_con_sintomi(index,1),'-','LineWidth', 2.0, 'Color', [1 0 1]);
+                b=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0, 'Color', [0.23137255012989 0.443137258291245 0.337254911661148]);
+                c=plot(time_num,dataReg.dimessi_guariti(index,1),'-','LineWidth', 2.0, 'Color', [0 0.800000011920929 0.200000002980232]);
+                d=plot(time_num,dataReg.deceduti(index,1),'-','LineWidth', 2.0, 'Color', [0.400000005960464 0.400000005960464 0.400000005960464]);
+                e=plot(time_num,dataReg.terapia_intensiva(index,1),'-','LineWidth', 2.0, 'Color', [1 0 0]);
+                f=plot(time_num,dataReg.totale_ospedalizzati(index,1),'-','LineWidth', 2.0, 'Color', [0.929411768913269 0.694117665290833 0.125490203499794]);
+                g=plot(time_num,dataReg.isolamento_domiciliare(index,1),'-','LineWidth', 2.0, 'Color', [0 0.447058826684952 0.74117648601532]);
+                h=plot(time_num,dataReg.totale_positivi(index,1),'-','LineWidth', 2.0, 'Color', [0 0.749019622802734 0.749019622802734]);
             catch
-                a=plot(time_num,str2double(dataReg.ricoverati_con_sintomi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
-                b=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(2, 8));
-                c=plot(time_num,str2double(dataReg.dimessi_guariti(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(3, 8));
-                d=plot(time_num,str2double(dataReg.deceduti(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(4, 8));
-                e=plot(time_num,str2double(dataReg.terapia_intensiva(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
-                f=plot(time_num,str2double(dataReg.totale_ospedalizzati(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
-                g=plot(time_num,str2double(dataReg.isolamento_domiciliare(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
-                h=plot(time_num,str2double(dataReg.totale_positivi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
+%                 a=plot(time_num,str2double(dataReg.ricoverati_con_sintomi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
+%                 b=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(2, 8));
+%                 c=plot(time_num,str2double(dataReg.dimessi_guariti(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(3, 8));
+%                 d=plot(time_num,str2double(dataReg.deceduti(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(4, 8));
+%                 e=plot(time_num,str2double(dataReg.terapia_intensiva(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(5, 8));
+%                 f=plot(time_num,str2double(dataReg.totale_ospedalizzati(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(6, 8));
+%                 g=plot(time_num,str2double(dataReg.isolamento_domiciliare(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(7, 8));
+%                 h=plot(time_num,str2double(dataReg.totale_positivi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(8, 8));
                 
             end
         else
@@ -991,39 +991,57 @@ for reg=1:size(regioni_tot,1)
         set(gcf,'Position',[26 79 967 603]);
         grid on
         hold on
-        if mediamobile_yn==0
-            try
-                a=plot(time_num(2:end),diff(dataReg.ricoverati_con_sintomi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
-                b=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(2, 8));
-                c=plot(time_num(2:end),diff(dataReg.dimessi_guariti(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(3, 8));
-                d=plot(time_num(2:end),diff(dataReg.deceduti(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(4, 8));
-                e=plot(time_num(2:end),diff(dataReg.terapia_intensiva(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(5, 8));
-                f=plot(time_num(2:end),diff(dataReg.totale_ospedalizzati(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(6, 8));
-                g=plot(time_num(2:end),diff(dataReg.isolamento_domiciliare(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(7, 8));
-                h=plot(time_num(2:end),diff(dataReg.totale_positivi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
-            catch
-                
-                a=plot(time_num(2:end),diff(str2double(dataReg.ricoverati_con_sintomi(index,1))),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
-                b=plot(time_num(2:end),diff(str2double(dataReg.totale_casi(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(2, 8));
-                c=plot(time_num(2:end),diff(str2double(dataReg.dimessi_guariti(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(3, 8));
-                d=plot(time_num(2:end),diff(str2double(dataReg.deceduti(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(4, 8));
-                e=plot(time_num(2:end),diff(str2double(dataReg.terapia_intensiva(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(5, 8));
-                f=plot(time_num(2:end),diff(str2double(dataReg.totale_ospedalizzati(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(6, 8));
-                g=plot(time_num(2:end),diff(str2double(dataReg.isolamento_domiciliare(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(7, 8));
-                h=plot(time_num(2:end),diff(str2double(dataReg.totale_positivi(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
-            end
+%         if mediamobile_yn==0
+%             try
+%                 a=plot(time_num(2:end),diff(dataReg.ricoverati_con_sintomi(index,1)),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
+%                 b=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(2, 8));
+%                 c=plot(time_num(2:end),diff(dataReg.dimessi_guariti(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(3, 8));
+%                 d=plot(time_num(2:end),diff(dataReg.deceduti(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(4, 8));
+%                 e=plot(time_num(2:end),diff(dataReg.terapia_intensiva(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(5, 8));
+%                 f=plot(time_num(2:end),diff(dataReg.totale_ospedalizzati(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(6, 8));
+%                 g=plot(time_num(2:end),diff(dataReg.isolamento_domiciliare(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(7, 8));
+%                 h=plot(time_num(2:end),diff(dataReg.totale_positivi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
+%             catch
+%                 
+%                 a=plot(time_num(2:end),diff(str2double(dataReg.ricoverati_con_sintomi(index,1))),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
+%                 b=plot(time_num(2:end),diff(str2double(dataReg.totale_casi(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(2, 8));
+%                 c=plot(time_num(2:end),diff(str2double(dataReg.dimessi_guariti(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(6, 8));
+%                 d=plot(time_num(2:end),diff(str2double(dataReg.deceduti(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(4, 8));
+%                 e=plot(time_num(2:end),diff(str2double(dataReg.terapia_intensiva(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(5, 8));
+%                 f=plot(time_num(2:end),diff(str2double(dataReg.totale_ospedalizzati(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(3, 8));
+%                 g=plot(time_num(2:end),diff(str2double(dataReg.isolamento_domiciliare(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(7, 8));
+%                 h=plot(time_num(2:end),diff(str2double(dataReg.totale_positivi(index,1))),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
+%             end
+%             
+%         else
+            a1=plot(time_num(2:end),diff(dataReg.ricoverati_con_sintomi(index,1)),':','LineWidth', 0.5, 'Color', [1 0 1]);
+            b1=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),':','LineWidth', 0.5,  'Color', [0.23137255012989 0.443137258291245 0.337254911661148]);
+            c1=plot(time_num(2:end),diff(dataReg.dimessi_guariti(index,1)),':','LineWidth', 0.5,  'Color', [0 0.800000011920929 0.200000002980232]);
+            d1=plot(time_num(2:end),diff(dataReg.deceduti(index,1)),':','LineWidth', 0.5,  'Color', [0.400000005960464 0.400000005960464 0.400000005960464]);
+            e1=plot(time_num(2:end),diff(dataReg.terapia_intensiva(index,1)),':','LineWidth', 0.5,  'Color', [1 0 0]);
+            f1=plot(time_num(2:end),diff(dataReg.totale_ospedalizzati(index,1)),':','LineWidth', 0.5,  'Color', [0.929411768913269 0.694117665290833 0.125490203499794]);
+            g1=plot(time_num(2:end),diff(dataReg.isolamento_domiciliare(index,1)),':','LineWidth', 0.5,  'Color', [0 0.447058826684952 0.74117648601532]);
+            h1=plot(time_num(2:end),diff(dataReg.totale_positivi(index,1)),':','LineWidth', 0.5,  'Color', [0 0.749019622802734 0.749019622802734]);
             
-        else
-            a=plot(time_num(2:end),movmean(diff(dataReg.ricoverati_con_sintomi(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0, 'Color', Cmap.getColor(1, 8));
-            b=plot(time_num(2:end-1),movmean(diff(dataReg.totale_casi(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(2, 8));
-            c=plot(time_num(2:end),movmean(diff(dataReg.dimessi_guariti(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(3, 8));
-            d=plot(time_num(2:end),movmean(diff(dataReg.deceduti(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(4, 8));
-            e=plot(time_num(2:end),movmean(diff(dataReg.terapia_intensiva(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(5, 8));
-            f=plot(time_num(2:end),movmean(diff(dataReg.totale_ospedalizzati(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(6, 8));
-            g=plot(time_num(2:end),movmean(diff(dataReg.isolamento_domiciliare(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(7, 8));
-            h=plot(time_num(2:end),movmean(diff(dataReg.totale_positivi(index,1)), 3, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(8, 8));
-        end
+            
+            window=3;
+            
+            a=plot(time_num(2:end),movmean(diff(dataReg.ricoverati_con_sintomi(index,1)), window, 'omitnan'),'-','LineWidth', 2.0, 'Color', [1 0 1]);
+            b=plot(time_num(2:end),movmean(diff(dataReg.totale_casi(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', [0.23137255012989 0.443137258291245 0.337254911661148]);
+            c=plot(time_num(2:end),movmean(diff(dataReg.dimessi_guariti(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', [0 0.800000011920929 0.200000002980232]);
+            d=plot(time_num(2:end),movmean(diff(dataReg.deceduti(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', [0.400000005960464 0.400000005960464 0.400000005960464]);
+            e=plot(time_num(2:end),movmean(diff(dataReg.terapia_intensiva(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', [1 0 0]);
+            f=plot(time_num(2:end),movmean(diff(dataReg.totale_ospedalizzati(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', [0.929411768913269 0.694117665290833 0.125490203499794]);
+            g=plot(time_num(2:end),movmean(diff(dataReg.isolamento_domiciliare(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color',[0 0.447058826684952 0.74117648601532]);
+            h=plot(time_num(2:end),movmean(diff(dataReg.totale_positivi(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', [0 0.749019622802734 0.749019622802734]);
+%         end
         
+
+
+
+
+
+
         if ismac
             font_size = 9;
         else
@@ -1049,8 +1067,14 @@ for reg=1:size(regioni_tot,1)
         end
         
         %     l=legend([a,b,c,d],'Ricoverati con sintomi','Totale Casi','Dimessi Guariti','Deceduti');
-        l=legend([b,a,c,d,e,f,g,h],'Totale Casi','Ricoverati con sintomi','Dimessi Guariti','Deceduti','Terapia intensiva','Totale ospedalizzati','Isolamento domiciliare','Attualmente positivi');
+%         l=legend([b,a,c,d,e,f,g,h],'Totale Casi','Ricoverati con sintomi','Dimessi Guariti','Deceduti','Terapia intensiva','Totale ospedalizzati','Isolamento domiciliare','Attualmente positivi');
+        l=legend([b,h,c,g,f,a,e,d],'Totale Casi','Attualmente positivi','Dimessi Guariti','Isolamento domiciliare','Totale ospedalizzati','Ricoverati con sintomi','Terapia intensiva','Deceduti');        
         set(l,'Location','northwest')
+        
+%         l1=legend([b1,b],'Dato giornaliero','Media mobile (3 giorni)');
+%         set(l1,'Location','SouthOutside')
+%         
+        
         
         % overlap copyright info
         datestr_now = datestr(now);
@@ -5297,12 +5321,21 @@ for reg = 1:size(Regione_lista)
             regione = char(RegioneTot(h));
             index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
             
-            
-            
             time_num = fix(datenum(dataReg.data(index)));
             if normalizza_per_popolazione==1
                 try
-                    b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.number(idx_pop(h)))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                    y=(dataReg.totale_casi(index,1)/pop.number(idx_pop(h)))*1000;
+                    b(h)=plot(time_num,(dataReg.totale_casi(index,1)/pop.number(idx_pop(h)))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));                    
+                    i = round(numel(time_num)/1)-1;                    
+                    % Get the local slope
+                    d = (y(i+1)-y(i-3))/4;
+                    X = diff(get(gca, 'xlim'));
+                    Y = diff(get(gca, 'ylim'));
+                    p = pbaspect;
+                    a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+                    % Display the text
+                    %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+                    text(time_num(i)+1.2, y(i)+d, sprintf('%s', regione), 'rotation', a,'fontSize',7);
                 catch
                     b(h)=plot(time_num,(str2double(dataReg.totale_casi(index,1))/pop.number(idx_pop(h)))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
                 end
@@ -5320,7 +5353,20 @@ for reg = 1:size(Regione_lista)
                 end
             else
                 try
-                    b(h)=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));
+                    y=(dataReg.totale_casi(index,1));
+                    b(h)=plot(time_num,dataReg.totale_casi(index,1),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));                    
+                    % Get the local slope
+                    i = round(numel(time_num)/1)-1;   
+                    d = (y(i+1)-y(i-3))/4;
+                    X = diff(get(gca, 'xlim'));
+                    Y = diff(get(gca, 'ylim'));
+                    p = pbaspect;
+                    a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+                    % Display the text
+                    %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+                    text(time_num(i)+1.2, y(i)+d, sprintf('%s', regione), 'rotation', a,'fontSize',7);
+                    
+                    
                 catch
                     b(h)=plot(time_num,str2double(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));
                 end
@@ -5361,8 +5407,9 @@ for reg = 1:size(Regione_lista)
             end
         end
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-        ax.XTick = time_num;
+        ax.XTick = time_num(1:2:end);
         datetick('x', datetickFormat, 'keepticks') ;
+        set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
         ax.FontSize = font_size;
         
@@ -5429,30 +5476,32 @@ for reg = 1:size(Regione_lista)
             
             if normalizza_per_popolazione==1
                 if splined_yn == 0
-                    b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                    b1(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,':','LineWidth', 1.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                    window=7;
+                    b(h)=plot(time_num(2:end),movmean(diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000, window, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
                     testo.sigla(h,:)=char(sigla_prov(h));
-                    sf=diff((dataReg.totale_casi(index,1)))/pop.number(idx_pop(h))*1000;
+                    
+                    sf=movmean(diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000, window, 'omitnan');
                     testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
                     testo.val(h,1)=sf(end);
                 else
                     [ySplined, xSpline, sWeights, ySplined_ext] = splinerMat(time_num(2:end),diff(dataReg.totale_casi(index,1))/pop.number(idx_pop(h))*1000,7)
                     plot(time_num(2:end),ySplined,'-r');
                     b(h)=plot(time_num(2:end),ySplined,'-','LineWidth', 2.0,  'Color', Cmap.getColor(h+4, size(RegioneTot,1)));
-                    
                     testo.sigla(h,:)=char(sigla_prov(h));
                     testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, ySplined(end)];
                     testo.val(h,1)=ySplined(end);
                 end
-                
-                
-                
-                
+
             else
                 try
                     if splined_yn == 0
-                        b(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                        b1(h)=plot(time_num(2:end),diff(dataReg.totale_casi(index,1)),':','LineWidth', 1.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                         window=7;
+                        b(h)=plot(time_num(2:end),movmean(diff(dataReg.totale_casi(index,1)), window, 'omitnan'),'-','LineWidth', 2.0,  'Color', Cmap.getColor(h, size(RegioneTot,1)));
+                        
                         testo.sigla(h,:)=char(sigla_prov(h));
-                        sf=diff((dataReg.totale_casi(index,1)));
+                        sf=movmean(diff(dataReg.totale_casi(index,1)), window, 'omitnan');
                         testo.pos(h,:)=[time_num(end)+((time_num(end)-time_num(1)))*0.01, sf(end)];
                         testo.val(h,1)=sf(end);
                         
@@ -5552,7 +5601,8 @@ for reg = 1:size(Regione_lista)
             end
         end
         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
-        ax.XTick = time_num;
+        ax.XTick = time_num(2):2:time_num(end);
+        set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
         datetick('x', datetickFormat, 'keepticks') ;
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
         ax.FontSize = font_size;
