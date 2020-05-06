@@ -1133,6 +1133,7 @@ Rocca Susella	218.00	16.77
 Roccafranca	4739.00	249.69
 Rodano	4571.00	354.24
 Rodengo-Saiano	9776.00	754.88
+Rodengo Saiano	9776.00	754.88
 Rodero	1333.00	547.80
 Rodigo	5283.00	126.70
 Roe' Volciano	4515.00	784.74
