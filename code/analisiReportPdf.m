@@ -1,4 +1,9 @@
-
+%% -------------------------
+if ismac
+    WORKroot = sprintf('/Users/Andrea/Repositories/covidguard.github.io/');
+else
+    WORKroot = sprintf('C:/Temp/Repo/covidguard');
+end
 
 %% download report pdf
 flag_download_1=0;
