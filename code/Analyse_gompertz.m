@@ -125,70 +125,72 @@ catch
 end
 animated_gif_reg_fase2(data,pop,'A');
 
-animated_gif_reg_gara(data,pop,'A');
+% animated_gif_reg_gara(data,pop,'A');
 
 
 
-%%best regioni day
-
+%% best regioni day
 figure;
 id_f = gcf;
-set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di nuovi contagi (il %s)',datestr(max(datenum(dataReg.data)),'dd mmm')));
-title(sprintf('Italia: Regioni con maggior numero di nuovi contagi il %s',datestr(max(datenum(dataReg.data)),'dd mmm')));
-
-
+set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di nuovi contagi per abitante (il %s)',datestr(max(datenum(dataReg.data)),'dd mmm')));
+title(sprintf('Italia: Regioni con maggior numero di nuovi contagi per abitante il %s',datestr(max(datenum(dataReg.data)),'dd mmm')));
 set(gcf,'NumberTitle','Off');
 set(gcf,'Position',[26 79 967 603]);
 grid on
 hold on
-
 worstRegValue=[];
+worstRegValue_abs=[];
 for reg=1:size(regioni_tot,1)
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     worstRegValue(reg,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-1)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstAbsValue(reg,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-1)));
 end
-
 worstRegValue(worstRegValue<0)=0;
-
+worstAbsValue(worstAbsValue<0)=0;
 [worstRegValue,idxSort]=sort(worstRegValue,'descend');
 
+x_data_i=flip(worstRegValue);
+idx_i=flip(idxSort);
 
-b=bar(worstRegValue);
-for i1=1:size(regioni_tot,1)
-    text(i1,worstRegValue(i1),sprintf('%.3f',worstRegValue(i1)),...
-        'HorizontalAlignment','center',...
-        'VerticalAlignment','bottom','fontsize',7)
-    
+a=barh([1 2], [x_data_i ,x_data_i]');
+grid minor
+
+for k=1:size(regioni_tot,1)
+    set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
 end
 
-hold on; grid minor
-set(gca,'XTick',1:size(regioni_tot,1))
-set(gca,'XTickLabel',regioni_tot(idxSort));
-set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-ylabel('Nuovi positivi / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
-if ismac
-    font_size = 9;
-else
-    font_size = 6.5;
+hT={};              % placeholder for text object handles
+for k=1:size(regioni_tot,1) % iterate over number of bar objects
+    hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(regioni_tot(idx_i(k))),worstAbsValue(idx_i(k))), ...
+        'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+    d=hT{k};
+    xx=a(k).YData(2);
+    yy=a(k).XData(2)+a(k).XOffset(1);    
+    d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+    drawnow
 end
 
-ax = gca;
-set(ax, 'FontName', 'Verdana');
-set(ax, 'FontSize', font_size);
+d=hT{1};
+xx=a(1).YData(2);
+yy=a(1).XData(2)+a(1).XOffset(1);
+d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
+   
+xlabel('Nuovi positivi / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
 
-ylimit=ylim;
-% if ylimit(2)<25
-%     ylim([0 25]);
-% end
+set(gca,'YTick',[])
+set(gca,'YLim',[1.6,2.4])
+set(gca,'FontSize',8);
+set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+xlabel('Nuovi casi / 100.000 abitanti')
+title(sprintf('Italia: Regioni con maggior numero di nuovi contagi per abitante il %s',datestr(max(datenum(dataReg.data)),'dd/mm/yyyy')));
 
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-
+ax=get(gca);
+ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
 
 % overlap copyright info
 datestr_now = datestr(now);
-annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.0463800000000001],...
+annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
     'String',{['Fonte: https://github.com/pcm-dpc']},...
     'HorizontalAlignment','center',...
     'FontSize',6,...
@@ -198,7 +200,7 @@ annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.046380000
     'Color',[0 0 0]);
 
 annotation(gcf,'textbox',...
-    [0.706873981385737 0.850746268656719 0.238100000000001 0.04638],...
+    [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
     'String',{'https://covidguard.github.io/#covid-19-italia'},...
     'LineStyle','none',...
     'HorizontalAlignment','left',...
@@ -216,65 +218,68 @@ close(gcf);
 list_day = unique(datenum(dataReg.data));
 
 
-% nuovi casi
 figure;
 id_f = gcf;
 set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di nuovi contagi (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
 title(sprintf('Italia: Regioni con maggior numero di nuovi contagi (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
-
-
 set(gcf,'NumberTitle','Off');
 set(gcf,'Position',[26 79 967 603]);
 grid on
 hold on
-
 worstRegValue=[];
+worstRegValue_abs=[];
 for reg=1:size(regioni_tot,1)
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     worstRegValue(reg,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-6)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstAbsValue(reg,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-6)));
 end
-
 worstRegValue(worstRegValue<0)=0;
-
+worstAbsValue(worstAbsValue<0)=0;
 [worstRegValue,idxSort]=sort(worstRegValue,'descend');
 
+x_data_i=flip(worstRegValue);
+idx_i=flip(idxSort);
 
-b=bar(worstRegValue);
-for i1=1:size(regioni_tot,1)
-    text(i1,worstRegValue(i1),sprintf('%.1f',worstRegValue(i1)),...
-        'HorizontalAlignment','center',...
-        'VerticalAlignment','bottom','fontsize',7)
-    
+a=barh([1 2], [x_data_i ,x_data_i]');
+grid minor
+
+for k=1:size(regioni_tot,1)
+    set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
 end
 
-hold on; grid minor
-set(gca,'XTick',1:size(regioni_tot,1))
-set(gca,'XTickLabel',regioni_tot(idxSort));
-set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-ylabel('Nuovi positivi ultima settimana / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
-if ismac
-    font_size = 9;
-else
-    font_size = 6.5;
+hT={};              % placeholder for text object handles
+for k=1:size(regioni_tot,1) % iterate over number of bar objects
+    hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(regioni_tot(idx_i(k))),worstAbsValue(idx_i(k))), ...
+        'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+    d=hT{k};
+    xx=a(k).YData(2);
+    yy=a(k).XData(2)+a(k).XOffset(1);    
+    d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+    drawnow
 end
 
-ax = gca;
-set(ax, 'FontName', 'Verdana');
-set(ax, 'FontSize', font_size);
+d=hT{1};
+xx=a(1).YData(2);
+yy=a(1).XData(2)+a(1).XOffset(1);
+d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
 
-ylimit=ylim;
-% if ylimit(2)<25
-%     ylim([0 25]);
-% end
+   
+xlabel('Nuovi positivi / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
 
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+set(gca,'YTick',[])
+set(gca,'YLim',[1.6,2.4])
+set(gca,'FontSize',8);
+set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+xlabel('Nuovi casi / 100.000 abitanti')
+title(sprintf('Italia: Regioni con maggior numero di nuovi contagi per abitante (dal %s al %s)',datestr(list_day(end-6),'dd/mm/yyyy'),datestr(list_day(end),'dd/mm/yyyy')));
 
+ax=get(gca);
+ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
 
 % overlap copyright info
 datestr_now = datestr(now);
-annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.0463800000000001],...
+annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
     'String',{['Fonte: https://github.com/pcm-dpc']},...
     'HorizontalAlignment','center',...
     'FontSize',6,...
@@ -284,7 +289,7 @@ annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.046380000
     'Color',[0 0 0]);
 
 annotation(gcf,'textbox',...
-    [0.706873981385737 0.850746268656719 0.238100000000001 0.04638],...
+    [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
     'String',{'https://covidguard.github.io/#covid-19-italia'},...
     'LineStyle','none',...
     'HorizontalAlignment','left',...
@@ -297,146 +302,85 @@ close(gcf);
 
 
 
-% deceduti
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%% deceduti week
 figure;
 id_f = gcf;
-set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di deceduti (il %s)',datestr(max(datenum(dataReg.data)),'dd mmm')));
-title(sprintf('Italia: Regioni con maggior numero di deceduti il %s',datestr(max(datenum(dataReg.data)),'dd mmm')));
+set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di decessi (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
+title(sprintf('Italia: Regioni con maggior numero di decessi  (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
 
 
 set(gcf,'NumberTitle','Off');
 set(gcf,'Position',[26 79 967 603]);
 grid on
 hold on
-
 worstRegValue=[];
-for reg=1:size(regioni_tot,1)
-    regione = char(regioni_tot(reg,1));
-    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
-    worstRegValue(reg,1)=(dataReg.deceduti(index(end))-dataReg.deceduti(index(end-1)))./pop.popolazioneRegioniPop(reg)*100000;
-end
-
-worstRegValue(worstRegValue<0)=0;
-
-[worstRegValue,idxSort]=sort(worstRegValue,'descend');
-
-
-b=bar(worstRegValue);
-for i1=1:size(regioni_tot,1)
-    text(i1,worstRegValue(i1),sprintf('%.3f',worstRegValue(i1)),...
-        'HorizontalAlignment','center',...
-        'VerticalAlignment','bottom','fontsize',7)
-    
-end
-
-hold on; grid minor
-set(gca,'XTick',1:size(regioni_tot,1))
-set(gca,'XTickLabel',regioni_tot(idxSort));
-set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-ylabel('Deceduti / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
-if ismac
-    font_size = 9;
-else
-    font_size = 6.5;
-end
-
-ax = gca;
-set(ax, 'FontName', 'Verdana');
-set(ax, 'FontSize', font_size);
-
-ylimit=ylim;
-% if ylimit(2)<25
-%     ylim([0 25]);
-% end
-
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-
-
-% overlap copyright info
-datestr_now = datestr(now);
-annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.0463800000000001],...
-    'String',{['Fonte: https://github.com/pcm-dpc']},...
-    'HorizontalAlignment','center',...
-    'FontSize',6,...
-    'FontName','Verdana',...
-    'FitBoxToText','off',...
-    'LineStyle','none',...
-    'Color',[0 0 0]);
-
-annotation(gcf,'textbox',...
-    [0.706873981385737 0.850746268656719 0.238100000000001 0.04638],...
-    'String',{'https://covidguard.github.io/#covid-19-italia'},...
-    'LineStyle','none',...
-    'HorizontalAlignment','left',...
-    'FontSize',6,...
-    'FontName','Verdana',...
-    'FitBoxToText','off');
-
-print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_bestRegDayDeceduti.PNG']);
-close(gcf);
-
-
-
-
-figure;
-id_f = gcf;
-set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di deceduti (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
-title(sprintf('Italia: Regioni con maggior numero di deceduti (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
-
-
-set(gcf,'NumberTitle','Off');
-set(gcf,'Position',[26 79 967 603]);
-grid on
-hold on
-
-worstRegValue=[];
+worstRegValue_abs=[];
 for reg=1:size(regioni_tot,1)
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     worstRegValue(reg,1)=(dataReg.deceduti(index(end))-dataReg.deceduti(index(end-6)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstAbsValue(reg,1)=(dataReg.deceduti(index(end))-dataReg.deceduti(index(end-6)));
 end
-
 worstRegValue(worstRegValue<0)=0;
-
+worstAbsValue(worstAbsValue<0)=0;
 [worstRegValue,idxSort]=sort(worstRegValue,'descend');
 
+x_data_i=flip(worstRegValue);
+idx_i=flip(idxSort);
 
-b=bar(worstRegValue);
-for i1=1:size(regioni_tot,1)
-    text(i1,worstRegValue(i1),sprintf('%.1f',worstRegValue(i1)),...
-        'HorizontalAlignment','center',...
-        'VerticalAlignment','bottom','fontsize',7)
-    
+a=barh([1 2], [x_data_i ,x_data_i]');
+grid minor
+
+for k=1:size(regioni_tot,1)
+    set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
 end
 
-hold on; grid minor
-set(gca,'XTick',1:size(regioni_tot,1))
-set(gca,'XTickLabel',regioni_tot(idxSort));
-set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-ylabel('Deceduti ultima settimana / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
-if ismac
-    font_size = 9;
-else
-    font_size = 6.5;
+hT={};              % placeholder for text object handles
+for k=1:size(regioni_tot,1) % iterate over number of bar objects
+    hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(regioni_tot(idx_i(k))),worstAbsValue(idx_i(k))), ...
+        'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+    d=hT{k};
+    xx=a(k).YData(2);
+    yy=a(k).XData(2)+a(k).XOffset(1);    
+    d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+    drawnow
 end
 
-ax = gca;
-set(ax, 'FontName', 'Verdana');
-set(ax, 'FontSize', font_size);
+d=hT{1};
+xx=a(1).YData(2);
+yy=a(1).XData(2)+a(1).XOffset(1);
+d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
+   
+xlabel('Deceduti / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
 
-ylimit=ylim;
-% if ylimit(2)<25
-%     ylim([0 25]);
-% end
+set(gca,'YTick',[])
+set(gca,'YLim',[1.6,2.4])
+set(gca,'FontSize',8);
+set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+xlabel('Deceduti / 100.000 abitanti')
+title(sprintf('Italia: Regioni con maggior numero di deceduti per abitante (dal %s al %s)',datestr(list_day(end-6),'dd/mm/yyyy'),datestr(list_day(end),'dd/mm/yyyy')));
 
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-
+ax=get(gca);
+ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
 
 % overlap copyright info
 datestr_now = datestr(now);
-annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.0463800000000001],...
+annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
     'String',{['Fonte: https://github.com/pcm-dpc']},...
     'HorizontalAlignment','center',...
     'FontSize',6,...
@@ -446,7 +390,7 @@ annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.046380000
     'Color',[0 0 0]);
 
 annotation(gcf,'textbox',...
-    [0.706873981385737 0.850746268656719 0.238100000000001 0.04638],...
+    [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
     'String',{'https://covidguard.github.io/#covid-19-italia'},...
     'LineStyle','none',...
     'HorizontalAlignment','left',...
@@ -462,68 +406,70 @@ close(gcf);
 
 
 
-
-
-
-% guariti
+%% deceduti day
 figure;
 id_f = gcf;
-set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di dimessi/guariti (il %s)',datestr(max(datenum(dataReg.data)),'dd mmm')));
-title(sprintf('Italia: Regioni con maggior numero di dimessi/guariti il %s',datestr(max(datenum(dataReg.data)),'dd mmm')));
+set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di deceduti il %s',datestr(max(datenum(dataReg.data)),'dd/mm/yyyy')));
+title(sprintf('Italia: Regioni con maggior numero di deceduti il %s',datestr(max(datenum(dataReg.data)),'dd/mm/yyyy')));
 
 
 set(gcf,'NumberTitle','Off');
 set(gcf,'Position',[26 79 967 603]);
 grid on
 hold on
-
 worstRegValue=[];
+worstRegValue_abs=[];
 for reg=1:size(regioni_tot,1)
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
-    worstRegValue(reg,1)=(dataReg.dimessi_guariti(index(end))-dataReg.dimessi_guariti(index(end-1)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstRegValue(reg,1)=(dataReg.deceduti(index(end))-dataReg.deceduti(index(end-1)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstAbsValue(reg,1)=(dataReg.deceduti(index(end))-dataReg.deceduti(index(end-1)));
 end
-
 worstRegValue(worstRegValue<0)=0;
-
+worstAbsValue(worstAbsValue<0)=0;
 [worstRegValue,idxSort]=sort(worstRegValue,'descend');
 
+x_data_i=flip(worstRegValue);
+idx_i=flip(idxSort);
 
-b=bar(worstRegValue);
-for i1=1:size(regioni_tot,1)
-    text(i1,worstRegValue(i1),sprintf('%.3f',worstRegValue(i1)),...
-        'HorizontalAlignment','center',...
-        'VerticalAlignment','bottom','fontsize',7)
-    
+a=barh([1 2], [x_data_i ,x_data_i]');
+grid minor
+
+for k=1:size(regioni_tot,1)
+    set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
 end
 
-hold on; grid minor
-set(gca,'XTick',1:size(regioni_tot,1))
-set(gca,'XTickLabel',regioni_tot(idxSort));
-set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-ylabel('Dimessi/guariti / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
-if ismac
-    font_size = 9;
-else
-    font_size = 6.5;
+hT={};              % placeholder for text object handles
+for k=1:size(regioni_tot,1) % iterate over number of bar objects
+    hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(regioni_tot(idx_i(k))),worstAbsValue(idx_i(k))), ...
+        'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+    d=hT{k};
+    xx=a(k).YData(2);
+    yy=a(k).XData(2)+a(k).XOffset(1);    
+    d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+    drawnow
 end
 
-ax = gca;
-set(ax, 'FontName', 'Verdana');
-set(ax, 'FontSize', font_size);
+d=hT{1};
+xx=a(1).YData(2);
+yy=a(1).XData(2)+a(1).XOffset(1);
+d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
 
-ylimit=ylim;
-% if ylimit(2)<25
-%     ylim([0 25]);
-% end
+xlabel('Deceduti / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
 
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+set(gca,'YTick',[])
+set(gca,'YLim',[1.6,2.4])
+set(gca,'FontSize',8);
+set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+xlabel('Deceduti / 100.000 abitanti')
+title(sprintf('Italia: Regioni con maggior numero di deceduti per abitante (il %s)',datestr(list_day(end),'dd/mm/yyyy')));
 
+ax=get(gca);
+ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
 
 % overlap copyright info
 datestr_now = datestr(now);
-annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.0463800000000001],...
+annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
     'String',{['Fonte: https://github.com/pcm-dpc']},...
     'HorizontalAlignment','center',...
     'FontSize',6,...
@@ -533,7 +479,94 @@ annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.046380000
     'Color',[0 0 0]);
 
 annotation(gcf,'textbox',...
-    [0.706873981385737 0.850746268656719 0.238100000000001 0.04638],...
+    [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_bestRegDayDeceduti.PNG']);
+close(gcf);
+
+
+
+
+%% dimessi guariti day
+figure;
+id_f = gcf;
+set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di dimessi/guariti il %s',datestr(max(datenum(dataReg.data)),'dd/mm/yyyy')));
+title(sprintf('Italia: Regioni con maggior numero di dimessi/guariti il %s',datestr(max(datenum(dataReg.data)),'dd/mm/yyyy')));
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+worstRegValue=[];
+worstRegValue_abs=[];
+for reg=1:size(regioni_tot,1)
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    worstRegValue(reg,1)=(dataReg.dimessi_guariti(index(end))-dataReg.dimessi_guariti(index(end-1)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstAbsValue(reg,1)=(dataReg.dimessi_guariti(index(end))-dataReg.dimessi_guariti(index(end-1)));
+end
+worstRegValue(worstRegValue<0)=0;
+worstAbsValue(worstAbsValue<0)=0;
+[worstRegValue,idxSort]=sort(worstRegValue,'descend');
+
+x_data_i=flip(worstRegValue);
+idx_i=flip(idxSort);
+
+a=barh([1 2], [x_data_i ,x_data_i]');
+grid minor
+
+for k=1:size(regioni_tot,1)
+    set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
+end
+
+hT={};              % placeholder for text object handles
+for k=1:size(regioni_tot,1) % iterate over number of bar objects
+    hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(regioni_tot(idx_i(k))),worstAbsValue(idx_i(k))), ...
+        'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+    d=hT{k};
+    xx=a(k).YData(2);
+    yy=a(k).XData(2)+a(k).XOffset(1);    
+    d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+    drawnow
+end
+
+d=hT{1};
+xx=a(1).YData(2);
+yy=a(1).XData(2)+a(1).XOffset(1);
+d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
+
+xlabel('Dimessi/guariti / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+
+set(gca,'YTick',[])
+set(gca,'YLim',[1.6,2.4])
+set(gca,'FontSize',8);
+set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+xlabel('Deceduti / 100.000 abitanti')
+title(sprintf('Italia: Regioni con maggior numero di dimessi/guariti per abitante (il %s)',datestr(list_day(end),'dd/mm/yyyy')));
+
+ax=get(gca);
+ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
     'String',{'https://covidguard.github.io/#covid-19-italia'},...
     'LineStyle','none',...
     'HorizontalAlignment','left',...
@@ -547,64 +580,72 @@ close(gcf);
 
 
 
+
+
+%% dimessi-guariti week
 figure;
 id_f = gcf;
 set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di dimessi/guariti (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
-title(sprintf('Italia: Regioni con maggior numero di dimessi/guariti (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
+title(sprintf('Italia: Regioni con maggior numero di dimessi/guariti  (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
 
 
 set(gcf,'NumberTitle','Off');
 set(gcf,'Position',[26 79 967 603]);
 grid on
 hold on
-
 worstRegValue=[];
+worstRegValue_abs=[];
 for reg=1:size(regioni_tot,1)
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     worstRegValue(reg,1)=(dataReg.dimessi_guariti(index(end))-dataReg.dimessi_guariti(index(end-6)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstAbsValue(reg,1)=(dataReg.dimessi_guariti(index(end))-dataReg.dimessi_guariti(index(end-6)));
 end
-
 worstRegValue(worstRegValue<0)=0;
-
+worstAbsValue(worstAbsValue<0)=0;
 [worstRegValue,idxSort]=sort(worstRegValue,'descend');
 
+x_data_i=flip(worstRegValue);
+idx_i=flip(idxSort);
 
-b=bar(worstRegValue);
-for i1=1:size(regioni_tot,1)
-    text(i1,worstRegValue(i1),sprintf('%.1f',worstRegValue(i1)),...
-        'HorizontalAlignment','center',...
-        'VerticalAlignment','bottom','fontsize',7)
-    
+a=barh([1 2], [x_data_i ,x_data_i]');
+grid minor
+
+for k=1:size(regioni_tot,1)
+    set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
 end
 
-hold on; grid minor
-set(gca,'XTick',1:size(regioni_tot,1))
-set(gca,'XTickLabel',regioni_tot(idxSort));
-set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
-ylabel('dimessi/guariti ultima settimana / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
-if ismac
-    font_size = 9;
-else
-    font_size = 6.5;
+hT={};              % placeholder for text object handles
+for k=1:size(regioni_tot,1) % iterate over number of bar objects
+    hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(regioni_tot(idx_i(k))),worstAbsValue(idx_i(k))), ...
+        'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+    d=hT{k};
+    xx=a(k).YData(2);
+    yy=a(k).XData(2)+a(k).XOffset(1);    
+    d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+    drawnow
 end
 
-ax = gca;
-set(ax, 'FontName', 'Verdana');
-set(ax, 'FontSize', font_size);
+d=hT{1};
+xx=a(1).YData(2);
+yy=a(1).XData(2)+a(1).XOffset(1);
+d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
+   
+xlabel('Dimessi/guariti / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
 
-ylimit=ylim;
-% if ylimit(2)<25
-%     ylim([0 25]);
-% end
+set(gca,'YTick',[])
+set(gca,'YLim',[1.6,2.4])
+set(gca,'FontSize',8);
+set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+xlabel('Dimessi/guariti / 100.000 abitanti')
+title(sprintf('Italia: Regioni con maggior numero di dimessi/guariti per abitante (dal %s al %s)',datestr(list_day(end-6),'dd/mm/yyyy'),datestr(list_day(end),'dd/mm/yyyy')));
 
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
-
+ax=get(gca);
+ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
 
 % overlap copyright info
 datestr_now = datestr(now);
-annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.0463800000000001],...
+annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
     'String',{['Fonte: https://github.com/pcm-dpc']},...
     'HorizontalAlignment','center',...
     'FontSize',6,...
@@ -614,7 +655,7 @@ annotation(gcf,'textbox',[0.706873981385729 0.873963515754561 0.2381 0.046380000
     'Color',[0 0 0]);
 
 annotation(gcf,'textbox',...
-    [0.706873981385737 0.850746268656719 0.238100000000001 0.04638],...
+    [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
     'String',{'https://covidguard.github.io/#covid-19-italia'},...
     'LineStyle','none',...
     'HorizontalAlignment','left',...
@@ -624,6 +665,8 @@ annotation(gcf,'textbox',...
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_bestRegWeekDimessi.PNG']);
 close(gcf);
+
+
 
 
 
@@ -4373,7 +4416,7 @@ for type= 1: size(loop.var,1)
         end
         
         
-        command = sprintf('[x,idx]=sort(regioni_conf.%s,''descend'');',char(loop.var(type)));
+        command = sprintf('[x,idx]=sort(regioni_conf.%s,''ascend'');',char(loop.var(type)));
         eval(command);
         tick_all=regioni_tot(idx);
         
@@ -4383,46 +4426,59 @@ for type= 1: size(loop.var,1)
         end
         
         if pesata==1
-            x=x./pop.popolazioneRegioniPop(idx1)*1000;
-            [x,idx1]=sort(x,'descend');
+            x=x./pop.popolazioneRegioniPop(idx1)*100000;
+            [x,idx1]=sort(x,'ascend');
             tick_all=tick_all(idx1);
-            
-            
         end
         
         figure;
         id_f = gcf;
         if pesata==1
-            command = sprintf('title(sprintf([''%s ogni 1000 abitanti (al '', datestr(time_num(end),''dd/mm''),'')\\\\fontsize{5}\\n '']));',char(loop.title(type)));eval(command);
+            command = sprintf('title(sprintf([''%s ogni 100.000 abitanti (al '', datestr(time_num(end),''dd/mm/yyyy''),'')\\\\fontsize{5}\\n '']));',char(loop.title(type)));eval(command);
         else
-            command = sprintf('title(sprintf([''%s (al '', datestr(time_num(end),''dd/mm''),'')\\\\fontsize{5}\\n '']));',char(loop.title(type)));eval(command);
+            command = sprintf('title(sprintf([''%s (al '', datestr(time_num(end),''dd/mm/yyyy''),'')\\\\fontsize{5}\\n '']));',char(loop.title(type)));eval(command);
         end
         set(gcf,'NumberTitle','Off');
         set(gcf,'Position',[26 79 967 603]);
         grid on
         hold on
-        b=bar(x);
-        for i1=1:numel(x)
-            if pesata==1
-                text(i1,x(i1),num2str(x(i1),'%.2f'),...
-                    'HorizontalAlignment','center',...
-                    'VerticalAlignment','bottom','fontsize',7)
-            else
-                text(i1,x(i1),num2str(x(i1),'%.0f'),...
-                    'HorizontalAlignment','center',...
-                    'VerticalAlignment','bottom','fontsize',7)
-            end
+        
+        a=barh([1 2], [x ;x]);
+        grid minor
+        for k=1:size(x,2)
+            set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(x,2)));
         end
         
-        hold on; grid minor
-        set(gca,'XTick',1:size(regioni_tot,1))
-        set(gca,'XTickLabel',tick_all)
-        set(gca,'XLim',[0.5,size(regioni_tot,1)+0.5])
-        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        hT={};              % placeholder for text object handles
+        for k=1:size(x,2) % iterate over number of bar objects
+            if pesata==1
+                hT{k}=text(a(k).YData+max(x(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%.2f)', char(tick_all(k)),x(k)), ...
+                    'VerticalAlignment','middle','horizontalalign','left','fontsize',7);                
+            else
+                hT{k}=text(a(k).YData+max(x(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(tick_all(k)),x(k)), ...
+                    'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+            end
+            d=hT{k};
+            xx=a(k).YData(2);
+            yy=a(k).XData(2)+a(k).XOffset(1);
+            d(2).Position=[xx+max(x(:))*0.01,yy,0];
+            drawnow
+        end
+        
+        d=hT{1};
+        xx=a(1).YData(2);
+        yy=a(1).XData(2)+a(1).XOffset(1);
+        d(2).Position=[xx+max(x(:))*0.01,yy,0];
+        
+       
+        set(gca,'YTick',[])
+        set(gca,'YLim',[1.6,2.4])
+        set(gca,'FontSize',8);
+        set(gca,'xlim',[0,max(x(:))*1.12]);
         if pesata==1
-            command = sprintf(' ylabel(''%s ogni 1000 abitanti'', ''FontName'', ''Verdana'', ''FontWeight'', ''Bold'',''FontSize'', 7);', char(loop.title(type)));eval(command);
+            command = sprintf(' xlabel(''%s ogni 100.0000 abitanti'', ''FontName'', ''Verdana'', ''FontWeight'', ''Bold'',''FontSize'', 7);', char(loop.title(type)));eval(command);
         else
-            command = sprintf(' ylabel(''%s'', ''FontName'', ''Verdana'', ''FontWeight'', ''Bold'',''FontSize'', 7);', char(loop.title(type)));eval(command);
+            command = sprintf(' xlabel(''%s'', ''FontName'', ''Verdana'', ''FontWeight'', ''Bold'',''FontSize'', 7);', char(loop.title(type)));eval(command);
         end
         if ismac
             font_size = 9;
@@ -4433,12 +4489,15 @@ for type= 1: size(loop.var,1)
         ax = gca;
         set(ax, 'FontName', 'Verdana');
         set(ax, 'FontSize', font_size);
-        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+       
+        ax=get(gca);
+        ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
         
         
-        %% overlap copyright info
+        
+        % overlap copyright info
         datestr_now = datestr(now);
-        annotation(gcf,'textbox',[0.709976359875905 0.907131011608624 0.2381 0.0463800000000001],...
+        annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
             'String',{['Fonte: https://github.com/pcm-dpc']},...
             'HorizontalAlignment','center',...
             'FontSize',6,...
@@ -4447,16 +4506,14 @@ for type= 1: size(loop.var,1)
             'LineStyle','none',...
             'Color',[0 0 0]);
         
-        
         annotation(gcf,'textbox',...
-            [0.708942233712519 0.925373134328359 0.238100000000001 0.04638],...
+            [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
             'String',{'https://covidguard.github.io/#covid-19-italia'},...
             'LineStyle','none',...
             'HorizontalAlignment','left',...
             'FontSize',6,...
             'FontName','Verdana',...
             'FitBoxToText','off');
-        
         
         
         if pesata==1
