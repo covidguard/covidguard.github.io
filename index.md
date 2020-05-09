@@ -148,7 +148,7 @@ Grafici comparativi di tutte le regioni
 <iframe class="slideshow-iframe" src="/slides/regioni_recap.html" 
 style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-Grafici comparativi con dati normalizzati per 1000 abitanti
+Grafici comparativi con dati normalizzati per 100.000 abitanti
 
 <iframe class="slideshow-iframe" src="/slides/regioni_recap_norm.html" 
 style="width:100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>

@@ -4446,7 +4446,7 @@ for type= 1: size(loop.var,1)
         a=barh([1 2], [x ;x]);
         grid minor
         for k=1:size(x,2)
-            set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(x,2)));
+            set(a(k),'FaceColor',Cmap.getColor(idx(k), size(x,2)));
         end
         
         hT={};              % placeholder for text object handles
@@ -4476,7 +4476,7 @@ for type= 1: size(loop.var,1)
         set(gca,'FontSize',8);
         set(gca,'xlim',[0,max(x(:))*1.12]);
         if pesata==1
-            command = sprintf(' xlabel(''%s ogni 100.0000 abitanti'', ''FontName'', ''Verdana'', ''FontWeight'', ''Bold'',''FontSize'', 7);', char(loop.title(type)));eval(command);
+            command = sprintf(' xlabel(''%s ogni 100.000 abitanti'', ''FontName'', ''Verdana'', ''FontWeight'', ''Bold'',''FontSize'', 7);', char(loop.title(type)));eval(command);
         else
             command = sprintf(' xlabel(''%s'', ''FontName'', ''Verdana'', ''FontWeight'', ''Bold'',''FontSize'', 7);', char(loop.title(type)));eval(command);
         end
