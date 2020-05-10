@@ -5679,7 +5679,7 @@ for reg = 1:size(Regione_lista)
         datetick('x', datetickFormat, 'keepticks') ;
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
         ax.FontSize = font_size;
-        
+        set(code_axe, 'Xlim', [time_num(2), time_num(end)]);  
 
         
         
