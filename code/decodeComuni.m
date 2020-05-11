@@ -22,7 +22,6 @@ if analizza_nuovo==1
     
     fileout=sprintf('%s/_json/Lombardia_comuni_html/datiComuni.txt',WORKroot);
     
-    
     filename = sprintf('%s/_json/Lombardia_comuni_html/%04d-%02d-%02d.html',WORKroot,year,month,day);
     fid       = fopen(filename, 'rt');
     file_scan = textscan(fid, '%s', 'whitespace', '');
@@ -30,6 +29,7 @@ if analizza_nuovo==1
     file_scan                             = file_scan{1};
     file_scan=char(file_scan);
     pattern = 'var _Flourish_data_column_names = {"data":{"nest_columns":["Provincia","Comune"],"size_columns":["Contagiati"]}}';
+    pattern = 'var _Flourish_data_column_names = {"data":{"nest_columns":["Provincia","Comune"],"size_columns":["Comuni"]}}';
     pattern2 = 'for (var _Flourish_dataset in _Flourish_data) {';
     idx1=strfind(file_scan,pattern);
     idx2=strfind(file_scan,pattern2);
@@ -138,6 +138,9 @@ dateNume=day_unique(end);
 for pp = 1 : numel(prov_list)
     
     sigla_prov_1 = char(prov_list(pp));
+    
+    if ~isempty(sigla_prov_1)
+    
     idx=find(strcmp(data_comune_unique.prov,cellstr(sigla_prov_1)));
     
     dataComo = struct;
@@ -212,7 +215,7 @@ for pp = 1 : numel(prov_list)
     
     print(gcf, '-dpng', [WORKroot,'/slides/img/comuniLombardia/', regione, '_casiTotali.PNG']);
     close(gcf);
-    
+    end
     
 end
 
@@ -223,6 +226,7 @@ dateNume=day_unique(end);
 for pp = 1 : numel(prov_list)
     
     sigla_prov_1 = char(prov_list(pp));
+    if ~isempty(sigla_prov_1)
     idx=find(strcmp(data_comune_unique.prov,cellstr(sigla_prov_1)));
     
     dataComo = struct;
@@ -298,7 +302,7 @@ for pp = 1 : numel(prov_list)
     
     print(gcf, '-dpng', [WORKroot,'/slides/img/comuniLombardia/', regione, '_casiTotaliPesati.PNG']);
     close(gcf);
-    
+    end
     
 end
 
@@ -415,6 +419,7 @@ prov_list=unique(data_comune_unique.prov);
 for pp = 1 : numel(prov_list)
     
     sigla_prov_1 = char(prov_list(pp));
+    if ~isempty(sigla_prov_1)
     
     
     idx=find(strcmp(data_comune_unique.prov,cellstr(sigla_prov_1)));
@@ -493,6 +498,7 @@ for pp = 1 : numel(prov_list)
     
     print(gcf, '-dpng', [WORKroot,'/slides/img/comuniLombardia/newgiornalieri_', regione, '.PNG']);
     close(gcf);
+    end
 end
 
 
