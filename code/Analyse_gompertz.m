@@ -695,18 +695,18 @@ for reg=1:size(regioni_tot,1)
         grid minor
         hold on
         
-        bbb=[dataReg.deceduti(index,1)';dataReg.terapia_intensiva(index,1)';dataReg.totale_ospedalizzati(index,1)'-dataReg.terapia_intensiva(index,1)';dataReg.isolamento_domiciliare(index,1)';dataReg.dimessi_guariti(index,1)'];
+        bbb=[dataReg.terapia_intensiva(index,1)';dataReg.totale_ospedalizzati(index,1)'-dataReg.terapia_intensiva(index,1)';dataReg.isolamento_domiciliare(index,1)';dataReg.dimessi_guariti(index,1)';dataReg.deceduti(index,1)'];
         if reg==9
             bbb_lombardia = bbb;
         end
         
         
         bbbar = bar(bbb','stacked'); hold on
-        set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
-        set(bbbar(2),'FaceColor',[1 0 0]);
-        set(bbbar(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
-        set(bbbar(4),'FaceColor',[1 1 0.400000005960464]);
-        set(bbbar(5),'FaceColor',[0 0.800000011920929 0.200000002980232]);
+        set(bbbar(5),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
+        set(bbbar(1),'FaceColor',[1 0 0]);
+        set(bbbar(2),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
+        set(bbbar(3),'FaceColor',[1 1 0.400000005960464]);
+        set(bbbar(4),'FaceColor',[0 0.800000011920929 0.200000002980232]);
         
         if ismac
             font_size = 9;
@@ -727,7 +727,7 @@ for reg=1:size(regioni_tot,1)
         set(ax, 'FontName', 'Verdana');
         set(ax, 'FontSize', font_size);
         
-        l=legend([bbbar(5), bbbar(4),bbbar(3),bbbar(2),bbbar(1)],'Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
+        l=legend([bbbar(4), bbbar(3),bbbar(2),bbbar(1),bbbar(5)],'Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
         set(l,'Location','northwest')
         % overlap copyright info
         datestr_now = datestr(now);
@@ -756,8 +756,7 @@ for reg=1:size(regioni_tot,1)
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_cumulati.PNG']);
         close(gcf);
         
-        
-        
+
         
         
         %% bar stacked: giornalieri
