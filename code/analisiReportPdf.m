@@ -19,7 +19,7 @@ if flag_download_1
         dd_1 = str2double(dd);
         
         serverAddress='https://www.interno.gov.it';
-        websave(sprintf('PDF_%s-%s-%s.PDF', yy,mm,dd), sprintf('%s/sites/default/files/modulistica/monitoraggio_serviz_controllo_giornaliero_%s.%s.%s.pdf', serverAddress,dd,mm,yy),'timeout',1);
+        websave(sprintf('PDF_%s-%s-%s.PDF', yy,mm,dd), sprintf('%s/sites/default/files/modulistica/monitoraggio_serviz_controllo_giornaliero_%s-%s-%s.pdf', serverAddress,dd,mm,yy),'timeout',1);
 %         websave(sprintf('PDF_%s-%s-%s.PDF', yy,mm,dd), sprintf('%s/sites/default/files/modulistica/monitoraggio_serviz_controllo_giornaliero_dal_%d.%d.%s.pdf', serverAddress,dd_1,mm_1,yy),'timeout',1);
         movefile(sprintf('PDF_%s-%s-%s.PDF', yy,mm,dd),sprintf('%s/_json/Report_PDF',WORKroot),'f');
         catch
