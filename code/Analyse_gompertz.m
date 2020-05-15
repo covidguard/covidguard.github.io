@@ -869,7 +869,7 @@ for reg=1:size(regioni_tot,1)
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         ax.XTick = time_num(1):2:time_num(end);
         datetick('x', datetickFormat, 'keepticks') ;
-        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        set(gca,'XTickLabelRotation',90,'FontSize',6.5);
         ax.FontSize = font_size;
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         
@@ -979,7 +979,7 @@ for reg=1:size(regioni_tot,1)
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         ax.XTick = time_num(1:2:end);
         datetick('x', datetickFormat, 'keepticks') ;
-        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        set(gca,'XTickLabelRotation',90,'FontSize',6.5);
         ax.FontSize = font_size;
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         
@@ -1099,7 +1099,7 @@ for reg=1:size(regioni_tot,1)
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         ax.XTick = time_num(1:2:end);
         datetick('x', datetickFormat, 'keepticks') ;
-        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        set(gca,'XTickLabelRotation',90,'FontSize',6.5);
         ax.FontSize = font_size;
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         
@@ -1715,10 +1715,10 @@ else
     font_size = 6.5;
 end
 
-set(gca,'XTick',1:size(time_num,1));
-set(gca,'XTickLabel',datestr(time_num,'dd mmm'));
+set(gca,'XTick',1:2:size(time_num,1));
+set(gca,'XTickLabel',datestr(time_num(1:2:end),'dd mmm'));
 set(gca,'XLim',[0.5,size(time_num,1)+0.5]);
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ax=gca;
 ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
@@ -1904,7 +1904,7 @@ fidx=find(idx);
 set(gca,'XTick',1:3:size(t(idx),1));
 set(gca,'XTickLabel',datestr(t(fidx(1):3:fidx(end)),'dd mmm'));
 set(gca,'XLim',[0.5,size(t(idx),1)+0.5]);
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ax=gca;
 ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
