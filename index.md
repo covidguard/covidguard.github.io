@@ -129,6 +129,7 @@ Andamento giornaliero delle numero di denunce rispetto ai controlli totali:
 ### Confronto temporale tra Regioni
 ![confrontoRaceTotaleCasi](/code/Andamento_Regioni_Race.gif)
 ![confrontoRaceAttualmentePositivi](/code/Andamento_Regioni_Race_attPositivi.gif)
+![confrontoRaceTamponi](/code/Andamento_Regioni_Race_Tamponi.gif)
 
 ### Confronto Regioni
 Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri osservati:
