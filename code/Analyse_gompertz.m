@@ -5945,7 +5945,7 @@ fclose(fout);
 % analisi di Gompertz sulla Lombardia
 
 
-for reg = [5,9]
+for reg = [9]
 % for reg = 1:size(Regione_lista,1);
     
     %%
