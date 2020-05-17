@@ -294,7 +294,7 @@ L'interpolazione delle serie di crescita dei nuovi casi provinciali permette di 
 Le curve soffrono ovviamente della estrema variabilità delle condizioni di rilevamento dei dati (tamponi, tipologia di persone analizzate, ...) e sono poco rappresentative nella parte di crescita, tuttavia mostrano inequivolcabilmente come, in praticolare in Provincia di Lodi ma anche nelle Province di Cremona e Pavia, l'epidemia fosse iniziata un periodo molto antecedente il primo caso ufficiale.
 In particolare il caso 1 italiano (circa 20 febbraio) era in corrispondenza quasi del picco di contagi della Provincia lodigiana.
 ![Curva Epidemica Lombardia 1](/slides/img/province/Province_Lombardia_casiTotaliGiornalieri_gomp.PNG)
-![Curva Epidemica Lombardia 2](/slides/img/province/_norm_Lombardia_casiTotaliGiornalieri_gomp.PNG)
+![Curva Epidemica Lombardia 2](/slides/img/province/Province_norm_Lombardia_casiTotaliGiornalieri_gomp.PNG)
 
 ### Dati comunali: totale casi
 Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di casi
