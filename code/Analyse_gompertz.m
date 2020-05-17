@@ -84,7 +84,6 @@ for i=1:size(file_scan,1)
 end
 
 dataProv = decodeJSON(json_oneRaw);
-dataProv = decodeJSON(json_oneRaw);
 dataProv.dataa = char(dataProv.data);
 dataProv.dataa(:,11)=' ';
 dataProv.data=cellstr(dataProv.dataa);
@@ -115,6 +114,9 @@ analisiReportPdf
 %% percorsi:
 data=struct;
 data.dataReg=dataReg;
+% animated_gif_reg_gara(data,pop,'A');
+
+
 animated_gif_reg_Andrea(data,'A');
 % animated_gif_reg_Andrea_fase2(data,'A');
 try
