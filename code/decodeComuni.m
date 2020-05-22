@@ -15,7 +15,7 @@ analizza_nuovo=0;
 if analizza_nuovo==1
     year=2020;
     month=05;
-    day=21;
+    day=22;
     
     
     dateNume=datenum(year,month,day);
@@ -28,7 +28,7 @@ if analizza_nuovo==1
     fclose(fid);
     file_scan                             = file_scan{1};
     file_scan=char(file_scan);
-%     pattern = 'var _Flourish_data_column_names = {"data":{"nest_columns":["Provincia","Comune"],"size_columns":["Contagiati"]}}';
+%     pattern = '_Flourish_data_column_names = {"data":{"nest_columns":["","003 comuni PER MINISTERO"],"size_columns":[""]}}';
     pattern = '_Flourish_data_column_names = {"data":{"nest_columns":["Provincia","Comune"],"size_columns":["Contagiati"]}}';
     pattern2 = 'for (var _Flourish_dataset in _Flourish_data) {';
     idx1=strfind(file_scan,pattern);
