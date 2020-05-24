@@ -403,3 +403,25 @@ print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleDecessiAndamento.
 close(gcf);
 
 
+
+
+
+
+
+
+%% worst rate last week
+rate=(worldData.data(end,:)-worldData.data(end-6,:))./worldData.data(end-6,:);
+
+[rate_sort,idx_sort]=sort(rate,'descend');
+idx_sort(isnan(rate_sort))=[];
+rate_sort(isnan(rate_sort))=[];
+idx_sort(~isfinite(rate_sort))=[];
+rate_sort(~isfinite(rate_sort))=[];
+
+bar(rate_sort(1:10))
+
+
+list_country(idx_sort(1:20),:)
+
+
+

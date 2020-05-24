@@ -9,7 +9,7 @@ end
 flag_download_1=0;
 if flag_download_1    
     tim_curr = now;
-    for k=2
+    for k=1
         try
         mm=datestr(tim_curr-k,'mm');
         dd=datestr(tim_curr-k,'dd');
