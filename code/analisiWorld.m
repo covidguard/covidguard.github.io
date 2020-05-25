@@ -425,3 +425,87 @@ list_country(idx_sort(1:20),:)
 
 
 
+
+
+
+
+
+
+
+%% 
+idx_sweden = find(strcmp(list_country,'Sweden'));
+idx_norway = find(strcmp(list_country,'Norway'));
+idx_finland = find(strcmp(list_country,'Finland'));
+idx_italy = find(strcmp(list_country,'Italy'));
+
+
+k=0;
+i=1;
+
+dead=[];
+
+try
+for w=size(date_s,1):-7:1
+     k=k+1;
+     dead(k,1) = (sum(worldData.death(w-6:w,idx_sweden)))/worldData.population(idx_sweden)*1000000;
+     dead(k,2) = (sum(worldData.death(w-6:w,idx_norway)))/worldData.population(idx_norway)*1000000;
+     dead(k,3) = (sum(worldData.death(w-6:w,idx_finland)))/worldData.population(idx_finland)*1000000;
+     dead(k,4) = (sum(worldData.death(w-6:w,idx_italy)))/worldData.population(idx_italy)*1000000;
+end
+catch
+end
+
+dead(isnan(dead))=0;
+
+figure;
+hold on
+grid on
+a=plot(flip(dead),'-','linewidth',2);
+legend(a,'Sweden','Norway','Finland');
+xlim([8, size(dead,1)]);
+xlabel('week')
+ylabel('deaths over 1.000.000 people');
+
+
+
+
+
+
+%% 
+idx_uk = find(strcmp(list_country,'United_Kingdom'));
+idx_belgium = find(strcmp(list_country,'Belgium'));
+idx_spain = find(strcmp(list_country,'Spain'));
+idx_italy = find(strcmp(list_country,'Italy'));
+idx_usa = find(strcmp(list_country,'United_States_of_America'));
+idx_brazil = find(strcmp(list_country,'Brazil'));
+
+k=0;
+i=1;
+
+dead=[];
+
+try
+for w=size(date_s,1):-7:1
+     k=k+1;
+     dead(k,1) = (sum(worldData.death(w-6:w,idx_uk)))/worldData.population(idx_uk)*1000000;
+     dead(k,2) = (sum(worldData.death(w-6:w,idx_belgium)))/worldData.population(idx_belgium)*1000000;
+     dead(k,3) = (sum(worldData.death(w-6:w,idx_spain)))/worldData.population(idx_spain)*1000000;
+     dead(k,4) = (sum(worldData.death(w-6:w,idx_italy)))/worldData.population(idx_italy)*1000000;
+     dead(k,5) = (sum(worldData.death(w-6:w,idx_usa)))/worldData.population(idx_usa)*1000000;
+     dead(k,6) = (sum(worldData.death(w-6:w,idx_brazil)))/worldData.population(idx_brazil)*1000000;
+end
+catch
+end
+
+dead(isnan(dead))=0;
+
+figure;
+hold on
+grid on
+a=plot(flip(dead),'-','linewidth',2);
+legend(a,'United Kingdom','Belgium','Spain','Italy','United States of America','Brazil');
+xlim([8, size(dead,1)-1]);
+xlabel('week')
+ylabel('deaths over 1.000.000 people');
+
+
