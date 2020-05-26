@@ -5191,9 +5191,21 @@ n_days_comp = 7;
 for reg = 1:size(Regione_lista)
     idx_reg=find(strcmp(dataReg.denominazione_regione,cell(Regione_lista(reg,:))));
     sigla_prov=dataReg.sigla_provincia(idx_reg);
-    [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
-    sigla_prov=sigla_prov(ixs);
+%     [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
+    
+    [sigla_prov, ixs]= unique(sigla_prov);
+    
+    RegioneTot=dataReg.denominazione_provincia(idx_reg(ixs));
+    
+    
+%     sigla_prov=sigla_prov(ixs);
+    
+    
+    
+    
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
+    sigla_prov=sigla_prov(ixs);
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr(''));
     sigla_prov=sigla_prov(ixs);
     
     % find population
@@ -6056,6 +6068,8 @@ dataReg=dataProv;
 
 [ListaProvince]= unique(dataReg.denominazione_provincia);
 ListaProvince = setdiff(ListaProvince,'In fase di definizione/aggiornamento');
+ListaProvince = setdiff(ListaProvince,'Forl\u201c-Cesena');
+
 
 tabellone=struct;
 
@@ -6083,11 +6097,14 @@ for p =1 : size(ListaProvince,1)
     %    plot(datenum(dataTime_diff),dataProv_diff_int,'.-r');
     %
     
-    
+    try
     tabellone.casi(:,p)=dataProv_diff_int;
     tabellone.coord(p,:)=[dataReg.lat(idx(1)) dataReg.long(idx(1))];
+    catch
+    end
     idx_prov = find(strcmp(pop.sigla, dataReg.sigla_provincia(idx(k))));
     tabellone.popolazione(p,1)=pop.number(idx_prov);
+    
     
 end
 
