@@ -582,6 +582,89 @@ close(gcf);
 
 
 
+%% positivi su casi testati week
+figure;
+id_f = gcf;
+set(id_f, 'Name', sprintf('Italia: Regioni con maggior percentuale di nuovi casi testati positivi (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
+title(sprintf('Italia: Regioni con maggior percentuale di nuovi casi testati positivi (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+worstRegValue=[];
+worstRegValue_abs=[];
+for reg=1:size(regioni_tot,1)
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    worstRegValue(reg,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-6)))/(dataReg.casi_testati(index(end))-dataReg.casi_testati(index(end-6)))*100;
+    worstAbsValue(reg,1)=(dataReg.casi_testati(index(end))-dataReg.casi_testati(index(end-6)));
+end
+worstRegValue(worstRegValue<0)=0;
+worstAbsValue(worstAbsValue<0)=0;
+[worstRegValue,idxSort]=sort(worstRegValue,'descend');
+
+x_data_i=flip(worstRegValue);
+idx_i=flip(idxSort);
+
+a=barh([1 2], [x_data_i ,x_data_i]');
+grid minor
+
+for k=1:size(regioni_tot,1)
+    set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
+end
+
+hT={};              % placeholder for text object handles
+for k=1:size(regioni_tot,1) % iterate over number of bar objects
+    hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%.2f%%)', char(regioni_tot(idx_i(k))),worstRegValue(end-k+1)), ...
+        'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+    d=hT{k};
+    xx=a(k).YData(2);
+    yy=a(k).XData(2)+a(k).XOffset(1);    
+    d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+    drawnow
+end
+
+d=hT{1};
+xx=a(1).YData(2);
+yy=a(1).XData(2)+a(1).XOffset(1);
+d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
+   
+xlabel('Percentuale di nuovi casi testati positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+
+set(gca,'YTick',[])
+set(gca,'YLim',[1.6,2.4])
+set(gca,'FontSize',8);
+set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+xlabel('Percentuale di nuovi casi testati positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+title(sprintf('Italia: Regioni con maggior percentuale di nuovi casi testati positivi (dal %s al %s)',datestr(list_day(end-6),'dd/mm/yyyy'),datestr(list_day(end),'dd/mm/yyyy')));
+
+ax=get(gca);
+ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_bestRegWeekCasiTestatiPerc.PNG']);
+close(gcf);
 
 
 
