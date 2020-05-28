@@ -25,6 +25,7 @@ Tutti i grafici qui prodotti vengono generati semi automaticamente dai dati uffi
     <li> <a href="#italia-regioni">Italia: Regioni</a> </li> 
     <li> <a href="#italia-province">Italia: Province</a> </li> 
     <li> <a href="#lombardia">Lombardia</a> </li> 
+    <li> <a href="#mondo">Mondo</a> </li> 
 </ul>
 <hr>
 **Attenzione**: per visualizzare correttamente il sito si consiglia l'utilizzo di Safari, Chrome o derivati, browser che non hanno pieno supporto degli ultimi standard CSS3 potrebbero non funzionare correttamente.
@@ -311,6 +312,13 @@ Per ogni Provincia lombarda vengono riportati i 25 Comuni con numero maggiore di
 <iframe class="slideshow-iframe" src="/slides/lombardia-comuni-nuovi.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
+
+## MONDO
+
+### Andamento giornaliero casi e decessi
+Infine uno sguardo sul mondo: i grafici riportano i Paesi con il maggior numero di casi e decessi pesati per popolazione:
+![Mappa Mondo](/slides/img/regioni/World_totaleCasiAndamento.PNG)
+![Mappa Mondo2](/slides/img/regioni/World_totaleDecessiAndamento.PNG)
 
 <hr>
 [Back to the Table of Contents](#table-of-contents)
