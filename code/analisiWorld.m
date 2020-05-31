@@ -515,3 +515,279 @@ close(gcf);
 % ylabel('deaths over 1.000.000 people');
 % 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+%% interpolazione e confronto tra paesi diversi: casi giornalieri
+customC_list = {'Italy'; 'Sweden';};
+
+customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'Brazil';'Chile';'United_States_of_America';'Peru';'United_Kingdom';'Mexico'};
+
+% customC_list = {'Sweden';'Norway';'Finland'};
+
+testo = struct;
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto casi giornalieri')
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+clear a1_tot t_tot;
+for reg = 1:size(customC_list,1)    
+    regione = char(customC_list{reg});    
+    idx_cR = find(strcmp(list_country,regione));
+    
+    y=(worldData.dataWeight(:,idx_cR)*100000);
+    t1=worldData.timeNum;
+    
+    a1=movmean(y, 20, 'omitnan');
+    t=t1;
+    
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=40:size(t1,1)
+%         if isfinite(y(i)) && y(i)>0
+%             fprintf(fout,'%d;%d\n',t1(i),y(i));
+%         end
+%     end
+%     fclose(fout);
+% 
+%     command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%     [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     
+
+    t_tot{reg}=t;
+    b1(reg)=plot(t1,y,':','LineWidth', 0.5,'color',Cmap.getColor(reg, size(customC_list,1)));
+    window=7;
+    b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
+    
+    testo.sigla(reg,:)=(customC_list(reg));
+%     testo.pos(reg,:)=[t(end)+((t(end)-t(40)))*0.01, sf(end)];
+    a1_tot{reg}=a1;
+    
+end
+string_legend='l=legend([b]';
+for reg = 1:size(customC_list,1)
+    regione = char(customC_list{reg});    
+    regione_leg=strrep(regione,'_', ' ');
+    string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
+end
+string_legend=sprintf('%s);',string_legend);
+% eval(string_legend)
+
+
+font_size = 6.5;
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+
+% ylim([0 max(a1_tot(:))*1.1]);
+ylabel('Numero casi giornalieri ogni 100.000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+
+set(gca, 'Xlim', [t(1)+50, t(end)]);
+datetick('x', datetickFormat) ;
+set(gca, 'Xlim', [t(1)+50, t(end)]);
+ax.FontSize = font_size;
+
+y_lim=ylim;
+y_lim(1)=0;
+ylim(y_lim);
+
+
+for h=1:size(customC_list,1)
+    a1_tot_h=[a1_tot{h}];
+    idx_max=find(a1_tot_h==max(a1_tot_h))-10;
+    i = idx_max;
+    
+    t_h=[t_tot{h}];
+    % Get the local slope
+    dy=a1_tot_h(i+1)-a1_tot_h(i-1);
+    dx=t_h(i+1)-t_h(i-1);
+    d = dy/dx;
+    
+    
+    X = diff(get(gca, 'xlim'));
+    Y = diff(get(gca, 'ylim'));
+    p = pbaspect;
+    a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+    text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
+end
+
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://data.europa.eu']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+%% interpolazione e confronto tra paesi diversi: casi decessi
+customC_list = {'Italy'; 'Sweden';};
+
+customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'Brazil';'Chile';'United_States_of_America';'Peru';'United_Kingdom';'Mexico'};
+% customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'United_States_of_America';'United_Kingdom'};
+
+testo = struct;
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto deceduti giornalieri')
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+clear a1_tot t_tot;
+for reg = 1:size(customC_list,1)    
+    regione = char(customC_list{reg});    
+    idx_cR = find(strcmp(list_country,regione));
+    
+    y=(worldData.deathWeight(:,idx_cR)*100000);
+    t1=worldData.timeNum;
+    
+    a1=movmean(y, 20, 'omitnan');
+    t=t1;
+    
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=40:size(t1,1)
+%         if isfinite(y(i)) && y(i)>0
+%             fprintf(fout,'%d;%d\n',t1(i),y(i));
+%         end
+%     end
+%     fclose(fout);
+% 
+%     command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%     [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     
+
+    t_tot{reg}=t;
+    b1(reg)=plot(t1,y,':','LineWidth', 0.5,'color',Cmap.getColor(reg, size(customC_list,1)));
+    window=7;
+    b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
+    
+    testo.sigla(reg,:)=(customC_list(reg));
+%     testo.pos(reg,:)=[t(end)+((t(end)-t(40)))*0.01, sf(end)];
+    a1_tot{reg}=a1;
+    
+end
+string_legend='l=legend([b]';
+for reg = 1:size(customC_list,1)
+    regione = char(customC_list{reg});    
+    regione_leg=strrep(regione,'_', ' ');
+    string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
+end
+string_legend=sprintf('%s);',string_legend);
+% eval(string_legend)
+
+
+font_size = 6.5;
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+
+% ylim([0 max(a1_tot(:))*1.1]);
+ylabel('Numero decessi giornalieri ogni 100.000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+
+set(gca, 'Xlim', [t(1)+50, t(end)]);
+datetick('x', datetickFormat) ;
+set(gca, 'Xlim', [t(1)+50, t(end)]);
+ax.FontSize = font_size;
+
+y_lim=ylim;
+y_lim(1)=0;
+ylim(y_lim);
+
+
+for h=1:size(customC_list,1)
+    a1_tot_h=[a1_tot{h}];
+    idx_max=find(a1_tot_h==max(a1_tot_h))-10;
+    i = idx_max;
+    
+    t_h=[t_tot{h}];
+    % Get the local slope
+    dy=a1_tot_h(i+1)-a1_tot_h(i-1);
+    dx=t_h(i+1)-t_h(i-1);
+    d = dy/dx;
+    
+    
+    X = diff(get(gca, 'xlim'));
+    Y = diff(get(gca, 'ylim'));
+    p = pbaspect;
+    a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+    text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
+end
+
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://data.europa.eu']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleDecessiAndamento_mediamobile.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+

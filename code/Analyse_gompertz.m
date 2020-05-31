@@ -2908,6 +2908,7 @@ for type=1:3
     for i=1:size(data,1)
         fprintf(fout,'%d;%d\n',time_num(i),data(i));
     end
+    fclose(fout);
     
     if type==1 || type==3
         %         command=sprintf('gauss_estim testIn_gauss.txt');system(command);
@@ -3029,13 +3030,15 @@ for type=1:3
     else
         font_size = 6.5;
     end
-    
+    grid minor
     ax = gca;
     code_axe = get(id_f, 'CurrentAxes');
     set(code_axe, 'FontName', 'Verdana');
     set(code_axe, 'FontSize', font_size);
     ylimi=get(gca,'ylim');
     set(gca,'ylim',([0,ylimi(2)]));
+    ax.YTick=ax.YTick(1):(ax.YTick(2)-(ax.YTick(1)))/4:ax.YTick(end);
+    
     ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
     if type==1
         ylabel('Numero attualmente positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
@@ -6513,4 +6516,5 @@ mappeprovincia_var;
 
 % mkdir('GRAPHS');
 % movefile('*.PNG','GRAPHS','f');
+fclose all
 

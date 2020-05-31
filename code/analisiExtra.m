@@ -129,6 +129,7 @@ for reg=[5,9]
         for i=1:size(data,1)
             fprintf(fout,'%d;%d\n',time_num(i),data(i));
         end
+        fclose(fout);
         
         if type==1 || type==3
             %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
