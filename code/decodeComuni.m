@@ -15,7 +15,7 @@ analizza_nuovo=0;
 if analizza_nuovo==1
     year=2020;
     month=05;
-    day=30;
+    day=31;
     
     
     dateNume=datenum(year,month,day);
