@@ -775,7 +775,7 @@ end
 
  %% CONFRONTO DUE REGIONI STESSO GRAFICO REGIONE MA SOLO ALCUNE PROVINCE
  
- PROV_LOMB = ['LO';'CR';'BG';'BR'];
+ PROV_LOMB = ['LO';'CR';'BG';'BS';'MB'];
  PROV_EMIL = ['PC';'PR';'RE';'RN'];
  dataReg=struct;
 
@@ -964,7 +964,7 @@ for type=2:3
     leg_lomb=leg_lomb(2:end);
 
     leg_emil='';
-    for kk = 1:size(PROV_LOMB,1)
+    for kk = 1:size(PROV_EMIL,1)
         leg_emil=[leg_emil,',',PROV_EMIL(kk,:)];
     end
     leg_emil=leg_emil(2:end);    
@@ -1016,8 +1016,8 @@ end
 
 %% CONFRONTO DUE REGIONI STESSO GRAFICO REGIONE MA SOLO ALCUNE PROVINCE (PESATA SULLA POPOLAZIONE)
  
- PROV_LOMB = ['LO';'CR';'BG';'BR'];
- PROV_EMIL = ['PC';'PR';'RE';'RN'];
+ PROV_LOMB = ['LO';'CR';'BG';'BS';'MB'];
+ PROV_EMIL = ['PC';'PR';'RE';'RN';'MO'];
 
  dataReg=struct;
 
