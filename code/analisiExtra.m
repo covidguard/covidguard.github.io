@@ -87,6 +87,277 @@ end
 
 
 
+
+
+
+
+%% correlazione casi-tamponi
+tolerance=0.07;
+
+lag=NaN(size(time_num(2:end),1),21);
+
+for reg=1:21
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    time_num = fix(datenum(dataReg.data(index)));
+    
+    
+    tamp_positivi = diff(dataReg.totale_casi(index,1));
+    tamp_tot      = diff(dataReg.tamponi(index,1));
+    tamp_tot(tamp_tot<0)=nan;
+    
+    tamp_positivi_perc = tamp_positivi./tamp_tot*100;
+    tamp_positivi(tamp_positivi_perc>100 |(tamp_positivi_perc==-Inf) |(tamp_positivi_perc==Inf))=nan;
+    tamp_tot(tamp_positivi_perc>100|(tamp_positivi_perc==-Inf) |(tamp_positivi_perc==Inf))=nan;
+    tamp_positivi_perc(tamp_positivi_perc>100|(tamp_positivi_perc==-Inf) |(tamp_positivi_perc==Inf))=nan;
+    
+    t=time_num(2:end);
+    
+    y1=tamp_positivi;
+    y2=tamp_positivi_perc;
+    
+    
+    l1='Numero tamponi positivi giornalieri';
+    l2='Percentuale tamponi positivi giornaliera';
+    % l2='Terapie giornalieri';
+    
+    [a1_1] = splinerMat(t,y1,7);
+    % figure;hold on
+    % plot(t,y1,'.b');
+    % plot(t,a1_1,'-r');
+    
+    
+    [a1_2] = splinerMat(t,y2,7);
+    % figure;hold on
+    % plot(t,y2,'.b');
+    % plot(t,a1_2,'-r');
+    
+    t_1_1=t;
+    t_1_2=t;
+    
+    corrcoeff_tot=[];
+    corrcoeff_tot2=[];
+    
+    for d=0:25
+        a=corrcoef(a1_1(1:end-d),a1_2(d+1:end),'rows','complete');
+        %         a=corrcoef(a1_1(1:end-d),a1_2(d+1:end),'rows','complete');
+        corrcoeff_tot(d+1)=a(1,2);
+    end
+    
+    for d=0:25
+        a=corrcoef(a1_2(1:end-d),a1_1(d+1:end),'rows','complete');
+        %         a=corrcoef(a1_1(1:end-d),a1_2(d+1:end),'rows','complete');
+        corrcoeff_tot2(d+1)=a(1,2);
+    end
+    
+    [coerrcoeff_max1, idx1]=max(corrcoeff_tot);
+    [coerrcoeff_max2, idx2]=max(corrcoeff_tot2);
+    
+    if coerrcoeff_max1>coerrcoeff_max2
+        offset_dec=idx1-1;
+    else
+        offset_dec=-idx2+1;
+    end
+    offset_dec=0;
+    
+    figure;
+    id_f = gcf;
+    set(gcf, 'Name', sprintf('%s: correlazione temporale',regione));
+    
+    
+    % tt=title(sprintf([regione ': correlazione nuovi casi/deceduti giornalieri\\fontsize{5}\n ']),'fontsize',9)
+    annotation(gcf,'textbox',...
+        [0.130299896587384 0.890266851563407 0.722854188210962 0.0630182421227199],...
+        'String',[regione ': correlazione numero tamponi positivi/percentuale tamponi positivi'],...
+        'LineStyle','none',...
+        'HorizontalAlignment','center',...
+        'FontWeight','bold',...
+        'FontSize',8,...
+        'FontName','Verdana',...
+        'FitBoxToText','off');
+    
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    [ax,a,b] = plotxx(t,y1,t,y2);
+    hold on
+    
+    ax1 = ax(1);
+    ax2 = ax(2);
+    
+    set(gcf,'CurrentAxes',ax1)
+    c=plot(t_1_1,a1_1,'-r');
+    
+    set(gcf,'CurrentAxes',ax2)
+    d=plot(t_1_2,a1_2,'-b');
+    
+    %
+    % a=plot(t,data_casiPositivi,'-ob','LineWidth', 2.0,'color',[0 0.200000002980232 0.600000023841858]); set(a,'markersize',6,'MarkerFaceColor',[0 0.447058826684952 0.74117648601532],'Color',[0 0.447058826684952 0.74117648601532]);
+    % b=plot(t-offset_dec,data_deceduti,'-ob','LineWidth', 2.0,'color',[1 0.200000002980232 0.600000023841858],'Parent',ax2); set(b,'markersize',6,'MarkerFaceColor',[0.850980401039124 0.325490206480026 0.0980392172932625],'Color',[0.850980401039124 0.325490206480026 0.0980392172932625]);
+    
+    
+    if ismac
+        font_size = 9;
+    else
+        font_size = 6.5;
+    end
+    
+    set(a,'marker','o','markersize',0.5,'MarkerFaceColor',[0 0.447058826684952 0.74117648601532],'Color',[0 0.447058826684952 0.74117648601532],'LineWidth', 1,'LineStyle',':');
+    set(b,'marker','o','markersize',0.5,'MarkerFaceColor',[0.850980401039124 0.325490206480026 0.0980392172932625],'Color',[0.850980401039124 0.325490206480026 0.0980392172932625],'LineWidth', 1,'LineStyle',':');
+    set(c,'Color',[0 0.447058826684952 0.74117648601532],'LineWidth', 2.0);
+    set(d,'Color',[0.850980401039124 0.325490206480026 0.0980392172932625],'LineWidth', 2.0);
+    
+    
+    
+    set(gcf,'CurrentAxes',ax1)
+    ylabel(l1, 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    set(ax1, 'FontName', 'Verdana');
+    set(ax1, 'FontSize', font_size);
+    
+    % set(ax1,'ylim',([0,80]));
+    ax1.XTick = datenum(time_num(1:2:end));
+    datetick('x', 'dd mmm', 'keepticks') ;
+    set(ax1,'xlim',([t(1),t(end)]));
+    set(ax1,'XTickLabelRotation',53,'FontSize',6.5);
+    set(ax1,'Xcolor',[0 0.447058826684952 0.74117648601532]);
+    set(ax1,'Ycolor',[0 0.447058826684952 0.74117648601532]);
+    ylims=get(ax1,'ylim');
+    ylim(ax1,[0 ylims(2)]);
+    
+    
+    set(gcf,'CurrentAxes',ax2)
+    ylabel(l2, 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    set(ax2, 'FontName', 'Verdana');
+    set(ax2, 'FontSize', font_size);
+    % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
+    % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
+    % ax2.XTick = t(1:2:end)+offset_dec-1
+    % set(ax2,'ylim',([0,80]));
+    ax2.XTick = datenum(time_num(1:2:end))+offset_dec;
+    set(ax2,'xlim',([t(1)+offset_dec,t(end)+offset_dec]));
+    ax2.XTickLabel = datestr(datenum(time_num(1:2:end))+offset_dec);
+    datetick('x', 'dd mmm', 'keepticks') ;
+    
+    set(ax2,'XTickLabelRotation',53,'FontSize',6.5);
+    set(ax2,'Xcolor',[0.850980401039124 0.325490206480026 0.0980392172932625]);
+    set(ax2,'Ycolor',[0.850980401039124 0.325490206480026 0.0980392172932625]);
+    ylims=get(ax2,'ylim');
+    ylim(ax2,[0 ylims(2)]);
+
+    % overlap copyright info
+    datestr_now = datestr(now);
+    annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+        'String',{['Fonte: https://github.com/pcm-dpc']},...
+        'HorizontalAlignment','center',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off',...
+        'LineStyle','none',...
+        'Color',[0 0 0]);
+    
+    annotation(gcf,'textbox',...
+        [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+        'String',{'https://covidguard.github.io/#covid-19-italia'},...
+        'LineStyle','none',...
+        'HorizontalAlignment','left',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off');
+    
+    %     annotation(gcf,'textbox',...
+    %         [0.328498902750058 0.735693681496092 0.537691794529686 0.0630182421227199],...
+    %         'String',['Offset: ', num2str(offset_dec), ' giorni'],...
+    %         'LineStyle','none',...
+    %         'HorizontalAlignment','right',...
+    %         'FontName','Verdana',...
+    %         'FitBoxToText','off');
+    
+    set(gcf,'CurrentAxes',ax2)
+    ylimit2=ylim;
+    set(gcf,'CurrentAxes',ax1)
+    ylimit1=ylim;
+    y_ord = ylimit1(2)/5*4;
+    
+    max1=max(a1_1);
+    max2=max(a1_2);
+    a1_1_n = a1_1./max1;
+    a1_2_n = a1_2./max2;
+    
+    distance=a1_1_n-a1_2_n;
+    
+    index_green=find(distance+a1_1_n*(1+tolerance)>a1_1_n*(1+tolerance));
+    index_red=find(distance+a1_1_n*(1+tolerance)<a1_1_n*(1-tolerance));
+    index_yellow=find(distance+a1_1_n*(1+tolerance)>=a1_1_n*(1-tolerance) & distance+a1_1_n*(1+tolerance)<=a1_1_n*(1+tolerance));
+    
+    % figure;plot(a1_1_n,'-r');hold on; plot(a1_1_n*(1+tolerance),'-b');plot(distance+a1_1_n*(1+tolerance),'-g');
+    
+    lag(:,reg)=distance;
+    %
+    % index_green=find(distance>a1_1_n*(1+tolerance));
+    % index_red=find(distance<-tolerance);
+    % index_yellow=find(distance>=-tolerance & distance<=tolerance);
+    
+    ak1 = plot(t_1_1(index_green),repmat(y_ord,size(index_green,1),1),'*g');
+    ak2 = plot(t_1_1(index_red),repmat(y_ord,size(index_red,1),1),'*r');
+    ak3 = plot(t_1_1(index_yellow),repmat(y_ord,size(index_yellow,1),1),'*y');
+    
+    l=legend([c,d,ak1,ak3,ak2],l1,l2,'Test sufficienti','Test mirati','Test insufficienti');
+    set(l,'Location','northeast')
+    
+    
+    print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_correlazioneTamponiPositiviCasi_v2_spline_', num2str(reg) ,'_', regione,'.PNG']);
+    close(gcf);
+    
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %% 
 
 %% interpolazione gaussiana regionale
