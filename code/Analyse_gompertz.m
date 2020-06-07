@@ -115,7 +115,7 @@ analisiReportPdf
 data=struct;
 data.dataReg=dataReg;
 % animated_gif_reg_gara(data,pop,'A');
-
+% animated_gif_prov_gara(dataProv,pop,'A');
 
 animated_gif_reg_Andrea(data,'A');
 % animated_gif_reg_Andrea_fase2(data,'A');
@@ -128,6 +128,128 @@ end
 animated_gif_reg_fase2(data,pop,'A');
 
 % animated_gif_reg_gara(data,pop,'A');
+
+
+
+%% indice fine epidemia
+customC_list=regioni_tot;
+
+testo = struct;
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Indice fine epidemia')
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+clear a1_tot t_tot max_a1;
+t1=datenum(unique(dataReg.data));
+
+
+
+for reg=1:size(regioni_tot,1)
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    
+    y=(dataReg.dimessi_guariti(index)+dataReg.deceduti(index))./(dataReg.totale_casi(index));
+    a1=movmean(y, 20, 'omitnan');
+    t=t1;
+    t_tot{reg}=t;
+    b1(reg)=plot(t1,y,':','LineWidth', 0.5,'color',Cmap.getColor(reg, size(regioni_tot,1)));
+    window=7;
+    b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(regioni_tot,1)));
+    a1_tot{reg}=a1;
+    max_a1(reg,1)=a1(end);
+end
+
+
+
+font_size = 6.5;
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+
+% ylim([0 max(a1_tot(:))*1.1]);
+ylabel('Indice fine epidemia', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+
+set(gca, 'Xlim', [t(1), t(end)]);
+datetick('x', datetickFormat) ;
+set(gca, 'Xlim', [t(1), t(end)]);
+ax.FontSize = font_size;
+
+ylim([0 1]);
+
+[~,idx_sort] = sort(max_a1);
+
+kk=0;
+for g=1:size(customC_list,1)
+    kk=kk+1;
+    if kk==1
+        delta = 5;
+    elseif kk==2
+        delta = 10;
+    elseif kk==3
+        delta = 15;
+        kk=0;
+    end
+    
+    
+    h=idx_sort(g);
+    
+    a1_tot_h=[a1_tot{h}];
+    
+    
+    idx_max=find(a1_tot_h==max(a1_tot_h))-delta;
+    i = idx_max;
+    
+    t_h=[t_tot{h}];
+    % Get the local slope
+    dy=a1_tot_h(i+1)-a1_tot_h(i-1);
+    dx=t_h(i+1)-t_h(i-1);
+    d = dy/dx;
+    
+    
+    X = diff(get(gca, 'xlim'));
+    Y = diff(get(gca, 'ylim'));
+    p = pbaspect;
+    a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+    text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
+end
+
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://data.europa.eu']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/Reg_indiceFineEpidemia.PNG']);
+close(gcf);
+
+
+
+
+
+
 
 
 
@@ -5673,6 +5795,231 @@ normalizza_per_superficie = 0;
 dataReg=dataProv;
 
 splined_yn=0;
+
+
+
+
+
+% peggior provincie sempre
+province_totale = struct;
+Provincia_lista=unique(dataReg.denominazione_provincia);
+ppt = 0;
+
+prov_tot=[];
+for reg = 1:size(Provincia_lista,1)
+    idx_reg=find(strcmp(dataReg.denominazione_provincia,cell(Provincia_lista(reg,:))));
+    sigla_prov=dataReg.sigla_provincia(idx_reg);
+    if ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('In fase di definizione/aggiornamento'))
+        %     [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
+        
+        %     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
+        %      [RegioneTot, ixs]=setdiff(RegioneTot,cellstr(''));
+        
+        sigla_prov=sigla_prov(1);
+        % find population
+        [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));
+        prov_tot(reg,1)=dataReg.totale_casi(idx_reg(end))/pop.number(idx_pop)*100000;
+%         prov_tot(reg,1)=dataReg.totale_casi(idx_reg(end));
+    end
+end
+[prov_sort, idx_sort]=sort(prov_tot,'descend');
+Provincia_lista(idx_sort)
+
+n_data=30;
+x=prov_sort(1:n_data);
+x=flip(x);
+
+ tick_all=flip(Provincia_lista(idx_sort(1:n_data)));
+        
+        figure;
+        id_f = gcf;
+        title(sprintf('Province: totale casi ogni 100.000 abitanti (al %s)', datestr(dataReg.data(end),'dd/mm/yyyy')));
+        set(gcf,'NumberTitle','Off');
+        set(gcf,'Position',[26 79 967 603]);
+        grid on
+        hold on
+        
+        a=barh([1 2], [x' ;x']);
+        grid minor
+        for k=1:size(x,2)
+            set(a(k),'FaceColor',Cmap.getColor(idx(k), size(x,2)));
+        end
+        
+        hT={};              % placeholder for text object handles
+        for k=1:size(x,1) % iterate over number of bar objects
+            hT{k}=text(a(k).YData+max(x(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%.2f)', char(tick_all(k)),x(k)), ...
+                'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+            d=hT{k};
+            xx=a(k).YData(2);
+            yy=a(k).XData(2)+a(k).XOffset(1);
+            d(2).Position=[xx+max(x(:))*0.01,yy,0];
+            drawnow
+        end
+        
+        d=hT{1};
+        xx=a(1).YData(2);
+        yy=a(1).XData(2)+a(1).XOffset(1);
+        d(2).Position=[xx+max(x(:))*0.01,yy,0];
+        
+       
+        set(gca,'YTick',[])
+        set(gca,'YLim',[1.6,2.4])
+        set(gca,'FontSize',8);
+        set(gca,'xlim',[0,max(x(:))*1.12]);
+
+        xlabel('Casi totali ogni 100.000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+
+        if ismac
+            font_size = 9;
+        else
+            font_size = 6.5;
+        end
+        
+        ax = gca;
+        set(ax, 'FontName', 'Verdana');
+        set(ax, 'FontSize', font_size);
+       
+        ax=get(gca);
+        ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
+        
+        
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        annotation(gcf,'textbox',...
+            [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_worstProvEver.PNG']);
+close(gcf);
+
+
+
+
+% 
+% 
+% % peggior provincie ultimo mese
+% province_totale = struct;
+% Provincia_lista=unique(dataReg.denominazione_provincia);
+% ppt = 0;
+% n_day=30;
+% prov_tot=[];
+% for reg = 1:size(Provincia_lista,1)
+%     idx_reg=find(strcmp(dataReg.denominazione_provincia,cell(Provincia_lista(reg,:))));
+%     sigla_prov=dataReg.sigla_provincia(idx_reg);
+%     if ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('In fase di definizione/aggiornamento'))
+%         %     [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
+%         
+%         %     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
+%         %      [RegioneTot, ixs]=setdiff(RegioneTot,cellstr(''));
+%         
+%         sigla_prov=sigla_prov(1);
+%         % find population
+%         [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));
+%         prov_tot(reg,1)=(dataReg.totale_casi(idx_reg(end))-dataReg.totale_casi(idx_reg(end-n_day)))/pop.number(idx_pop)*100000;
+% %         prov_tot(reg,1)=dataReg.totale_casi(idx_reg(end));
+%     end
+% end
+% [prov_sort, idx_sort]=sort(prov_tot,'descend');
+% Provincia_lista(idx_sort)
+% 
+% n_data=30;
+% x=prov_sort(1:n_data);
+% x=flip(x);
+% 
+%  tick_all=flip(Provincia_lista(idx_sort(1:n_data)));
+%         
+%         figure;
+%         id_f = gcf;
+%         title(sprintf('Province: totale casi ogni 100.000 abitanti (al %s)', datestr(dataReg.data(end),'dd/mm/yyyy')));
+%         set(gcf,'NumberTitle','Off');
+%         set(gcf,'Position',[26 79 967 603]);
+%         grid on
+%         hold on
+%         
+%         a=barh([1 2], [x' ;x']);
+%         grid minor
+%         for k=1:size(x,2)
+%             set(a(k),'FaceColor',Cmap.getColor(idx(k), size(x,2)));
+%         end
+%         
+%         hT={};              % placeholder for text object handles
+%         for k=1:size(x,1) % iterate over number of bar objects
+%             hT{k}=text(a(k).YData+max(x(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%.2f)', char(tick_all(k)),x(k)), ...
+%                 'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+%             d=hT{k};
+%             xx=a(k).YData(2);
+%             yy=a(k).XData(2)+a(k).XOffset(1);
+%             d(2).Position=[xx+max(x(:))*0.01,yy,0];
+%             drawnow
+%         end
+%         
+%         d=hT{1};
+%         xx=a(1).YData(2);
+%         yy=a(1).XData(2)+a(1).XOffset(1);
+%         d(2).Position=[xx+max(x(:))*0.01,yy,0];
+%         
+%        
+%         set(gca,'YTick',[])
+%         set(gca,'YLim',[1.6,2.4])
+%         set(gca,'FontSize',8);
+%         set(gca,'xlim',[0,max(x(:))*1.12]);
+% 
+%         xlabel('Casi totali ogni 100.000 abitanti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+% 
+%         if ismac
+%             font_size = 9;
+%         else
+%             font_size = 6.5;
+%         end
+%         
+%         ax = gca;
+%         set(ax, 'FontName', 'Verdana');
+%         set(ax, 'FontSize', font_size);
+%        
+%         ax=get(gca);
+%         ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
+%         
+%         
+%         
+%         % overlap copyright info
+%         datestr_now = datestr(now);
+%         annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+%             'String',{['Fonte: https://github.com/pcm-dpc']},...
+%             'HorizontalAlignment','center',...
+%             'FontSize',6,...
+%             'FontName','Verdana',...
+%             'FitBoxToText','off',...
+%             'LineStyle','none',...
+%             'Color',[0 0 0]);
+%         
+%         annotation(gcf,'textbox',...
+%             [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+%             'String',{'https://covidguard.github.io/#covid-19-italia'},...
+%             'LineStyle','none',...
+%             'HorizontalAlignment','left',...
+%             'FontSize',6,...
+%             'FontName','Verdana',...
+%             'FitBoxToText','off');
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_worstProvEver.PNG']);
+% close(gcf);
+
+
+
+
 
 
 
