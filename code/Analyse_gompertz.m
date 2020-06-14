@@ -6404,6 +6404,7 @@ for reg = 1:size(Regione_lista)
         hold on
         b=[];
         string_legend='l=legend([b]';
+        set(gca,'YScale','log')
         for h=1:size(RegioneTot,1)
             regione = char(RegioneTot(h));
             index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
@@ -6555,7 +6556,7 @@ for reg = 1:size(Regione_lista)
         testo=struct;
         
         RegioneTot=setdiff(RegioneTot,cellstr('Forl\u201c-Cesena'));
-        
+        set(gca,'YScale','log')
         for h=1:size(RegioneTot,1)
             regione = char(RegioneTot(h));
             %         index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));

@@ -1,17 +1,11 @@
  
-
-
- 
-
-
- 
  
 
 
  
 
 
- Controlli effettuati nella giornata del 11 giugno   
+ Controlli effettuati nella giornata del 12 giugno   
 
 
  
@@ -21,7 +15,7 @@ PERSONE CONTROLLATE
  
 
 
-71.995 
+76.982 
 
 
  
@@ -34,7 +28,7 @@ ex art. 4, comma 1, d.l. 25.03.2020 n. 19 (conv. l. 35/2020)
  
 
 
-      93 
+       138 
 
 
   PERSONE DENUNCIATE ex art. 260 r.d. 27.07.1934 n. 1265 
@@ -55,7 +49,7 @@ persone in quarantena perché risultate positive al virus)
  
 
 
-9 
+24 
 
 
  
@@ -73,7 +67,7 @@ ATTIVITA’ O ESERCIZI CONTROLLATI
  
 
 
-20.688 
+19.806 
 
 
  
@@ -88,7 +82,7 @@ ex art. 4, comma 1, d.l. 25.03.2020 n. 19 (conv. l. 35/2020)
  
 
 
-20 
+98 
 
 
   CHIUSURA PROVVISORIA DI ATTIVITA’ O ESERCIZI  
@@ -103,7 +97,7 @@ ex art. 4, comma 1, d.l. 25.03.2020 n. 19 (conv. l. 35/2020)
  
 
 
-8 
+7 
 
 
   CHIUSURA DI ATTIVITA’ O ESERCIZI  
@@ -118,7 +112,7 @@ ex art. 4, comma 1, d.l. 25.03.2020 n. 19 (conv. l. 35/2020)
  
 
 
-0 
+1 
 
 
  
@@ -136,7 +130,7 @@ ex art. 4, comma 1, d.l. 25.03.2020 n. 19 (conv. l. 35/2020)
  
 
 
-12 giugno 2020 
+13 giugno 2020 
  
 
 
