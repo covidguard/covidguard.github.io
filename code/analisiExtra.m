@@ -82,6 +82,59 @@ end
 
 
 
+% italia senza la lombardia
+dataRegTot = dataReg;
+idx_sinlomb=find(~strcmp(dataReg.denominazione_regione,cellstr('Lombardia')));
+idx_lomb=find(strcmp(dataReg.denominazione_regione,cellstr('Lombardia')));
+% idx_lomb=find(strcmp(dataReg.denominazione_regione,cellstr('Marche')));
+
+dataReg.data=dataReg.data(idx_sinlomb,:);
+dataReg.stato=dataReg.stato(idx_sinlomb,:);
+dataReg.codice_regione=dataReg.codice_regione(idx_sinlomb,:);
+dataReg.denominazione_regione=dataReg.denominazione_regione(idx_sinlomb,:);
+dataReg.lat=dataReg.lat(idx_sinlomb,:);
+dataReg.long=dataReg.long(idx_sinlomb,:);
+dataReg.ricoverati_con_sintomi=dataReg.ricoverati_con_sintomi(idx_sinlomb,:);
+dataReg.terapia_intensiva=dataReg.terapia_intensiva(idx_sinlomb,:);
+dataReg.totale_ospedalizzati=dataReg.totale_ospedalizzati(idx_sinlomb,:);
+dataReg.isolamento_domiciliare=dataReg.isolamento_domiciliare(idx_sinlomb,:);
+dataReg.totale_positivi=dataReg.totale_positivi(idx_sinlomb,:);
+dataReg.variazione_totale_positivi=dataReg.variazione_totale_positivi(idx_sinlomb,:);
+dataReg.nuovi_positivi=dataReg.nuovi_positivi(idx_sinlomb,:);
+dataReg.dimessi_guariti=dataReg.dimessi_guariti(idx_sinlomb,:);
+dataReg.deceduti=dataReg.deceduti(idx_sinlomb,:);
+dataReg.totale_casi=dataReg.totale_casi(idx_sinlomb,:);
+dataReg.tamponi=dataReg.tamponi(idx_sinlomb,:);
+dataReg.casi_testati=dataReg.casi_testati(idx_sinlomb,:);
+dataReg.note_it=dataReg.note_it(idx_sinlomb,:);
+dataReg.note_en=dataReg.note_en(idx_sinlomb,:);
+dataReg.dataa=dataReg.dataa(idx_sinlomb,:);
+
+dataRegSinLomb = dataReg;
+dataReg=dataRegTot;
+
+
+dataRegLomb.data=dataReg.data(idx_lomb,:);
+dataRegLomb.stato=dataReg.stato(idx_lomb,:);
+dataRegLomb.codice_regione=dataReg.codice_regione(idx_lomb,:);
+dataRegLomb.denominazione_regione=dataReg.denominazione_regione(idx_lomb,:);
+dataRegLomb.lat=dataReg.lat(idx_lomb,:);
+dataRegLomb.long=dataReg.long(idx_lomb,:);
+dataRegLomb.ricoverati_con_sintomi=dataReg.ricoverati_con_sintomi(idx_lomb,:);
+dataRegLomb.terapia_intensiva=dataReg.terapia_intensiva(idx_lomb,:);
+dataRegLomb.totale_ospedalizzati=dataReg.totale_ospedalizzati(idx_lomb,:);
+dataRegLomb.isolamento_domiciliare=dataReg.isolamento_domiciliare(idx_lomb,:);
+dataRegLomb.totale_positivi=dataReg.totale_positivi(idx_lomb,:);
+dataRegLomb.variazione_totale_positivi=dataReg.variazione_totale_positivi(idx_lomb,:);
+dataRegLomb.nuovi_positivi=dataReg.nuovi_positivi(idx_lomb,:);
+dataRegLomb.dimessi_guariti=dataReg.dimessi_guariti(idx_lomb,:);
+dataRegLomb.deceduti=dataReg.deceduti(idx_lomb,:);
+dataRegLomb.totale_casi=dataReg.totale_casi(idx_lomb,:);
+dataRegLomb.tamponi=dataReg.tamponi(idx_lomb,:);
+dataRegLomb.casi_testati=dataReg.casi_testati(idx_lomb,:);
+dataRegLomb.note_it=dataReg.note_it(idx_lomb,:);
+dataRegLomb.note_en=dataReg.note_en(idx_lomb,:);
+dataRegLomb.dataa=dataReg.dataa(idx_lomb,:);
 
 
 
@@ -89,6 +142,768 @@ end
 
 
 
+
+
+
+day_unique = unique(dataReg.data);
+time_num=datenum(day_unique);
+dataSoloLomb=NaN(size(day_unique,1),5);
+dataItaliaSenzaLomb=NaN(size(day_unique,1),5);
+totaleCasiSoloLomb=NaN(size(day_unique,1),1);
+totaleCasiItaliaSenzaLomb=NaN(size(day_unique,1),1);
+for k = 1: size(day_unique,1)
+    index = find(strcmp(dataRegSinLomb.data,day_unique(k)));
+    dataItaliaSenzaLomb(k,1)=sum(dataRegSinLomb.deceduti(index));
+    dataItaliaSenzaLomb(k,2)=sum(dataRegSinLomb.terapia_intensiva(index));
+    dataItaliaSenzaLomb(k,3)=sum(dataRegSinLomb.totale_ospedalizzati(index));
+    dataItaliaSenzaLomb(k,4)=sum(dataRegSinLomb.isolamento_domiciliare(index));
+    dataItaliaSenzaLomb(k,5)=sum(dataRegSinLomb.dimessi_guariti(index));
+    totaleCasiItaliaSenzaLomb(k,1)=sum(dataRegSinLomb.totale_casi(index));
+    
+    index = find(strcmp(dataRegLomb.data,day_unique(k)));
+    dataSoloLomb(k,1)=sum(dataRegLomb.deceduti(index));
+    dataSoloLomb(k,2)=sum(dataRegLomb.terapia_intensiva(index));
+    dataSoloLomb(k,3)=sum(dataRegLomb.totale_ospedalizzati(index));
+    dataSoloLomb(k,4)=sum(dataRegLomb.isolamento_domiciliare(index));
+    dataSoloLomb(k,5)=sum(dataRegLomb.dimessi_guariti(index));
+    totaleCasiSoloLomb(k,1)=sum(dataRegLomb.totale_casi(index));    
+end
+    
+
+
+
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto Lombardia - resto Italia: Casi giornalieri')
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(time_num(2:end),diff(totaleCasiItaliaSenzaLomb),'.-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(time_num(2:end),diff(totaleCasiSoloLomb),'.-r','markersize',14);
+
+font_size=8;
+  ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ylimi=get(gca,'ylim');
+        set(gca,'ylim',([0,ylimi(2)]));
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero nuovi casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+        set(gca,'xlim',([time_num(1) time_num(end)]));
+        set(gca,'XTick',[time_num(1):3:time_num(end)]);
+        set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)],'dd mmm'));
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        l=legend([a,b],'Resto d''Italia', 'Lombardia');
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+ 
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_1_casiGiornalieri.PNG']);
+close(gcf);
+       
+
+
+
+
+% deceduti
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto Lombardia - resto Italia: Deceduti giornalieri')
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(time_num(2:end),diff(dataItaliaSenzaLomb(:,1)),'.-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(time_num(2:end),diff(dataSoloLomb(:,1)),'.-r','markersize',14);
+
+font_size=8;
+  ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ylimi=get(gca,'ylim');
+        set(gca,'ylim',([0,ylimi(2)]));
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero deceduti giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+        set(gca,'xlim',([time_num(1) time_num(end)]));
+        set(gca,'XTick',[time_num(1):3:time_num(end)]);
+        set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)],'dd mmm'));
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        l=legend([a,b],'Resto d''Italia', 'Lombardia');
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+ 
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_2_decedutiGiornalieri.PNG']);
+close(gcf);
+       
+
+
+
+% terapie intensive
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto Lombardia - resto Italia: Terapie intensive')
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(time_num(1:end),(dataItaliaSenzaLomb(:,2)),'.-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(time_num(1:end),(dataSoloLomb(:,2)),'.-r','markersize',14);
+
+font_size=8;
+  ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ylimi=get(gca,'ylim');
+        set(gca,'ylim',([0,ylimi(2)]));
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero terapie intensive', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+        set(gca,'xlim',([time_num(1) time_num(end)]));
+        set(gca,'XTick',[time_num(1):3:time_num(end)]);
+        set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)],'dd mmm'));
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        l=legend([a,b],'Resto d''Italia', 'Lombardia');
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+ 
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_3_terapieIntensive.PNG']);
+close(gcf);
+       
+
+
+% ospedalizzati
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto Lombardia - resto Italia: Totale Ospedalizzati')
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(time_num(1:end),(dataItaliaSenzaLomb(:,3)),'.-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(time_num(1:end),(dataSoloLomb(:,3)),'.-r','markersize',14);
+
+font_size=8;
+  ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ylimi=get(gca,'ylim');
+        set(gca,'ylim',([0,ylimi(2)]));
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero ospedalizzati', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+        set(gca,'xlim',([time_num(1) time_num(end)]));
+        set(gca,'XTick',[time_num(1):3:time_num(end)]);
+        set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)],'dd mmm'));
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        l=legend([a,b],'Resto d''Italia - no Lombardia', 'Marche');
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+ 
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_3_opedalizzati.PNG']);
+close(gcf);
+     
+
+
+
+% isolamento domiciliare
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto Lombardia - resto Italia: Isolamento domiciliare')
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(time_num(1:end),(dataItaliaSenzaLomb(:,4)),'.-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(time_num(1:end),(dataSoloLomb(:,4)),'.-r','markersize',14);
+
+font_size=8;
+  ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ylimi=get(gca,'ylim');
+        set(gca,'ylim',([0,ylimi(2)]));
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Numero in isolamento domiciliare', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+        set(gca,'xlim',([time_num(1) time_num(end)]));
+        set(gca,'XTick',[time_num(1):3:time_num(end)]);
+        set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)],'dd mmm'));
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        l=legend([a,b],'Resto d''Italia', 'Lombardia');
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+ 
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_4_isolamento_domiciliare.PNG']);
+close(gcf);
+     
+
+
+
+% dimessi guariti
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto Lombardia - resto Italia: Dimessi-guariti')
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(time_num(1:end),(dataItaliaSenzaLomb(:,5)),'.-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(time_num(1:end),(dataSoloLomb(:,5)),'.-r','markersize',14);
+
+font_size=8;
+  ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ylimi=get(gca,'ylim');
+        set(gca,'ylim',([0,ylimi(2)]));
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Dimessi-guariti', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+        set(gca,'xlim',([time_num(1) time_num(end)]));
+        set(gca,'XTick',[time_num(1):3:time_num(end)]);
+        set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)],'dd mmm'));
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        l=legend([a,b],'Resto d''Italia', 'Lombardia');
+        set(l,'Location','northwest')
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+ 
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_5_dimessi_guariti.PNG']);
+close(gcf);
+
+
+
+% attualmente positivi
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto Lombardia - resto Italia: attualmente positivi')
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(time_num(1:end),(dataItaliaSenzaLomb(:,3)+dataItaliaSenzaLomb(:,4)),'.-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(time_num(1:end),(dataSoloLomb(:,3)+dataSoloLomb(:,4)),'.-r','markersize',14);
+
+font_size=8;
+  ax = gca;
+        code_axe = get(id_f, 'CurrentAxes');
+        set(code_axe, 'FontName', 'Verdana');
+        set(code_axe, 'FontSize', font_size);
+        ylimi=get(gca,'ylim');
+        set(gca,'ylim',([0,ylimi(2)]));
+        ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        ylabel('Attualmente positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+        set(gca,'xlim',([time_num(1) time_num(end)]));
+        set(gca,'XTick',[time_num(1):3:time_num(end)]);
+        set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)],'dd mmm'));
+        set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+        ax.FontSize = font_size;
+        l=legend([a,b],'Resto d''Italia', 'Lombardia');
+        set(l,'Location','northwest')
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+ 
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_6_attualmente_positivi.PNG']);
+close(gcf);
+
+return
+% 
+
+% %% GRAFICI Italia senza lombardia
+% mediamobile_yn=0;
+% index_tot=[];
+% 
+% for reg=1:size(regioni_tot,1)
+%     try
+%         regione = char(regioni_tot(reg,1));
+%         index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+%         time_num = fix(datenum(dataReg.data(index)));
+%         index_tot=[index;index_tot];
+%     end
+% end
+% index=index_tot;       
+%         
+% regione = 'Italia senza Lombardia';        
+% 
+%         
+%         
+%         
+%         
+%         
+% 
+% %% bars Nazionale
+% day_unique = unique(dataReg.data);
+% time_num=datenum(day_unique);
+% data=NaN(size(day_unique,1),5);
+% totaleCasi=NaN(size(day_unique,1),1);
+% for k = 1: size(day_unique,1)
+%     index = find(strcmp(dataReg.data,day_unique(k)));
+%     data(k,1)=sum(dataReg.deceduti(index));
+%     data(k,2)=sum(dataReg.terapia_intensiva(index));
+%     data(k,3)=sum(dataReg.totale_ospedalizzati(index));
+%     data(k,4)=sum(dataReg.isolamento_domiciliare(index));
+%     data(k,5)=sum(dataReg.dimessi_guariti(index));
+%     totaleCasi(k,1)=sum(dataReg.totale_casi(index));
+%     
+% end
+% 
+% 
+% 
+% 
+% %% bars Nazionale
+% day_unique = unique(dataReg.data);
+% time_num=datenum(day_unique);
+% data=NaN(size(day_unique,1),5);
+% totaleCasi=NaN(size(day_unique,1),1);
+% for k = 1: size(day_unique,1)
+%     index = find(strcmp(dataReg.data,day_unique(k)));
+%     data(k,1)=sum(dataReg.deceduti(index));
+%     data(k,2)=sum(dataReg.terapia_intensiva(index));
+%     data(k,3)=sum(dataReg.totale_ospedalizzati(index));
+%     data(k,4)=sum(dataReg.isolamento_domiciliare(index));
+%     data(k,5)=sum(dataReg.dimessi_guariti(index));
+%     totaleCasi(k,1)=sum(dataReg.totale_casi(index));
+%     
+% end
+% 
+% 
+% %% bar stacked: totale casi
+% datetickFormat = 'dd mmm';
+% figure;
+% id_f = gcf;
+% regione = 'Italia';
+% set(id_f, 'Name', [regione ': dati cumulati']);
+% title(sprintf([regione ': dati cumulati\\fontsize{5}\n ']))
+% 
+% set(gcf,'NumberTitle','Off');
+% set(gcf,'Position',[26 79 967 603]);
+% hold on
+% grid minor; grid on
+% 
+% 
+% bbb=[data(:,1)';data(:,2)';data(:,3)'-data(:,2)';data(:,4)';data(:,5)'];
+% 
+% bbbar = bar(bbb','stacked'); hold on
+% set(bbbar(1),'FaceColor',[0.400000005960464 0.400000005960464 0.400000005960464]);
+% set(bbbar(2),'FaceColor',[1 0 0]);
+% set(bbbar(3),'FaceColor',[0.929411768913269 0.694117665290833 0.125490203499794]);
+% set(bbbar(4),'FaceColor',[1 1 0.400000005960464]);
+% set(bbbar(5),'FaceColor',[0 0.800000011920929 0.200000002980232]);
+% 
+% if ismac
+%     font_size = 9;
+% else
+%     font_size = 6.5;
+% end
+% 
+% set(gca,'XTick',1:2:size(time_num,1));
+% set(gca,'XTickLabel',datestr(time_num(1:2:end),'dd mmm'));
+% set(gca,'XLim',[0.5,size(time_num,1)+0.5]);
+% set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+% ax=gca;
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+% ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+% 
+% ax = gca;
+% set(ax, 'FontName', 'Verdana');
+% set(ax, 'FontSize', font_size);
+% 
+% l=legend([bbbar(5), bbbar(4),bbbar(3),bbbar(2),bbbar(1)],'Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
+% set(l,'Location','northwest')
+% % overlap copyright info
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+%     'String',{['Fonte: https://github.com/pcm-dpc']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% annotation(gcf,'textbox',...
+%     [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+%     'String',{'https://covidguard.github.io/#covid-19-italia'},...
+%     'LineStyle','none',...
+%     'HorizontalAlignment','left',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off');
+% 
+% 
+% 
+% % %     cd([WORKroot,'/assets/img/regioni']);
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_bars_cumulati.PNG']);
+% close(gcf);
+% 
+% 
+% 
+% %%
+% data_interp=[];
+% % interpolazione di ogni serie
+% 
+% %%
+% data_interp=[];
+% % interpolazione di ogni serie
+% 
+% % 2: terapia_intensiva
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:size(data,1)
+%     fprintf(fout,'%f;%d\n',time_num(i),data(i,2));
+% end
+% fclose(fout);
+% %     command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+% %     [t,data_interp(:,2),a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% %
+% command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+% [t,data_interp(:,2),a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% 
+% 
+% 
+% % 1: deceduti
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:size(data,1)
+%     fprintf(fout,'%f;%d\n',time_num(i),data(i,1));
+% end
+% fclose(fout);
+% %     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% %     [t,data_interp(:,1),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+% [t_temp,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% [t_1, idx1]= intersect(t_temp, t);
+% data_interp(:,1)=data_interpTemp(idx1);
+% 
+% 
+% % 3: ospedalizzati
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:size(data,1)
+%     fprintf(fout,'%f;%d\n',time_num(i),data(i,3));
+% end
+% fclose(fout);
+% %     command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+% %     [t,data_interp(:,3),a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+% [t,data_interp(:,3),a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% 
+% % 4: isolamento_domiciliare
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:size(data,1)
+%     fprintf(fout,'%f;%d\n',time_num(i),data(i,4));
+% end
+% fclose(fout);
+% %     command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+% %     [t,data_interp(:,4),a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+% [t,data_interp(:,4),a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% 
+% 
+% % 5: dimessiGuariti
+% fout=fopen('testIn_gauss.txt','wt');
+% for i=1:size(data,1)
+%     fprintf(fout,'%f;%d\n',time_num(i),data(i,5));
+% end
+% fclose(fout);
+% %     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% %     [t,data_interp(:,5),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+% [t_temp,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% [t_1, idx1]= intersect(t_temp, t);
+% data_interp(:,5)=data_interpTemp(idx1);
+% 
+% 
+% 
+% % 6: CasiTotali
+% fout=fopen('testIn_gauss.txt','wt');
+% data6= [data(:,1)'+data(:,3)'+data(:,4)'+data(:,5)']';
+% for i=1:size(data,1)
+%     fprintf(fout,'%f;%d\n',time_num(i),data6(i,1));
+% end
+% fclose(fout);
+% %     command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+% %     [t,data_interp(:,6),a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% 
+% command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+% [t_temp,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% [t_1, idx1]= intersect(t_temp, t);
+% data_interp(:,6)=data_interpTemp(idx1);
+% 
+% 
+% 
+% 
+% 
+% t_min = time_num(1);
+% t_max = time_num(end)+60;
+% 
+% idx=t_1>=t_min & t_1<=t_max;
+% 
+% 
+% datetickFormat = 'dd mmm';
+% figure;
+% id_f = gcf;
+% regione = 'Italia senza Lombardia';
+% set(id_f, 'Name', [regione ': dati cumulati']);
+% title(sprintf([regione ': dati cumulati\\fontsize{5}\n ']))
+% 
+% set(gcf,'NumberTitle','Off');
+% set(gcf,'Position',[26 79 967 603]);
+% hold on
+% grid minor; grid on
+% 
+% bbb1=[data_interp(idx,1)';data_interp(idx,2)';data_interp(idx,3)';data_interp(idx,4)';data_interp(idx,5)';data_interp(idx,6)';data_interp(idx,3)'+data_interp(idx,4)'+data_interp(idx,2)'];
+% bbb1(:,1:size(time_num,1)-3)=NaN;
+% bbbar1 = plot(bbb1','--'); hold on
+% set(bbbar1(1),'Color',[0.400000005960464 0.400000005960464 0.400000005960464],'linewidth',1);
+% set(bbbar1(2),'Color',[1 0 0],'linewidth',1);
+% set(bbbar1(3),'Color',[0.929411768913269 0.694117665290833 0.125490203499794],'linewidth',1);
+% set(bbbar1(4),'Color',[0 0.447058826684952 0.74117648601532],'linewidth',1);
+% set(bbbar1(5),'Color',[0 0.800000011920929 0.200000002980232],'linewidth',1);
+% set(bbbar1(6),'Color',[0.23137255012989 0.443137258291245 0.337254911661148],'linewidth',1);
+% set(bbbar1(7),'Color',[0.301960796117783 0.745098054409027 0.933333337306976],'linewidth',1);
+% 
+% hold on
+% 
+% bbb=[data(:,1)';data(:,2)';data(:,3)';data(:,4)';data(:,5)';data6';data(:,3)'+data(:,4)'+data(:,2)'];
+% 
+% bbbar = plot(bbb','-'); hold on
+% set(bbbar(1),'Color',[0.400000005960464 0.400000005960464 0.400000005960464],'linewidth',3);
+% set(bbbar(2),'Color',[1 0 0],'linewidth',3);
+% set(bbbar(3),'Color',[0.929411768913269 0.694117665290833 0.125490203499794],'linewidth',3);
+% set(bbbar(4),'Color',[0 0.447058826684952 0.74117648601532],'linewidth',3);
+% set(bbbar(5),'Color',[0 0.800000011920929 0.200000002980232],'linewidth',3);
+% set(bbbar(6),'Color',[0.23137255012989 0.443137258291245 0.337254911661148],'linewidth',3);
+% set(bbbar(7),'Color',[0.301960796117783 0.745098054409027 0.933333337306976],'linewidth',3);
+% 
+% 
+% 
+% if ismac
+%     font_size = 9;
+% else
+%     font_size = 6.5;
+% end
+% 
+% fidx=find(idx);
+% set(gca,'XTick',1:3:size(t(idx),1));
+% set(gca,'XTickLabel',datestr(t(fidx(1):3:fidx(end)),'dd mmm'));
+% set(gca,'XLim',[0.5,size(t(idx),1)+0.5]);
+% set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+% ax=gca;
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+% ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+% 
+% ax = gca;
+% set(ax, 'FontName', 'Verdana');
+% set(ax, 'FontSize', font_size);
+% 
+% l=legend([bbbar(6),bbbar(7),bbbar(5), bbbar(4),bbbar(3),bbbar(2),bbbar(1)],'Casi Totali','Attualmente positivi','Dimessi Guariti','Isolamento domiciliare', 'Ricoverati con sintomi', 'Terapia intensiva','Deceduti');
+% set(l,'Location','northwest')
+% % overlap copyright info
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+%     'String',{['Fonte: https://github.com/pcm-dpc']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% annotation(gcf,'textbox',...
+%     [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+%     'String',{'https://covidguard.github.io/#covid-19-italia'},...
+%     'LineStyle','none',...
+%     'HorizontalAlignment','left',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off');
+% 
+% 
+% 
+% % %     cd([WORKroot,'/assets/img/regioni']);
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_linee_cumulati.PNG']);
+% close(gcf);
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% regioni_tot=regioni_totconLomb;
 
 
 %% correlazione casi-tamponi
