@@ -28,7 +28,7 @@ if flag_download_1
     
     % analise report pdf
     fileDir = dir(sprintf('%s/_json/Report_PDF/*.pdf',WORKroot));
-    for i = size(fileDir,1): size(fileDir,1)
+    for i = size(fileDir,1)-2: size(fileDir,1)
         command = sprintf('cd %s/_json/Report_PDF && extractPDFText %s',WORKroot, fileDir(i).name);
         system(command);
     end

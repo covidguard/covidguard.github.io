@@ -165,6 +165,7 @@ end
 
 % add custom country
 customC_list = {'Brazil'; 'Russia';'China'};
+customC_list = {'Italy'; 'Sweden'};
 
 for reg = 1:size(customC_list,1)    
     regione = char(customC_list{reg});    

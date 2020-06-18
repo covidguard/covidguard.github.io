@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="it" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ og: http://ogp.me/ns# rdfs: http://www.w3.org/2000/01/rdf-schema# sioc: http://rdfs.org/sioc/ns# sioct: http://rdfs.org/sioc/types# skos: http://www.w3.org/2004/02/skos/core# xsd: http://www.w3.org/2001/XMLSchema#">
+<head>
+  <link rel="profile" href="http://www.w3.org/1999/xhtml/vocab" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="https://www.interno.gov.it/sites/all/themes/interno_theme/favicon.ico" type="image/vnd.microsoft.icon" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link rel="canonical" href="https://www.interno.gov.it/it" />
+<link rel="shortlink" href="https://www.interno.gov.it/it" />
+<meta property="og:site_name" content="Ministero dell‘Interno" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.interno.gov.it/it" />
+<meta property="og:title" content="Ministero dell‘Interno" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:url" content="https://www.interno.gov.it/it" />
+<meta name="twitter:title" content="Ministero dell‘Interno" />
+  <title>Pagina non trovata | Ministero dell‘Interno</title>
+  <style type="text/css" media="all">
+@import url("https://www.interno.gov.it/modules/system/system.menus.css?qc4861");
+@import url("https://www.interno.gov.it/modules/system/system.messages.css?qc4861");
+@import url("https://www.interno.gov.it/modules/system/system.theme.css?qc4861");
+</style>
+<style type="text/css" media="all">
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/simplenews/simplenews.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/date/date_api/date.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/date/date_popup/themes/datepicker.1.7.css?qc4861");
+@import url("https://www.interno.gov.it/modules/field/theme/field.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/google_analytics_reports/google_analytics_reports.css?qc4861");
+@import url("https://www.interno.gov.it/modules/node/node.css?qc4861");
+@import url("https://www.interno.gov.it/modules/user/user.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/views/css/views.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/ckeditor/css/ckeditor.css?qc4861");
+</style>
+<style type="text/css" media="all">
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/ctools/css/ctools.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/panels/css/panels.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/eu_cookie_compliance/css/eu_cookie_compliance.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/modules/contrib/addtoany/addtoany.css?qc4861");
+</style>
+<style type="text/css" media="all">
+<!--/*--><![CDATA[/*><!--*/
+#sliding-popup.sliding-popup-bottom,#sliding-popup.sliding-popup-bottom .eu-cookie-withdraw-banner,.eu-cookie-withdraw-tab{background:#0779BF;}#sliding-popup.sliding-popup-bottom.eu-cookie-withdraw-wrapper{background:transparent}#sliding-popup .popup-content #popup-text h1,#sliding-popup .popup-content #popup-text h2,#sliding-popup .popup-content #popup-text h3,#sliding-popup .popup-content #popup-text p,.eu-cookie-compliance-secondary-button,.eu-cookie-withdraw-tab{color:#ffffff !important;}.eu-cookie-withdraw-tab{border-color:#ffffff;}.eu-cookie-compliance-more-button{color:#ffffff !important;}
+
+/*]]>*/-->
+</style>
+<style type="text/css" media="all">
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/formalize.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/system.base.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/meanmenu.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/new.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/interno-twitter.css?qc4861");
+</style>
+<style type="text/css" media="all">
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/alpha-reset.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/alpha-mobile.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/alpha-alpha.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/omega/css/omega-branding.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/omega/css/omega-menu.css?qc4861");
+</style>
+
+<!--[if lte IE 8]>
+<link type="text/css" rel="stylesheet" href="https://www.interno.gov.it/sites/all/themes/interno_theme/css/ie-lte-8.css?qc4861" media="all" />
+<![endif]-->
+
+<!--[if lte IE 7]>
+<link type="text/css" rel="stylesheet" href="https://www.interno.gov.it/sites/all/themes/interno_theme/css/ie-lte-7.css?qc4861" media="all" />
+<![endif]-->
+<style type="text/css" media="all">
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/global.css?qc4861");
+</style>
+
+<!--[if (lt IE 9)&(!IEMobile)]>
+<style type="text/css" media="all">
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/interno-theme-alpha-default.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/interno-theme-alpha-default-normal.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/grid/alpha_default/normal/alpha-default-normal-16.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/grid/alpha_default/normal/alpha-default-normal-12.css?qc4861");
+</style>
+<![endif]-->
+
+<!--[if gte IE 9]><!-->
+<style type="text/css" media="all and (min-width: 780px), all and (max-width: 1024px) and (min-width: 1024px) and (orientation:landscape)">
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/interno-theme-alpha-default.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/interno-theme-alpha-default-normal.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/grid/alpha_default/normal/alpha-default-normal-16.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/grid/alpha_default/normal/alpha-default-normal-12.css?qc4861");
+</style>
+<!--<![endif]-->
+
+<!--[if gte IE 9]><!-->
+<style type="text/css" media="all and (min-width: 1220px)">
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/interno-theme-alpha-default.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/interno_theme/css/interno-theme-alpha-default-wide.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/grid/alpha_default/wide/alpha-default-wide-16.css?qc4861");
+@import url("https://www.interno.gov.it/sites/all/themes/omega/alpha/css/grid/alpha_default/wide/alpha-default-wide-12.css?qc4861");
+</style>
+<!--<![endif]-->
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+window.jQuery || document.write("<script src='/sites/all/modules/contrib/jquery_update/replace/jquery/1.7/jquery.min.js'>\x3C/script>")
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://www.interno.gov.it/misc/jquery-extend-3.4.0.js?v=1.7.2"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/misc/jquery.once.js?v=1.2"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/misc/drupal.js?qc4861"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/modules/contrib/waypoints/waypoints.min.js?v=1.0.2"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/modules/contrib/eu_cookie_compliance/js/jquery.cookie-1.4.1.min.js?v=1.4.1"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/modules/contrib/google_analytics_reports/google_analytics_reports.js?qc4861"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/default/files/languages/it_7cc4-YEFtze2ca6kXnLM0cLg07uPxugZzVEPNO4NtVI.js?qc4861"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/modules/contrib/responsive_menus/styles/meanMenu/jquery.meanmenu.min.js?qc4861"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/modules/contrib/responsive_menus/styles/meanMenu/responsive_menus_mean_menu.js?qc4861"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/modules/contrib/google_analytics/googleanalytics.js?qc4861"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-1652514-1", {"cookieDomain":"auto"});ga("set", "page", "/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer);ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/themes/interno_theme/js/dynamics.js?qc4861"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/themes/interno_theme/js/maps.js?qc4861"></script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/themes/omega/omega/js/omega-mediaqueries.js?qc4861"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"it\/","ajaxPageState":{"theme":"interno_theme","theme_token":"zJmbtQa5E1qOaiZjALbIXT2kzwsSSXpDaAP3a5IdbmM","js":{"0":1,"1":1,"sites\/all\/modules\/contrib\/eu_cookie_compliance\/js\/eu_cookie_compliance.js":1,"\/\/code.jquery.com\/jquery-1.7.2.min.js":1,"2":1,"misc\/jquery-extend-3.4.0.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/contrib\/waypoints\/waypoints.min.js":1,"sites\/all\/modules\/contrib\/eu_cookie_compliance\/js\/jquery.cookie-1.4.1.min.js":1,"sites\/all\/modules\/contrib\/google_analytics_reports\/google_analytics_reports.js":1,"public:\/\/languages\/it_7cc4-YEFtze2ca6kXnLM0cLg07uPxugZzVEPNO4NtVI.js":1,"sites\/all\/modules\/contrib\/responsive_menus\/styles\/meanMenu\/jquery.meanmenu.min.js":1,"sites\/all\/modules\/contrib\/responsive_menus\/styles\/meanMenu\/responsive_menus_mean_menu.js":1,"sites\/all\/modules\/contrib\/google_analytics\/googleanalytics.js":1,"3":1,"sites\/all\/themes\/interno_theme\/js\/dynamics.js":1,"sites\/all\/themes\/interno_theme\/js\/maps.js":1,"sites\/all\/themes\/omega\/omega\/js\/omega-mediaqueries.js":1},"css":{"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"sites\/all\/modules\/contrib\/simplenews\/simplenews.css":1,"sites\/all\/modules\/contrib\/date\/date_api\/date.css":1,"sites\/all\/modules\/contrib\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"sites\/all\/modules\/contrib\/google_analytics_reports\/google_analytics_reports.css":1,"modules\/node\/node.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/contrib\/views\/css\/views.css":1,"sites\/all\/modules\/contrib\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/contrib\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/contrib\/panels\/css\/panels.css":1,"sites\/all\/modules\/contrib\/eu_cookie_compliance\/css\/eu_cookie_compliance.css":1,"sites\/all\/modules\/contrib\/addtoany\/addtoany.css":1,"0":1,"sites\/all\/themes\/interno_theme\/css\/formalize.css":1,"sites\/all\/themes\/interno_theme\/css\/system.base.css":1,"sites\/all\/themes\/interno_theme\/css\/meanmenu.css":1,"sites\/all\/themes\/interno_theme\/css\/new.css":1,"sites\/all\/themes\/interno_theme\/css\/interno-twitter.css":1,"sites\/all\/themes\/omega\/alpha\/css\/alpha-reset.css":1,"sites\/all\/themes\/omega\/alpha\/css\/alpha-mobile.css":1,"sites\/all\/themes\/omega\/alpha\/css\/alpha-alpha.css":1,"sites\/all\/themes\/omega\/omega\/css\/omega-branding.css":1,"sites\/all\/themes\/omega\/omega\/css\/omega-menu.css":1,"sites\/all\/themes\/interno_theme\/css\/ie-lte-8.css":1,"sites\/all\/themes\/interno_theme\/css\/ie-lte-7.css":1,"sites\/all\/themes\/interno_theme\/css\/global.css":1,"ie::normal::sites\/all\/themes\/interno_theme\/css\/interno-theme-alpha-default.css":1,"ie::normal::sites\/all\/themes\/interno_theme\/css\/interno-theme-alpha-default-normal.css":1,"ie::normal::sites\/all\/themes\/omega\/alpha\/css\/grid\/alpha_default\/normal\/alpha-default-normal-16.css":1,"ie::normal::sites\/all\/themes\/omega\/alpha\/css\/grid\/alpha_default\/normal\/alpha-default-normal-12.css":1,"normal::sites\/all\/themes\/interno_theme\/css\/interno-theme-alpha-default.css":1,"normal::sites\/all\/themes\/interno_theme\/css\/interno-theme-alpha-default-normal.css":1,"sites\/all\/themes\/omega\/alpha\/css\/grid\/alpha_default\/normal\/alpha-default-normal-16.css":1,"sites\/all\/themes\/omega\/alpha\/css\/grid\/alpha_default\/normal\/alpha-default-normal-12.css":1,"wide::sites\/all\/themes\/interno_theme\/css\/interno-theme-alpha-default.css":1,"wide::sites\/all\/themes\/interno_theme\/css\/interno-theme-alpha-default-wide.css":1,"sites\/all\/themes\/omega\/alpha\/css\/grid\/alpha_default\/wide\/alpha-default-wide-16.css":1,"sites\/all\/themes\/omega\/alpha\/css\/grid\/alpha_default\/wide\/alpha-default-wide-12.css":1}},"jcarousel":{"ajaxPath":"\/it\/jcarousel\/ajax\/views"},"urlIsAjaxTrusted":{"\/it\/search":true},"better_exposed_filters":{"views":{"blocchi_banner":{"displays":{"block_2":{"filters":[]}}}}},"googleAnalyticsReportsAjaxUrl":"\/it\/google-analytics-reports\/ajax","responsive_menus":[{"selectors":"#zone-menu","container":"body","trigger_txt":"\u003Cspan \/\u003E\u003Cspan \/\u003E\u003Cspan \/\u003E","close_txt":"X","close_size":"18px","position":"right","media_size":"780","show_children":"1","expand_children":"1","expand_txt":"+","contract_txt":"-","remove_attrs":"1","responsive_menus_style":"mean_menu"}],"eu_cookie_compliance":{"popup_enabled":1,"popup_agreed_enabled":0,"popup_hide_agreed":0,"popup_clicking_confirmation":0,"popup_scrolling_confirmation":false,"popup_html_info":"\u003Cdiv\u003E\n  \u003Cdiv class=\u0022popup-content info\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022\u003E\n      \u003Ch2\u003EQuesto sito utilizza cookies tecnici e di terze parti per funzionalit\u00e0 quali la condivisione sui social network e\/o la visualizzazione di media. Se non acconsenti all\u0027utilizzo dei cookie di terze parti, alcune di queste funzionalit\u00e0 potrebbero essere non disponibili. Per maggiori informazioni consulta la privacy policy\u003C\/h2\u003E              \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button\u0022\u003ENo, voglio maggiori informazioni\u003C\/button\u003E\n          \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022agree-button eu-cookie-compliance-default-button\u0022\u003EOK, Accetto\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","use_mobile_message":false,"mobile_popup_html_info":"\u003Cdiv\u003E\n  \u003Cdiv class=\u0022popup-content info\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022\u003E\n                    \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button\u0022\u003ENo, voglio maggiori informazioni\u003C\/button\u003E\n          \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022agree-button eu-cookie-compliance-default-button\u0022\u003EOK, Accetto\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E\n","mobile_breakpoint":"768","popup_html_agreed":"\u003Cdiv\u003E\n  \u003Cdiv class=\u0022popup-content agreed\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022\u003E\n      \u003Ch2\u003EThank you for accepting cookies\u003C\/h2\u003E\u003Cp\u003EYou can now hide this message or find out more about cookies.\u003C\/p\u003E    \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022hide-popup-button eu-cookie-compliance-hide-button\u0022\u003ENascondi\u003C\/button\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button-thank-you\u0022 \u003EPi\u00f9 informazioni\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","popup_use_bare_css":false,"popup_height":"auto","popup_width":"100%","popup_delay":1000,"popup_link":"\/it\/amministrazione-trasparente\/altri-contenuti-dati-ulteriori\/privacy","popup_link_new_window":0,"popup_position":null,"popup_language":"it","store_consent":false,"better_support_for_screen_readers":0,"reload_page":0,"domain":"","popup_eu_only_js":0,"cookie_lifetime":100,"cookie_session":false,"disagree_do_not_show_popup":0,"method":"default","whitelisted_cookies":"","withdraw_markup":"\u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-tab\u0022\u003EPrivacy settings\u003C\/button\u003E\n\u003Cdiv class=\u0022eu-cookie-withdraw-banner\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022\u003E\n      \u003Ch2\u003EWe use cookies on this site to enhance your user experience\u003C\/h2\u003E\n\u003Cp\u003EYou have given your consent for us to set cookies.\u003C\/p\u003E\n    \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-button\u0022\u003EWithdraw consent\u003C\/button\u003E\n    \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E\n","withdraw_enabled":false},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"},"omega":{"layouts":{"primary":"normal","order":["normal","wide"],"queries":{"normal":"all and (min-width: 780px), all and (max-width: 1024px) and (min-width: 1024px) and (orientation:landscape)","wide":"all and (min-width: 1220px)"}}}});
+//--><!]]>
+</script>
+</head>
+<body class="html not-front not-logged-in no-sidebars page-sites page-sites-default page-sites-default-files page-sites-default-files-modulistica page-sites-default-files-modulistica-monitoraggio-serviz-controllo-giornaliero-17062020pdf i18n-it context-sites">
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible element-focusable">Salta al contenuto principale</a>
+  </div>
+    <div class="page clearfix" id="page">
+      
+<div id="pre-header">
+    <div class="container-16">
+        <div class="grid-16">
+        <a href="http://www.governo.it">Governo Italiano</a>
+        </div>
+    </div>
+    <div class="clearfix" ></div>
+</div>
+<div id="section-header" class="section section-header">
+  <div id="zone-branding-wrapper" class="zone-wrapper zone-branding-wrapper clearfix">  
+  <div id="zone-branding" class="zone zone-branding clearfix container-16">
+    <div class="grid-8 region region-branding" id="region-branding">
+  <div class="region-inner region-branding-inner">
+    <div class="branding-data clearfix">
+      <div class="logo-img">
+          <a href="/"><img src="/sites/all/themes/interno_theme/logo.svg" alt="Ministero dell'Interno" title="Ministero dell'Interno" /></a>
+      </div>
+
+                  <div class="site-name-slogan">
+        
+        <h1 class="site-title">Ministero dell&rsquo;Interno</h1>
+
+                      </div>
+          </div>
+      </div>
+</div><div class="grid-4 region region-branding-side2" id="region-branding-side2">
+  <div class="region-inner region-branding-side2-inner">
+    <div class="block block-views block--exp-ricerca-page block-views-exp-ricerca-page odd block-without-title" id="block-views-exp-ricerca-page">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <form action="/it/search" method="get" id="views-exposed-form-ricerca-page" accept-charset="UTF-8"><div><div class="views-exposed-form">
+  <div class="views-exposed-widgets clearfix">
+          <div id="edit-search-api-views-fulltext-wrapper" class="views-exposed-widget views-widget-filter-search_api_views_fulltext">
+                  <label for="edit-search-api-views-fulltext">
+            Cerca nel sito          </label>
+                        <div class="views-widget">
+          <div class="form-item form-type-textfield form-item-search-api-views-fulltext">
+ <input class="required" type="text" id="edit-search-api-views-fulltext" name="search_api_views_fulltext" value="cerca nel sito..." size="30" maxlength="128" />
+</div>
+        </div>
+              </div>
+                    <div class="views-exposed-widget views-submit-button">
+      <input type="submit" id="edit-submit-ricerca" name="Cerca" value="Cerca" class="form-submit" />    </div>
+      </div>
+</div>
+</div></form>    </div>
+  </div>
+</div>
+  </div>
+</div>  </div>
+</div>
+<div class="flag_container clearfix">
+                <div class="green clearfix"></div>
+                <div class="white clearfix"></div>
+                <div class="red clearfix"></div>
+            </div><div id="zone-menu-wrapper" class="zone-wrapper zone-menu-wrapper clearfix">  
+  <div id="zone-menu" class="zone zone-menu clearfix container-16">
+    <div class="grid-16 region region-menu" id="region-menu">
+  <div class="region-inner region-menu-inner">
+          </div>
+</div>
+  </div>
+</div><div id="zone-header-wrapper" class="zone-wrapper zone-header-wrapper clearfix">  
+  <div id="zone-header" class="zone zone-header clearfix container-12">
+    <div class="grid-12 region region-header-first" id="region-header-first">
+  <div class="region-inner region-header-first-inner">
+    <div class="block block-blockify block-blockify-breadcrumb block-blockify-blockify-breadcrumb odd block-without-title" id="block-blockify-blockify-breadcrumb">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <h2 class="element-invisible">Tu sei qui</h2><div class="breadcrumb">Pagina non trovata</div>    </div>
+  </div>
+</div>
+  </div>
+</div>  </div>
+</div></div>    
+      <div id="section-content" class="section section-content">
+  <div id="zone-content-wrapper" class="zone-wrapper zone-content-wrapper clearfix">  
+  <div id="zone-content" class="zone zone-content clearfix container-16">    
+        
+        <div class="grid-16 region region-content" id="region-content">
+  <div class="region-inner region-content-inner">
+    <a id="main-content"></a>
+                        <div class="block block-system block-main block-system-main odd block-without-title" id="block-system-main">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      La pagina richiesta "/it/sites/default/files/modulistica/monitoraggio_serviz_controllo_giornaliero_17.06.2020.pdf" non è stata trovata.    </div>
+  </div>
+</div>
+      </div>
+</div>  </div>
+</div><div id="zone-postscript-wrapper" class="zone-wrapper zone-postscript-wrapper clearfix">  
+  <div id="zone-postscript" class="zone zone-postscript clearfix container-12">
+    <div class="grid-2 region region-postscript-second" id="region-postscript-second">
+  <div class="region-inner region-postscript-second-inner">
+    <div class="block block-menu-block block-2 block-menu-block-2 odd" id="block-menu-block-2">
+  <div class="block-inner clearfix">
+              <h2 class="block-title">Ministero</h2>
+            
+    <div class="content clearfix">
+      <div class="menu-block-wrapper menu-block-2 menu-name-main-menu parent-mlid-993 menu-level-1">
+  <ul class="menu"><li class="first leaf menu-mlid-6729 ministro"><a href="/it/ministero/luciana-lamorgese">Ministro</a></li>
+<li class="leaf has-children menu-mlid-6737 viceministri"><a href="/it/ministero/viceministri">Viceministri</a></li>
+<li class="leaf has-children menu-mlid-6746 sottosegretari"><a href="/it/ministero/sottosegretari">Sottosegretari</a></li>
+<li class="leaf has-children menu-mlid-1010 uffici-di-diretta-collaborazione"><a href="/it/ministero/uffici-diretta-collaborazione">Uffici di diretta collaborazione</a></li>
+<li class="leaf has-children menu-mlid-1012 dipartimenti"><a href="/it/ministero/dipartimenti" title="">Dipartimenti</a></li>
+<li class="leaf has-children menu-mlid-6625 commissari"><a href="/it/ministero/commissari">Commissari</a></li>
+<li class="leaf menu-mlid-6135 agenzia-nazionale-beni-sequestrati-e-confiscati-alla-criminalità-organizzata"><a href="/it/ministero/agenzia-nazionale-lamministrazione-e-destinazione-dei-beni-sequestrati-e-confiscati-alla-criminalita">Agenzia nazionale beni sequestrati e confiscati alla criminalità organizzata</a></li>
+<li class="leaf menu-mlid-5277 autorità-di-gestione-servizi-di-cura-infanzia-e-anziani-non-autosufficienti"><a href="/it/ministero/autorita-gestione-dei-servizi-cura-allinfanzia-e-anziani-non-autosufficienti">Autorità di gestione servizi di cura infanzia e anziani non autosufficienti</a></li>
+<li class="leaf menu-mlid-4779 struttura-di-missione-antimafia-sisma-2016"><a href="/it/ministero/struttura-missione-antimafia-sisma-2016">Struttura di missione antimafia sisma 2016</a></li>
+<li class="leaf menu-mlid-1685 uffici-sul-territorio"><a href="/it/ministero/uffici-territorio">Uffici sul territorio</a></li>
+<li class="leaf has-children menu-mlid-2635 osservatori"><a href="/it/ministero/osservatori">Osservatori</a></li>
+<li class="leaf has-children menu-mlid-1770 comitati"><a href="/it/ministero/comitati">Comitati</a></li>
+<li class="last leaf has-children menu-mlid-1027 istituti-di-formazione"><a href="/it/ministero/istituti-formazione">Istituti di formazione</a></li>
+</ul></div>
+    </div>
+  </div>
+</div>
+  </div>
+</div><div class="grid-2 region region-postscript-third" id="region-postscript-third">
+  <div class="region-inner region-postscript-third-inner">
+    <div class="block block-menu-block block-1 block-menu-block-1 odd" id="block-menu-block-1">
+  <div class="block-inner clearfix">
+              <h2 class="block-title">Temi</h2>
+            
+    <div class="content clearfix">
+      <div class="menu-block-wrapper menu-block-1 menu-name-main-menu parent-mlid-566 menu-level-1">
+  <ul class="menu"><li class="first leaf has-children menu-mlid-1589 sicurezza"><a href="/it/temi/sicurezza/argomenti#block-menu-menu-menu-tab-tema" title="">Sicurezza</a></li>
+<li class="leaf has-children menu-mlid-1588 immigrazione-e-asilo"><a href="/it/temi/immigrazione-e-asilo/argomenti#block-menu-menu-menu-tab-tema" title="">Immigrazione e asilo</a></li>
+<li class="leaf has-children menu-mlid-1591 territorio"><a href="/it/temi/territorio/argomenti#block-menu-menu-menu-tab-tema" title="">Territorio</a></li>
+<li class="leaf has-children menu-mlid-1592 cittadinanza-e-altri-diritti-civili"><a href="/it/temi/cittadinanza-e-altri-diritti-civili/argomenti#block-menu-menu-menu-tab-tema" title="">Cittadinanza e altri diritti civili</a></li>
+<li class="leaf has-children menu-mlid-1590 elezioni-e-referendum"><a href="/it/temi/elezioni-e-referendum/argomenti#block-menu-menu-menu-tab-tema" title="">Elezioni e referendum</a></li>
+<li class="last leaf has-children menu-mlid-1587 prevenzione-e-soccorso"><a href="/it/temi/prevenzione-e-soccorso/argomenti#block-menu-menu-menu-tab-tema" title="">Prevenzione e soccorso</a></li>
+</ul></div>
+    </div>
+  </div>
+</div>
+  </div>
+</div><div class="grid-2 region region-postscript-fourth" id="region-postscript-fourth">
+  <div class="region-inner region-postscript-fourth-inner">
+    <div class="block block-menu-block block-3 block-menu-block-3 odd" id="block-menu-block-3">
+  <div class="block-inner clearfix">
+              <h2 class="block-title">Servizi</h2>
+            
+    <div class="content clearfix">
+      <div class="menu-block-wrapper menu-block-3 menu-name-main-menu parent-mlid-646 menu-level-1">
+  <ul class="menu"><li class="first leaf has-children menu-mlid-4975 servizi-on-line"><a href="/it/servizi/servizi-line">Servizi on line</a></li>
+<li class="leaf has-children menu-mlid-1004 informazioni-utili"><a href="/it/servizi/informazioni-utili">Informazioni utili</a></li>
+<li class="leaf has-children menu-mlid-4976 accesso-ai-dati-e-altri-diritti-e-tutele"><a href="/it/servizi/accesso-dati-e-altri-diritti-e-tutele">Accesso ai dati e altri diritti e tutele</a></li>
+<li class="last leaf has-children menu-mlid-4980 modulistica,-norme-e-pareri"><a href="/it/servizi/modulistica-norme-e-pareri">Modulistica, norme e pareri</a></li>
+</ul></div>
+    </div>
+  </div>
+</div>
+  </div>
+</div><div class="grid-2 region region-postscript-fifth" id="region-postscript-fifth">
+  <div class="region-inner region-postscript-fifth-inner">
+    <div class="block block-menu-block block-4 block-menu-block-4 odd" id="block-menu-block-4">
+  <div class="block-inner clearfix">
+              <h2 class="block-title">Sala stampa</h2>
+            
+    <div class="content clearfix">
+      <div class="menu-block-wrapper menu-block-4 menu-name-main-menu parent-mlid-1599 menu-level-1">
+  <ul class="menu"><li class="first leaf menu-mlid-1078 comunicati-stampa"><a href="/it/sala-stampa/comunicati-stampa">Comunicati stampa</a></li>
+<li class="leaf menu-mlid-1084 interventi-e-interviste"><a href="/it/sala-stampa/interventi-e-interviste">Interventi e interviste</a></li>
+<li class="leaf menu-mlid-1105 notizie"><a href="/it/sala-stampa/notizie">Notizie</a></li>
+<li class="leaf has-children menu-mlid-1088 pubblicazioni"><a href="/it/sala-stampa/pubblicazioni">Pubblicazioni</a></li>
+<li class="leaf menu-mlid-1089 dati-e-statistiche"><a href="/it/sala-stampa/dati-e-statistiche">Dati e statistiche</a></li>
+<li class="leaf menu-mlid-1090 speciali"><a href="/it/sala-stampa/speciali">Speciali</a></li>
+<li class="leaf menu-mlid-6725 galleria-video"><a href="/it/galleria-video" title="">Galleria video</a></li>
+<li class="leaf menu-mlid-6726 galleria-immagini"><a href="/it/galleria-immagini">Galleria immagini</a></li>
+<li class="leaf menu-mlid-2276 campagne-di-comunicazione"><a href="/it/sala-stampa/campagne-comunicazione" title="">Campagne di comunicazione</a></li>
+<li class="leaf menu-mlid-2100 sindacato-ispettivo-parlamentare"><a href="/it/sala-stampa/sindacato-ispettivo-parlamentare">Sindacato ispettivo parlamentare</a></li>
+<li class="leaf menu-mlid-6627 consultazione-dati-elettorali-e-referendari"><a href="https://dait.interno.gov.it/elezioni" title="">Consultazione dati elettorali e referendari</a></li>
+<li class="leaf menu-mlid-1091 monitoraggio-accessi"><a href="/it/sala-stampa/monitoraggio-accessi">Monitoraggio accessi</a></li>
+<li class="last leaf menu-mlid-1077 rassegna-stampa"><a href="/it/sala-stampa/rassegna-stampa">Rassegna stampa</a></li>
+</ul></div>
+    </div>
+  </div>
+</div>
+  </div>
+</div><div class="grid-2 region region-postscript-sixth" id="region-postscript-sixth">
+  <div class="region-inner region-postscript-sixth-inner">
+    <div class="block block-menu-block block-5 block-menu-block-5 odd" id="block-menu-block-5">
+  <div class="block-inner clearfix">
+              <h2 class="block-title">Viminale</h2>
+            
+    <div class="content clearfix">
+      <div class="menu-block-wrapper menu-block-5 menu-name-main-menu parent-mlid-645 menu-level-1">
+  <ul class="menu"><li class="first leaf menu-mlid-998 storia"><a href="/it/viminale/storia" title="">Storia</a></li>
+<li class="leaf has-children menu-mlid-651 palazzo"><a href="/it/viminale/palazzo">Palazzo</a></li>
+<li class="leaf has-children menu-mlid-1000 biblioteche"><a href="/it/viminale/biblioteche">Biblioteche</a></li>
+<li class="leaf has-children menu-mlid-1336 ministri-dal-1861"><a href="/it/viminale/ministri-dal-1861" title="">Ministri dal 1861</a></li>
+<li class="leaf menu-mlid-1617 sottosegretari-e-viceministri-dell&#039;interno-dal-1888"><a href="/it/viminale/sottosegretari-e-viceministri-dellinterno-dal-1888">Sottosegretari e Viceministri dell&#039;Interno dal 1888</a></li>
+<li class="last leaf menu-mlid-5056 patrimonio-del-fondo-edifici-di-culto"><a href="/it/ministero/dipartimenti/dipartimento-liberta-civili-e-limmigrazione/direzione-centrale-lamministrazione-fondo-edifici-culto/patrimonio-fondo-edifici-culto" title="">Patrimonio del Fondo edifici di culto</a></li>
+</ul></div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>  </div>
+</div><div id="zone-prefooter-wrapper" class="zone-wrapper zone-prefooter-wrapper clearfix">  
+  <div id="zone-prefooter" class="zone zone-prefooter clearfix container-12">
+    <div class="grid-12 region region-prefooter" id="region-prefooter">
+  <div class="region-inner region-prefooter-inner">
+    <div class="block block-views block-blocchi-banner-block-2 block-views-blocchi-banner-block-2 odd block-without-title" id="block-views-blocchi-banner-block-2">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <div class="view view-blocchi-banner view-id-blocchi_banner view-display-id-block_2 banner view-dom-id-c63c1eb5372ad07acfba67868aef57a2">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+    
+<div  about="/it/cc-creative-commors" typeof="sioc:Item foaf:Documentnode-banner-9543" class="ds-1col node node-banner node-promoted node-teaser view-mode-teaser node-published node-not-sticky author-lucianolollobrigida odd clearfix clearfix">
+
+  
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even views-row-1 first last"><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/it/"><img typeof="foaf:Image" src="https://www.interno.gov.it/sites/default/files/banner/creative_commons.png" width="160" height="60" alt="Vai a: CC BY 3.0 IT " title="Vai a: CC BY 3.0 IT " /></a></div></div></div></div>
+
+  </div>
+  <div class="views-row views-row-2 views-row-even">
+    
+<div  about="/it/gazzetta-ufficiale" typeof="sioc:Item foaf:Documentnode-banner-656" class="ds-1col node node-banner node-promoted node-teaser view-mode-teaser node-published node-not-sticky author-admin even clearfix clearfix">
+
+  
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even views-row-1 first last"><a href="http://www.gazzettaufficiale.it/"><img typeof="foaf:Image" src="https://www.interno.gov.it/sites/default/files/banner/gazzetta_ufficiale.png" width="203" height="54" alt="Vai a: Gazzetta Ufficiale" title="Vai a: Gazzetta Ufficiale" /></a></div></div></div></div>
+
+  </div>
+  <div class="views-row views-row-3 views-row-odd">
+    
+<div  about="/it/normattiva-0" typeof="sioc:Item foaf:Documentnode-banner-448" class="ds-1col node node-banner node-promoted node-teaser view-mode-teaser node-published node-not-sticky author-admin odd clearfix clearfix">
+
+  
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even views-row-1 first last"><a href="http://www.normattiva.it/"><img typeof="foaf:Image" src="https://www.interno.gov.it/sites/default/files/banner/btn_normattiva.png" width="206" height="66" alt="Vai a: Normattiva" title="Vai a: Normattiva" /></a></div></div></div></div>
+
+  </div>
+  <div class="views-row views-row-4 views-row-even views-row-last">
+    
+<div  about="/it/fatturapa" typeof="sioc:Item foaf:Documentnode-banner-447" class="ds-1col node node-banner node-promoted node-teaser view-mode-teaser node-published node-not-sticky author-admin even clearfix clearfix">
+
+  
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even views-row-1 first last"><a href="http://www.fatturapa.gov.it/export/fatturazione/it/"><img typeof="foaf:Image" src="https://www.interno.gov.it/sites/default/files/banner/fatturapa_0.png" width="210" height="90" alt="Vai a: FatturaPA" title="Vai a: FatturaPA" /></a></div></div></div></div>
+
+  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>    </div>
+  </div>
+</div>
+  </div>
+</div>  </div>
+</div></div>    
+  
+  </div>  <div class="region region-page-bottom" id="region-page-bottom">
+  <div class="region-inner region-page-bottom-inner">
+      </div>
+</div><script type="text/javascript">
+<!--//--><![CDATA[//><!--
+function euCookieComplianceLoadScripts() {}
+//--><!]]>
+</script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+var eu_cookie_compliance_cookie_name = "";
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://www.interno.gov.it/sites/all/modules/contrib/eu_cookie_compliance/js/eu_cookie_compliance.js?qc4861"></script>
+</body>
+</html>
