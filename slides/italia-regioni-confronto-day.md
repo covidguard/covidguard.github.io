@@ -1,6 +1,6 @@
 ---
 layout: iframe
-title: Italia: confronto Regioni ultimo giorno
+title: Italia - confronto Regioni ultimo giorno
 parent: COVID-19 Italia
 nav_order: 15
 has_toc: true

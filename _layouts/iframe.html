@@ -38,7 +38,7 @@
         {% for style in elem[1].init %}
           .css("{{ style[0] }}", "{{ style[1] }}")
         {% endfor %}
-        {% if elem[1].to & elem[1].from %}
+        {% if elem[1].to and elem[1].from %}
           .animate({
             {% for style in elem[1].to %}
               "{{ style[0] }}": "{{ style[1] }}",

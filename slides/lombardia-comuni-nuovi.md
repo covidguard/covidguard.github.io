@@ -1,6 +1,6 @@
 ---
 layout: iframe
-title: Comuni Lombardia: nuovi casi
+title: Comuni Lombardia - nuovi casi
 parent: COVID-19 Italia
 nav_order: 14
 has_toc: true

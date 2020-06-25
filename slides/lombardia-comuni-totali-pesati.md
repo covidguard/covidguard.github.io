@@ -1,6 +1,6 @@
 ---
 layout: iframe
-title: Comuni Lombardia: casi totali pesati per popolazione
+title: Comuni Lombardia - casi totali pesati per popolazione
 parent: COVID-19 Italia
 nav_order: 13
 has_toc: true

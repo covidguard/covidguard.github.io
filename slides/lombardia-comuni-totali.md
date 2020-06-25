@@ -1,6 +1,6 @@
 ---
 layout: iframe
-title: Comuni Lombardia: casi totali
+title: Comuni Lombardia - casi totali
 parent: COVID-19 Italia
 nav_order: 12
 has_toc: true
