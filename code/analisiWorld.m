@@ -210,6 +210,7 @@ end
 
 x_lim=get(gca,'xlim');
 xlim([-10,x_lim(2)]);
+% xlim([-10,120]);
 
 y_lim=get(gca,'ylim');
 ylim([10,y_lim(2)*1.1]);
@@ -537,6 +538,8 @@ customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'Brazil';'Chile';'U
 % customC_list = {'Italy'; 'Sweden';'Spain';'France';'United_States_of_America';'United_Kingdom';'Germany'};
 
 % customC_list = {'Sweden';'Norway';'Finland'};
+
+% customC_list = {''};
 
 testo = struct;
 datetickFormat = 'dd mmm';
