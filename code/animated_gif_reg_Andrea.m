@@ -40,8 +40,8 @@ end
 
 
 
-y_data = zeros(length(data.dataReg.codice_regione)/size(regioni_tot,1)-6,size(regioni_tot,1));
-x_data = zeros(length(data.dataReg.codice_regione)/size(regioni_tot,1)-6,size(regioni_tot,1));
+y_data = zeros(length(data.dataReg.denominazione_regione)/size(regioni_tot,1)-6,size(regioni_tot,1));
+x_data = zeros(length(data.dataReg.denominazione_regione)/size(regioni_tot,1)-6,size(regioni_tot,1));
 for reg=1:size(regioni_tot,1)  
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(data.dataReg.denominazione_regione,cellstr(regione)));

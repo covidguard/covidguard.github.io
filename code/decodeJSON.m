@@ -32,7 +32,14 @@ for i = 1 : length(indexStartEntry)
             value = char(value);
             value(strfind(value,''''))= ' ';
             value = cellstr(value);
+            if strcmp(value,'ull,')
+%                 value='null';
+            end
+            try
             eval(sprintf('data.%s(i, 1) = cellstr(''%s'');', fieldName, char(value)));
+            catch
+                
+            end
         else
             while ~strcmp(l_i(kk),',') && kk<length(l_i)
                 kk = kk + 1;
@@ -44,7 +51,23 @@ for i = 1 : length(indexStartEntry)
             try
               eval(sprintf('data.%s(i, 1) = %f;', fieldName, value));
             catch
+                try
                eval(sprintf('data.%s(i, 1) = %s;', fieldName, value)); 
+               
+               
+                catch
+         
+                    try
+                        if strcmp(data.denominazione_provincia(i, 1),'Napoli')
+                             eval(sprintf('data.%s(i, 1) = cellstr(''NA'');', fieldName));
+                        else
+                            eval(sprintf('data.%s(i, 1) = cellstr('''');', fieldName));
+                        end
+                    catch
+                         eval(sprintf('data.%s(i, 1) = cellstr('''');', fieldName));
+                    end
+                        
+                end
             end
         end        
     end

@@ -96,12 +96,15 @@ pop.popolazioneRegioniPop=[];
 for kk = 1:size(Regione_lista,1)
     idx = find(strcmp(dataProv.denominazione_regione,Regione_lista(kk)));
     prov_della_regione=unique(dataProv.sigla_provincia(idx));
+    
     [prov_della_regione, ixs]=setdiff(prov_della_regione,cellstr(''));
+    [prov_della_regione, ixs]=setdiff(prov_della_regione,cellstr('A'));
+    
     
     pop.popolazioneRegioniPop(kk)=0;
     pop.popolazioneRegioniNome(kk)=Regione_lista(kk);
     for jj=1:size(prov_della_regione,1)
-        idx=find(strcmp(pop.sigla,prov_della_regione(jj)));
+        idx=find(strcmp(pop.sigla,prov_della_regione(jj)));   
         pop.popolazioneRegioniPop(kk)=pop.popolazioneRegioniPop(kk)+pop.number(idx);
     end
 end
@@ -125,7 +128,7 @@ try
     %     animated_gif_reg_Andrea(data,'S');
 catch
 end
-animated_gif_reg_fase2(data,pop,'A');
+% % % % % % animated_gif_reg_fase2(data,pop,'A');
 
 % animated_gif_reg_gara(data,pop,'A');
 
@@ -1277,6 +1280,97 @@ annotation(gcf,'textbox',...
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_bestRegWeekDimessi.PNG']);
 close(gcf);
+
+
+
+% 
+% %% percentuale positivi da screening
+% figure;
+% id_f = gcf;
+% set(id_f, 'Name', sprintf('Italia: Regioni con maggior percentuale di positivi da screening il %s',datestr(max(datenum(dataReg.data)),'dd/mm/yyyy')));
+% title(sprintf('Italia: Regioni con maggior percentuale di positivi da screening il %s',datestr(max(datenum(dataReg.data)),'dd/mm/yyyy')));
+% 
+% 
+% set(gcf,'NumberTitle','Off');
+% set(gcf,'Position',[26 79 967 603]);
+% grid on
+% hold on
+% worstRegValue=[];
+% worstRegValue_abs=[];
+% for reg=1:size(regioni_tot,1)
+%     regione = char(regioni_tot(reg,1));
+%     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+%     worstAbsValue(reg,1)=(dataReg.casi_da_screening(index(end))-dataReg.casi_da_screening(index(end-1)))/(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-1)))*100;
+% end
+% % worstRegValue(worstRegValue<0)=0;
+% worstAbsValue(worstAbsValue<0)=0;
+% [worstAbsValue,idxSort]=sort(worstAbsValue,'descend');
+% 
+% x_data_i=flip(worstAbsValue);
+% idx_i=flip(idxSort);
+% 
+% a=barh([1 2], [x_data_i ,x_data_i]');
+% grid minor
+% 
+% for k=1:size(regioni_tot,1)
+%     set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
+% end
+% 
+% hT={};              % placeholder for text object handles
+% for k=1:size(regioni_tot,1) % iterate over number of bar objects
+%     try
+%     hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(regioni_tot(idx_i(k))),worstAbsValue(idx_i(k))), ...
+%         'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+%     d=hT{k};
+%     xx=a(k).YData(2);
+%     yy=a(k).XData(2)+a(k).XOffset(1);    
+%     d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+%     drawnow
+%     catch
+%     end
+% end
+% 
+% d=hT{1};
+% xx=a(1).YData(2);
+% yy=a(1).XData(2)+a(1).XOffset(1);
+% d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
+% 
+% xlabel('Deceduti / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+% 
+% set(gca,'YTick',[])
+% set(gca,'YLim',[1.6,2.4])
+% set(gca,'FontSize',8);
+% set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+% xlabel('Deceduti / 100.000 abitanti')
+% title(sprintf('Italia: Regioni con maggior numero di deceduti per abitante (il %s)',datestr(list_day(end),'dd/mm/yyyy')));
+% 
+% ax=get(gca);
+% ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
+% 
+% % overlap copyright info
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+%     'String',{['Fonte: https://github.com/pcm-dpc']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% annotation(gcf,'textbox',...
+%     [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+%     'String',{'https://covidguard.github.io/#covid-19-italia'},...
+%     'LineStyle','none',...
+%     'HorizontalAlignment','left',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off');
+% 
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_bestRegDayDeceduti.PNG']);
+% close(gcf);
+% 
+% 
 
 
 
@@ -2949,6 +3043,11 @@ n_tamponi=NaN(size(day_unique,1),1);
 n_totaleCasi =NaN(size(day_unique,1),1);
 n_deceduti = NaN(size(day_unique,1),1);
 n_guariti = NaN(size(day_unique,1),1);
+
+n_casi_da_sospetto_diagnostico = NaN(size(day_unique,1),1);
+n_casi_da_screening = NaN(size(day_unique,1),1);
+
+
 for k = 1: size(day_unique,1)
     index = find(strcmp(dataReg.data,day_unique(k)) & strcmp(dataReg.denominazione_regione,'Lombardia'));
     %     index = find(strcmp(dataReg.data,day_unique(k)) & strcmp(dataReg.denominazione_regione,'Liguria'));
@@ -2956,6 +3055,8 @@ for k = 1: size(day_unique,1)
     n_totaleCasi(k)=sum(dataReg.totale_casi(index));
     n_deceduti(k)=sum(dataReg.deceduti(index));
     n_guariti(k)=sum(dataReg.dimessi_guariti(index));
+    n_casi_da_sospetto_diagnostico(k)=sum(dataReg.casi_da_sospetto_diagnostico(index));
+    n_casi_da_screening(k)=sum(dataReg.casi_da_screening(index));
 end
 
 time_num = fix(datenum(day_unique));
@@ -4203,6 +4304,12 @@ annotation(gcf,'textbox',...
     'FontName','Verdana',...
     'FitBoxToText','off');
 
+yl = get(ax2,'ylim');
+set(ax2,'ylim',([0,yl(2)]));
+
+yl = get(ax1,'ylim');
+set(ax1,'ylim',([0,yl(2)]));
+
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_correlazioneCasiDeceduti_v2.PNG']);
 close(gcf);
 
@@ -4609,6 +4716,8 @@ ax = gca;
 set(ax, 'FontName', 'Verdana');
 set(ax, 'FontSize', font_size);
 
+t_lim=get(ax,'ylim');
+ylim([0 t_lim(2)]);
 
 yyaxis right
 c=plot(perTampPos,'-b','LineWidth', 1.5);
@@ -4619,6 +4728,9 @@ grid minor
 
 l=legend([b(2),b(1),c],'Tamponi negativi','Tamponi positivi','Percent. tamponi positivi');
 set(l,'Location','northwest')
+
+t_lim=ylim;
+ylim([0 100]);
 
 
 
@@ -6035,9 +6147,13 @@ for reg = 1:size(Regione_lista)
     sigla_prov=dataReg.sigla_provincia(idx_reg);
 %     [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
     
+
+
     [sigla_prov, ixs]= unique(sigla_prov);
     
     RegioneTot=dataReg.denominazione_provincia(idx_reg(ixs));
+    
+    
     
     
 %     sigla_prov=sigla_prov(ixs);
@@ -6060,14 +6176,14 @@ for reg = 1:size(Regione_lista)
     % find population
     [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));
     
-    for h=1:size(RegioneTot,1)
+    for h=1:size(RegioneTot,1) 
         regione = char(RegioneTot(h));
         index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
         ppt=ppt+1;
         province_totale.nome(ppt,1)=cellstr(regione);
         province_totale.datoUltimo(ppt,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-1)))./pop.number(idx_pop(h))*1000;
         province_totale.datoLastDays(ppt,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-n_days_comp+1)))./pop.number(idx_pop(h))*1000;
-    end
+        end
 end
 
 [worstProvValue,idx]=sort(province_totale.datoUltimo,'descend');
@@ -6388,6 +6504,8 @@ for reg = 1:size(Regione_lista)
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('fuori Regione/P.A.'));
     sigla_prov=sigla_prov(ixs);
    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione'));
+    sigla_prov=sigla_prov(ixs);
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione / Provincia Autonoma'));
     sigla_prov=sigla_prov(ixs);
     
     % find population
