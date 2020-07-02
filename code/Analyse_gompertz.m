@@ -128,7 +128,7 @@ try
     %     animated_gif_reg_Andrea(data,'S');
 catch
 end
-% % % % % % animated_gif_reg_fase2(data,pop,'A');
+animated_gif_reg_fase2(data,pop,'A');
 
 % animated_gif_reg_gara(data,pop,'A');
 
