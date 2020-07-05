@@ -301,8 +301,8 @@ dataReg.deceduti=dataReg.deceduti(idx_sinlomb,:);
 dataReg.totale_casi=dataReg.totale_casi(idx_sinlomb,:);
 dataReg.tamponi=dataReg.tamponi(idx_sinlomb,:);
 dataReg.casi_testati=dataReg.casi_testati(idx_sinlomb,:);
-dataReg.note_it=dataReg.note_it(idx_sinlomb,:);
-dataReg.note_en=dataReg.note_en(idx_sinlomb,:);
+% dataReg.note_it=dataReg.note_it(idx_sinlomb,:);
+% dataReg.note_en=dataReg.note_en(idx_sinlomb,:);
 dataReg.dataa=dataReg.dataa(idx_sinlomb,:);
 
 dataRegSinLomb = dataReg;
@@ -327,8 +327,8 @@ dataRegLomb.deceduti=dataReg.deceduti(idx_lomb,:);
 dataRegLomb.totale_casi=dataReg.totale_casi(idx_lomb,:);
 dataRegLomb.tamponi=dataReg.tamponi(idx_lomb,:);
 dataRegLomb.casi_testati=dataReg.casi_testati(idx_lomb,:);
-dataRegLomb.note_it=dataReg.note_it(idx_lomb,:);
-dataRegLomb.note_en=dataReg.note_en(idx_lomb,:);
+% dataRegLomb.note_it=dataReg.note_it(idx_lomb,:);
+% dataRegLomb.note_en=dataReg.note_en(idx_lomb,:);
 dataRegLomb.dataa=dataReg.dataa(idx_lomb,:);
 
 

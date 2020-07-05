@@ -8,19 +8,32 @@ end
 %% download data
 flag_download_1=1;
 if flag_download_1
-    websave('world.csv', 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv','timeout',1);
+    websave('world1.csv', 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv','timeout',1);
     %         websave(sprintf('PDF_%s-%s-%s.PDF', yy,mm,dd), sprintf('%s/sites/default/files/modulistica/monitoraggio_serviz_controllo_giornaliero_dal_%d.%d.%s.pdf', serverAddress,dd_1,mm_1,yy),'timeout',1);
-    movefile('world.csv',sprintf('%s/_json',WORKroot),'f');
+    movefile('world1.csv',sprintf('%s/_json',WORKroot),'f');
 end
 
 
 
 % decode data
-filename = sprintf('%s/_json/world.csv',WORKroot);
+filename = sprintf('%s/_json/world1.csv',WORKroot);
+filename1 = sprintf('%s/_json/world.csv',WORKroot);
+
+fout=fopen(filename1,'wt');
+fid=fopen(filename,'rt');
+l=fgetl(fid);
+while length(l)>2
+    if isempty(strfind(l,'Bonaire,'))    
+    fprintf(fout,'%s\n',l);
+    end
+    l=fgetl(fid);
+end
+fclose(fid);
+fclose(fout);
 
 
 
-[world.dateRep,world.day,world.month,world.year,world.cases,world.deaths,world.countriesAndTerritories,world.geoId,world.countryterritoryCode,world.popData2018,world.continentExp] = textread(filename,...
+[world.dateRep,world.day,world.month,world.year,world.cases,world.deaths,world.countriesAndTerritories,world.geoId,world.countryterritoryCode,world.popData2018,world.continentExp] = textread(filename1,...
     '%s%d%d%d%d%d%s%s%s%d%s','delimiter',',','headerlines',1);
 
 l=[];

@@ -113,7 +113,7 @@ end
 %% report pdf
 analisiReportPdf
 
-
+analisiExtra
 %% percorsi:
 data=struct;
 data.dataReg=dataReg;
@@ -7044,6 +7044,7 @@ dataReg=dataProv;
 [ListaProvince]= unique(dataReg.denominazione_provincia);
 ListaProvince = setdiff(ListaProvince,'In fase di definizione/aggiornamento');
 ListaProvince = setdiff(ListaProvince,'In fase di definizione');
+ListaProvince = setdiff(ListaProvince,'Fuori Regione / Provincia Autonoma');
 ListaProvince = setdiff(ListaProvince,'fuori Regione/P.A.');
 ListaProvince = setdiff(ListaProvince,'Forl\u201c-Cesena');
 
