@@ -571,7 +571,7 @@ font_size=8;
         set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)],'dd mmm'));
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
         ax.FontSize = font_size;
-        l=legend([a,b],'Resto d''Italia - no Lombardia', 'Marche');
+        l=legend([a,b],'Resto d''Italia', 'Lombardia');
         
         % overlap copyright info
         datestr_now = datestr(now);
@@ -1373,7 +1373,7 @@ end
 %% interpolazione gaussiana regionale
 
 %% GRAFICI SINGOLA REGIONE
-for reg=[5,9]
+for reg=5
     
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
@@ -1621,7 +1621,7 @@ for type=1:3
     set(gcf,'Position',[26 79 967 603]);
     grid on
     hold on
-   
+ 
     %%%%%%%%%%%%%%%%%%%%%%%%%
     % EMILIA ROMAGNA
     %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1630,15 +1630,15 @@ for type=1:3
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     time_num = fix(datenum(dataReg.data(index)));
        
-    try
-        delete('testIn_gauss.txt');
-    catch
-    end
-    try
-        delete('testIn_gauss_fit.txt');
-    catch
-    end
-    
+%     try
+%         delete('testIn_gauss.txt');
+%     catch
+%     end
+%     try
+%         delete('testIn_gauss_fit.txt');
+%     catch
+%     end
+%     
     if type==1 %gauss su attualmente positivi
         data=dataReg.totale_positivi(index,1);
         %         data=dataReg.totale_casi(index,1);
@@ -1654,36 +1654,34 @@ for type=1:3
         time_num=time_num(2:end);
     end
     
-    
-    
-    fout=fopen('testIn_gauss.txt','wt');
-    for i=1:size(data,1)
-        fprintf(fout,'%d;%d\n',time_num(i),data(i));
-    end
-    
-    if type==1 || type==3
-        %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
-    elseif type==2
-        
-        %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
-        
-        
-        %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-        command=sprintf('gomp_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        
-    end
-    
-   
+%     
+%     
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:size(data,1)
+%         fprintf(fout,'%d;%d\n',time_num(i),data(i));
+%     end
+%     
+%     if type==1 || type==3
+%         %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     elseif type==2
+%         
+%         %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
+%         
+%         
+%         %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         
+%     end
+%     
+  
     figure(id_f(type))
-%     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
-%     d5=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
-%     c5=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
-    b05=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+
+%     b05=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
     a05=plot(time_num,data,'ob','markersize',3,'color',[0.600000023841858 0.200000002980232 0],'MarkerFaceColor',[0.600000023841858 0.200000002980232 0]);
     
     
@@ -1696,14 +1694,14 @@ for type=1:3
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
     time_num = fix(datenum(dataReg.data(index)));
        
-    try
-        delete('testIn_gauss.txt');
-    catch
-    end
-    try
-        delete('testIn_gauss_fit.txt');
-    catch
-    end
+%     try
+%         delete('testIn_gauss.txt');
+%     catch
+%     end
+%     try
+%         delete('testIn_gauss_fit.txt');
+%     catch
+%     end
     
     if type==1 %gauss su attualmente positivi
         data=dataReg.totale_positivi(index,1);
@@ -1719,35 +1717,35 @@ for type=1:3
         data=diff(data);
         time_num=time_num(2:end);
     end
-    
-    
-    
-    fout=fopen('testIn_gauss.txt','wt');
-    for i=1:size(data,1)
-        fprintf(fout,'%d;%d\n',time_num(i),data(i));
-    end
-    
-    if type==1 || type==3
-        %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
-    elseif type==2
-        
-        %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
-        
-        
-        %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-        command=sprintf('gomp_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        
-    end
-    
+%     
+%     
+%     
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:size(data,1)
+%         fprintf(fout,'%d;%d\n',time_num(i),data(i));
+%     end
+%     
+%     if type==1 || type==3
+%         %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     elseif type==2
+%         
+%         %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
+%         
+%         
+%         %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         
+%     end
+%     
 
     
     figure(id_f(type))
-    b09=plot(t,a1,'-r','LineWidth', 2.0,'color',[0 0.498039215803146 0]);
+%     b09=plot(t,a1,'-r','LineWidth', 2.0,'color',[0 0.498039215803146 0]);
     a09=plot(time_num,data,'ob','markersize',3,'color',[0.164705887436867 0.384313732385635 0.274509817361832],'MarkerFaceColor',[0.164705887436867 0.384313732385635 0.274509817361832]);
    
         
@@ -1774,8 +1772,11 @@ for type=1:3
     ax.FontSize = font_size;
     
     
-    l=legend([a05,b05,a09,b09],'Emilia-Romagna: Dati Reali',sprintf('Emilia-Romagna: Stima al %s',datestr(time_num(end),'dd mmm')),'Lombardia: Dati Reali',sprintf('Lombardia: Stima al %s',datestr(time_num(end),'dd mmm')));
-        
+%     l=legend([a05,b05,a09,b09],'Emilia-Romagna: Dati Reali',sprintf('Emilia-Romagna: Stima al %s',datestr(time_num(end),'dd mmm')),'Lombardia: Dati Reali',sprintf('Lombardia: Stima al %s',datestr(time_num(end),'dd mmm')));
+    l=legend([a05,a09],'Emilia-Romagna','Lombardia');
+
+    
+    
         set(l,'Location','northwest')
         % overlap copyright info
         datestr_now = datestr(now);
@@ -1878,35 +1879,33 @@ for type=1:3
     end
     
     
-    
-    fout=fopen('testIn_gauss.txt','wt');
-    for i=1:size(data,1)
-        fprintf(fout,'%d;%d\n',time_num(i),data(i));
-    end
-    
-    if type==1 || type==3
-        %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
-    elseif type==2
-        
-        %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
-        
-        
-        %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-        command=sprintf('gomp_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        
-    end
+%     
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:size(data,1)
+%         fprintf(fout,'%d;%d\n',time_num(i),data(i));
+%     end
+%     
+%     if type==1 || type==3
+%         %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     elseif type==2
+%         
+%         %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
+%         
+%         
+%         %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         
+%     end
     
    
     figure(id_f(type))
-%     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
-%     d5=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
-%     c5=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
-    b05=plot(t,a1./pop.popolazioneRegioniPop(reg)*100000,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+
+%     b05=plot(t,a1./pop.popolazioneRegioniPop(reg)*100000,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
     a05=plot(time_num,data./pop.popolazioneRegioniPop(reg)*100000,'ob','markersize',3,'color',[0.600000023841858 0.200000002980232 0],'MarkerFaceColor',[0.600000023841858 0.200000002980232 0]);
     
     
@@ -1943,34 +1942,34 @@ for type=1:3
         time_num=time_num(2:end);
     end
     
-    
-    
-    fout=fopen('testIn_gauss.txt','wt');
-    for i=1:size(data,1)
-        fprintf(fout,'%d;%d\n',time_num(i),data(i));
-    end
-    
-    if type==1 || type==3
-        %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
-    elseif type==2
-        
-        %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
-        
-        
-        %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
-        command=sprintf('gomp_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        
-    end
-    
+%     
+%     
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:size(data,1)
+%         fprintf(fout,'%d;%d\n',time_num(i),data(i));
+%     end
+%     
+%     if type==1 || type==3
+%         %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     elseif type==2
+%         
+%         %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
+%         
+%         
+%         %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         
+%     end
+%     
 
     
     figure(id_f(type))
-    b09=plot(t,a1./pop.popolazioneRegioniPop(reg)*100000,'-r','LineWidth', 2.0,'color',[0 0.498039215803146 0]);
+%     b09=plot(t,a1./pop.popolazioneRegioniPop(reg)*100000,'-r','LineWidth', 2.0,'color',[0 0.498039215803146 0]);
     a09=plot(time_num,data./pop.popolazioneRegioniPop(reg)*100000,'ob','markersize',3,'color',[0.164705887436867 0.384313732385635 0.274509817361832],'MarkerFaceColor',[0.164705887436867 0.384313732385635 0.274509817361832]);
    
         
@@ -1997,8 +1996,9 @@ for type=1:3
     ax.FontSize = font_size;
     
     
-    l=legend([a05,b05,a09,b09],'Emilia-Romagna: Dati Reali',sprintf('Emilia-Romagna: Stima al %s',datestr(time_num(end),'dd mmm')),'Lombardia: Dati Reali',sprintf('Lombardia: Stima al %s',datestr(time_num(end),'dd mmm')));
-        
+%     l=legend([a05,b05,a09,b09],'Emilia-Romagna: Dati Reali',sprintf('Emilia-Romagna: Stima al %s',datestr(time_num(end),'dd mmm')),'Lombardia: Dati Reali',sprintf('Lombardia: Stima al %s',datestr(time_num(end),'dd mmm')));
+     l=legend([a05,a09],'Emilia-Romagna','Lombardia');
+       
         set(l,'Location','northwest')
         % overlap copyright info
         datestr_now = datestr(now);
