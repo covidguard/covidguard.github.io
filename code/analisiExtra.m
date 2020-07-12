@@ -1,82 +1,82 @@
-
-%% -------------------------
-if ismac
-    WORKroot = sprintf('/Users/Andrea/Repositories/covidguard.github.io/');
-else
-    WORKroot = sprintf('C:/Temp/Repo/covidguard');
-end
-
-%% load population
-%% ---------------
-filename = fullfile(WORKroot, '_json', 'popolazione_province.txt');
-[pop.id, pop.name, pop.number, pop.perc, pop.superf, pop.numCom, pop.sigla]=textread(filename,'%d%s%d%f%%%d%d%s','delimiter',';');
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Regioni
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-filename = sprintf('%s/_json/dpc-covid19-ita-regioni.json',WORKroot);
-fid       = fopen(filename, 'rt');
-file_scan = textscan(fid, '%s', 'delimiter', '\n', 'endOfLine', '\r\n', 'whitespace', '');
-fclose(fid);
-file_scan                             = file_scan{1};
-file_scan=char(file_scan);
-
-json_oneRaw='';
-json_oneRaw(1:size(file_scan,1)*size(file_scan,2))=' ';
-for i=1:size(file_scan,1)
-    json_oneRaw(1+(i-1)*size(file_scan,2):i*size(file_scan,2))=file_scan(i,:);
-    %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
-end
-dataReg = decodeJSON(json_oneRaw);
-dataReg.dataa = char(dataReg.data);
-dataReg.dataa(:,11)=' ';
-dataReg.data=cellstr(dataReg.dataa);
-regioni_tot = unique(dataReg.denominazione_regione);
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Province
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-filename = sprintf('%s/_json/dpc-covid19-ita-province.json',WORKroot);
-fid       = fopen(filename, 'rt');
-file_scan = textscan(fid, '%s', 'delimiter', '\n', 'endOfLine', '\r\n', 'whitespace', '');
-fclose(fid);
-file_scan                             = file_scan{1};
-file_scan=char(file_scan);
-
-json_oneRaw='';
-json_oneRaw(1:size(file_scan,1)*size(file_scan,2))=' ';
-for i=1:size(file_scan,1)
-    json_oneRaw(1+(i-1)*size(file_scan,2):i*size(file_scan,2))=file_scan(i,:);
-    %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
-end
-
-dataProv = decodeJSON(json_oneRaw);
-dataProv.dataa = char(dataProv.data);
-dataProv.dataa(:,11)=' ';
-dataProv.data=cellstr(dataProv.dataa);
-Regione_lista = unique(dataProv.denominazione_regione);
-
-
-pop.popolazioneRegioniNome=cell('');
-pop.popolazioneRegioniPop=[];
-%% popolazione regioni
-for kk = 1:size(Regione_lista,1)
-    idx = find(strcmp(dataProv.denominazione_regione,Regione_lista(kk)));
-    prov_della_regione=unique(dataProv.sigla_provincia(idx));
-    [prov_della_regione, ixs]=setdiff(prov_della_regione,cellstr(''));
-    
-    pop.popolazioneRegioniPop(kk)=0;
-    pop.popolazioneRegioniNome(kk)=Regione_lista(kk);
-    for jj=1:size(prov_della_regione,1)
-        idx=find(strcmp(pop.sigla,prov_della_regione(jj)));
-        pop.popolazioneRegioniPop(kk)=pop.popolazioneRegioniPop(kk)+pop.number(idx);
-    end
-end
-
+% 
+% %% -------------------------
+% if ismac
+%     WORKroot = sprintf('/Users/Andrea/Repositories/covidguard.github.io/');
+% else
+%     WORKroot = sprintf('C:/Temp/Repo/covidguard');
+% end
+% 
+% %% load population
+% %% ---------------
+% filename = fullfile(WORKroot, '_json', 'popolazione_province.txt');
+% [pop.id, pop.name, pop.number, pop.perc, pop.superf, pop.numCom, pop.sigla]=textread(filename,'%d%s%d%f%%%d%d%s','delimiter',';');
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Regioni
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% filename = sprintf('%s/_json/dpc-covid19-ita-regioni.json',WORKroot);
+% fid       = fopen(filename, 'rt');
+% file_scan = textscan(fid, '%s', 'delimiter', '\n', 'endOfLine', '\r\n', 'whitespace', '');
+% fclose(fid);
+% file_scan                             = file_scan{1};
+% file_scan=char(file_scan);
+% 
+% json_oneRaw='';
+% json_oneRaw(1:size(file_scan,1)*size(file_scan,2))=' ';
+% for i=1:size(file_scan,1)
+%     json_oneRaw(1+(i-1)*size(file_scan,2):i*size(file_scan,2))=file_scan(i,:);
+%     %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
+% end
+% dataReg = decodeJSON(json_oneRaw);
+% dataReg.dataa = char(dataReg.data);
+% dataReg.dataa(:,11)=' ';
+% dataReg.data=cellstr(dataReg.dataa);
+% regioni_tot = unique(dataReg.denominazione_regione);
+% 
+% 
+% 
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Province
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% filename = sprintf('%s/_json/dpc-covid19-ita-province.json',WORKroot);
+% fid       = fopen(filename, 'rt');
+% file_scan = textscan(fid, '%s', 'delimiter', '\n', 'endOfLine', '\r\n', 'whitespace', '');
+% fclose(fid);
+% file_scan                             = file_scan{1};
+% file_scan=char(file_scan);
+% 
+% json_oneRaw='';
+% json_oneRaw(1:size(file_scan,1)*size(file_scan,2))=' ';
+% for i=1:size(file_scan,1)
+%     json_oneRaw(1+(i-1)*size(file_scan,2):i*size(file_scan,2))=file_scan(i,:);
+%     %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
+% end
+% 
+% dataProv = decodeJSON(json_oneRaw);
+% dataProv.dataa = char(dataProv.data);
+% dataProv.dataa(:,11)=' ';
+% dataProv.data=cellstr(dataProv.dataa);
+% Regione_lista = unique(dataProv.denominazione_regione);
+% 
+% 
+% pop.popolazioneRegioniNome=cell('');
+% pop.popolazioneRegioniPop=[];
+% %% popolazione regioni
+% for kk = 1:size(Regione_lista,1)
+%     idx = find(strcmp(dataProv.denominazione_regione,Regione_lista(kk)));
+%     prov_della_regione=unique(dataProv.sigla_provincia(idx));
+%     [prov_della_regione, ixs]=setdiff(prov_della_regione,cellstr(''));
+%     
+%     pop.popolazioneRegioniPop(kk)=0;
+%     pop.popolazioneRegioniNome(kk)=Regione_lista(kk);
+%     for jj=1:size(prov_della_regione,1)
+%         idx=find(strcmp(pop.sigla,prov_della_regione(jj)));
+%         pop.popolazioneRegioniPop(kk)=pop.popolazioneRegioniPop(kk)+pop.number(idx);
+%     end
+% end
+% 
 
 
 
@@ -775,7 +775,7 @@ font_size=8;
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_6_attualmente_positivi.PNG']);
 close(gcf);
 
-return
+
 % 
 
 % %% GRAFICI Italia senza lombardia
@@ -2049,7 +2049,7 @@ end
 
 
 
-
+return
 
 
 

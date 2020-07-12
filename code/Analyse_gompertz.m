@@ -4,6 +4,8 @@
 % mkdir('slides/img');
 % mkdir('slides/img/province');
 % mkdir('slides/img/regioni');
+analisiWorld
+
 if ismac
     flag_download = false;
 else
@@ -114,6 +116,7 @@ end
 analisiReportPdf
 
 analisiExtra
+
 %% percorsi:
 data=struct;
 data.dataReg=dataReg;
