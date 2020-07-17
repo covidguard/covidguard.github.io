@@ -120,7 +120,7 @@ analisiExtra
 %% percorsi:
 data=struct;
 data.dataReg=dataReg;
-% animated_gif_reg_gara(data,pop,'A');
+animated_gif_reg_gara(data,pop,'A');
 % animated_gif_prov_gara(dataProv,pop,'A');
 
 animated_gif_reg_Andrea(data,'A');
@@ -6546,6 +6546,8 @@ for reg = 1:size(Regione_lista)
             index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
             
             time_num = fix(datenum(dataReg.data(index)));
+            [time_num, aaa] = unique(time_num);
+            index=index(aaa);
             if normalizza_per_popolazione==1
                 try
                     y=(dataReg.totale_casi(index,1)/pop.number(idx_pop(h)))*1000;
