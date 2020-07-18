@@ -120,7 +120,7 @@ analisiExtra
 %% percorsi:
 data=struct;
 data.dataReg=dataReg;
-animated_gif_reg_gara(data,pop,'A');
+% animated_gif_reg_gara(data,pop,'A');
 % animated_gif_prov_gara(dataProv,pop,'A');
 
 animated_gif_reg_Andrea(data,'A');
