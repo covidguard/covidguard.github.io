@@ -667,6 +667,8 @@ annotation(gcf,'textbox',...
     'FontName','Verdana',...
     'FitBoxToText','off');
 
+ylim([0 40]);
+
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile.PNG']);
 close(gcf);
@@ -818,6 +820,7 @@ annotation(gcf,'textbox',...
     'FontName','Verdana',...
     'FitBoxToText','off');
 
+ylim([0 40])
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile_worst10.PNG']);
 close(gcf);
@@ -922,7 +925,7 @@ for h=1:size(customC_list,1)
     a = atan(d*p(2)*X/p(1)/Y)*180/pi;
     text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
 end
-
+ylim([0 2.4]);
 
 
 
