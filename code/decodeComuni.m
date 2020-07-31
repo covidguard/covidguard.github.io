@@ -10,12 +10,12 @@ end
 
 
 
-analizza_nuovo=0;
+analizza_nuovo=1;
 
 if analizza_nuovo==1
     year=2020;
     month=07;
-    day=20;
+    day=30;
     
     
     dateNume=datenum(year,month,day);
