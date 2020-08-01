@@ -177,8 +177,8 @@ end
 
 
 % add custom country
-customC_list = {'Brazil'; 'Russia';'China'};
-customC_list = {'Italy'; 'Sweden'};
+% customC_list = {'Brazil'; 'Russia';'China'};
+customC_list = {'Italy'};
 
 for reg = 1:size(customC_list,1)    
     regione = char(customC_list{reg});    
@@ -270,12 +270,12 @@ close(gcf);
 %% TOTAL DEATHS
 n_lines=20;
 
-[worstWeight,idx]=sort(worldData.dataSumWeight,'descend');
+[worstWeight,idx]=sort(worldData.deathsSumWeight,'descend');
 idx_country_worst=idx(1:n_lines);
 list_country(idx(1:n_lines))
 worldData.population(idx(1:n_lines))
 
-worldData.dataSumWeight(idx_country_worst)
+% worldData.dataSumWeight(idx_country_worst)
 
 
 colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
@@ -344,46 +344,46 @@ end
 
 
 
-
-% add custom country
-customC_list = {'Brazil'; 'Russia';'China'};
-
-for reg = 1:size(customC_list,1)    
-    regione = char(customC_list{reg});    
-    idx_cR = find(strcmp(list_country,regione));
-    
-    y=cumsum(worldData.deathWeight(:,idx_cR)*100000);
-    
-       try
-        aligmnent_reg=find(y>=aligmnent); aligmnent_reg=aligmnent_reg(1);
-        
-        a(reg)=plot([-aligmnent_reg:-aligmnent_reg+size(date_s,1)-1]', y,'LineWidth', 2.0, 'Color', colors{reg});
-        
-        idxx=find(~isnan(y));idxx=idxx(end);
-        i = round(idxx/1)-1;
-        
-        % Get the local slope
-        d = (y(i+1)-y(i-3))/4;
-        X = diff(get(gca, 'xlim'));
-        Y = diff(get(gca, 'ylim'));
-        p = pbaspect;
-        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
-        if ~isfinite(a)
-            a=90;
-        end
-        
-        % Display the text
-        count = char(regione);
-        count=strrep(count,'_',' ');
-        
-        
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(-aligmnent_reg+size(date_s,1)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7);
-        
-       catch
-           fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
-       end
-end
+% 
+% % add custom country
+% customC_list = {'Brazil'; 'Russia';'China'};
+% 
+% for reg = 1:size(customC_list,1)    
+%     regione = char(customC_list{reg});    
+%     idx_cR = find(strcmp(list_country,regione));
+%     
+%     y=cumsum(worldData.deathWeight(:,idx_cR)*100000);
+%     
+%        try
+%         aligmnent_reg=find(y>=aligmnent); aligmnent_reg=aligmnent_reg(1);
+%         
+%         a(reg)=plot([-aligmnent_reg:-aligmnent_reg+size(date_s,1)-1]', y,'LineWidth', 2.0, 'Color', colors{reg});
+%         
+%         idxx=find(~isnan(y));idxx=idxx(end);
+%         i = round(idxx/1)-1;
+%         
+%         % Get the local slope
+%         d = (y(i+1)-y(i-3))/4;
+%         X = diff(get(gca, 'xlim'));
+%         Y = diff(get(gca, 'ylim'));
+%         p = pbaspect;
+%         a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+%         if ~isfinite(a)
+%             a=90;
+%         end
+%         
+%         % Display the text
+%         count = char(regione);
+%         count=strrep(count,'_',' ');
+%         
+%         
+%         %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+%         text(-aligmnent_reg+size(date_s,1)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7);
+%         
+%        catch
+%            fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
+%        end
+% end
 
 
 
