@@ -12,7 +12,7 @@
 /* Fix visualization - margin problems close to the nav bar when shrinking the screen */
 @media (min-width: 66.5rem) {
     .main-content {
-       margin-left: calc(max(270px, (100% - 1064px) / 2 + 264px));
+       /*margin-left: calc(max(270px, (100% - 1064px) / 2 + 264px));*/
     }
 }
 
