@@ -23,12 +23,12 @@ for i = 1 : length(indexStartEntry)
         fieldName = l_i(kk+1 : indexEndField(k)-1);
         
         % find value
-        kk = indexEndField(k) + 3;
+        kk = indexEndField(k) + 3       -1;
         if strcmp(l_i(kk),'"')
             while ~strcmp(l_i(kk+1),'"')
                 kk = kk + 1;
             end
-            value = cellstr(l_i(indexEndField(k) + 4 : kk));
+            value = cellstr(l_i(indexEndField(k) + 4      -1 : kk));
             value = char(value);
             value(strfind(value,''''))= ' ';
             value = cellstr(value);
@@ -47,7 +47,7 @@ for i = 1 : length(indexStartEntry)
             if kk == length(l_i)
                 kk = length(l_i)+1;
             end
-            value = str2double(l_i(indexEndField(k) + 3 : kk-1));
+            value = str2double(l_i(indexEndField(k) + 3      -1 : kk-1));
             try
               eval(sprintf('data.%s(i, 1) = %f;', fieldName, value));
             catch

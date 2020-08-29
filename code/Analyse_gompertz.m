@@ -5925,7 +5925,7 @@ for reg = 1:size(Provincia_lista,1)
     try
     idx_reg=find(strcmp(dataReg.denominazione_provincia,cell(Provincia_lista(reg,:))));             
     sigla_prov=dataReg.sigla_provincia(idx_reg);
-    if ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('In fase di definizione/aggiornamento')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('In fase di definizione')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('fuori Regione/P.A.'))
+    if ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('In fase di definizione/aggiornamento')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('In fase di definizione')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('In fase di definizione\/aggiornamento')) & ~strcmp(cellstr(Provincia_lista(reg,:)),cellstr('fuori Regione/P.A.'))
         %     [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
         
         %     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
@@ -6162,7 +6162,8 @@ for reg = 1:size(Regione_lista)
 %     sigla_prov=sigla_prov(ixs);
     
     
-    
+     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione\/aggiornamento'));
+    sigla_prov=sigla_prov(ixs);   
     
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
     sigla_prov=sigla_prov(ixs);
@@ -6176,6 +6177,9 @@ for reg = 1:size(Regione_lista)
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr(''));
     sigla_prov=sigla_prov(ixs);
     
+    [sigla_prov]=setdiff(sigla_prov,cellstr(''));
+    
+    
     % find population
     [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));
     
@@ -6186,7 +6190,7 @@ for reg = 1:size(Regione_lista)
         province_totale.nome(ppt,1)=cellstr(regione);
         province_totale.datoUltimo(ppt,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-1)))./pop.number(idx_pop(h))*1000;
         province_totale.datoLastDays(ppt,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-n_days_comp+1)))./pop.number(idx_pop(h))*1000;
-        end
+     end
 end
 
 [worstProvValue,idx]=sort(province_totale.datoUltimo,'descend');
@@ -6504,11 +6508,15 @@ for reg = 1:size(Regione_lista)
     sigla_prov=sigla_prov(ixs);
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
     sigla_prov=sigla_prov(ixs);
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione\/aggiornamento'));
+    sigla_prov=sigla_prov(ixs);
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('fuori Regione/P.A.'));
     sigla_prov=sigla_prov(ixs);
    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione'));
     sigla_prov=sigla_prov(ixs);
-    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione / Provincia Autonoma'));
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione / Provincia Autonoma'));      
+    sigla_prov=sigla_prov(ixs);
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione \/ Provincia Autonoma'));      
     sigla_prov=sigla_prov(ixs);
     
     % find population
@@ -7048,8 +7056,10 @@ dataReg=dataProv;
 
 [ListaProvince]= unique(dataReg.denominazione_provincia);
 ListaProvince = setdiff(ListaProvince,'In fase di definizione/aggiornamento');
+ListaProvince = setdiff(ListaProvince,'In fase di definizione\/aggiornamento');
 ListaProvince = setdiff(ListaProvince,'In fase di definizione');
 ListaProvince = setdiff(ListaProvince,'Fuori Regione / Provincia Autonoma');
+ListaProvince = setdiff(ListaProvince,'Fuori Regione \/ Provincia Autonoma');
 ListaProvince = setdiff(ListaProvince,'fuori Regione/P.A.');
 ListaProvince = setdiff(ListaProvince,'Forl\u201c-Cesena');
 
@@ -7135,9 +7145,13 @@ for reg = [9]
     sigla_prov=sigla_prov(ixs);
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
     sigla_prov=sigla_prov(ixs);
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione\/aggiornamento'));
+    sigla_prov=sigla_prov(ixs);
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('fuori Regione/P.A.'));
     sigla_prov=sigla_prov(ixs);
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione'));
+    sigla_prov=sigla_prov(ixs);    
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione \/ Provincia Autonoma'));
     sigla_prov=sigla_prov(ixs);
     
     % find population
