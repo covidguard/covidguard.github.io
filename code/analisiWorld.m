@@ -98,7 +98,7 @@ worldData.deathsSumWeight = sum(temp);
 
 
 %% TOTAL CASES
-n_lines=20;
+n_lines=30;
 
 [worstWeight,idx]=sort(worldData.dataSumWeight,'descend');
 idx_country_worst=idx(1:n_lines);
