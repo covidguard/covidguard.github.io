@@ -1424,8 +1424,8 @@ for reg=1:size(regioni_tot,1)
         end
         
         
-        set(gca,'XTick',1:2:size(time_num,1));
-        set(gca,'XTickLabel',datestr(time_num(1:2:end),'dd mmm'));
+        set(gca,'XTick',1:3:size(time_num,1));
+        set(gca,'XTickLabel',datestr(time_num(1:3:end),'dd mmm'));
         set(gca,'XLim',[0.5,size(time_num,1)+0.5]);
         set(gca,'XTickLabelRotation',90,'FontSize',6.5);
         ax=gca;
@@ -1499,8 +1499,8 @@ for reg=1:size(regioni_tot,1)
         end
         
         
-        set(gca,'XTick',1:2:size(time_num(2:end),1));
-        set(gca,'XTickLabel',datestr(time_num(2:2:end),'dd mmm'));
+        set(gca,'XTick',1:3:size(time_num(2:end),1));
+        set(gca,'XTickLabel',datestr(time_num(2:3:end),'dd mmm'));
         set(gca,'XLim',[0.5,size(time_num(2:end),1)+0.5]);
         set(gca,'XTickLabelRotation',90,'FontSize',6.5);
         ax=gca;
@@ -1576,7 +1576,7 @@ for reg=1:size(regioni_tot,1)
         ylabel('% casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
         
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-        ax.XTick = time_num(1):2:time_num(end);
+        ax.XTick = time_num(1):3:time_num(end);
         datetick('x', datetickFormat, 'keepticks') ;
         set(gca,'XTickLabelRotation',90,'FontSize',6.5);
         ax.FontSize = font_size;
@@ -1686,7 +1686,7 @@ for reg=1:size(regioni_tot,1)
         
         
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-        ax.XTick = time_num(1:2:end);
+        ax.XTick = time_num(1:3:end);
         datetick('x', datetickFormat, 'keepticks') ;
         set(gca,'XTickLabelRotation',90,'FontSize',6.5);
         ax.FontSize = font_size;
@@ -1806,7 +1806,7 @@ for reg=1:size(regioni_tot,1)
         ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
         ylabel('Numero casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-        ax.XTick = time_num(1:2:end);
+        ax.XTick = time_num(1:3:end);
         datetick('x', datetickFormat, 'keepticks') ;
         set(gca,'XTickLabelRotation',90,'FontSize',6.5);
         ax.FontSize = font_size;
@@ -1900,8 +1900,8 @@ for reg=1:size(regioni_tot,1)
     a(1).FaceColor = [1 0.200000002980232 0.200000002980232];
     
     
-    set(gca,'XTick',1:2:size(tamp_positivi,1))
-    set(gca,'XTickLabel',datestr(time_num(2:2:end),'dd mmm'))
+    set(gca,'XTick',1:3:size(tamp_positivi,1))
+    set(gca,'XTickLabel',datestr(time_num(2:3:end),'dd mmm'))
     set(gca,'XTickLabelRotation',90,'FontSize',6.5);
     set(gca,'XLim',[0.5,size(time_num,1)-0.5]);
     yL=get(gca,'ylim');
@@ -1996,8 +1996,8 @@ for reg=1:size(regioni_tot,1)
     a(1).FaceColor = [1 0.200000002980232 0.200000002980232];
     
     
-    set(gca,'XTick',1:2:size(tamp_positivi,1))
-    set(gca,'XTickLabel',datestr(time_num(2:2:end),'dd mmm'))
+    set(gca,'XTick',1:3:size(tamp_positivi,1))
+    set(gca,'XTickLabel',datestr(time_num(2:3:end),'dd mmm'))
     set(gca,'XTickLabelRotation',90,'FontSize',6.5);
     set(gca,'XLim',[0.5,size(time_num,1)-0.5]);
     yL=get(gca,'ylim');
@@ -2091,8 +2091,8 @@ for reg=1:size(regioni_tot,1)
     a(1).FaceColor = [1 0.200000002980232 0.200000002980232];
     
     
-    set(gca,'XTick',1:2:size(tamp_positivi,1))
-    set(gca,'XTickLabel',datestr(time_num(2:2:end),'dd mmm'))
+    set(gca,'XTick',1:3:size(tamp_positivi,1))
+    set(gca,'XTickLabel',datestr(time_num(2:3:end),'dd mmm'))
     set(gca,'XTickLabelRotation',90,'FontSize',6.5);
     set(gca,'XLim',[0.5,size(time_num,1)-0.5]);
     yL=get(gca,'ylim');
@@ -2248,7 +2248,7 @@ for reg = 1:size(regioni_tot,1);
     set(ax1, 'FontSize', font_size);
     
     % set(ax1,'ylim',([0,80]));
-    ax1.XTick = datenum(time_num(1:2:end));
+    ax1.XTick = datenum(time_num(1:3:end));
     datetick('x', 'dd mmm', 'keepticks') ;
     set(ax1,'xlim',([t(1),t(end)]));
     set(ax1,'XTickLabelRotation',53,'FontSize',6.5);
@@ -2264,11 +2264,11 @@ for reg = 1:size(regioni_tot,1);
     set(ax2, 'FontSize', font_size);
     % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
     % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
-    % ax2.XTick = t(1:2:end)+offset_dec-1
+    % ax2.XTick = t(1:3:end)+offset_dec-1
     % set(ax2,'ylim',([0,80]));
-    ax2.XTick = datenum(time_num(1:2:end))+offset_dec;
+    ax2.XTick = datenum(time_num(1:3:end))+offset_dec;
     set(ax2,'xlim',([t(1)+offset_dec,t(end)+offset_dec]));
-    ax2.XTickLabel = datestr(datenum(time_num(1:2:end))+offset_dec);
+    ax2.XTickLabel = datestr(datenum(time_num(1:3:end))+offset_dec);
     datetick('x', 'dd mmm', 'keepticks') ;
     
     set(ax2,'XTickLabelRotation',53,'FontSize',6.5);
@@ -2603,8 +2603,8 @@ else
     font_size = 6.5;
 end
 
-set(gca,'XTick',1:2:size(time_num,1));
-set(gca,'XTickLabel',datestr(time_num(1:2:end),'dd mmm'));
+set(gca,'XTick',1:3:size(time_num,1));
+set(gca,'XTickLabel',datestr(time_num(1:3:end),'dd mmm'));
 set(gca,'XLim',[0.5,size(time_num,1)+0.5]);
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ax=gca;
@@ -2886,8 +2886,8 @@ close(gcf);
 %     font_size = 6.5;
 % end
 %
-% set(gca,'XTick',1:2:size(t,1));
-% set(gca,'XTickLabel',datestr(t(1:2:end),'dd mmm'));
+% set(gca,'XTick',1:3:size(t,1));
+% set(gca,'XTickLabel',datestr(t(1:3:end),'dd mmm'));
 % set(gca,'XLim',[0.5,size(t,1)+0.5]);
 % set(gca,'XTickLabelRotation',53,'FontSize',6.5);
 % ax=gca;
@@ -2992,8 +2992,8 @@ close(gcf);
 %     font_size = 6.5;
 % end
 %
-% set(gca,'XTick',1:2:size(t,1));
-% set(gca,'XTickLabel',datestr(t(1:2:end),'dd mmm'));
+% set(gca,'XTick',1:3:size(t,1));
+% set(gca,'XTickLabel',datestr(t(1:3:end),'dd mmm'));
 % set(gca,'XLim',[0.5,size(t,1)+0.5]);
 % set(gca,'XTickLabelRotation',53,'FontSize',6.5);
 % ax=gca;
@@ -3163,8 +3163,8 @@ ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 ylabel('Casi Totali (corretti con il numero tamponi)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
 
 set(gca,'xlim',([time_num(1) time_num(end)+50]));
-set(gca,'XTick',[time_num(1):2:time_num(end)+50]);
-set(gca,'XTickLabel',datestr([time_num(1):2:time_num(end)+50],'dd mmm'));
+set(gca,'XTick',[time_num(1):3:time_num(end)+50]);
+set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)+50],'dd mmm'));
 
 
 
@@ -4094,7 +4094,7 @@ set(ax1, 'FontSize', font_size);
 set(ax1,'xlim',([t(1),t(end)]));
 set(ax1,'ylim',([0,80]));
 ax1.XTick = time_num;
-ax1.XTick = time_num(1):2:time_num(end);
+ax1.XTick = time_num(1):3:time_num(end);
 datetick('x', 'dd mmm', 'keepticks') ;
 set(ax1,'XTickLabelRotation',53,'FontSize',6.5);
 set(ax1,'Xcolor',[0 0.447058826684952 0.74117648601532]);
@@ -4105,7 +4105,7 @@ set(ax2, 'FontName', 'Verdana');
 set(ax2, 'FontSize', font_size);
 set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec]));
 
-ax2.XTick = t(1)+offset_dec-1:2:t(end)+offset_dec;
+ax2.XTick = t(1)+offset_dec-1:3:t(end)+offset_dec;
 set(ax2,'ylim',([0,80]));
 datetick('x', 'dd mmm', 'keepticks') ;
 % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec]));
@@ -4264,7 +4264,7 @@ set(ax1, 'FontName', 'Verdana');
 set(ax1, 'FontSize', font_size);
 set(ax1,'xlim',([t(1),t(end)+10]));
 % set(ax1,'ylim',([0,80]));
-ax1.XTick = [time_num(1):2:time_num(end)+10];
+ax1.XTick = [time_num(1):3:time_num(end)+10];
 datetick('x', 'dd mmm', 'keepticks') ;
 set(ax1,'XTickLabelRotation',53,'FontSize',6.5);
 set(ax1,'Xcolor',[0 0.447058826684952 0.74117648601532]);
@@ -4277,10 +4277,10 @@ set(ax2, 'FontSize', font_size);
 set(ax2,'xlim',([t(1)+offset_dec,t(end)+offset_dec+10]));
 % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
 % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
-% ax2.XTick = t(1:2:end)+offset_dec-1
+% ax2.XTick = t(1:3:end)+offset_dec-1
 % set(ax2,'ylim',([0,80]));
-ax2.XTick = [time_num(1):2:time_num(end)+10]+offset_dec;
-ax2.XTickLabel = [time_num(1):2:time_num(end)+10]+offset_dec;
+ax2.XTick = [time_num(1):3:time_num(end)+10]+offset_dec;
+ax2.XTickLabel = [time_num(1):3:time_num(end)+10]+offset_dec;
 datetick('x', 'dd mmm', 'keepticks') ;
 set(ax2,'XTickLabelRotation',53,'FontSize',6.5);
 set(ax2,'Xcolor',[0.850980401039124 0.325490206480026 0.0980392172932625]);
@@ -4439,7 +4439,7 @@ set(ax1, 'FontName', 'Verdana');
 set(ax1, 'FontSize', font_size);
 
 % set(ax1,'ylim',([0,80]));
-ax1.XTick = datenum(time_num(1:2:end));
+ax1.XTick = datenum(time_num(1:3:end));
 datetick('x', 'dd mmm', 'keepticks') ;
 set(ax1,'xlim',([t(1),t(end)]));
 set(ax1,'XTickLabelRotation',53,'FontSize',6.5);
@@ -4455,11 +4455,11 @@ set(ax2, 'FontName', 'Verdana');
 set(ax2, 'FontSize', font_size);
 % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
 % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
-% ax2.XTick = t(1:2:end)+offset_dec-1
+% ax2.XTick = t(1:3:end)+offset_dec-1
 % set(ax2,'ylim',([0,80]));
-ax2.XTick = datenum(time_num(1:2:end))+offset_dec;
+ax2.XTick = datenum(time_num(1:3:end))+offset_dec;
 set(ax2,'xlim',([t(1)+offset_dec,t(end)+offset_dec]));
-ax2.XTickLabel = datestr(datenum(time_num(1:2:end))+offset_dec);
+ax2.XTickLabel = datestr(datenum(time_num(1:3:end))+offset_dec);
 datetick('x', 'dd mmm', 'keepticks') ;
 
 set(ax2,'XTickLabelRotation',53,'FontSize',6.5);
@@ -4555,7 +4555,7 @@ close(gcf);
 % set(ax1, 'FontSize', font_size);
 % 
 % % set(ax1,'ylim',([0,80]));
-% ax1.XTick = datenum(time_num(1:2:end));
+% ax1.XTick = datenum(time_num(1:3:end));
 % datetick('x', 'dd mmm', 'keepticks') ;
 % set(ax1,'xlim',([t(1),t(end)]));
 % set(ax1,'XTickLabelRotation',53,'FontSize',6.5);
@@ -4571,11 +4571,11 @@ close(gcf);
 % set(ax2, 'FontSize', font_size);
 % % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
 % % set(ax2,'xlim',([t(1)+offset_dec-1,t(end)+offset_dec-1]));
-% % ax2.XTick = t(1:2:end)+offset_dec-1
+% % ax2.XTick = t(1:3:end)+offset_dec-1
 % % set(ax2,'ylim',([0,80]));
-% ax2.XTick = datenum(time_num(1:2:end))+offset_dec;
+% ax2.XTick = datenum(time_num(1:3:end))+offset_dec;
 % set(ax2,'xlim',([t(1)+offset_dec,t(end)+offset_dec]));
-% ax2.XTickLabel = datestr(datenum(time_num(1:2:end))+offset_dec);
+% ax2.XTickLabel = datestr(datenum(time_num(1:3:end))+offset_dec);
 % datetick('x', 'dd mmm', 'keepticks') ;
 % 
 % set(ax2,'XTickLabelRotation',53,'FontSize',6.5);
@@ -4768,7 +4768,7 @@ ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 ylabel('% casi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
 
 set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-ax.XTick = time_num(1):2:time_num(end);
+ax.XTick = time_num(1):3:time_num(end);
 datetick('x', datetickFormat, 'keepticks') ;
 set(gca,'XTickLabelRotation',53,'FontSize',6.5);
 ax.FontSize = font_size;
@@ -4850,8 +4850,8 @@ else
     font_size = 6.5;
 end
 
-set(gca,'XTick',1:2:size(time_num(2:end),1));
-set(gca,'XTickLabel',datestr(time_num(2:2:end),'dd mmm'));
+set(gca,'XTick',1:3:size(time_num(2:end),1));
+set(gca,'XTickLabel',datestr(time_num(2:3:end),'dd mmm'));
 set(gca,'XLim',[0.5,size(time_num(2:end),1)+0.5]);
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ax=gca;
@@ -4933,8 +4933,8 @@ else
     font_size = 6.5;
 end
 
-set(gca,'XTick',1:2:size(time_num(2:end),1));
-set(gca,'XTickLabel',datestr(time_num(2:2:end),'dd mmm'));
+set(gca,'XTick',1:3:size(time_num(2:end),1));
+set(gca,'XTickLabel',datestr(time_num(2:3:end),'dd mmm'));
 set(gca,'XLim',[0.5,size(time_num(2:end),1)+0.5]);
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ax=gca;
@@ -6786,7 +6786,7 @@ for reg = 1:size(Regione_lista)
             end
         end
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
-        ax.XTick = time_num(1:2:end);
+        ax.XTick = time_num(1:3:end);
         datetick('x', datetickFormat, 'keepticks') ;
         set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
@@ -6995,7 +6995,7 @@ for reg = 1:size(Regione_lista)
         
         
         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
-        ax.XTick = time_num(2):2:time_num(end);
+        ax.XTick = time_num(2):3:time_num(end);
         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
         datetick('x', datetickFormat, 'keepticks') ;
         set(gca,'XTickLabelRotation',53,'FontSize',6.5);
@@ -7467,7 +7467,7 @@ for reg = [9]
         
         
         set(code_axe, 'Xlim', [time_num(1)-50, time_num(end)+100]);
-%         ax.XTick = time_num(2):2:time_num(end);
+%         ax.XTick = time_num(2):3:time_num(end);
 %         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
         datetick('x', datetickFormat) ;
         set(code_axe, 'Xlim', [time_num(1)-50, time_num(end)+100]);
@@ -7731,7 +7731,7 @@ end
 %         
 %         
 %         set(code_axe, 'Xlim', [time_num(1)-50, time_num(end)+100]);
-% %         ax.XTick = time_num(2):2:time_num(end);
+% %         ax.XTick = time_num(2):3:time_num(end);
 % %         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
 %         datetick('x', datetickFormat) ;
 %         set(code_axe, 'Xlim', [time_num(1)-50, time_num(end)+100]);
@@ -7847,7 +7847,7 @@ end
 %         
 %         
 %         set(gca, 'Xlim', [time_num(1)-50, time_num(end)+20]);
-%         %         ax.XTick = time_num(2):2:time_num(end);
+%         %         ax.XTick = time_num(2):3:time_num(end);
 %         %         set(code_axe, 'Xlim', [time_num(2), time_num(end)]);
 %         datetick('x', datetickFormat) ;
 %         set(gca, 'Xlim', [time_num(1)-50, time_num(end)+20]);
