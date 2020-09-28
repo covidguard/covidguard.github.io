@@ -628,7 +628,7 @@ ylim(y_lim);
 for h=1:size(customC_list,1)
     a1_tot_h=[a1_tot{h}];
     idx_max=find(a1_tot_h==max(a1_tot_h))-10;
-    i = idx_max;
+    i = idx_max(1);
     
     t_h=[t_tot{h}];
     % Get the local slope
@@ -641,8 +641,11 @@ for h=1:size(customC_list,1)
     Y = diff(get(gca, 'ylim'));
     p = pbaspect;
     a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+  
     text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
-end
+
+    
+    end
 
 
 
@@ -781,7 +784,7 @@ ylim(y_lim);
 for h=1:size(customC_list,1)
     a1_tot_h=[a1_tot{h}];
     idx_max=find(a1_tot_h==max(a1_tot_h))-10;
-    i = idx_max;
+    i = idx_max(1);
     
     t_h=[t_tot{h}];
     % Get the local slope
@@ -820,7 +823,7 @@ annotation(gcf,'textbox',...
     'FontName','Verdana',...
     'FitBoxToText','off');
 
-ylim([0 40])
+ylim([0 80])
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile_worst10.PNG']);
 close(gcf);
@@ -910,7 +913,7 @@ ylim(y_lim);
 for h=1:size(customC_list,1)
     a1_tot_h=[a1_tot{h}];
     idx_max=find(a1_tot_h==max(a1_tot_h))-10;
-    i = idx_max;
+    i = idx_max(1);
     
     t_h=[t_tot{h}];
     % Get the local slope
