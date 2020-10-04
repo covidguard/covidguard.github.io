@@ -180,6 +180,8 @@ end
 % customC_list = {'Brazil'; 'Russia';'China'};
 customC_list = {'Italy';'Sweden'};
 
+% customC_list = {'Norway';'Sweden';'Finland'};
+
 for reg = 1:size(customC_list,1)    
     regione = char(customC_list{reg});    
     idx_cR = find(strcmp(list_country,regione));
@@ -188,6 +190,7 @@ for reg = 1:size(customC_list,1)
     
        try
         aligmnent_reg=find(y>=aligmnent); aligmnent_reg=aligmnent_reg(1);
+        aligmnent_reg=0
         
         a(reg)=plot([-aligmnent_reg:-aligmnent_reg+size(date_s,1)-1]', y,'LineWidth', 2.0, 'Color', colors{reg});
         
