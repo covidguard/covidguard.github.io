@@ -262,6 +262,16 @@ Il grafico riporta l'andamento del numero di soggetti attualmente positivi
 ![Picco Lombardia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Lombardia_cumulati.PNG)
 
 
+### Confronto Lombardia-Resto d'Italia: casi giornalieri
+I grafici riportano il confronto negli andamenti tra la Lombardia e il resto d'Italia
+<iframe class="slideshow-iframe" src="/slides/lombardia-italia-confronto.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+
+
+
+
+
+
 ### Curve epidemiche provinciali
 L'interpolazione delle serie di crescita dei nuovi casi provinciali permette di valutare gli andamenti Provincia per Provincia della Regione.
 Le curve soffrono ovviamente della estrema variabilità delle condizioni di rilevamento dei dati (tamponi, tipologia di persone analizzate, ...) e sono poco rappresentative nella parte di crescita, tuttavia mostrano inequivolcabilmente come, in praticolare in Provincia di Lodi ma anche nelle Province di Cremona e Pavia, l'epidemia fosse iniziata un periodo molto antecedente il primo caso ufficiale.
