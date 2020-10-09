@@ -419,7 +419,7 @@ font_size=8;
         
  
 % %     cd([WORKroot,'/assets/img/regioni']);
-print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/_confrontoItaliaLombardia_1_casiGiornalieri.PNG']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/confrontoItaliaLombardia_1_casiGiornalieri.PNG']);
 close(gcf);
        
 

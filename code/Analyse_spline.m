@@ -3593,69 +3593,6 @@ for type=1:3
     a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
     b=plot(t,a1,'-r','LineWidth', 1.5,'color',[1 0.400000005960464 0.400000005960464]);
 
-    
-%     if type==1 || type==3
-%         [max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
-%         
-%         try
-%             idxMina1=find(round(a1(fix(size(a1,1)/5*4):end))<100)+fix(size(a1,1)/5*4); idxMina1=idxMina1(1);
-%             idxMina2=find(round(a2(fix(size(a2,1)/5*4):end))<100)+fix(size(a2,1)/5*4); idxMina2=idxMina2(1);
-%             idxMina3=find(round(a3(fix(size(a3,1)/5*4):end))<100)+fix(size(a3,1)/5*4); idxMina3=idxMina3(1);
-%         catch
-%             idxMina1=[];
-%             idxMina2=[];
-%             idxMina3=[];
-%         end
-%         
-%         piccoMin=[];
-%         piccoMax=[];
-%         zeroMin=[];
-%         zeroMax=[];
-%         try
-%             piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
-%             piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
-%             
-%             zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
-%             zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
-%         catch
-%             
-%             
-%         end
-%         try
-%             if piccoMin<piccoMax
-%                 picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
-%             else
-%                 picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
-%             end
-%             
-%             if piccoMin<piccoMax
-%                 zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
-%             else
-%                 zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
-%             end
-%             
-%             annotation(gcf,'textbox',...
-%                 [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
-%                 'String',{picco},...
-%                 'LineStyle','none',...
-%                 'HorizontalAlignment','right',...
-%                 'FontSize',10,...
-%                 'FontName','Verdana',...
-%                 'FitBoxToText','off');
-%             
-%             annotation(gcf,'textbox',...
-%                 [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
-%                 'String',{zero},...
-%                 'LineStyle','none',...
-%                 'HorizontalAlignment','right',...
-%                 'FontName','Verdana',...
-%                 'FitBoxToText','off');
-%         catch
-%         end
-%     end
-    
-    
-    
     if ismac
         font_size = 9;
     else
