@@ -54,6 +54,15 @@ Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perci�
 Per ogni Regione il grafico mira a valutare empiricamente l'attuale possibilità di un'adeguata ed efficace risposta alle fasi successive dell'epidemia. N.B.: le conclusioni sono puramente indicative.
 ![Andamento regioni1](slides/img/regioni/status.PNG)
 
+### Confronto casi testati / numero casi positivi
+Il grafico riporta il confronto tra regioni relativo all'ultima settimana riguardo il numero di nuovi casi testati e il numero di nuovi casi positivi. 
+Se la Regione si trova nella zona rossa significa che sta praticando un numero insufficiente di test.
+Se la Regione si trova nella zona gialla significa che sta praticando un numero sufficiente di test.
+Se la Regione si trova nella zona verde significa che sta praticando un numero sovrabbodante di test.
+Se la . N.B.: le conclusioni sono puramente indicative.
+![Andamento regioni6](slides/img/regioni/ita_bestRegWeekCasiTestatiPercentMAP.PNG)
+
+
 
 ### Andamento epidemia: confronto tra Regioni
 Il grafico riporta l'andamento del numero dei casi totali di ogni Regione allineati temporalmente a partire dal caso 10/100.000 di ogni Regione.

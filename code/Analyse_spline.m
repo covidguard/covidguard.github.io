@@ -870,21 +870,21 @@ end
 ylabel('Percentuale Nuovi casi testati Positivi')
 xlabel('Nuovi casi testati ogni 100.000 ab.')
 set(gcf,'color','w');
-
-for n = 1:size(x_data,1)
-    % Draw plot for y = x.^n
-    x = x_data(n,:);
-    y = y_data(n,:);
-    
-    for q=1:length(x)
-        %plot(x(q)',y(q)',markers{l},'w')
-        lbl(q).Position(1:2) = [x(q), y(q)];
-    end
-    for q=1:length(x)
-        %plot(x(q)',y(q)',markers{l},'w')
-        lbl(q).Position(1:2) = [x(q), y(q)];
-    end
-end
+% 
+% for n = 1:size(x_data,1)
+%     % Draw plot for y = x.^n
+%     x = x_data(n,:);
+%     y = y_data(n,:);
+%     
+%     for q=1:length(x)
+%         %plot(x(q)',y(q)',markers{l},'w')
+%         lbl(q).Position(1:2) = [x(q), y(q)];
+%     end
+%     for q=1:length(x)
+%         %plot(x(q)',y(q)',markers{l},'w')
+%         lbl(q).Position(1:2) = [x(q), y(q)];
+%     end
+% end
 
 datestr_now = datestr(now);
 annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
