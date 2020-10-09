@@ -1381,7 +1381,7 @@ close(gcf);
 
 
 %% GRAFICI SINGOLA REGIONE
-mediamobile_yn=0;
+mediamobile_yn=1;
 for reg=1:size(regioni_tot,1)
     try
         regione = char(regioni_tot(reg,1));
@@ -1727,6 +1727,10 @@ for reg=1:size(regioni_tot,1)
         print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/reg_',regione, '_cumulati.PNG']);
         close(gcf);
         %     cd([WORKroot,'/code']);
+        
+        
+        
+        
         
         %% figura giornaliera
         datetickFormat = 'dd mmm';
@@ -3543,24 +3547,23 @@ for type=1:3
     fclose(fout);
     
     if type==1 || type==3
-        %         command=sprintf('gauss_estim testIn_gauss.txt');system(command);
-        %         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        
-        command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
-        
-        %                 command=sprintf('chi_estim_conf testIn_gauss.txt');system(command);
-        %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_chi_fit.txt','%d%f%f%f%f%f','delimiter',';');
+
+        [a1] = splinerMat(time_num,data,10);
+        t = time_num;
+
+%         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         
+
     elseif type==2
-        %         command=sprintf('sigm_estim testIn_gauss.txt');system(command);
-        %         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
         
-        command=sprintf('gomp_estim testIn_gauss.txt');system(command);
-        [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+        [a1] = splinerMat(time_num,data,10);
+        t = time_num;
         
+%         command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
         
-        
-        
+  
     end
     
     
@@ -3582,78 +3585,73 @@ for type=1:3
     set(gcf,'Position',[26 79 967 603]);
     grid on
     hold on
+
     
-    %                 shadedplot(t(2:end),diff(a4)',diff(a5'),[0.9 0.9 1]);  hold on
-    %             a=plot(time_num(2:end),diff(data),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
-    %             b=plot(t(2:end),diff(a1),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
-    %
-    %
-    
-    shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
-    d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
-    c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+%     shadedplot(t,a4',a5',[0.9 0.9 1]);  hold on
+%     d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+%     c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
     b=plot(t,a1,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
     a=plot(time_num,data,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
     
-    if type==1 || type==3
-        [max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
-        
-        try
-            idxMina1=find(round(a1(fix(size(a1,1)/5*4):end))<100)+fix(size(a1,1)/5*4); idxMina1=idxMina1(1);
-            idxMina2=find(round(a2(fix(size(a2,1)/5*4):end))<100)+fix(size(a2,1)/5*4); idxMina2=idxMina2(1);
-            idxMina3=find(round(a3(fix(size(a3,1)/5*4):end))<100)+fix(size(a3,1)/5*4); idxMina3=idxMina3(1);
-        catch
-            idxMina1=[];
-            idxMina2=[];
-            idxMina3=[];
-        end
-        
-        piccoMin=[];
-        piccoMax=[];
-        zeroMin=[];
-        zeroMax=[];
-        try
-            piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
-            piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
-            
-            zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
-            zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
-        catch
-            
-            
-        end
-        try
-            if piccoMin<piccoMax
-                picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
-            else
-                picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
-            end
-            
-            if piccoMin<piccoMax
-                zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
-            else
-                zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
-            end
-            
-            annotation(gcf,'textbox',...
-                [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
-                'String',{picco},...
-                'LineStyle','none',...
-                'HorizontalAlignment','right',...
-                'FontSize',10,...
-                'FontName','Verdana',...
-                'FitBoxToText','off');
-            
-            annotation(gcf,'textbox',...
-                [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
-                'String',{zero},...
-                'LineStyle','none',...
-                'HorizontalAlignment','right',...
-                'FontName','Verdana',...
-                'FitBoxToText','off');
-        catch
-        end
-    end
+%     if type==1 || type==3
+%         [max1, idxMaxa1]=max(a1); [max2, idxMaxa2]=max(a2); [max3, idxMaxa3]=max(a3);
+%         
+%         try
+%             idxMina1=find(round(a1(fix(size(a1,1)/5*4):end))<100)+fix(size(a1,1)/5*4); idxMina1=idxMina1(1);
+%             idxMina2=find(round(a2(fix(size(a2,1)/5*4):end))<100)+fix(size(a2,1)/5*4); idxMina2=idxMina2(1);
+%             idxMina3=find(round(a3(fix(size(a3,1)/5*4):end))<100)+fix(size(a3,1)/5*4); idxMina3=idxMina3(1);
+%         catch
+%             idxMina1=[];
+%             idxMina2=[];
+%             idxMina3=[];
+%         end
+%         
+%         piccoMin=[];
+%         piccoMax=[];
+%         zeroMin=[];
+%         zeroMax=[];
+%         try
+%             piccoMin=min([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+%             piccoMax=max([t(idxMaxa1),t(idxMaxa2),t(idxMaxa3)]);
+%             
+%             zeroMin=min([t(idxMina1),t(idxMina2),t(idxMina3)]);
+%             zeroMax=max([t(idxMina1),t(idxMina2),t(idxMina3)]);
+%         catch
+%             
+%             
+%         end
+%         try
+%             if piccoMin<piccoMax
+%                 picco = sprintf('Stima picco: %s-%s', datestr(piccoMin,'dd mmm'), datestr(piccoMax,'dd mmm'));
+%             else
+%                 picco = sprintf('Stima picco: %s', datestr(piccoMin,'dd mmm'));
+%             end
+%             
+%             if piccoMin<piccoMax
+%                 zero = sprintf('Stima <100 casi: %s-%s', datestr(zeroMin,'dd mmm'), datestr(zeroMax,'dd mmm'));
+%             else
+%                 zero = sprintf('Stima <100 casi: %s', datestr(zeroMin,'dd mmm'));
+%             end
+%             
+%             annotation(gcf,'textbox',...
+%                 [0.59875904860393 0.814262023217247 0.29886246122027 0.0845771144278608],...
+%                 'String',{picco},...
+%                 'LineStyle','none',...
+%                 'HorizontalAlignment','right',...
+%                 'FontSize',10,...
+%                 'FontName','Verdana',...
+%                 'FitBoxToText','off');
+%             
+%             annotation(gcf,'textbox',...
+%                 [0.59875904860393 0.779436152570481 0.29886246122027 0.0845771144278606],...
+%                 'String',{zero},...
+%                 'LineStyle','none',...
+%                 'HorizontalAlignment','right',...
+%                 'FontName','Verdana',...
+%                 'FitBoxToText','off');
+%         catch
+%         end
+%     end
     
     
     
@@ -3684,9 +3682,12 @@ for type=1:3
     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
     ax.FontSize = font_size;
     
-    set(gca,'xlim',([time_num(1) time_num(end)+90]));
-    set(gca,'XTick',[time_num(1):3:time_num(end)+90]);
-    set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)+90],'dd mmm'));
+    set(gca,'xlim',([time_num(1) time_num(end)+30]));
+    set(gca,'XTick',[time_num(1):5:time_num(end)+30]);
+    
+    
+    interv = fix(time_num(end)+30-time_num(1))/60;
+    set(gca,'XTickLabel',datestr([time_num(1):interv:time_num(end)+90],'dd mmm'));
     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
     ax.FontSize = font_size;
     
