@@ -98,7 +98,7 @@ worldData.deathsSumWeight = sum(temp);
 
 
 %% TOTAL CASES
-n_lines=30;
+n_lines=15;
 
 [worstWeight,idx]=sort(worldData.dataSumWeight,'descend');
 idx_country_worst=idx(1:n_lines);
@@ -178,10 +178,11 @@ end
 
 % add custom country
 % customC_list = {'Brazil'; 'Russia';'China'};
-customC_list = {'Italy';'Sweden'};
+% customC_list = {'Italy';'Sweden'};
 
 % customC_list = {'Norway';'Sweden';'Finland'};
 
+customC_list={''};
 for reg = 1:size(customC_list,1)    
     regione = char(customC_list{reg});    
     idx_cR = find(strcmp(list_country,regione));
@@ -549,7 +550,7 @@ last10DaysIncrement=worldData.dataWeight(end,:)-worldData.dataWeight(end-10,:);
 %% interpolazione e confronto tra paesi diversi: casi giornalieri
 customC_list = {'Italy'; 'Sweden';};
 
-customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'Brazil';'Chile';'United_States_of_America';'Peru';'United_Kingdom';'Mexico'};
+% customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'Brazil';'Chile';'United_States_of_America';'Peru';'United_Kingdom';'Mexico'};
 
 % customC_list = {'Italy'; 'Sweden';'Spain';'France';'United_States_of_America';'United_Kingdom';'Germany'};
 
@@ -568,6 +569,11 @@ set(gcf,'Position',[26 79 967 603]);
 grid on
 hold on
 clear a1_tot t_tot;
+
+ytot=(worldData.dataWeight(:)*100000);
+[a,b]=sort(ytot,'descend');
+
+
 for reg = 1:size(customC_list,1)    
     regione = char(customC_list{reg});    
     idx_cR = find(strcmp(list_country,regione));
@@ -673,10 +679,10 @@ annotation(gcf,'textbox',...
     'FontName','Verdana',...
     'FitBoxToText','off');
 
-ylim([0 40]);
+% ylim([0 40]);
 
 
-print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile.PNG']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile_ITA_SWE.PNG']);
 close(gcf);
 
 
@@ -837,9 +843,9 @@ close(gcf);
 
 
 %% interpolazione e confronto tra paesi diversi: casi decessi
-customC_list = {'Italy'; 'Sweden';};
+% customC_list = {'Italy'; 'Sweden';};
 
-customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'Brazil';'Chile';'United_States_of_America';'Peru';'United_Kingdom';'Mexico'};
+% customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'Brazil';'Chile';'United_States_of_America';'Peru';'United_Kingdom';'Mexico'};
 % customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'United_States_of_America';'United_Kingdom'};
 
 testo = struct;

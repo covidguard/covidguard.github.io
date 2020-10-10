@@ -235,7 +235,7 @@ y_data_int=[];
 %interpolation piecewise
 tmp = x_data;
 tmp(tmp == 0) = 1;
-step = 0.2;
+step = 0.2 + 0.8;
 for i = 1:size(x_data,2)
     [~, ~, ~, y_data_int(:,i)] = splinerMat(1:size(x_data,1),tmp(:,i),2,0,1:step:size(x_data,1));
 end
@@ -244,7 +244,7 @@ clear tmp
 tmp = datenum(day_list);
 x_data_int=[];
 tmp(tmp == 0) = 1;
-step = 0.2;
+step = 0.2 + 0.8;
 for i = 1:1
     [~, ~, ~, x_data_int(:,i)] = splinerMat(1:size(day_list,1),tmp(:,i),2,0,1:step:size(x_data,1));
 end
@@ -509,7 +509,7 @@ y_data_int=[];
 %interpolation piecewise
 tmp = x_data;
 tmp(tmp == 0) = 1;
-step = 0.2;
+step = 0.2 + 0.8;
 for i = 1:size(x_data,2)
     [~, ~, ~, y_data_int(:,i)] = splinerMat(1:size(x_data,1),tmp(:,i),2,0,1:step:size(x_data,1));
 end
@@ -518,7 +518,7 @@ clear tmp
 tmp = datenum(day_list);
 x_data_int=[];
 tmp(tmp == 0) = 1;
-step = 0.2;
+step = 0.2 + 0.8;
 for i = 1:1
     [~, ~, ~, x_data_int(:,i)] = splinerMat(1:size(day_list,1),tmp(:,i),2,0,1:step:size(x_data,1));
 end
