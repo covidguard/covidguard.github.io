@@ -133,7 +133,7 @@ catch
 end
 animated_gif_reg_fase2(data,pop,'A');
 
-% animated_gif_reg_gara(data,pop,'A');
+animated_gif_reg_gara(data,pop,'A');
 
 
 
@@ -6175,7 +6175,13 @@ for reg = 1:size(Regione_lista)
     sigla_prov=sigla_prov(ixs);
     
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('fuori Regione/P.A.'));
-    sigla_prov=sigla_prov(ixs);    
+    sigla_prov=sigla_prov(ixs);   
+    
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione \/ Provincia Autonoma'));
+    sigla_prov=sigla_prov(ixs);       
+
+    
+    
     
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr(''));
     sigla_prov=sigla_prov(ixs);
@@ -6521,6 +6527,10 @@ for reg = 1:size(Regione_lista)
     sigla_prov=sigla_prov(ixs);
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione \/ Provincia Autonoma'));      
     sigla_prov=sigla_prov(ixs);
+    
+ 
+
+    
     
     % find population
     [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));

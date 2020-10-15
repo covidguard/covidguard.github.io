@@ -854,6 +854,7 @@ for reg = 1 : size(regioni_tot,1)
         dataItaliaSenzaReg(k,3)=sum(dataRegSinReg.totale_ospedalizzati(index));
         dataItaliaSenzaReg(k,4)=sum(dataRegSinReg.isolamento_domiciliare(index));
         dataItaliaSenzaReg(k,5)=sum(dataRegSinReg.dimessi_guariti(index));
+        dataItaliaSenzaReg(k,6)=sum(dataRegSinReg.casi_testati(index));
         totaleCasiItaliaSenzaReg(k,1)=sum(dataRegSinReg.totale_casi(index));
         
         index = find(strcmp(dataRegReg.data,day_unique(k)));
@@ -862,6 +863,7 @@ for reg = 1 : size(regioni_tot,1)
         dataSoloReg(k,3)=sum(dataRegReg.totale_ospedalizzati(index));
         dataSoloReg(k,4)=sum(dataRegReg.isolamento_domiciliare(index));
         dataSoloReg(k,5)=sum(dataRegReg.dimessi_guariti(index));
+        dataSoloReg(k,6)=sum(dataRegReg.casi_testati(index));
         totaleCasiSoloReg(k,1)=sum(dataRegReg.totale_casi(index));
     end
     
@@ -869,6 +871,95 @@ for reg = 1 : size(regioni_tot,1)
     
     
     datetickFormat = 'dd mmm';
+    
+    
+    
+    
+    
+    %% casi testati
+    
+    figure;
+    id_f = gcf;
+    title(sprintf('Confronto %s - resto Italia: Casi testati', char(regioni_tot(reg))));
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    popReg=pop.popolazioneRegioniPop(reg);
+    popSenzaReg=sum(pop.popolazioneRegioniPop)-pop.popolazioneRegioniPop(reg);
+    
+    
+    a=plot(time_num(2:end),diff(dataItaliaSenzaReg(:,6))./popSenzaReg*100000,'.-b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+    b=plot(time_num(2:end),diff(dataSoloReg(:,6))./popReg*100000,'.-r','markersize',14);
+    
+
+    font_size=8;
+    ax = gca;
+    code_axe = get(id_f, 'CurrentAxes');
+    set(code_axe, 'FontName', 'Verdana');
+    set(code_axe, 'FontSize', font_size);
+    ylimi=get(gca,'ylim');
+    set(gca,'ylim',([0,ylimi(2)]));
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+    ylabel('Numero casi testati ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    
+    
+    interv = round((time_num(end)-time_num(1))/60);
+    
+    set(gca,'xlim',([time_num(1) time_num(end)]));
+    set(gca,'XTick',[time_num(1):interv:time_num(end)]);
+    set(gca,'XTickLabel',datestr([time_num(1):interv:time_num(end)],'dd mmm'));
+    set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+    ax.FontSize = font_size;
+    l=legend([a,b],'Resto d''Italia', char(regioni_tot(reg)));
+    
+    % overlap copyright info
+    datestr_now = datestr(now);
+    annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+        'String',{['Fonte: https://github.com/pcm-dpc']},...
+        'HorizontalAlignment','center',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off',...
+        'LineStyle','none',...
+        'Color',[0 0 0]);
+    
+    
+    annotation(gcf,'textbox',...
+        [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+        'String',{'https://covidguard.github.io/#covid-19-italia'},...
+        'LineStyle','none',...
+        'HorizontalAlignment','left',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off');
+        
+    % %     cd([WORKroot,'/assets/img/regioni']);
+    print(gcf, '-dpng', sprintf('%s//slides/img/regioni/confronti/confrontoItalia_6_casiTestati_%s.PNG', WORKroot,char(regioni_tot(reg))));
+    close(gcf);
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    % casi giornalieri
     figure;
     id_f = gcf;
     title(sprintf('Confronto %s - resto Italia: Casi giornalieri', char(regioni_tot(reg))));

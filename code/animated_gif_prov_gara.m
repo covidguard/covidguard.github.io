@@ -10,6 +10,9 @@ data.denominazione_provincia(k)=cellstr('Forli-Cesena');
 
 province_tot=unique(data.denominazione_provincia);
 province_tot=setdiff(province_tot,'In fase di definizione/aggiornamento');
+province_tot=setdiff(province_tot,'Fuori Regione \/ Provincia Autonoma');
+province_tot=setdiff(province_tot,'In fase di definizione\/aggiornamento');
+
 
 day_list = unique(data.data);
 x_data = nan(numel(day_list), size(province_tot,1));
