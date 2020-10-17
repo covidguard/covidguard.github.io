@@ -4797,7 +4797,7 @@ set(gca,'XTickLabel',datestr(time_num(2:3:end),'dd mmm'));
 set(gca,'XLim',[0.5,size(time_num(2:end),1)+0.5]);
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ax=gca;
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+% 
 ylabel('Numero tamponi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
 ax = gca;
 set(ax, 'FontName', 'Verdana');
@@ -4805,6 +4805,7 @@ set(ax, 'FontSize', font_size);
 
 t_lim=get(ax,'ylim');
 ylim([0 t_lim(2)]);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 
 yyaxis right
 c=plot(perTampPos,'-b','LineWidth', 1.5);
@@ -4880,16 +4881,20 @@ set(gca,'XTickLabel',datestr(time_num(2:3:end),'dd mmm'));
 set(gca,'XLim',[0.5,size(time_num(2:end),1)+0.5]);
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ax=gca;
-ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+
 ylabel('Numero tamponi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
 ax = gca;
 set(ax, 'FontName', 'Verdana');
 set(ax, 'FontSize', font_size);
 
+t_lim=get(ax,'ylim');
+ylim([0 t_lim(2)]);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 
 yyaxis right
 c=plot(perCastiTestPos,'-b','LineWidth', 1.5);
 ylim([0 100]);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
 set(gca,'YColor', [0 0 1]);
 ylabel('Percentuale tamponi positivi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
 grid minor
