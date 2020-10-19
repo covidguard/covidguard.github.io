@@ -973,3 +973,165 @@ close(gcf);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% 
+% 
+% %% radar regioni casi-deceduti
+% 
+% 
+% 
+% [worstWeight,idx]=sort(worldData.deathsSumWeight,'descend');
+% idx_country_worst=idx(1:end);
+% n_lines=size(idx_country_worst,2);
+% % list_country(idx(1:end))
+% % worldData.population(idx(1:end))
+% 
+% % worldData.dataSumWeight(idx_country_worst)
+% 
+% 
+% colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+% colors={};
+% for k=1:n_lines
+%     colors{k}=Cmap.getColor(k, n_lines);
+% end
+% 
+% 
+% 
+% figure;
+% hold on
+% id_f = gcf;
+% set(id_f, 'Name', sprintf('Deceduti vs Casi totali'));
+% title( sprintf('Deceduti vs Casi totali'));
+% 
+% 
+% set(gcf,'NumberTitle','Off');
+% set(gcf,'Position',[26 79 967 603]);
+% grid on
+% hold on
+% 
+% x_data=[];
+% y_data=[];
+% 
+% y_data=worldData.deathsSumWeight(idx);
+% x_data=worldData.dataSumWeight(idx);
+%     
+% 
+% set(gca,'Xscale','log');
+% set(gca,'Yscale','log');
+% % 
+% ylim([min(y_data) (max(y_data))*1.5])
+% xlim([min(x_data) max(x_data)*1.5])
+% 
+% x = logspace(-10,log10(max(x_data)*1.5),500);
+% 
+% perc = [0.25 0.5 1 2 5 10 40];
+% for p=1:size(perc,2)
+%     y = x./100*perc(p);
+%     hg = loglog(x,y,'--');
+%     set(hg,'color',[0.831372549019608 0.815686274509804 0.784313725490196]);
+% end
+% 
+% 
+% 
+% colors={};
+% for k=1:n_lines
+%     colors{k}=Cmap.getColor(k, n_lines);
+% end
+% % Init labels
+% l=1;
+% x = x_data;
+% y = y_data;
+% clear lbl;
+% hold on;
+% fontsize=10;
+% for q=1:length(x)
+%     %plot(x(q)',y(q)',markers{l},'w')
+%     lbl(q) = text(x(q),y(q), upper(list_country(idx(q))),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold');
+%     l=l+1;
+%     if l==size(colors,2)
+%         l=1;
+%     end
+% end
+% ax=gca;
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+% ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
+% 
+% 
+% ylabel('Deceduti totali ogni 100.000 ab')
+% xlabel('Casi totali ogni 100.000 ab')
+% set(gcf,'color','w');
+% 
+% 
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+%     'String',{['Fonte: https://github.com/pcm-dpc']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% annotation(gcf,'textbox',...
+%     [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+%     'String',{'https://covidguard.github.io/#covid-19-italia'},...
+%     'LineStyle','none',...
+%     'HorizontalAlignment','left',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off');
+% 
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_radarDecVSCasi.PNG']);
+% close(gcf);
+
+
+
+
+
+
+
