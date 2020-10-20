@@ -1484,6 +1484,364 @@ close(gcf);
 
 
 
+%% GRAFICI ITALIA
+try
+dataIta = struct;
+
+dataIta.time = unique(dataReg.data);
+
+for i=1:size(dataIta.time,1)
+    index = find(strcmp(dataReg.data, dataIta.time(i)));
+    dataIta.terapieIntesive(i,1) = sum(dataReg.terapia_intensiva(index));
+    dataIta.ricoverati_con_sintomi(i,1) = sum(dataReg.ricoverati_con_sintomi(index));
+    dataIta.totale_ospedalizzati(i,1) = sum(dataReg.totale_ospedalizzati(index));
+    dataIta.totale_casi(i,1) = sum(dataReg.totale_casi(index));
+    dataIta.casi_testati(i,1) = sum(dataReg.casi_testati(index));
+end
+
+
+
+
+%% terapie intensive
+datetickFormat = 'dd mmm';
+regione = 'Italia';
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': terapie intensive']);
+title(sprintf([regione ': terapie intensive\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(datenum(dataIta.time),dataIta.terapieIntesive,'-r','LineWidth', 2.0);
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Terapie Intensive', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+ax.XTick = time_num(1):3:time_num(end);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ax.FontSize = font_size;
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+
+
+t_lim=ylim;
+if t_lim(2)<100
+    ylim([t_lim(1) 100]);
+end
+
+l=legend(a,'Terapie Intensive');
+set(l,'Location','northeast')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+        
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_1_terapie_intensive.PNG']);
+close(gcf);
+
+
+
+%% ricoverati con sintomi
+datetickFormat = 'dd mmm';
+regione = 'Italia';
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': ricoverati con sintomi']);
+title(sprintf([regione ': ricoverati con sintomi\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(datenum(dataIta.time),dataIta.ricoverati_con_sintomi	,'-r','LineWidth', 2.0);
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Ricoverati con sintomi', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+ax.XTick = time_num(1):3:time_num(end);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ax.FontSize = font_size;
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+
+
+t_lim=ylim;
+if t_lim(2)<100
+    ylim([t_lim(1) 100]);
+end
+
+l=legend(a,'Ricoverati con sintomi');
+set(l,'Location','northeast')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+        
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_2_ricoverati_con_sintomi.PNG']);
+close(gcf);
+
+
+%% rapporto t.i. / ricoverati con sintomi
+datetickFormat = 'dd mmm';
+regione = 'Italia';
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': rapporto TerapieIntensive/Ricoverati con sintomi']);
+title(sprintf([regione ': rapporto TerapieIntensive/Ricoverati con sintomi\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(datenum(dataIta.time), dataIta.terapieIntesive./dataIta.ricoverati_con_sintomi*100	,'-r','LineWidth', 2.0);
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('rapporto TerapieIntensive/Ricoverati con sintomi (%)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+ax.XTick = time_num(1):3:time_num(end);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ax.FontSize = font_size;
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+
+
+
+l=legend(a,'rapporto TerapieIntensive/Ricoverati con sintomi (%)');
+set(l,'Location','northeast')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+        
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_3_terintVSricoverati_con_sintomi.PNG']);
+close(gcf);
+
+
+
+%% rapporto ospedaliizati / casi totali
+datetickFormat = 'dd mmm';
+regione = 'Italia';
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': rapporto Ospedalizzati/Casi Totali']);
+title(sprintf([regione ': rapporto Ospedalizzati/Casi Totali\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(datenum(dataIta.time), dataIta.totale_ospedalizzati./dataIta.totale_casi*100	,'-r','LineWidth', 2.0);
+
+  
+    
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('rapporto Ospedalizzati/Casi Totali (%)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+ax.XTick = time_num(1):3:time_num(end);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ax.FontSize = font_size;
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+
+
+
+l=legend(a,'rapporto Ospedalizzati/Casi Totali (%)');
+set(l,'Location','northeast')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+        
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_4_rapporto OspedalizzativsCasi Totali.PNG']);
+close(gcf);
+
+
+
+ 
+
+
+
+
+%% rapporto casi totoali / casi testati
+datetickFormat = 'dd mmm';
+regione = 'Italia';
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': percentuale casi testati positivi']);
+title(sprintf([regione ': percentuale casi testati positivi/Casi Totali\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(datenum(dataIta.time), dataIta.totale_casi./dataIta.casi_testati*100	,'-r','LineWidth', 2.0);
+
+  
+    
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel(' percentuale casi testati positivi/Casi Totali (%)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+ax.XTick = time_num(1):3:time_num(end);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ax.FontSize = font_size;
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+
+
+
+l=legend(a,' percentuale casi testati positivi/Casi Totali (%)');
+set(l,'Location','northeast')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+        
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_5_ percentuale casi testati positivivsCasi Totali.PNG']);
+close(gcf);
+
+catch
+    end
+
+
+
+
+
+
+
+
+
 
 
 %% GRAFICI SINGOLA REGIONE
@@ -2667,6 +3025,12 @@ end
 
 
 
+
+
+
+
+
+
 %% bars Nazionale
 day_unique = unique(dataReg.data);
 time_num=datenum(day_unique);
@@ -2682,6 +3046,26 @@ for k = 1: size(day_unique,1)
     totaleCasi(k,1)=sum(dataReg.totale_casi(index));
     
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 %% bar stacked: totale casi
