@@ -88,20 +88,38 @@ Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domicilia
 Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale e test risultati effettivamente positivi:
 ![Tamponi totali](slides/img/regioni/ita_tamponi.PNG)
 
+### Italia: percentuale casi testati positivi
+Il grafico riporta l'andamento della percentuale di casi testati positivi:
+![Italia ricoverati](/slides/img/regioni/ITA_Italia_5_percentuale_casi_testati_positivivsCasi_Totali.PNG)
+
 
 ### Italia: totale cumulato totale dei casi
 Il grafico mostra l'andamento del numero cumulato di casi:
 ![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
 
-
 ### Italia: andamento casi giornalieri
 La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
 ![Picco Italia NuoviPositivi](/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_Italia_cumulati.PNG)
 
-
 ### Italia: andamento numero positivi
 Il grafico riporta il numero di soggetti attualmente positivi:
 ![Picco Italia Positivi](/slides/img/regioni/reg_stimapiccoAttPositivi_Italia_cumulati.PNG)
+
+### Italia: andamento numero terapie intensive
+Il grafico riporta l'andamento del numero di soggetti in terapia intensiva:
+![Italia TI](/slides/img/regioni/ITA_Italia_1_terapie_intensive.PNG)
+
+### Italia: andamento numero ricoverati
+Il grafico riporta l'andamento del numero di soggetti ricoverati:
+![Italia ricoverati](/slides/img/regioni/ITA_Italia_2_ricoverati_con_sintomi.PNG)
+
+### Italia: rapporto tra terapie intensive e ricoverati
+Il grafico riporta l'andamento del rapporto tra soggetti in terapia intesiva e altri ricoverati:
+![Italia ricoverati](/slides/img/regioni/ITA_Italia_3_terintVSricoverati_con_sintomi.PNG)
+
+### Italia: rapporto tra totale ricoverati e casi totali
+Il grafico riporta l'andamento del rapporto tra soggetti ricoverati sui casi totali:
+![Italia ricoverati](/slides/img/regioni/ITA_Italia_4_rapporto_OspedalizzativsCas_Totali.PNG)
 
 
 ### Italia: Esito
