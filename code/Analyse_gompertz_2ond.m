@@ -1,0 +1,432 @@
+% if ismac
+%     flag_download = false;
+% else
+%     flag_download = true;
+% end
+% 
+% 
+% %% -------------------------
+% if ismac
+%     WORKroot = sprintf('/Users/Andrea/Repositories/covidguard.github.io/');
+% else
+%     WORKroot = sprintf('C:/Temp/Repo/covidguard');
+% end
+% % 
+% % %% download json from server
+% % if flag_download
+% %     delete(sprintf('%s/_json/*.json',WORKroot))
+% %     
+% %     serverAddress = 'https://raw.githubusercontent.com';
+% %     
+% %     command = sprintf('wget --no-check-certificate %s/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json', serverAddress);
+% %     system(command);
+% %     
+% %     command = sprintf('wget --no-check-certificate %s/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json', serverAddress);
+% %     system(command);
+% %     
+% %     movefile('dpc-covid19-ita-province.json',sprintf('%s/_json',WORKroot),'f');
+% %     movefile('dpc-covid19-ita-regioni.json',sprintf('%s/_json',WORKroot)),'f';
+% % end
+% 
+% 
+% %% load population
+% %% ---------------
+% filename = fullfile(WORKroot, '_json', 'popolazione_province.txt');
+% [pop.id, pop.name, pop.number, pop.perc, pop.superf, pop.numCom, pop.sigla]=textread(filename,'%d%s%d%f%%%d%d%s','delimiter',';');
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Regioni
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% filename = sprintf('%s/_json/dpc-covid19-ita-regioni.json',WORKroot);
+% fid       = fopen(filename, 'rt');
+% file_scan = textscan(fid, '%s', 'delimiter', '\n', 'endOfLine', '\r\n', 'whitespace', '');
+% fclose(fid);
+% file_scan                             = file_scan{1};
+% file_scan=char(file_scan);
+% 
+% json_oneRaw='';
+% json_oneRaw(1:size(file_scan,1)*size(file_scan,2))=' ';
+% for i=1:size(file_scan,1)
+%     json_oneRaw(1+(i-1)*size(file_scan,2):i*size(file_scan,2))=file_scan(i,:);
+%     %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
+% end
+% dataReg = decodeJSON1(json_oneRaw);
+% dataReg.dataa = char(dataReg.data);
+% dataReg.dataa(:,11)=' ';
+% dataReg.data=cellstr(dataReg.dataa);
+regioni_tot = unique(dataReg.denominazione_regione);
+% 
+
+
+
+timeTot_datenum=datenum(unique(dataReg.data));
+id_inizio2ondata=215;
+
+
+
+%% ITALIA
+italia = struct;
+italia.datanum=timeTot_datenum;
+italia.totale_casi = [];
+italia.nuovi_positivi = [];
+
+dataReg.datanum=datenum(dataReg.data);
+for k = 1:size(timeTot_datenum,1)
+    index = find(dataReg.datanum==timeTot_datenum(k));
+    italia.totale_casi(k)=sum(dataReg.totale_casi(index));
+    italia.nuovi_positivi(k)=sum(dataReg.nuovi_positivi(index));
+end
+
+italia2O = struct;
+italia2O.datanum=italia.datanum(id_inizio2ondata:end);
+italia2O.totale_casi=italia.totale_casi(id_inizio2ondata:end);
+italia2O.nuovi_positivi=italia.nuovi_positivi(id_inizio2ondata:end);
+
+
+% totale casi
+fout=fopen('testIn_gauss.txt','wt');
+data6= italia2O.totale_casi' - italia2O.totale_casi(1);
+for i=1:size(data6,1)
+   fprintf(fout,'%f;%d\n',italia2O.datanum(i),data6(i,1));
+end
+fclose(fout);  
+command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+[t,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+% [t,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+
+data_interpTemp=data_interpTemp+italia2O.totale_casi(1);
+    
+
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+regione = 'Italia';
+set(id_f, 'Name', [regione ': casi totali']);
+title(sprintf([regione ': casi totali\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+
+grid on
+hold on
+shadedplot(t,a4'+italia2O.totale_casi(1),a5'+italia2O.totale_casi(1),[0.9 0.9 1]);  hold on
+% d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+% c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+
+a=plot(timeTot_datenum,italia.totale_casi,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(t(t>=italia.datanum(id_inizio2ondata)),data_interpTemp(t>=italia.datanum(id_inizio2ondata)),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+
+
+
+font_size=8;
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ax.YTickLabel = num2str(str2double(ax.YTickLabel));
+
+ylabel('Casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+ 
+  
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+    
+    
+
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_extrap-casi_tot.PNG']);
+close(gcf);
+
+
+
+%% casi giornalieri
+figure;
+id_f = gcf;
+regione = 'Italia';
+set(id_f, 'Name', [regione ': casi giornalieri']);
+title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+
+grid on
+hold on
+% shadedplot(t,a4'+italia2O.totale_casi(1),a5'+italia2O.totale_casi(1),[0.9 0.9 1]);  hold on
+% d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+% c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+
+a=plot(timeTot_datenum(2:end),diff(italia.totale_casi),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(t(t>italia.datanum(id_inizio2ondata)+1),diff(data_interpTemp(t>=italia.datanum(id_inizio2ondata))),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+
+
+
+font_size=8;
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ax.YTickLabel = num2str(str2double(ax.YTickLabel));
+
+ylabel('Casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+ 
+  
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+    
+    
+
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_extrap-casi_giorn.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+id_inizio2ondata=215;
+
+
+
+%% LOMBARDIA
+l = struct;
+lombardia.datanum=timeTot_datenum;
+lombardia.totale_casi = [];
+lombardia.nuovi_positivi = [];
+
+regione = 'Lombardia';
+
+dataReg.datanum=datenum(dataReg.data);
+for k = 1:size(timeTot_datenum,1)
+    index = find(dataReg.datanum==timeTot_datenum(k) & strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    lombardia.totale_casi(k)=sum(dataReg.totale_casi(index));
+    lombardia.nuovi_positivi(k)=sum(dataReg.nuovi_positivi(index));
+end
+
+lombardia2O = struct;
+lombardia2O.datanum=lombardia.datanum(id_inizio2ondata:end);
+lombardia2O.totale_casi=lombardia.totale_casi(id_inizio2ondata:end);
+lombardia2O.nuovi_positivi=lombardia.nuovi_positivi(id_inizio2ondata:end);
+
+
+% totale casi
+fout=fopen('testIn_gauss.txt','wt');
+data6= lombardia2O.totale_casi' - lombardia2O.totale_casi(1);
+for i=1:size(data6,1)
+   fprintf(fout,'%f;%d\n',lombardia2O.datanum(i),data6(i,1));
+end
+fclose(fout);  
+command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+[t,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+% [t,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+
+data_interpTemp=data_interpTemp+lombardia2O.totale_casi(1);
+    
+
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+
+set(id_f, 'Name', [regione ': casi totali']);
+title(sprintf([regione ': casi totali\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+
+grid on
+hold on
+shadedplot(t,a4'+lombardia2O.totale_casi(1),a5'+lombardia2O.totale_casi(1),[0.9 0.9 1]);  hold on
+% d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+% c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+
+a=plot(timeTot_datenum,lombardia.totale_casi,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(t(t>=lombardia.datanum(id_inizio2ondata)),data_interpTemp(t>=lombardia.datanum(id_inizio2ondata)),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+
+
+
+font_size=8;
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ax.YTickLabel = num2str(str2double(ax.YTickLabel));
+
+ylabel('Casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+ 
+  
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-lombardia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+    
+    
+
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_extrap-casi_tot.PNG']);
+close(gcf);
+
+
+
+%% casi giornalieri
+figure;
+id_f = gcf;
+regione = 'lombardia';
+set(id_f, 'Name', [regione ': casi giornalieri']);
+title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+
+grid on
+hold on
+% shadedplot(t,a4'+lombardia2O.totale_casi(1),a5'+lombardia2O.totale_casi(1),[0.9 0.9 1]);  hold on
+% d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+% c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+
+a=plot(timeTot_datenum(2:end),diff(lombardia.totale_casi),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(t(t>lombardia.datanum(id_inizio2ondata)+1),diff(data_interpTemp(t>=lombardia.datanum(id_inizio2ondata))),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+
+
+
+font_size=8;
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ax.YTickLabel = num2str(str2double(ax.YTickLabel));
+
+ylabel('Casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+ 
+  
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-lombardia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+    
+    
+
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_extrap-casi_giorn.PNG']);
+close(gcf);
+
+
+

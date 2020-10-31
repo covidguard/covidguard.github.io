@@ -123,6 +123,12 @@ data.dataReg=dataReg;
 % animated_gif_reg_gara(data,pop,'A');
 % animated_gif_prov_gara(dataProv,pop,'A');
 
+%% 2nda ondata
+Analyse_gompertz_2ond
+
+
+
+
 animated_gif_reg_Andrea(data,'A');
 % animated_gif_reg_Andrea_fase2(data,'A');
 try
