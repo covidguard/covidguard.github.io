@@ -54,7 +54,7 @@
 % dataReg = decodeJSON1(json_oneRaw);
 % dataReg.dataa = char(dataReg.data);
 % dataReg.dataa(:,11)=' ';
-% dataReg.data=cellstr(dataReg.dataa);
+dataReg.data=cellstr(dataReg.dataa);
 regioni_tot = unique(dataReg.denominazione_regione);
 % 
 
@@ -76,12 +76,117 @@ for k = 1:size(timeTot_datenum,1)
     index = find(dataReg.datanum==timeTot_datenum(k));
     italia.totale_casi(k)=sum(dataReg.totale_casi(index));
     italia.nuovi_positivi(k)=sum(dataReg.nuovi_positivi(index));
+    italia.ti(k)=sum(dataReg.terapia_intensiva(index));
+    italia.deceduti(k)=sum(dataReg.deceduti(index));
+    italia.ricoverati(k)=sum(dataReg.ricoverati_con_sintomi(index));
 end
 
 for k=8:size(timeTot_datenum,1)
     italia.progSett(k)=(italia.totale_casi(k)-italia.totale_casi(k-7))/italia.totale_casi(k-7)*100;
     italia.progSett_n(k)=(italia.nuovi_positivi(k)-italia.nuovi_positivi(k-7))/italia.nuovi_positivi(k-7)*100;
+    italia.progSett_terapia_intensiva(k)=(italia.ti(k)-italia.ti(k-7))/italia.ti(k-7)*100;
+    italia.progSett_deceduti(k)=(italia.deceduti(k)-italia.deceduti(k-7))/italia.deceduti(k-7)*100;
+    italia.progSett_ricoverati(k)=(italia.ricoverati(k)-italia.ricoverati(k-7))/italia.ricoverati(k-7)*100;
 end
+
+regione='Italia';
+
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+
+set(id_f, 'Name', [regione ': incrementi settimanali']);
+title(sprintf([regione ': incrementi settimanali\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+subplot(2,2,1)
+grid on
+hold on
+inc = round(size(timeTot_datenum,1)-150)/18;
+a=bar(timeTot_datenum,italia.progSett);
+set(gca,'XTick',timeTot_datenum(1:inc:end))
+set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('% incremento settimanale casi totali');
+xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+
+subplot(2,2,2)
+grid on
+hold on
+a=bar(timeTot_datenum,italia.progSett_ricoverati);
+a.BarWidth=1;
+set(gca,'XTick',timeTot_datenum(1:inc:end))
+set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('% incremento settimanale ricoverati con sintomi');
+xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+
+subplot(2,2,3)
+grid on
+hold on
+a=bar(timeTot_datenum,italia.progSett_terapia_intensiva);
+a.BarWidth=1;
+set(gca,'XTick',timeTot_datenum(1:inc:end))
+set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('% incremento settimanale terapie intensive');
+xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+
+subplot(2,2,4)
+grid on
+hold on
+a=bar(timeTot_datenum,italia.progSett_deceduti);
+a.BarWidth=1;
+set(gca,'XTick',timeTot_datenum(1:inc:end))
+set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('% incremento settimanale deceduti');
+xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-lombardia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+    
+    
+
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_increm_settimanale.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
 
 italia2O = struct;
 italia2O.datanum=italia.datanum(id_inizio2ondata:end);
@@ -183,7 +288,7 @@ grid minor; grid on
 
 grid on
 hold on
-% shadedplot(t,a4'+italia2O.totale_casi(1),a5'+italia2O.totale_casi(1),[0.9 0.9 1]);  hold on
+shadedplot(t(2:end),diff(a4)',diff(a5)',[0.9 0.9 1]);  hold on
 % d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
 % c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
 
@@ -274,6 +379,7 @@ lombardia.totale_casi = [];
 lombardia.nuovi_positivi = [];
 
 regione = 'Lombardia';
+% regione = 'Liguria';
 
 dataReg.datanum=datenum(dataReg.data);
 for k = 1:size(timeTot_datenum,1)
@@ -309,6 +415,7 @@ grid on
 hold on
 inc = round(size(timeTot_datenum,1)-150)/18;
 a=bar(timeTot_datenum,lombardia.progSett);
+a.BarWidth=1;
 set(gca,'XTick',timeTot_datenum(1:inc:end))
 set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
 datetick('x', datetickFormat, 'keepticks') ;
@@ -320,6 +427,7 @@ subplot(2,2,2)
 grid on
 hold on
 a=bar(timeTot_datenum,lombardia.progSett_ricoverati);
+a.BarWidth=1;
 set(gca,'XTick',timeTot_datenum(1:inc:end))
 set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
 datetick('x', datetickFormat, 'keepticks') ;
@@ -331,6 +439,7 @@ subplot(2,2,3)
 grid on
 hold on
 a=bar(timeTot_datenum,lombardia.progSett_terapia_intensiva);
+a.BarWidth=1;
 set(gca,'XTick',timeTot_datenum(1:inc:end))
 set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
 datetick('x', datetickFormat, 'keepticks') ;
@@ -342,6 +451,7 @@ subplot(2,2,4)
 grid on
 hold on
 a=bar(timeTot_datenum,lombardia.progSett_deceduti);
+a.BarWidth=1;
 set(gca,'XTick',timeTot_datenum(1:inc:end))
 set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
 datetick('x', datetickFormat, 'keepticks') ;
@@ -489,7 +599,7 @@ grid minor; grid on
 
 grid on
 hold on
-% shadedplot(t,a4'+lombardia2O.totale_casi(1),a5'+lombardia2O.totale_casi(1),[0.9 0.9 1]);  hold on
+shadedplot(t(2:end),diff(a4)',diff(a5)',[0.9 0.9 1]);  hold on
 % d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
 % c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
 
