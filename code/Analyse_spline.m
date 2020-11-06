@@ -8665,10 +8665,388 @@ mappeprovincia_var;
 
 
 
+%% STATUS PROVINCE PER REGIONE
+dataReg.datenum=datenum(dataReg.data);
+for reg = 1:size(Regione_lista)
+    try
+        x_data=[];
+        y_data=[];
+        
+        n_day_offset_x = 7;
+        
+        
+        
+        
+        %%
+        idx_reg=find(strcmp(dataReg.denominazione_regione,cell(Regione_lista(reg,:))));
+        sigla_prov=dataReg.sigla_provincia(idx_reg);
+        [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
+        sigla_prov=sigla_prov(ixs);
+        [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
+        sigla_prov=sigla_prov(ixs);
+        [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione\/aggiornamento'));
+        sigla_prov=sigla_prov(ixs);
+        [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('fuori Regione/P.A.'));
+        sigla_prov=sigla_prov(ixs);
+        [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione'));
+        sigla_prov=sigla_prov(ixs);
+        [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione / Provincia Autonoma'));
+        sigla_prov=sigla_prov(ixs);
+        [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione \/ Provincia Autonoma'));
+        sigla_prov=sigla_prov(ixs);
+        
+        % find population
+        [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));
+        
+        %     RegioneTot={'Como','Lecco','Milano','Bergamo','Varese','Lodi','Monza e della Brianza'}';
+        %     RegioneTot={'Como','Bergamo','Brescia','Lecco'}'
+        
+        
+        for h=1:size(RegioneTot,1)
+            regione = char(RegioneTot(h));
+            index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
+            
+            time_num = fix(datenum(dataReg.data(index)));
+            [time_num, aaa] = unique(time_num);
+            index=index(aaa);
+            idx1=index(end);
+            idx2=index(end-n_day_offset_x+1);
+            
+            
+            x_data(h,1) = (dataReg.totale_casi(idx1)-dataReg.totale_casi(idx2))/n_day_offset_x/pop.number(idx_pop(h))*100000;
+            y_data(h,1) = (dataReg.totale_casi(idx1)-dataReg.totale_casi(idx2))/dataReg.totale_casi(idx2)*100;
+            
+        end
+        
+        date_list=unique(dataReg.data);
+        
+        
+        lastDay=unique(dataReg.data); lastDay=lastDay(end);
+        lastWeek=unique(dataReg.data); lastWeek=lastWeek(end-6);
+        lastThree=unique(dataReg.data); lastThree=lastThree(end-n_day_offset_x+1);
+        
+        
+        idx = find(strcmp(dataReg.data,lastDay));
+        idx2 = find(strcmp(dataReg.data,lastWeek));
+        idx3 = find(strcmp(dataReg.data,lastThree));
+        
+        x_data_ita=mean(x_data);
+        y_data_ita=mean(y_data);
+        
+        
+        h = figure;
+        set(h,'NumberTitle','Off');
+        set(h,'Position',[26 79 967 603]);
+        grid minor
+        axis tight manual % this ensures that getframe() returns a consistent size
+        ylim([0 10])
+        xlim([0 500])
+        
+        
+        days = (datenum(unique(dataReg.data)));
+        
+        
+        % Init labels
+        l=1;
+        x = x_data(:,1);
+        y = y_data(:,1);
+        clear lbl;
+        
+        annotation(gcf,'textbox',[0.671713691830404 0.940298507462687 0.238100000000001 0.0463800000000003],...
+            'String',datestr(days(end), 'dd mmm'),...
+            'HorizontalAlignment','right',...
+            'FontSize',20,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0.5 0.5 0.5]);
+        
+        
+        
+        
+        fontsize=10;
+        for q=1:size(x,1)
+            %plot(x(q)',y(q)',markers{l},'w')
+            %     if strcmp('P.A. Bolzano',regioni_tot{q})
+            %         lbl(q) = text(x(q),y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+            %     elseif strcmp('P.A. Trento',regioni_tot{q})
+            %         lbl(q) = text(x(q),y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+            %     elseif strcmp('Valle d Aosta',regioni_tot{q})
+            %         lbl(q) = text(x(q),y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+            %     else
+            lbl(q) = text(x(q),y(q), upper(RegioneTot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+            %     end
+            
+        end
+        l=l+1;
+        if l==size(colors,2)
+            l=1;
+        end
+        
+        
+        
+        grid on
+        % text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
+        % text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
+        xlabel(sprintf('Media nuovi casi ultimi %d giorni / 100.000 ab', n_day_offset_x));
+        ylabel('Incremento settimanale percentuale di casi totali')
+        set(gcf,'color','w');
+        
+        fh = gcf;
+        
+        % add Italy
+        hold on
+        
+        
+        x = x_data;
+        y = y_data;
+        
+        xlim([0 max(x)*1.1]);
+        ylim([0 max(y)*1.1]);
+        
+        xLimF=xlim;
+        yLimF=ylim;
+        rectangle('Position',[0,0,x_data_ita,y_data_ita],'FaceColor',[0 1 0 .2],'LineWidth',1)
+        rectangle('Position',[0,y_data_ita,x_data_ita,yLimF(2)-y_data_ita],'FaceColor',[1 1 0 .2],'LineWidth',1)
+        rectangle('Position',[x_data_ita,0,xLimF(2)-x_data_ita,y_data_ita],'FaceColor',[1 1 0 .2],'LineWidth',1)
+        rectangle('Position',[x_data_ita,y_data_ita,xLimF(2)-x_data_ita,yLimF(2)-y_data_ita],'FaceColor',[1 0 0 .2],'LineWidth',1)
+        
+        
+        
+        
+        %     hdate.String = datestr(days(n), 'dd mmm');
+        for q=1:size(x_data,1)
+            %plot(x(q)',y(q)',markers{l},'w')
+            lbl(q).Position(1:2) = [x(q), y(q)];
+        end
+        lbl(q+1) = text(x_data_ita,y_data_ita, upper(Regione_lista(reg)),'Color', [0 0 0],'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center', 'verticalAlignment','bottom');
+        
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+        title(upper(Regione_lista(reg)));
+        
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/status_',char(Regione_lista(reg)),'.PNG']);
+        close(gcf);
+    catch
+        close all
+    end
+end
+
+
+
+
+
+
+
+%% STATUS 20 peggiori PROVINCE
+dataReg.datenum=datenum(dataReg.data);
+n_prov = 30;
+
+x_data_tot =[];
+y_data_tot=[];
+denom_prov_tot='';
+n_day_offset_x = 7;
+for reg = 1:size(Regione_lista,1)
+    idx_reg=find(strcmp(dataReg.denominazione_regione,cell(Regione_lista(reg,:))));
+    sigla_prov=dataReg.sigla_provincia(idx_reg);
+    [RegioneTot, ixs]= unique(dataReg.denominazione_provincia(idx_reg));
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione\/aggiornamento'));
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('fuori Regione/P.A.'));
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione'));
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione / Provincia Autonoma'));
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('Fuori Regione \/ Provincia Autonoma'));
+    
+    % find population
+    [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));
+    
+    %     RegioneTot={'Como','Lecco','Milano','Bergamo','Varese','Lodi','Monza e della Brianza'}';
+    %     RegioneTot={'Como','Bergamo','Brescia','Lecco'}'
+    
+    x_data=[];
+    y_data=[];
+    for h=1:size(RegioneTot,1)
+        regione = char(RegioneTot(h));
+        index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
+        
+        time_num = fix(datenum(dataReg.data(index)));
+        [time_num, aaa] = unique(time_num);
+        index=index(aaa);
+        idx1=index(end);
+        idx2=index(end-n_day_offset_x+1);
+        
+        
+        
+        x_data(h,1) = (dataReg.totale_casi(idx1)-dataReg.totale_casi(idx2))/n_day_offset_x/pop.number(idx_pop(h))*100000;
+        y_data(h,1) = (dataReg.totale_casi(idx1)-dataReg.totale_casi(idx2))/dataReg.totale_casi(idx2)*100;
+        denom_prov_tot=[denom_prov_tot;RegioneTot(h)];
+    end
+    
+    x_data_tot=[x_data_tot;x_data];
+    y_data_tot=[y_data_tot;y_data];
+end
+
+
+x_data_ita=mean(x_data_tot);
+y_data_ita=mean(y_data_tot);
+
+
+h = figure;
+set(h,'NumberTitle','Off');
+set(h,'Position',[26 79 967 603]);
+grid minor
+hold on
+axis tight manual % this ensures that getframe() returns a consistent size
+ylim([0 10])
+xlim([0 500])
+
+
+days = (datenum(unique(dataReg.data)));
+
+
+% Init labels
+l=1;
+
+dist=sqrt(x_data_tot.^2+y_data_tot.^2);
+[dist, idxSort]=sort(dist,'descend');
+denom_prov_tot(idxSort);
+
+
+
+x = x_data_tot(idxSort(1:n_prov),1);
+y = y_data_tot(idxSort(1:n_prov),1);
+denom_prov_sort = denom_prov_tot(idxSort(1:n_prov));
+clear lbl;
+
+annotation(gcf,'textbox',[0.671713691830404 0.940298507462687 0.238100000000001 0.0463800000000003],...
+    'String',datestr(days(end), 'dd mmm'),...
+    'HorizontalAlignment','right',...
+    'FontSize',20,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0.5 0.5 0.5]);
+
+fontsize=8;
+for q=1:size(x,1)
+    lbl(q) = text(x(q),y(q), upper(denom_prov_sort{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+    %     end
+end
+l=l+1;
+if l==size(colors,2)
+    l=1;
+end
+
+
+
+grid on
+% text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
+% text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
+xlabel(sprintf('Media nuovi casi ultimi %d giorni / 100.000 ab', n_day_offset_x));
+ylabel('Incremento settimanale percentuale di casi totali')
+set(gcf,'color','w');
+
+fh = gcf;
+
+% add Italy
+hold on
+
+
+%         x = x_data;
+%         y = y_data;
+%
+xlim([0 max(x)*1.1]);
+ylim([0 max(y)*1.1]);
+
+xLimF=xlim;
+yLimF=ylim;
+rectangle('Position',[0,0,x_data_ita,y_data_ita],'FaceColor',[0 1 0 .2],'LineWidth',1)
+rectangle('Position',[0,y_data_ita,x_data_ita,yLimF(2)-y_data_ita],'FaceColor',[1 1 0 .2],'LineWidth',1)
+rectangle('Position',[x_data_ita,0,xLimF(2)-x_data_ita,y_data_ita],'FaceColor',[1 1 0 .2],'LineWidth',1)
+rectangle('Position',[x_data_ita,y_data_ita,xLimF(2)-x_data_ita,yLimF(2)-y_data_ita],'FaceColor',[1 0 0 .2],'LineWidth',1)
+
+
+
+
+%     hdate.String = datestr(days(n), 'dd mmm');
+for q=1:size(x_data,1)
+    %plot(x(q)',y(q)',markers{l},'w')
+    lbl(q).Position(1:2) = [x(q), y(q)];
+end
+lbl(q+1) = text(x_data_ita,y_data_ita, 'Italia','Color', [0 0 0],'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center', 'verticalAlignment','bottom');
+
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+title(upper('Italia'));
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/status_peggioriProvince.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
 
 
 
 % mkdir('GRAPHS');
 % movefile('*.PNG','GRAPHS','f');
 fclose all
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
