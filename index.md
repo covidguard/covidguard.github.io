@@ -51,7 +51,7 @@ Nota: nella parte bassa del grafico il numero dei casi è troppo limitato perci�
 
 
 ### Stato attuale delle Regioni
-Per ogni Regione il grafico mira a valutare empiricamente l'attuale possibilità di un'adeguata ed efficace risposta alle fasi successive dell'epidemia. N.B.: le conclusioni sono puramente indicative.
+Stato delle Regioni nell'ultima settimana: più la regione è nella parte alta più i casi stanno aumentando; più le regioni sono verso destra, maggiore è il numero di casi identificati. N.B.: le conclusioni sono puramente indicative.
 ![Andamento regioni1](slides/img/regioni/status.PNG)
 
 ### Confronto casi testati / numero casi positivi
@@ -83,7 +83,6 @@ Andamento dei dati giornalieri per casi totali, dimessi, in isolamento domicilia
 ![Andamento Italia Grafico a Barre](slides/img/regioni/reg_Italia_bars_cumulati.PNG)
 ![Andamento Italia Grafico a Linee](slides/img/regioni/reg_Italia_linee_cumulati.PNG)
 
-
 ### Italia: Tamponi totali
 Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale e test risultati effettivamente positivi:
 ![Tamponi totali](slides/img/regioni/ita_tamponi.PNG)
@@ -92,14 +91,16 @@ Numero di tamponi analizzati giorno per giorno su tutto il territorio nazionale 
 Il grafico riporta l'andamento della percentuale di casi testati positivi:
 ![Italia ricoverati](/slides/img/regioni/ITA_Italia_5_percentuale_casi_testati_positivivsCasi_Totali.PNG)
 
-
 ### Italia: totale cumulato totale dei casi
 Il grafico mostra l'andamento del numero cumulato di casi:
 ![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
 
+La modellazione del numero totale di casi risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
+![Stima Picco Italia Totale](/slides/img/regioni/2ond_reg_Italia_extrap-casi_tot.PNG)
+
 ### Italia: andamento casi giornalieri
 La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
-![Picco Italia NuoviPositivi](/slides/img/regioni/reg_stimapiccoNuoviGiornalieri_Italia_cumulati.PNG)
+![Picco Italia NuoviPositivi](/slides/img/regioni/2ond_reg_Italia_extrap-casi_giorn.PNG)
 
 ### Italia: andamento numero positivi
 Il grafico riporta il numero di soggetti attualmente positivi:
@@ -120,7 +121,6 @@ Il grafico riporta l'andamento del rapporto tra soggetti in terapia intesiva e a
 ### Italia: rapporto tra totale ricoverati e casi totali
 Il grafico riporta l'andamento del rapporto tra soggetti ricoverati sui casi totali:
 ![Italia ricoverati](/slides/img/regioni/ITA_Italia_4_rapporto_OspedalizzativsCas_Totali.PNG)
-
 
 ### Italia: Esito
 Relazione tra deceduti e dimessi/guariti:
@@ -227,6 +227,11 @@ Rapporto deceduti su casi totali:
 
 Per le provincie di ogni regione Italiana al momento sono disponibili solo i casi positivi totali.
 
+
+### Stato attuale delle Province
+Stato delle Province per ogni Regione nell'ultima settimana: più la Provincia è nella parte alta più i casi stanno aumentando; più le Province sono verso destra, maggiore è il numero di casi identificati. N.B.: le conclusioni sono puramente indicative.
+<iframe class="slideshow-iframe" src="/slides/province_status.html" 
+style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
 ### Le 15 Province con più contagi negli ultimi 7 giorni
 ![Province con più contagi](slides/img/regioni/ita_worstProv7Day.PNG)

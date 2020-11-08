@@ -394,223 +394,226 @@ close(gcf);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-x_data=[];
-y_data=[];
-
-n_day_offset_x = 7;
-
-date_list=unique(data.dataReg.data);
-
-
-for reg=1:size(regioni_tot,1)
-    regione = char(regioni_tot(reg,1));
-    index = find(strcmp(data.dataReg.denominazione_regione,cellstr(regione)));
-    
-    idx1=index(end);
-    idx2=find(strcmp(data.dataReg.denominazione_regione,cellstr(regione)) & strcmp(data.dataReg.data, date_list(end-n_day_offset_x+1)));
-    
-    x_data(reg,1) = (data.dataReg.totale_casi(idx1)-data.dataReg.totale_casi(idx2))/n_day_offset_x/pop.popolazioneRegioniPop(reg)*100000;
-    y_data(reg,1) = (data.dataReg.totale_casi(idx1)-data.dataReg.totale_casi(idx2))/data.dataReg.totale_casi(idx2)*100;
-end
-
-lastDay=unique(data.dataReg.data); lastDay=lastDay(end);
-lastWeek=unique(data.dataReg.data); lastWeek=lastWeek(end-6);
-lastThree=unique(data.dataReg.data); lastThree=lastThree(end-n_day_offset_x+1);
-
-
-idx = find(strcmp(data.dataReg.data,lastDay));
-idx2 = find(strcmp(data.dataReg.data,lastWeek));
-idx3 = find(strcmp(data.dataReg.data,lastThree));
-
-x_data_ita=(sum(data.dataReg.totale_casi(idx))-sum(data.dataReg.totale_casi(idx3)))/n_day_offset_x/sum(pop.popolazioneRegioniPop)*100000;
-y_data_ita=(sum(data.dataReg.totale_casi(idx))-sum(data.dataReg.totale_casi(idx2)))/sum(data.dataReg.totale_casi(idx2))*100;
-
-
-h = figure;
-set(h,'NumberTitle','Off');
-set(h,'Position',[26 79 967 603]);
-grid minor
-axis tight manual % this ensures that getframe() returns a consistent size
-ylim([0 10])
-xlim([0 500])
-
-
-days = (datenum(unique(data.dataReg.data)));
-
-
-% Init labels
-l=1;
-x = x_data(:,1);
-y = y_data(:,1);
-clear lbl;
-
-annotation(gcf,'textbox',[0.671713691830404 0.940298507462687 0.238100000000001 0.0463800000000003],...
-    'String',datestr(days(end), 'dd mmm'),...
-    'HorizontalAlignment','right',...
-    'FontSize',20,...
-    'FontName','Verdana',...
-    'FitBoxToText','off',...
-    'LineStyle','none',...
-    'Color',[0.5 0.5 0.5]);
-
-
-
-fontsize=10;
-for q=1:size(x,1)
-    %plot(x(q)',y(q)',markers{l},'w')
-    try
-        if ~strcmp(regions,'A')
-            lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(:))','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-        else
-            if strcmp('P.A. Bolzano',regioni_tot{q})
-                lbl(q) = text(x(q),y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-            elseif strcmp('P.A. Trento',regioni_tot{q})
-                lbl(q) = text(x(q),y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-            elseif strcmp('Valle d Aosta',regioni_tot{q})
-                lbl(q) = text(x(q),y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-            else
-                lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-            end
-        end
-    catch
-        if strcmp('P.A. Bolzano',regioni_tot{q})
-            lbl(q) = text(x(q),y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-        elseif strcmp('P.A. Trento',regioni_tot{q})
-            lbl(q) = text(x(q),y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-        elseif strcmp('Valle d Aosta',regioni_tot{q})
-            lbl(q) = text(x(q),y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-        else
-            lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
-        end
-    end
-    l=l+1;
-    if l==size(colors,2)
-        l=1;
-    end
-end
-
-
-grid on
-% text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
-% text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
-xlabel(sprintf('Media nuovi casi ultimi %d giorni / 100.000 ab', n_day_offset_x));
-ylabel('Incremento settimanale percentuale di casi totali')
-set(gcf,'color','w');
-
-fh = gcf;
-
-% add Italy
-hold on
-
-
-    x = x_data;
-    y = y_data;
-
-xlim([0 max(x)*1.1]);
-ylim([0 max(y)*1.1]);
-
-xLimF=xlim;
-yLimF=ylim;
-
-
-rectangle('Position',[0,0,x_data_ita,y_data_ita],'FaceColor',[0 1 0 .2],'LineWidth',1)
-rectangle('Position',[0,y_data_ita,x_data_ita,yLimF(2)-y_data_ita],'FaceColor',[1 0.400000011920929 0 .2],'LineWidth',1)
-rectangle('Position',[x_data_ita,0,xLimF(2)-x_data_ita,y_data_ita],'FaceColor',[1 1 0 .2],'LineWidth',1)
-rectangle('Position',[x_data_ita,y_data_ita,xLimF(2)-x_data_ita,yLimF(2)-y_data_ita],'FaceColor',[1 0 0 .2],'LineWidth',1)
-
 % 
-% annotation(gcf,'textbox',...
-%     [0.820062047569804 0.882255389718076 0.0825655446397846 0.035531381343986],...
-%     'Color',[1 0 0],...
-%     'String','alti numeri',...
-%     'LineStyle','none',...
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% x_data=[];
+% y_data=[];
+% 
+% n_day_offset_x = 7;
+% 
+% date_list=unique(data.dataReg.data);
+% 
+% 
+% for reg=1:size(regioni_tot,1)
+%     regione = char(regioni_tot(reg,1));
+%     index = find(strcmp(data.dataReg.denominazione_regione,cellstr(regione)));
+%     
+%     idx1=index(end);
+%     idx2=find(strcmp(data.dataReg.denominazione_regione,cellstr(regione)) & strcmp(data.dataReg.data, date_list(end-n_day_offset_x+1)));
+%     
+%     x_data(reg,1) = (data.dataReg.totale_casi(idx1)-data.dataReg.totale_casi(idx2))/n_day_offset_x/pop.popolazioneRegioniPop(reg)*100000;
+%     y_data(reg,1) = (data.dataReg.totale_casi(idx1)-data.dataReg.totale_casi(idx2))/data.dataReg.totale_casi(idx2)*100;
+% end
+% 
+% lastDay=unique(data.dataReg.data); lastDay=lastDay(end);
+% lastWeek=unique(data.dataReg.data); lastWeek=lastWeek(end-6);
+% lastThree=unique(data.dataReg.data); lastThree=lastThree(end-n_day_offset_x+1);
+% 
+% 
+% idx = find(strcmp(data.dataReg.data,lastDay));
+% idx2 = find(strcmp(data.dataReg.data,lastWeek));
+% idx3 = find(strcmp(data.dataReg.data,lastThree));
+% 
+% x_data_ita=(sum(data.dataReg.totale_casi(idx))-sum(data.dataReg.totale_casi(idx3)))/n_day_offset_x/sum(pop.popolazioneRegioniPop)*100000;
+% y_data_ita=(sum(data.dataReg.totale_casi(idx))-sum(data.dataReg.totale_casi(idx2)))/sum(data.dataReg.totale_casi(idx2))*100;
+% 
+% 
+% h = figure;
+% set(h,'NumberTitle','Off');
+% set(h,'Position',[26 79 967 603]);
+% grid minor
+% axis tight manual % this ensures that getframe() returns a consistent size
+% ylim([0 10])
+% xlim([0 500])
+% 
+% 
+% days = (datenum(unique(data.dataReg.data)));
+% 
+% 
+% % Init labels
+% l=1;
+% x = x_data(:,1);
+% y = y_data(:,1);
+% clear lbl;
+% 
+% annotation(gcf,'textbox',[0.671713691830404 0.940298507462687 0.238100000000001 0.0463800000000003],...
+%     'String',datestr(days(end), 'dd mmm'),...
 %     'HorizontalAlignment','right',...
-%     'VerticalAlignment','middle',...
-%     'FontSize',8,...
+%     'FontSize',20,...
 %     'FontName','Verdana',...
 %     'FitBoxToText','off',...
-%     'BackgroundColor',[1 1 1]);
-% 
-% annotation(gcf,'textbox',...
-%     [0.75387797311272 0.115187865589425 0.145647240606694 0.0324074909611554],...
-%     'Color',[1 0 0],...
-%     'VerticalAlignment','middle',...
-%     'String','non pronto per fase 2',...
 %     'LineStyle','none',...
-%     'HorizontalAlignment','right',...
-%     'FontSize',8,...
+%     'Color',[0.5 0.5 0.5]);
+% 
+% 
+% 
+% fontsize=10;
+% for q=1:size(x,1)
+%     %plot(x(q)',y(q)',markers{l},'w')
+%     try
+%         if ~strcmp(regions,'A')
+%             lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(:))','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%         else
+%             if strcmp('P.A. Bolzano',regioni_tot{q})
+%                 lbl(q) = text(x(q),y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%             elseif strcmp('P.A. Trento',regioni_tot{q})
+%                 lbl(q) = text(x(q),y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%             elseif strcmp('Valle d Aosta',regioni_tot{q})
+%                 lbl(q) = text(x(q),y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%             else
+%                 lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%             end
+%         end
+%     catch
+%         if strcmp('P.A. Bolzano',regioni_tot{q})
+%             lbl(q) = text(x(q),y(q), 'BOLZ','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%         elseif strcmp('P.A. Trento',regioni_tot{q})
+%             lbl(q) = text(x(q),y(q), 'TREN','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%         elseif strcmp('Valle d Aosta',regioni_tot{q})
+%             lbl(q) = text(x(q),y(q), 'VDAO','Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%         else
+%             lbl(q) = text(x(q),y(q), upper(regioni_tot{q}(1:4)),'Color', colors{l},'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center');
+%         end
+%     end
+%     l=l+1;
+%     if l==size(colors,2)
+%         l=1;
+%     end
+% end
+% 
+% 
+% grid on
+% % text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
+% % text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
+% xlabel(sprintf('Media nuovi casi ultimi %d giorni / 100.000 ab', n_day_offset_x));
+% ylabel('Incremento settimanale percentuale di casi totali')
+% set(gcf,'color','w');
+% 
+% fh = gcf;
+% 
+% % add Italy
+% hold on
+% 
+% 
+%     x = x_data;
+%     y = y_data;
+% 
+% xlim([0 max(x)*1.1]);
+% ylim([0 max(y)*1.1]);
+% 
+% xLimF=xlim;
+% yLimF=ylim;
+% 
+% 
+% rectangle('Position',[0,0,x_data_ita,y_data_ita],'FaceColor',[0 1 0 .2],'LineWidth',1)
+% rectangle('Position',[0,y_data_ita,x_data_ita,yLimF(2)-y_data_ita],'FaceColor',[1 0.400000011920929 0 .2],'LineWidth',1)
+% rectangle('Position',[x_data_ita,0,xLimF(2)-x_data_ita,y_data_ita],'FaceColor',[1 1 0 .2],'LineWidth',1)
+% rectangle('Position',[x_data_ita,y_data_ita,xLimF(2)-x_data_ita,yLimF(2)-y_data_ita],'FaceColor',[1 0 0 .2],'LineWidth',1)
+% 
+% % 
+% % annotation(gcf,'textbox',...
+% %     [0.820062047569804 0.882255389718076 0.0825655446397846 0.035531381343986],...
+% %     'Color',[1 0 0],...
+% %     'String','alti numeri',...
+% %     'LineStyle','none',...
+% %     'HorizontalAlignment','right',...
+% %     'VerticalAlignment','middle',...
+% %     'FontSize',8,...
+% %     'FontName','Verdana',...
+% %     'FitBoxToText','off',...
+% %     'BackgroundColor',[1 1 1]);
+% % 
+% % annotation(gcf,'textbox',...
+% %     [0.75387797311272 0.115187865589425 0.145647240606694 0.0324074909611554],...
+% %     'Color',[1 0 0],...
+% %     'VerticalAlignment','middle',...
+% %     'String','non pronto per fase 2',...
+% %     'LineStyle','none',...
+% %     'HorizontalAlignment','right',...
+% %     'FontSize',8,...
+% %     'FontName','Verdana',...
+% %     'FitBoxToText','off',...
+% %     'BackgroundColor',[1 1 1]);
+% % 
+% % annotation(gcf,'textbox',...
+% %     [0.135470527404344 0.884673769403688 0.145647240606694 0.0324074909611556],...
+% %     'Color',[1 0 0],...
+% %     'VerticalAlignment','middle',...
+% %     'String','non pronto per fase 2',...
+% %     'LineStyle','none',...
+% %     'HorizontalAlignment','right',...
+% %     'FontSize',8,...
+% %     'FontName','Verdana',...
+% %     'FitBoxToText','off',...
+% %     'BackgroundColor',[1 1 1]);
+% % 
+% % annotation(gcf,'textbox',...
+% %     [0.137538779731128 0.118504615174833 0.114788004136504 0.0324074909611555],...
+% %     'Color',[1 0 0],...
+% %     'VerticalAlignment','middle',...
+% %     'String','pronto per fase 2',...
+% %     'LineStyle','none',...
+% %     'HorizontalAlignment','right',...
+% %     'FontSize',8,...
+% %     'FontName','Verdana',...
+% %     'FitBoxToText','off',...
+% %     'BackgroundColor',[1 1 1]);
+% 
+% 
+% %     hdate.String = datestr(days(n), 'dd mmm');
+% for q=1:size(x_data,1)
+%     %plot(x(q)',y(q)',markers{l},'w')
+%     lbl(q).Position(1:2) = [x(q), y(q)];
+% end
+% lbl(q+1) = text(x_data_ita,y_data_ita, 'ITALIA','Color', [0 0 0],'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center', 'verticalAlignment','bottom');
+% 
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+%     'String',{['Fonte: https://github.com/pcm-dpc']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
 %     'FontName','Verdana',...
 %     'FitBoxToText','off',...
-%     'BackgroundColor',[1 1 1]);
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
 % 
 % annotation(gcf,'textbox',...
-%     [0.135470527404344 0.884673769403688 0.145647240606694 0.0324074909611556],...
-%     'Color',[1 0 0],...
-%     'VerticalAlignment','middle',...
-%     'String','non pronto per fase 2',...
+%     [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+%     'String',{'https://covidguard.github.io/#covid-19-italia'},...
 %     'LineStyle','none',...
-%     'HorizontalAlignment','right',...
-%     'FontSize',8,...
+%     'HorizontalAlignment','left',...
+%     'FontSize',6,...
 %     'FontName','Verdana',...
-%     'FitBoxToText','off',...
-%     'BackgroundColor',[1 1 1]);
+%     'FitBoxToText','off');
 % 
-% annotation(gcf,'textbox',...
-%     [0.137538779731128 0.118504615174833 0.114788004136504 0.0324074909611555],...
-%     'Color',[1 0 0],...
-%     'VerticalAlignment','middle',...
-%     'String','pronto per fase 2',...
-%     'LineStyle','none',...
-%     'HorizontalAlignment','right',...
-%     'FontSize',8,...
-%     'FontName','Verdana',...
-%     'FitBoxToText','off',...
-%     'BackgroundColor',[1 1 1]);
+% 
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/status.PNG']);
+% close(gcf);
+% 
+% end
 
 
-%     hdate.String = datestr(days(n), 'dd mmm');
-for q=1:size(x_data,1)
-    %plot(x(q)',y(q)',markers{l},'w')
-    lbl(q).Position(1:2) = [x(q), y(q)];
-end
-lbl(q+1) = text(x_data_ita,y_data_ita, 'ITALIA','Color', [0 0 0],'fontsize',fontsize,'FontWeight','bold','horizontalAlignment','center', 'verticalAlignment','bottom');
 
-datestr_now = datestr(now);
-annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
-    'String',{['Fonte: https://github.com/pcm-dpc']},...
-    'HorizontalAlignment','center',...
-    'FontSize',6,...
-    'FontName','Verdana',...
-    'FitBoxToText','off',...
-    'LineStyle','none',...
-    'Color',[0 0 0]);
-
-annotation(gcf,'textbox',...
-    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
-    'String',{'https://covidguard.github.io/#covid-19-italia'},...
-    'LineStyle','none',...
-    'HorizontalAlignment','left',...
-    'FontSize',6,...
-    'FontName','Verdana',...
-    'FitBoxToText','off');
-
-
-print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/status.PNG']);
-close(gcf);
-
-end
 
 function beautifyFig(fig_handle)
 % Change font size / type colors of a figure
