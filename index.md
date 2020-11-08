@@ -225,7 +225,7 @@ Rapporto deceduti su casi totali:
 
 ## ITALIA Province
 
-Per le provincie di ogni regione Italiana al momento sono disponibili solo i casi positivi totali.
+Per le province di ogni regione Italiana al momento sono disponibili solo i casi positivi totali.
 
 
 ### Stato attuale delle Province
