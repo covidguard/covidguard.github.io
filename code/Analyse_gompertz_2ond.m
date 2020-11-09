@@ -392,11 +392,11 @@ for k = 1:size(timeTot_datenum,1)
 end
 
 for k=150:size(timeTot_datenum,1)
-    lombardia.progSett(k)=(lombardia.totale_casi(k)-lombardia.totale_casi(k-7))/lombardia.totale_casi(k-7)*100;
-    lombardia.progSett_n(k)=(lombardia.nuovi_positivi(k)-lombardia.nuovi_positivi(k-7))/lombardia.nuovi_positivi(k-7)*100;
-    lombardia.progSett_terapia_intensiva(k)=(lombardia.ti(k)-lombardia.ti(k-7))/lombardia.ti(k-7)*100;
-    lombardia.progSett_deceduti(k)=(lombardia.deceduti(k)-lombardia.deceduti(k-7))/lombardia.deceduti(k-7)*100;
-    lombardia.progSett_ricoverati(k)=(lombardia.ricoverati(k)-lombardia.ricoverati(k-7))/lombardia.ricoverati(k-7)*100;
+    lombardia.progSett(k)=(lombardia.totale_casi(k)-lombardia.totale_casi(k-7))/(lombardia.totale_casi(k-7)-lombardia.totale_casi(k-13))*100;
+    lombardia.progSett_n(k)=(lombardia.nuovi_positivi(k)-lombardia.nuovi_positivi(k-7))/(lombardia.nuovi_positivi(k-7)-lombardia.nuovi_positivi(k-13))*100;
+    lombardia.progSett_terapia_intensiva(k)=(lombardia.ti(k)-lombardia.ti(k-7))/(lombardia.ti(k-7)-lombardia.ti(k-13))*100;
+    lombardia.progSett_deceduti(k)=(lombardia.deceduti(k)-lombardia.deceduti(k-7))/(lombardia.deceduti(k-7)-lombardia.deceduti(k-13))*100;
+    lombardia.progSett_ricoverati(k)=(lombardia.ricoverati(k)-lombardia.ricoverati(k-7))/(lombardia.ricoverati(k-7)-lombardia.ricoverati(k-13))*100;
 end
 
 
