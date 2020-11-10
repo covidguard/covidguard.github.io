@@ -8957,7 +8957,7 @@ grid on
 % text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
 % text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
 xlabel(sprintf('Media nuovi casi ultimi %d giorni / 100.000 ab', n_day_offset_x));
-ylabel('Incremento settimanale percentuale di casi totali')
+ylabel('Casi totali ultima settimana vs settimana precedente (%)')
 set(gcf,'color','w');
 
 fh = gcf;
@@ -9139,7 +9139,7 @@ for reg = 1:size(Regione_lista)
         % text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
         % text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
         xlabel(sprintf('Media nuovi casi ultimi %d giorni / 100.000 ab', n_day_offset_x));
-        ylabel('Incremento settimanale percentuale di casi totali')
+        ylabel('Casi totali ultima settimana vs settimana precedente (%)')
         set(gcf,'color','w');
         
         fh = gcf;
