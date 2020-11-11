@@ -2025,7 +2025,7 @@ annotation(gcf,'textbox',...
 ylimm = get(gca,'ylim');
 ylim([0,ylimm(2)]);
         
-print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_5_ percentuale_casi_testati_positivivsCasi_Totali.PNG']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_5_percentuale_casi_testati_positivivsCasi_Totali.PNG']);
 close(gcf);
 
 
@@ -2391,7 +2391,7 @@ annotation(gcf,'textbox',...
 ylimm = get(gca,'ylim');
 ylim([0,ylimm(2)]);
         
-print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/REGN_',regione, '_5_ percentuale_casi_testati_positivivsCasi_Totali.PNG']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/REGN_',regione, '_5_percentuale_casi_testati_positivivsCasi_Totali.PNG']);
 close(gcf);
 
 
