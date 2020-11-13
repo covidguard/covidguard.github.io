@@ -2429,6 +2429,126 @@ for reg=1:size(regioni_tot,1)
         time_num = fix(datenum(dataReg.data(index)));
         
         
+        day_unique = unique(dataReg.data);
+        data_casiPositivi=NaN(size(day_unique,1),1);
+        data_deceduti=NaN(size(day_unique,1),1);
+        data_terapie=NaN(size(day_unique,1),1);
+        data_guariti=NaN(size(day_unique,1),1);
+        data_ricoverati=NaN(size(day_unique,1),1);
+        
+        data_casiPositivi=dataReg.totale_casi(index);
+        data_deceduti=dataReg.deceduti(index);
+        
+        time_num = fix(datenum(day_unique));
+        
+        
+        
+        % indice di mortalità settimanale
+        
+        offset_decCas = 14;
+        id_i=1;
+        id_e=id_i+6;
+        
+        id_i_d=id_i+offset_decCas;
+        id_e_d=id_i_d+6;
+        
+        dataItaWeek=struct;
+        dataItaWeek.casiNuovi=[];
+        dataItaWeek.deceduti=[];
+        dataItaWeek.label={''};
+        
+        k=0;
+        while id_e_d<size(day_unique,1)
+            k=k+1;
+            
+            dataItaWeek.casiNuovi=[dataItaWeek.casiNuovi;data_casiPositivi(id_e)-data_casiPositivi(id_i)];
+            dataItaWeek.deceduti=[dataItaWeek.deceduti;data_deceduti(id_e_d)-data_deceduti(id_i_d)];
+            dataItaWeek.label(k,1)= cellstr(sprintf('%s - %s', datestr(datenum(day_unique(id_i)),'dd mmm'), datestr(datenum(day_unique(id_e)),'dd mmm')));
+            id_i=id_e+1;
+            id_e=id_i+6;
+            id_i_d=id_i+offset_decCas;
+            id_e_d=id_i_d+6;
+        end
+        try
+            k=k+1;
+            %     id_e=size(day_unique,1);
+            id_e_d=size(day_unique,1);
+            dataItaWeek.casiNuovi=[dataItaWeek.casiNuovi;data_casiPositivi(id_e)-data_casiPositivi(id_i)]
+            dataItaWeek.deceduti=[dataItaWeek.deceduti;data_deceduti(id_e_d)-data_deceduti(id_i_d)];
+            dataItaWeek.label(k,1)= cellstr(sprintf('%s - %s', datestr(datenum(day_unique(id_i)),'dd mmm'), datestr(datenum(day_unique(id_e)),'dd mmm')));
+        catch
+            
+        end
+        
+        
+        figure;
+        id_f = gcf;
+        set(id_f, 'Name', sprintf('%s: indice di mortalità settimanale','regione'));
+        title(sprintf(sprintf('%s: indice di mortalità settimanale (15gg offset)', regione)))
+        
+        
+        set(gcf,'NumberTitle','Off');
+        set(gcf,'Position',[26 79 967 603]);
+        grid on
+        hold on
+        
+        b=bar(dataItaWeek.deceduti./dataItaWeek.casiNuovi*100);
+        
+        hold on; grid minor
+        set(gca,'XTick',1:size(day_unique,1))
+        set(gca,'XTickLabel',dataItaWeek.label)
+        set(gca,'XLim',[0.5,(size(dataItaWeek.deceduti./dataItaWeek.casiNuovi,1))+0.5])
+        set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+        ylabel('indice di mortalità settimanale (%)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+        if ismac
+            font_size = 9;
+        else
+            font_size = 6.5;
+        end
+        
+        ax = gca;
+        set(ax, 'FontName', 'Verdana');
+        set(ax, 'FontSize', font_size);
+        %
+        % ylimit=ylim;
+        % if ylimit(2)<25
+        %     ylim([0 25]);
+        % end
+        
+        % ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+        
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        annotation(gcf,'textbox',...
+            [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/',regione,'_indice_mortalita_settimanale15.PNG']);
+        close(gcf);
+
+        
+       
+        
+        
+        
+        
+        
+        
         %% bar stacked: totale casi
         datetickFormat = 'dd mmm';
         figure;
@@ -5152,9 +5272,6 @@ close(gcf);
 
 
 
-%% analisi nazionale sulla correlazione casi-deceduti: versione 2
-offset_dec = 3;
-offset_guar = 0;
 
 % reg=9
 % regione = char(regioni_tot(reg,1));
@@ -5179,6 +5296,190 @@ for k = 1: size(day_unique,1)
 end
 time_num = fix(datenum(day_unique));
 regione = 'Italia';
+
+
+% indice di mortalità settimanale
+
+offset_decCas = 14;
+id_i=1;
+id_e=id_i+6;
+
+id_i_d=id_i+offset_decCas;
+id_e_d=id_i_d+6;
+
+dataItaWeek=struct;
+dataItaWeek.casiNuovi=[];
+dataItaWeek.deceduti=[];
+dataItaWeek.label={''};
+
+k=0;
+while id_e_d<size(day_unique,1)
+    k=k+1;
+    
+    dataItaWeek.casiNuovi=[dataItaWeek.casiNuovi;data_casiPositivi(id_e)-data_casiPositivi(id_i)];
+    dataItaWeek.deceduti=[dataItaWeek.deceduti;data_deceduti(id_e_d)-data_deceduti(id_i_d)];
+    dataItaWeek.label(k,1)= cellstr(sprintf('%s - %s', datestr(datenum(day_unique(id_i)),'dd mmm'), datestr(datenum(day_unique(id_e)),'dd mmm')));
+    id_i=id_e+1;
+    id_e=id_i+6;
+    id_i_d=id_i+offset_decCas;
+    id_e_d=id_i_d+6;
+end
+try
+    k=k+1;
+%     id_e=size(day_unique,1);
+    id_e_d=size(day_unique,1);
+    dataItaWeek.casiNuovi=[dataItaWeek.casiNuovi;data_casiPositivi(id_e)-data_casiPositivi(id_i)]
+    dataItaWeek.deceduti=[dataItaWeek.deceduti;data_deceduti(id_e_d)-data_deceduti(id_i_d)];
+    dataItaWeek.label(k,1)= cellstr(sprintf('%s - %s', datestr(datenum(day_unique(id_i)),'dd mmm'), datestr(datenum(day_unique(id_e)),'dd mmm')));
+catch
+    
+end
+
+
+figure;
+id_f = gcf;
+set(id_f, 'Name', 'Italia: indice di mortalità settimanale');
+title(sprintf(['Italia: indice di mortalità settimanale (15gg offset) \\fontsize{5}\n ']))
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+b=bar(dataItaWeek.deceduti./dataItaWeek.casiNuovi*100);
+
+hold on; grid minor
+set(gca,'XTick',1:size(day_unique,1))
+set(gca,'XTickLabel',dataItaWeek.label)
+set(gca,'XLim',[0.5,(size(dataItaWeek.deceduti./dataItaWeek.casiNuovi,1))+0.5])
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('indice di mortalità settimanale (%)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+% 
+% ylimit=ylim;
+% if ylimit(2)<25
+%     ylim([0 25]);
+% end
+
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_indice_mortalita_settimanale15.PNG']);
+close(gcf);
+
+
+
+figure;
+id_f = gcf;
+set(id_f, 'Name', 'Italia: indice di mortalità');
+title(sprintf(['Italia: indice di mortalità cumulato \\fontsize{5}\n ']))
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+b=plot(datenum(day_unique),data_deceduti./data_casiPositivi*100,'linewidth',2);
+
+hold on; grid minor
+
+inc = round((size(datenum(day_unique),1))/18);
+
+set(gca,'XTick',datenum(day_unique(1:inc:end)));
+
+datetick('x', 'dd-mmm', 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ax.FontSize = font_size;
+
+ylabel('indice di mortalità cumulato(%)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+% 
+% ylimit=ylim;
+% if ylimit(2)<25
+%     ylim([0 25]);
+% end
+
+% ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_indice_mortalita_cumulato.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+%% analisi nazionale sulla correlazione casi-deceduti: versione 2
+offset_dec = 3;
+offset_guar = 0;
+
+
 
 t=time_num(2:end);
 data_casiPositivi=diff(data_casiPositivi);
