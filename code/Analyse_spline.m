@@ -5419,6 +5419,7 @@ set(gca,'XTick',datenum(day_unique(1:inc:end)));
 
 datetick('x', 'dd-mmm', 'keepticks') ;
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ax = gca;
 ax.FontSize = font_size;
 
 ylabel('indice di mortalità cumulato(%)', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
@@ -5428,7 +5429,7 @@ else
     font_size = 6.5;
 end
 
-ax = gca;
+
 set(ax, 'FontName', 'Verdana');
 set(ax, 'FontSize', font_size);
 % 

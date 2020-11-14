@@ -65,10 +65,10 @@ set(h,'Position',[26 79 967 603]);
 grid minor
 axis tight manual % this ensures that getframe() returns a consistent size
 set(gca,'yscale','log')
-ylim([1 1000000])
+ylim([1 10000000])
 xlim([-10 110])
-rectangle('Position',[60 100 40 110000])
-rectangle('Position',[0 70 20 110000])
+rectangle('Position',[60 100 40 1100000])
+rectangle('Position',[0 70 20 1100000])
 %markers = {'+','o','*','.','x','v','>'};
 colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
 colors={};
@@ -151,8 +151,8 @@ for q=1:length(x)
 end
 
 grid on
-text(60, 260000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
-text(0, 260000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
+text(60, 2600000, {'alto tasso di crescita e','  alto numero di casi'},'Color','k','fontsize',14)
+text(0, 2600000, {'epidemia sotto','   controllo'},'Color','k','fontsize',14)
 ylabel('Numero di casi totali')
 xlabel('Incremento settimanale percentuale di casi totali')
 set(gcf,'color','w');
