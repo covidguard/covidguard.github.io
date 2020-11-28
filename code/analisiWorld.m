@@ -119,7 +119,7 @@ end
 
 %% confronto tra stati: casi totali allineato da 20 casi su 100.000
 
-aligmnent=25;
+aligmnent=10;
 
 date_s=list_day;
 h = figure;
@@ -181,15 +181,17 @@ end
 % customC_list = {'Italy';'Sweden'};
 
 % customC_list = {'Norway';'Sweden';'Finland'};
+worldData.dataWeight(isnan(worldData.dataWeight))=0;
 
 customC_list={''};
 for reg = 1:size(customC_list,1)    
     regione = char(customC_list{reg});    
     idx_cR = find(strcmp(list_country,regione));
     
+    worldData.dataWeight(isnan(worldData.dataWeight(:,idx_cR)),idx_cR)=0;
     y=cumsum(worldData.dataWeight(:,idx_cR)*100000);
     
-       try
+    try
         aligmnent_reg=find(y>=aligmnent); aligmnent_reg=aligmnent_reg(1);
         aligmnent_reg=0
         
@@ -232,7 +234,7 @@ xlim([-10,x_lim(2)]);
 y_lim=get(gca,'ylim');
 ylim([10,y_lim(2)*1.1]);
 
-xlabel('giorni dal caso 25/100.000');
+xlabel('giorni dal caso 10/100.000');
 
 
 
@@ -351,43 +353,43 @@ end
 % 
 % % add custom country
 % customC_list = {'Brazil'; 'Russia';'China'};
-% 
-% for reg = 1:size(customC_list,1)    
-%     regione = char(customC_list{reg});    
-%     idx_cR = find(strcmp(list_country,regione));
-%     
-%     y=cumsum(worldData.deathWeight(:,idx_cR)*100000);
-%     
-%        try
-%         aligmnent_reg=find(y>=aligmnent); aligmnent_reg=aligmnent_reg(1);
-%         
-%         a(reg)=plot([-aligmnent_reg:-aligmnent_reg+size(date_s,1)-1]', y,'LineWidth', 2.0, 'Color', colors{reg});
-%         
-%         idxx=find(~isnan(y));idxx=idxx(end);
-%         i = round(idxx/1)-1;
-%         
-%         % Get the local slope
-%         d = (y(i+1)-y(i-3))/4;
-%         X = diff(get(gca, 'xlim'));
-%         Y = diff(get(gca, 'ylim'));
-%         p = pbaspect;
-%         a = atan(d*p(2)*X/p(1)/Y)*180/pi;
-%         if ~isfinite(a)
-%             a=90;
-%         end
-%         
-%         % Display the text
-%         count = char(regione);
-%         count=strrep(count,'_',' ');
-%         
-%         
-%         %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-%         text(-aligmnent_reg+size(date_s,1)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7);
-%         
-%        catch
-%            fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
-%        end
-% end
+
+for reg = 1:size(customC_list,1)    
+    regione = char(customC_list{reg});    
+    idx_cR = find(strcmp(list_country,regione));
+    worldData.deathWeight(isnan(worldData.deathWeight(:,idx_cR)),idx_cR)=0;
+    y=cumsum(worldData.deathWeight(:,idx_cR)*100000);
+    
+       try
+        aligmnent_reg=find(y>=aligmnent); aligmnent_reg=aligmnent_reg(1);
+        
+        a(reg)=plot([-aligmnent_reg:-aligmnent_reg+size(date_s,1)-1]', y,'LineWidth', 2.0, 'Color', colors{reg});
+        
+        idxx=find(~isnan(y));idxx=idxx(end);
+        i = round(idxx/1)-1;
+        
+        % Get the local slope
+        d = (y(i+1)-y(i-3))/4;
+        X = diff(get(gca, 'xlim'));
+        Y = diff(get(gca, 'ylim'));
+        p = pbaspect;
+        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+        if ~isfinite(a)
+            a=90;
+        end
+        
+        % Display the text
+        count = char(regione);
+        count=strrep(count,'_',' ');
+        
+        
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+        text(-aligmnent_reg+size(date_s,1)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7);
+        
+       catch
+           fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
+       end
+end
 
 
 
