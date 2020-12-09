@@ -59,7 +59,7 @@ for i=1:size(file_scan,1)
     json_oneRaw(1+(i-1)*size(file_scan,2):i*size(file_scan,2))=file_scan(i,:);
     %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
 end
-dataReg = decodeJSON1(json_oneRaw);
+dataReg = decodeJSON(json_oneRaw);
 dataReg.dataa = char(dataReg.data);
 dataReg.dataa(:,11)=' ';
 dataReg.data=cellstr(dataReg.dataa);
@@ -85,7 +85,7 @@ for i=1:size(file_scan,1)
     %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
 end
 
-dataProv = decodeJSON1(json_oneRaw);
+dataProv = decodeJSON(json_oneRaw);
 dataProv.dataa = char(dataProv.data);
 dataProv.dataa(:,11)=' ';
 dataProv.data=cellstr(dataProv.dataa);
@@ -113,7 +113,7 @@ end
 
 
 %% report pdf
-analisiReportPdf
+% analisiReportPdf
 
 analisiExtra
 
@@ -732,8 +732,8 @@ close(gcf);
 %% tamponi week
 figure;
 id_f = gcf;
-set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di tamponi (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
-title(sprintf('Italia: Regioni con maggior numero di tamponi  (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
+set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di casi testati (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
+title(sprintf('Italia: Regioni con maggior numero di casi testati  (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
 
 
 set(gcf,'NumberTitle','Off');
@@ -745,8 +745,8 @@ worstRegValue_abs=[];
 for reg=1:size(regioni_tot,1)
     regione = char(regioni_tot(reg,1));
     index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
-    worstRegValue(reg,1)=(dataReg.tamponi(index(end))-dataReg.tamponi(index(end-6)))./pop.popolazioneRegioniPop(reg)*100000;
-    worstAbsValue(reg,1)=(dataReg.tamponi(index(end))-dataReg.tamponi(index(end-6)));
+    worstRegValue(reg,1)=(dataReg.casi_testati(index(end))-dataReg.casi_testati(index(end-6)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstAbsValue(reg,1)=(dataReg.casi_testati(index(end))-dataReg.casi_testati(index(end-6)));
 end
 worstRegValue(worstRegValue<0)=0;
 worstAbsValue(worstAbsValue<0)=0;
@@ -778,14 +778,14 @@ xx=a(1).YData(2);
 yy=a(1).XData(2)+a(1).XOffset(1);
 d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
    
-xlabel('Tamponi / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+xlabel('Casi Testati / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
 
 set(gca,'YTick',[])
 set(gca,'YLim',[1.6,2.4])
 set(gca,'FontSize',8);
 set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
 xlabel('Tamponi / 100.000 abitanti')
-title(sprintf('Italia: Regioni con maggior numero di tamponi per abitante (dal %s al %s)',datestr(list_day(end-6),'dd/mm/yyyy'),datestr(list_day(end),'dd/mm/yyyy')));
+title(sprintf('Italia: Regioni con maggior numero di Casi Testati per abitante (dal %s al %s)',datestr(list_day(end-6),'dd/mm/yyyy'),datestr(list_day(end),'dd/mm/yyyy')));
 
 ax=get(gca);
 ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
@@ -993,6 +993,96 @@ close(gcf);
 
 
 
+
+%% ingressi in terapia intensiva week
+ingressi_terapia_intensiva=dataReg.ingressi_terapia_intensiva;
+ingressi_terapia_intensiva(isnan(ingressi_terapia_intensiva))=0;
+figure;
+id_f = gcf;
+set(id_f, 'Name', sprintf('Italia: Regioni con maggior numero di nuove T.I. (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
+title(sprintf('Italia: Regioni con maggior numero di nuove T.I. (dal %s al %s)',datestr(list_day(end-6),'dd mmm'),datestr(list_day(end),'dd mmm')));
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+worstRegValue=[];
+worstRegValue_abs=[];
+for reg=1:size(regioni_tot,1)
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    index=index(end-6:end);
+    worstRegValue(reg,1)=sum(ingressi_terapia_intensiva(index(end-6:end)))./pop.popolazioneRegioniPop(reg)*100000;
+    worstAbsValue(reg,1)=sum(ingressi_terapia_intensiva(index(end-6:end)));    
+    worstRegValuePercPos(reg,1)=sum(ingressi_terapia_intensiva(index(end-6:end)))./worstAbsValue(reg,1)*100;
+end
+worstRegValue(worstRegValue<0)=0;
+worstAbsValue(worstAbsValue<0)=0;
+[worstRegValue,idxSort]=sort(worstRegValue,'descend');
+
+worstRegValuePercPos=worstRegValuePercPos(idxSort);
+
+x_data_i=flip(worstRegValue);
+idx_i=flip(idxSort);
+
+a=barh([1 2], [x_data_i ,x_data_i]');
+grid minor
+
+for k=1:size(regioni_tot,1)
+    set(a(k),'FaceColor',Cmap.getColor(idx_i(k), size(regioni_tot,1)));
+end
+
+hT={};              % placeholder for text object handles
+for k=1:size(regioni_tot,1) % iterate over number of bar objects
+    hT{k}=text(a(k).YData+max(x_data_i(:))*0.01,a(k).XData+a(k).XOffset,sprintf('%s (%d)', char(regioni_tot(idx_i(k))),worstAbsValue(idx_i(k))), ...
+        'VerticalAlignment','middle','horizontalalign','left','fontsize',7);
+    d=hT{k};
+    xx=a(k).YData(2);
+    yy=a(k).XData(2)+a(k).XOffset(1);    
+    d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];    
+    drawnow
+end
+
+d=hT{1};
+xx=a(1).YData(2);
+yy=a(1).XData(2)+a(1).XOffset(1);
+d(2).Position=[xx+max(x_data_i(:))*0.01,yy,0];
+   
+xlabel('Nuove T.I. / 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', 7);
+
+set(gca,'YTick',[])
+set(gca,'YLim',[1.6,2.4])
+set(gca,'FontSize',8);
+set(gca,'xlim',[0,max(x_data_i(:))*1.12]);
+xlabel('Nuovi casi testati / 100.000 abitanti')
+title(sprintf('Italia: Regioni con maggior numero di nuove T.I. per abitante (dal %s al %s)',datestr(list_day(end-6),'dd/mm/yyyy'),datestr(list_day(end),'dd/mm/yyyy')));
+
+ax=get(gca);
+ax.XTickLabel = mat2cell(ax.XTick, 1, numel(ax.XTick))';
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ita_bestRegWeeknuoveTI.PNG']);
+close(gcf);
 
 
 
@@ -1690,10 +1780,8 @@ for i=1:size(dataIta.time,1)
     dataIta.totale_ospedalizzati(i,1) = sum(dataReg.totale_ospedalizzati(index));
     dataIta.totale_casi(i,1) = sum(dataReg.totale_casi(index));
     dataIta.casi_testati(i,1) = sum(dataReg.casi_testati(index));
+    dataIta.nuoveTI(i,1)= sum(dataReg.ingressi_terapia_intensiva(index));
 end
-
-
-
 
 
 
@@ -1760,6 +1848,73 @@ annotation(gcf,'textbox',...
     'FitBoxToText','off');
         
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_1_terapie_intensive.PNG']);
+close(gcf);
+
+
+
+%% nuove terapie intensive
+datetickFormat = 'dd mmm';
+regione = 'Italia';
+figure;
+id_f = gcf;
+set(id_f, 'Name', [regione ': ingressi terapie intensive']);
+title(sprintf([regione ': ingressi terapie intensive\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+
+a=plot(datenum(dataIta.time),dataIta.nuoveTI,'-r','LineWidth', 2.0);
+
+if ismac
+    font_size = 9;
+else
+    font_size = 6.5;
+end
+
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ylabel('Ingressi Terapie Intensive', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+ax.XTick = time_num(1):3:time_num(end);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ax.FontSize = font_size;
+set(code_axe, 'Xlim', [time_num(1), time_num(end)]);
+
+
+t_lim=ylim;
+if t_lim(2)<100
+    ylim([t_lim(1) 100]);
+end
+
+l=legend(a,'Ingressi Terapie Intensive');
+set(l,'Location','northeast')
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+        
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/ITA_',regione, '_1a_ingressi_terapie_intensive.PNG']);
 close(gcf);
 
 
