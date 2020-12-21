@@ -32,9 +32,13 @@ fclose(fid);
 fclose(fout);
 
 
+% 
+% [world.dateRep,world.day,world.month,world.year,world.cases,world.deaths,world.countriesAndTerritories,world.geoId,world.countryterritoryCode,world.popData2018,world.continentExp] = textread(filename1,...
+%     '%s%d%d%d%d%d%s%s%s%d%s','delimiter',',','headerlines',1);
 
-[world.dateRep,world.day,world.month,world.year,world.cases,world.deaths,world.countriesAndTerritories,world.geoId,world.countryterritoryCode,world.popData2018,world.continentExp] = textread(filename1,...
-    '%s%d%d%d%d%d%s%s%s%d%s','delimiter',',','headerlines',1);
+[world.dateRep,world.year_week,world.cases,world.deaths,world.countriesAndTerritories,world.geoId,world.countryterritoryCode,world.popData2018,world.continentExp,world.notRate] = textread(filename1,...
+    '%s%s%d%d%s%s%s%d%s%f','delimiter',',','headerlines',1);
+
 
 l=[];
 l_i=0;
@@ -599,13 +603,13 @@ for reg = 1:size(customC_list,1)
 %     
 
     t_tot{reg}=t;
-    b1(reg)=plot(t1,y,':','LineWidth', 0.5,'color',Cmap.getColor(reg, size(customC_list,1)));
+    b1(reg)=plot(t1,y,'-','LineWidth', 3,'color',Cmap.getColor(reg, size(customC_list,1)));
     window=7;
-    b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
+%     b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
     
     testo.sigla(reg,:)=(customC_list(reg));
 %     testo.pos(reg,:)=[t(end)+((t(end)-t(40)))*0.01, sf(end)];
-    a1_tot{reg}=a1;
+    a1_tot{reg}=y;
     
 end
 string_legend='l=legend([b]';
@@ -736,7 +740,7 @@ for reg = 1:size(customC_list,1)
     regione = char(customC_list{reg});    
     idx_cR = find(strcmp(list_country,regione));
     
-    y=(worldData.dataWeight(:,idx_cR)*100000);
+    y=(worldData.dataWeight(:,idx_cR)*100000)./7;
     t1=worldData.timeNum;
     
     a1=movmean(y, 20, 'omitnan');
@@ -755,23 +759,23 @@ for reg = 1:size(customC_list,1)
 %     
 
     t_tot{reg}=t;
-    b1(reg)=plot(t1,y,':','LineWidth', 0.5,'color',Cmap.getColor(reg, size(customC_list,1)));
+    b1(reg)=plot(t1,y,'-','LineWidth', 3,'color',Cmap.getColor(reg, size(customC_list,1)));
     window=7;
-    b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
+%     b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
     
     testo.sigla(reg,:)=(customC_list(reg));
 %     testo.pos(reg,:)=[t(end)+((t(end)-t(40)))*0.01, sf(end)];
-    a1_tot{reg}=a1;
+    a1_tot{reg}=y;
     
 end
-string_legend='l=legend([b]';
+string_legend='l=legend([b1]';
 for reg = 1:size(customC_list,1)
     regione = char(customC_list{reg});    
     regione_leg=strrep(regione,'_', ' ');
     string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
 end
-string_legend=sprintf('%s);',string_legend);
-% eval(string_legend)
+string_legend=sprintf('%s,''location'',''NorthWest'');',string_legend);
+ eval(string_legend)
 
 
 font_size = 6.5;
@@ -794,13 +798,13 @@ ylim(y_lim);
 
 for h=1:size(customC_list,1)
     a1_tot_h=[a1_tot{h}];
-    idx_max=find(a1_tot_h==max(a1_tot_h))-10;
+    idx_max=find(a1_tot_h==max(a1_tot_h))-1;
     i = idx_max(1);
     
     t_h=[t_tot{h}];
     % Get the local slope
-    dy=a1_tot_h(i+1)-a1_tot_h(i-1);
-    dx=t_h(i+1)-t_h(i-1);
+    dy=a1_tot_h(i)-a1_tot_h(i-1);
+    dx=t_h(i)-t_h(i-1);
     d = dy/dx;
     
     
@@ -808,7 +812,7 @@ for h=1:size(customC_list,1)
     Y = diff(get(gca, 'ylim'));
     p = pbaspect;
     a = atan(d*p(2)*X/p(1)/Y)*180/pi;
-    text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
+    text(t_h(i)-0.2, a1_tot_h(i)+2, strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
 end
 
 
@@ -834,7 +838,7 @@ annotation(gcf,'textbox',...
     'FontName','Verdana',...
     'FitBoxToText','off');
 
-ylim([0 80])
+% ylim([0 80])
 
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile_worst10.PNG']);
 close(gcf);
@@ -860,12 +864,12 @@ set(gcf,'NumberTitle','Off');
 set(gcf,'Position',[26 79 967 603]);
 grid on
 hold on
-clear a1_tot t_tot;
+clear a1_tot t_to b;
 for reg = 1:size(customC_list,1)    
     regione = char(customC_list{reg});    
     idx_cR = find(strcmp(list_country,regione));
     
-    y=(worldData.deathWeight(:,idx_cR)*100000);
+    y=(worldData.deathWeight(:,idx_cR)*100000)./7;
     t1=worldData.timeNum;
     
     a1=movmean(y, 20, 'omitnan');
@@ -884,13 +888,14 @@ for reg = 1:size(customC_list,1)
 %     
 
     t_tot{reg}=t;
-    b1(reg)=plot(t1,y,':','LineWidth', 0.5,'color',Cmap.getColor(reg, size(customC_list,1)));
+    b(reg)=plot(t1,y,'-','LineWidth', 3,'color',Cmap.getColor(reg, size(customC_list,1)));
+
     window=7;
-    b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
+%     b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
     
     testo.sigla(reg,:)=(customC_list(reg));
 %     testo.pos(reg,:)=[t(end)+((t(end)-t(40)))*0.01, sf(end)];
-    a1_tot{reg}=a1;
+    a1_tot{reg}=y;
     
 end
 string_legend='l=legend([b]';
@@ -899,8 +904,8 @@ for reg = 1:size(customC_list,1)
     regione_leg=strrep(regione,'_', ' ');
     string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
 end
-string_legend=sprintf('%s);',string_legend);
-% eval(string_legend)
+string_legend=sprintf('%s,''location'',''NorthWest'');',string_legend);
+eval(string_legend)
 
 
 font_size = 6.5;
@@ -923,13 +928,13 @@ ylim(y_lim);
 
 for h=1:size(customC_list,1)
     a1_tot_h=[a1_tot{h}];
-    idx_max=find(a1_tot_h==max(a1_tot_h))-10;
+    idx_max=find(a1_tot_h==max(a1_tot_h));
     i = idx_max(1);
     
     t_h=[t_tot{h}];
     % Get the local slope
-    dy=a1_tot_h(i+1)-a1_tot_h(i-1);
-    dx=t_h(i+1)-t_h(i-1);
+    dy=a1_tot_h(i)-a1_tot_h(i-1);
+    dx=t_h(i)-t_h(i-1);
     d = dy/dx;
     
     
@@ -937,9 +942,9 @@ for h=1:size(customC_list,1)
     Y = diff(get(gca, 'ylim'));
     p = pbaspect;
     a = atan(d*p(2)*X/p(1)/Y)*180/pi;
-    text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
+    text(t_h(i)-0.2, a1_tot_h(i)+0.02, strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
 end
-ylim([0 2.4]);
+% ylim([0 2.4]);
 
 
 
