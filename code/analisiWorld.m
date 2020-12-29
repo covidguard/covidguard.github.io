@@ -220,7 +220,7 @@ for reg = 1:size(customC_list,1)
         
         
         %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(-aligmnent_reg+size(date_s,1)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7);
+        text(-aligmnent_reg+size(date_s,1)-1, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7);
         
        catch
            fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
@@ -357,6 +357,8 @@ end
 % 
 % % add custom country
 % customC_list = {'Brazil'; 'Russia';'China'};
+
+% customC_list = {'Finland'; 'Sweden';'Norway';'Italy'};
 
 for reg = 1:size(customC_list,1)    
     regione = char(customC_list{reg});    
