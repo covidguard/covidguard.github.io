@@ -2022,7 +2022,7 @@ end
 
  %% CONFRONTO DUE REGIONI STESSO GRAFICO REGIONE
 
-for type=1:3
+for type=1:4
     
    
     datetickFormat = 'dd mmm';
@@ -2036,6 +2036,9 @@ for type=1:3
         set(id_f(type), 'Name', [regione ': totale casi']);
         title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
     elseif type==3
+        set(id_f(type), 'Name', [regione ': deceduti']);
+        title(sprintf([regione ': deceduti\\fontsize{5}\n ']))
+    elseif type==4
         set(id_f(type), 'Name', [regione ': casi giornalieri']);
         title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
     end
@@ -2072,10 +2075,15 @@ for type=1:3
     end
     %         data=dataReg.deceduti(index,1);
     if type==3
+         data=dataReg.deceduti(index,1);
+
+    end
+
+     if type==4
+        data=dataReg.totale_casi(index,1);
         data=diff(data);
         time_num=time_num(2:end);
     end
-    
 %     
 %     
 %     fout=fopen('testIn_gauss.txt','wt');
@@ -2136,9 +2144,14 @@ for type=1:3
     end
     %         data=dataReg.deceduti(index,1);
     if type==3
+        data=dataReg.deceduti(index,1);
+    end
+    if type==4
+        data=dataReg.totale_casi(index,1);
         data=diff(data);
         time_num=time_num(2:end);
     end
+    
 %     
 %     
 %     
@@ -2225,12 +2238,14 @@ for type=1:3
 end
 
 
-for type=1:3    
+for type=1:4   
     if type==1
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoAttPositivi_',regione, '_cumulati.PNG']);
     elseif type==2
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoTotaleCasi_',regione, '_cumulati.PNG']);
     elseif type==3
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoDeceduti_',regione, '_cumulati.PNG']);        
+    elseif type==4
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoNuoviGiornalieri_',regione, '_cumulati.PNG']);
     end
     close(id_f(type));
@@ -2244,11 +2259,11 @@ end
 
 
 
-
+font_size=8;
 
  %% CONFRONTO DUE REGIONI STESSO GRAFICO REGIONE PESATO PER ABITANTI
 
-for type=1:3
+for type=1:4
     datetickFormat = 'dd mmm';
     regione='LOMB-EMIL';
     figure;
@@ -2260,6 +2275,9 @@ for type=1:3
         set(id_f(type), 'Name', [regione ': totale casi ogni 100.000 ab.']);
         title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
     elseif type==3
+        set(id_f(type), 'Name', [regione ': deceduti ogni 100.000 ab.']);
+        title(sprintf([regione ': deceduti\\fontsize{5}\n ']))    
+    elseif type==4
         set(id_f(type), 'Name', [regione ': casi giornalieri ogni 100.000 ab.']);
         title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
     end
@@ -2290,12 +2308,19 @@ for type=1:3
         %         data=dataReg.totale_casi(index,1);
         %          data=diff(data);
         
-    elseif type==2  || type==3 %sigmoide su totale casi
+    elseif type==2  || type==4 %sigmoide su totale casi
         data=dataReg.totale_casi(index,1);
         %              data=dataReg.dimessi_guariti(index,1);
     end
+    
+    if type==3 %gauss su attualmente positivi
+        data=dataReg.deceduti(index,1);
+        %         data=dataReg.totale_casi(index,1);
+        %          data=diff(data);
+    end
+    
     %         data=dataReg.deceduti(index,1);
-    if type==3
+    if type==4
         data=diff(data);
         time_num=time_num(2:end);
     end
@@ -2354,12 +2379,17 @@ for type=1:3
         %         data=dataReg.totale_casi(index,1);
         %          data=diff(data);
         
-    elseif type==2  || type==3 %sigmoide su totale casi
+    elseif type==2  || type==4 %sigmoide su totale casi
         data=dataReg.totale_casi(index,1);
         %              data=dataReg.dimessi_guariti(index,1);
     end
     %         data=dataReg.deceduti(index,1);
+    
     if type==3
+        data=dataReg.deceduti(index,1);
+
+    end    
+    if type==4
         data=diff(data);
         time_num=time_num(2:end);
     end
@@ -2407,11 +2437,13 @@ for type=1:3
     elseif type==2
         ylabel('Numero totale casi ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     elseif type==3
+        ylabel('Numero totale deceduti ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);       
+    elseif type==4    
         ylabel('Numero nuovi casi giornalieri ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     end
-    set(gca,'xlim',([time_num(1) time_num(end)+90]));
-    set(gca,'XTick',[time_num(1):3:time_num(end)+90]);
-    set(gca,'XTickLabel',datestr([time_num(1):3:time_num(end)+90],'dd mmm'));
+    set(gca,'xlim',([time_num(1) time_num(end)]));
+    set(gca,'XTick',[time_num(1):7:time_num(end)]);
+    set(gca,'XTickLabel',datestr([time_num(1):7:time_num(end)],'dd mmm'));
     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
     ax.FontSize = font_size;
     
@@ -2447,12 +2479,14 @@ for type=1:3
 end
 
 
-for type=1:3    
+for type=1:4    
     if type==1
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoAttPositiviPesata_',regione, '_cumulati.PNG']);
     elseif type==2
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoTotaleCasiPesata_',regione, '_cumulati.PNG']);
     elseif type==3
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoTotaleDecedutiPesata_',regione, '_cumulati.PNG']);        
+    elseif type==4
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoNuoviGiornalieriPesata_',regione, '_cumulati.PNG']);
     end
     close(id_f(type));
@@ -2464,6 +2498,261 @@ end
 
 
 
+
+
+
+
+
+font_size=8;
+
+ %% CONFRONTO DUE REGIONI STESSO GRAFICO REGIONE PESATO PER ABITANTI: SECONDA ONDATA
+
+for type=2:4
+    datetickFormat = 'dd mmm';
+    regione='LOMB-EMIL';
+    figure;
+    id_f(type) = gcf;
+    if type==1
+        set(id_f(type), 'Name', [regione ': attualmente positivi']);
+        title(sprintf([regione ': attualmente positivi ogni 100.000 ab.\\fontsize{5}\n ']))
+    elseif type==2
+        set(id_f(type), 'Name', [regione ': totale casi ogni 100.000 ab.']);
+        title(sprintf([regione ': totale casi\\fontsize{5}\n ']))
+    elseif type==3
+        set(id_f(type), 'Name', [regione ': deceduti ogni 100.000 ab.']);
+        title(sprintf([regione ': deceduti\\fontsize{5}\n ']))    
+    elseif type==4
+        set(id_f(type), 'Name', [regione ': casi giornalieri ogni 100.000 ab.']);
+        title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+    end
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+   
+    %%%%%%%%%%%%%%%%%%%%%%%%%
+    % EMILIA ROMAGNA
+    %%%%%%%%%%%%%%%%%%%%%%%%%
+    reg=5;       
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    time_num = fix(datenum(dataReg.data(index)));
+    
+    
+    idx_time_num = find(time_num>=datenum('2020/09/01'));
+    time_num_2f=time_num(idx_time_num);
+    
+       
+    try
+        delete('testIn_gauss.txt');
+    catch
+    end
+    try
+        delete('testIn_gauss_fit.txt');
+    catch
+    end
+    
+    if type==1 %gauss su attualmente positivi
+        data=dataReg.totale_positivi(index,1);
+        data=data(idx_time_num)-data(idx_time_num(1));
+        %         data=dataReg.totale_casi(index,1);
+        %          data=diff(data);
+        
+    elseif type==2  || type==4 %sigmoide su totale casi
+        data=dataReg.totale_casi(index,1);
+        data=data(idx_time_num)-data(idx_time_num(1));
+        %              data=dataReg.dimessi_guariti(index,1);
+    end
+    
+    if type==3 %gauss su attualmente positivi
+        data=dataReg.deceduti(index,1);
+        data=data(idx_time_num)-data(idx_time_num(1));
+        %         data=dataReg.totale_casi(index,1);
+        %          data=diff(data);
+    end
+    
+    %         data=dataReg.deceduti(index,1);
+    if type==4
+        data=dataReg.totale_casi(index,1);
+        data=data(idx_time_num)-data(idx_time_num(1));
+        data=diff(data);
+        time_num_2f=time_num_2f(2:end);
+    end
+    
+    
+%     
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:size(data,1)
+%         fprintf(fout,'%d;%d\n',time_num(i),data(i));
+%     end
+%     
+%     if type==1 || type==3
+%         %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     elseif type==2
+%         
+%         %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
+%         
+%         
+%         %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         
+%     end
+    
+   
+    figure(id_f(type))
+
+%     b05=plot(t,a1./pop.popolazioneRegioniPop(reg)*100000,'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+    a05=plot(time_num_2f,data./pop.popolazioneRegioniPop(reg)*100000,'-ob','markersize',3,'color',[0.600000023841858 0.200000002980232 0],'MarkerFaceColor',[0.600000023841858 0.200000002980232 0]);
+    
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%
+    % LOMBARDIA
+    %%%%%%%%%%%%%%%%%%%%%%%%%
+    reg=9;       
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    time_num = fix(datenum(dataReg.data(index)));
+       
+    try
+        delete('testIn_gauss.txt');
+    catch
+    end
+    try
+        delete('testIn_gauss_fit.txt');
+    catch
+    end
+    
+    if type==1 %gauss su attualmente positivi
+        data=dataReg.totale_positivi(index,1);
+        data=data(idx_time_num)-data(idx_time_num(1));
+        %         data=dataReg.totale_casi(index,1);
+        %          data=diff(data);
+        
+    elseif type==2  || type==4 %sigmoide su totale casi
+        data=dataReg.totale_casi(index,1);
+        data=data(idx_time_num)-data(idx_time_num(1));
+        %              data=dataReg.dimessi_guariti(index,1);
+    end
+    
+    if type==3 %gauss su attualmente positivi
+        data=dataReg.deceduti(index,1);
+        data=data(idx_time_num)-data(idx_time_num(1));
+        %         data=dataReg.totale_casi(index,1);
+        %          data=diff(data);
+    end
+    
+    %         data=dataReg.deceduti(index,1);
+    if type==4
+        data=dataReg.totale_casi(index,1);
+        data=data(idx_time_num)-data(idx_time_num(1));
+        data=diff(data);
+%         time_num_2f=time_num_2f(2:end);
+    end
+    
+    
+%     
+%     
+%     fout=fopen('testIn_gauss.txt','wt');
+%     for i=1:size(data,1)
+%         fprintf(fout,'%d;%d\n',time_num(i),data(i));
+%     end
+%     
+%     if type==1 || type==3
+%         %                 command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_d1_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_d1_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%     elseif type==2
+%         
+%         %command=sprintf('sigm_estim_conf_0 testIn_gauss.txt');system(command);
+%         
+%         
+%         %                 command=sprintf('sigm_estim testIn_gauss.txt');system(command);
+%         %                 [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_sigm_fit.txt','%d%f%f%f%f%f','delimiter',';');
+%         command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+%         [t,a1,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+%         
+%     end
+%     
+
+    
+    figure(id_f(type))
+%     b09=plot(t,a1./pop.popolazioneRegioniPop(reg)*100000,'-r','LineWidth', 2.0,'color',[0 0.498039215803146 0]);
+    a09=plot(time_num_2f,data./pop.popolazioneRegioniPop(reg)*100000,'-ob','markersize',3,'color',[0.164705887436867 0.384313732385635 0.274509817361832],'MarkerFaceColor',[0.164705887436867 0.384313732385635 0.274509817361832]);
+   
+        
+    ax = gca;
+    code_axe = get(id_f(type), 'CurrentAxes');
+    set(code_axe, 'FontName', 'Verdana');
+    set(code_axe, 'FontSize', font_size);
+    ylimi=get(gca,'ylim');
+    set(gca,'ylim',([0,ylimi(2)]));
+    ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+    if type==1
+        ylabel('Numero attualmente positivi ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    elseif type==2
+        ylabel('Numero totale casi ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    elseif type==3
+        ylabel('Numero totale deceduti ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);       
+    elseif type==4    
+        ylabel('Numero nuovi casi giornalieri ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    end
+    set(gca,'xlim',([time_num_2f(1) time_num_2f(end)]));
+    set(gca,'XTick',[time_num_2f(1):3:time_num_2f(end)]);
+    set(gca,'XTickLabel',datestr([time_num_2f(1):3:time_num_2f(end)],'dd mmm'));
+    set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+    ax.FontSize = font_size;
+    
+    ax.FontSize = font_size;
+    
+    
+%     l=legend([a05,b05,a09,b09],'Emilia-Romagna: Dati Reali',sprintf('Emilia-Romagna: Stima al %s',datestr(time_num(end),'dd mmm')),'Lombardia: Dati Reali',sprintf('Lombardia: Stima al %s',datestr(time_num(end),'dd mmm')));
+     l=legend([a05,a09],'Emilia-Romagna','Lombardia');
+       
+        set(l,'Location','northwest')
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        
+        annotation(gcf,'textbox',...
+            [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+    
+         
+end
+
+
+for type=2:4    
+    if type==1
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_2F_stimapiccoAttPositiviPesata_',regione, '_cumulati.PNG']);
+    elseif type==2
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_2F_stimapiccoTotaleCasiPesata_',regione, '_cumulati.PNG']);
+    elseif type==3
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_2F_stimapiccoTotaleDecedutiPesata_',regione, '_cumulati.PNG']);        
+    elseif type==4
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_2F_stimapiccoNuoviGiornalieriPesata_',regione, '_cumulati.PNG']);
+    end
+    close(id_f(type));
+end
 
 
 
@@ -2713,6 +3002,47 @@ for type=2:3
     end
     close(id_f(type));
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
