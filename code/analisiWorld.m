@@ -556,7 +556,7 @@ last10DaysIncrement=worldData.dataWeight(end,:)-worldData.dataWeight(end-10,:);
 
 
 %% interpolazione e confronto tra paesi diversi: casi giornalieri
-customC_list = {'Italy'; 'Sweden';};
+customC_list = {'Italy'; 'Israel';};
 
 % customC_list = {'Italy'; 'Sweden';'Spain';'Belgium';'France';'Brazil';'Chile';'United_States_of_America';'Peru';'United_Kingdom';'Mexico'};
 
@@ -690,7 +690,7 @@ annotation(gcf,'textbox',...
 % ylim([0 40]);
 
 
-print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile_ITA_SWE.PNG']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile_ITA_ISR.PNG']);
 close(gcf);
 
 
