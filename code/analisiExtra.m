@@ -2524,6 +2524,9 @@ for type=2:4
     elseif type==4
         set(id_f(type), 'Name', [regione ': casi giornalieri ogni 100.000 ab.']);
         title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+    elseif type==5
+        set(id_f(type), 'Name', [regione ': Ingressi T.I. ogni 100.000 ab.']);
+        title(sprintf([regione ': Ingressi T.I.\\fontsize{5}\n ']))    
     end
     set(gcf,'NumberTitle','Off');
     set(gcf,'Position',[26 79 967 603]);
@@ -2540,6 +2543,7 @@ for type=2:4
     
     
     idx_time_num = find(time_num>=datenum('2020/09/01'));
+    idx_time_num = find(time_num>=datenum('2020/12/01'));
     time_num_2f=time_num(idx_time_num);
     
        
@@ -2579,7 +2583,15 @@ for type=2:4
         time_num_2f=time_num_2f(2:end);
     end
     
-    
+    if type==5
+        data=dataReg.ingressi_terapia_intensiva(index,1);
+        idxda = find(isfinite(data))-idx_time_num(1)+1;
+        
+        data=data(idx_time_num(idxda));
+        data=cumsum(data);
+        
+        time_num_2f=time_num(idx_time_num(idxda));
+    end    
 %     
 %     fout=fopen('testIn_gauss.txt','wt');
 %     for i=1:size(data,1)
@@ -2654,7 +2666,15 @@ for type=2:4
         data=diff(data);
 %         time_num_2f=time_num_2f(2:end);
     end
-    
+    if type==5
+        data=dataReg.ingressi_terapia_intensiva(index,1);
+        idxda = find(isfinite(data))-idx_time_num(1)+1;
+        
+        data=data(idx_time_num(idxda));
+        data=cumsum(data);
+        
+        time_num_2f=time_num(idx_time_num(idxda));
+    end     
     
 %     
 %     
@@ -2702,7 +2722,10 @@ for type=2:4
         ylabel('Numero totale deceduti ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);       
     elseif type==4    
         ylabel('Numero nuovi casi giornalieri ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
-    end
+    elseif type==5    
+        ylabel('Ingresso cumulato in T.I. ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+    end    
+    
     set(gca,'xlim',([time_num_2f(1) time_num_2f(end)]));
     set(gca,'XTick',[time_num_2f(1):3:time_num_2f(end)]);
     set(gca,'XTickLabel',datestr([time_num_2f(1):3:time_num_2f(end)],'dd mmm'));
@@ -2741,7 +2764,7 @@ for type=2:4
 end
 
 
-for type=2:4    
+for type=2:5   
     if type==1
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_2F_stimapiccoAttPositiviPesata_',regione, '_cumulati.PNG']);
     elseif type==2
@@ -2750,6 +2773,8 @@ for type=2:4
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_2F_stimapiccoTotaleDecedutiPesata_',regione, '_cumulati.PNG']);        
     elseif type==4
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_2F_stimapiccoNuoviGiornalieriPesata_',regione, '_cumulati.PNG']);
+    elseif type==5
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_2F_stimapiccoTItotaliPesata_',regione, '_cumulati.PNG']);
     end
     close(id_f(type));
 end

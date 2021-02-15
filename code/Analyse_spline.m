@@ -114,8 +114,10 @@ end
 
 %% report pdf
 % analisiReportPdf
-
+try
 analisiExtra
+catch
+end
 
 %% percorsi:
 data=struct;

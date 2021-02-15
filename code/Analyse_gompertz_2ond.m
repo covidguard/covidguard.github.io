@@ -62,7 +62,7 @@ regioni_tot = unique(dataReg.denominazione_regione);
 
 timeTot_datenum=datenum(unique(dataReg.data));
 id_inizio2ondata=215;
-
+id_inizio2ondata=305;
 
 
 %% ITALIA
