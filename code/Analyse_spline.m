@@ -4,7 +4,7 @@
 % mkdir('slides/img');
 % mkdir('slides/img/province');
 % mkdir('slides/img/regioni');
-analisiWorld
+% analisiWorld
 
 if ismac
     flag_download = false;
