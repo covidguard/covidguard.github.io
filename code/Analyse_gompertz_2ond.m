@@ -652,3 +652,287 @@ close(gcf);
 
 
 
+
+
+
+
+
+
+
+%% EMILIA
+lombardia = struct;
+lombardia.datanum=timeTot_datenum;
+lombardia.totale_casi = [];
+lombardia.nuovi_positivi = [];
+
+regione = 'Emilia-Romagna';
+% regione = 'Liguria';
+
+dataReg.datanum=datenum(dataReg.data);
+for k = 1:size(timeTot_datenum,1)
+    index = find(dataReg.datanum==timeTot_datenum(k) & strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    lombardia.totale_casi(k)=sum(dataReg.totale_casi(index));
+    lombardia.nuovi_positivi(k)=sum(dataReg.nuovi_positivi(index));
+    lombardia.ti(k)=sum(dataReg.terapia_intensiva(index));
+    lombardia.deceduti(k)=sum(dataReg.deceduti(index));
+    lombardia.ricoverati(k)=sum(dataReg.ricoverati_con_sintomi(index));
+end
+
+for k=150:size(timeTot_datenum,1)
+    lombardia.progSett(k)=(lombardia.totale_casi(k)-lombardia.totale_casi(k-7))/(lombardia.totale_casi(k-7)-lombardia.totale_casi(k-13))*100-100;
+    lombardia.progSett_n(k)=(lombardia.nuovi_positivi(k)-lombardia.nuovi_positivi(k-7))/(lombardia.nuovi_positivi(k-7)-lombardia.nuovi_positivi(k-13))*100-100;
+    lombardia.progSett_terapia_intensiva(k)=(lombardia.ti(k)-lombardia.ti(k-7))/(lombardia.ti(k-7)-lombardia.ti(k-13))*100-100;
+    lombardia.progSett_deceduti(k)=(lombardia.deceduti(k)-lombardia.deceduti(k-7))/(lombardia.deceduti(k-7)-lombardia.deceduti(k-13))*100-100;
+    lombardia.progSett_ricoverati(k)=(lombardia.ricoverati(k)-lombardia.ricoverati(k-7))/(lombardia.ricoverati(k-7)-lombardia.ricoverati(k-13))*100-100;
+end
+
+
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+
+set(id_f, 'Name', [regione ': incrementi settimanali']);
+title(sprintf([regione ': incrementi settimanali\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+subplot(2,2,1)
+grid on
+hold on
+inc = round(size(timeTot_datenum,1)-150)/18;
+a=bar(timeTot_datenum,lombardia.progSett);
+a.BarWidth=1;
+set(gca,'XTick',timeTot_datenum(1:inc:end))
+set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('% incremento settimanale casi totali');
+xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+
+subplot(2,2,2)
+grid on
+hold on
+a=bar(timeTot_datenum,lombardia.progSett_ricoverati);
+a.BarWidth=1;
+set(gca,'XTick',timeTot_datenum(1:inc:end))
+set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('% incremento settimanale ricoverati con sintomi');
+xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+
+subplot(2,2,3)
+grid on
+hold on
+a=bar(timeTot_datenum,lombardia.progSett_terapia_intensiva);
+a.BarWidth=1;
+set(gca,'XTick',timeTot_datenum(1:inc:end))
+set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('% incremento settimanale terapie intensive');
+xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+
+subplot(2,2,4)
+grid on
+hold on
+a=bar(timeTot_datenum,lombardia.progSett_deceduti);
+a.BarWidth=1;
+set(gca,'XTick',timeTot_datenum(1:inc:end))
+set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+ylabel('% incremento settimanale deceduti');
+xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+    
+    
+
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_increm_settimanale.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+lombardia2O = struct;
+lombardia2O.datanum=lombardia.datanum(id_inizio2ondata:end);
+lombardia2O.totale_casi=lombardia.totale_casi(id_inizio2ondata:end);
+lombardia2O.nuovi_positivi=lombardia.nuovi_positivi(id_inizio2ondata:end);
+
+
+% totale casi
+fout=fopen('testIn_gauss.txt','wt');
+data6= lombardia2O.totale_casi' - lombardia2O.totale_casi(1);
+for i=1:size(data6,1)
+   fprintf(fout,'%f;%d\n',lombardia2O.datanum(i),data6(i,1));
+end
+fclose(fout);  
+command=sprintf('gomp_estim testIn_gauss.txt');system(command);
+[t,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_gomp_fit.txt','%f%f%f%f%f%f','delimiter',';');
+% command=sprintf('gauss_estim testIn_gauss.txt');system(command);
+% [t,data_interpTemp,a2,a3,a4,a5]=textread('testIn_gauss_fit.txt','%f%f%f%f%f%f','delimiter',';');
+
+data_interpTemp=data_interpTemp+lombardia2O.totale_casi(1);
+    
+
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+
+set(id_f, 'Name', [regione ': casi totali']);
+title(sprintf([regione ': casi totali\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+
+grid on
+hold on
+shadedplot(t,a4'+lombardia2O.totale_casi(1),a5'+lombardia2O.totale_casi(1),[0.9 0.9 1]);  hold on
+% d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+% c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+
+a=plot(timeTot_datenum,lombardia.totale_casi,'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(t(t>=lombardia.datanum(id_inizio2ondata)),data_interpTemp(t>=lombardia.datanum(id_inizio2ondata)),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+
+
+
+font_size=8;
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ax.YTickLabel = num2str(str2double(ax.YTickLabel));
+
+ylabel('Casi totali', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+ 
+  
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+    
+    
+
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_extrap-casi_tot.PNG']);
+close(gcf);
+
+
+
+%% casi giornalieri
+figure;
+id_f = gcf;
+regione = 'Emilia-Romagna';
+set(id_f, 'Name', [regione ': casi giornalieri']);
+title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+hold on
+grid minor; grid on
+
+grid on
+hold on
+shadedplot(t(2:end),diff(a4)',diff(a5)',[0.9 0.9 1]);  hold on
+% d=plot(t,a3,'-b','LineWidth', 2.0,'color',[0.600000023841858 0.600000023841858 0.600000023841858]);
+% c=plot(t,a2,'-g','LineWidth', 2.0,'color',[0.800000011920929 0.800000011920929 0]);
+
+a=plot(timeTot_datenum(2:end),diff(lombardia.totale_casi),'.b','markersize',14,'color',[0 0.200000002980232 0.600000023841858]);
+b=plot(t(t>lombardia.datanum(id_inizio2ondata)+1),diff(data_interpTemp(t>=lombardia.datanum(id_inizio2ondata))),'-r','LineWidth', 2.0,'color',[1 0.400000005960464 0.400000005960464]);
+
+
+
+font_size=8;
+ax = gca;
+code_axe = get(id_f, 'CurrentAxes');
+set(code_axe, 'FontName', 'Verdana');
+set(code_axe, 'FontSize', font_size);
+ylimi=get(gca,'ylim');
+set(gca,'ylim',([0,ylimi(2)]));
+ax.YTickLabel = mat2cell(ax.YTick, 1, numel(ax.YTick))';
+ax.YTickLabel = num2str(str2double(ax.YTickLabel));
+
+ylabel('Casi giornalieri', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
+datetick('x', datetickFormat, 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+ax.FontSize = font_size;
+ 
+  
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+    
+    
+
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_extrap-casi_giorn.PNG']);
+close(gcf);

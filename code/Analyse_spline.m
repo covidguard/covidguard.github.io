@@ -59,7 +59,7 @@ for i=1:size(file_scan,1)
     json_oneRaw(1+(i-1)*size(file_scan,2):i*size(file_scan,2))=file_scan(i,:);
     %     json_oneRaw=sprintf('%s%s',json_oneRaw,file_scan(i,:));
 end
-dataReg = decodeJSON(json_oneRaw);
+dataReg = decodeJSON2(json_oneRaw);
 dataReg.dataa = char(dataReg.data);
 dataReg.dataa(:,11)=' ';
 dataReg.data=cellstr(dataReg.dataa);
