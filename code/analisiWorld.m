@@ -8,56 +8,51 @@ end
 %% download data
 flag_download_1=1;
 if flag_download_1
-    websave('world1.csv', 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv','timeout',1);
+%     websave('world1.csv', 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv','timeout',1);
     %         websave(sprintf('PDF_%s-%s-%s.PDF', yy,mm,dd), sprintf('%s/sites/default/files/modulistica/monitoraggio_serviz_controllo_giornaliero_dal_%d.%d.%s.pdf', serverAddress,dd_1,mm_1,yy),'timeout',1);
-    movefile('world1.csv',sprintf('%s/_json',WORKroot),'f');
+    
+   websave('world.csv', 'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv','timeout',1); 
+   
+    movefile('world.csv',sprintf('%s/_json',WORKroot),'f');
 end
 
 
 
 % decode data
-filename = sprintf('%s/_json/world1.csv',WORKroot);
+% filename = sprintf('%s/_json/world1.csv',WORKroot);
 filename1 = sprintf('%s/_json/world.csv',WORKroot);
-
-fout=fopen(filename1,'wt');
-fid=fopen(filename,'rt');
-l=fgetl(fid);
-while length(l)>2
-    if isempty(strfind(l,'Bonaire,'))    
-    fprintf(fout,'%s\n',l);
-    end
-    l=fgetl(fid);
-end
-fclose(fid);
-fclose(fout);
-
-
 % 
-% [world.dateRep,world.day,world.month,world.year,world.cases,world.deaths,world.countriesAndTerritories,world.geoId,world.countryterritoryCode,world.popData2018,world.continentExp] = textread(filename1,...
-%     '%s%d%d%d%d%d%s%s%s%d%s','delimiter',',','headerlines',1);
+% fout=fopen(filename1,'wt');
+% fid=fopen(filename,'rt');
+% l=fgetl(fid);
+% while length(l)>2
+%     if isempty(strfind(l,'Bonaire,'))    
+%     fprintf(fout,'%s\n',l);
+%     end
+%     l=fgetl(fid);
+% end
+% fclose(fid);
+% fclose(fout);
 
-[world.dateRep,world.year_week,world.cases,world.deaths,world.countriesAndTerritories,world.geoId,world.countryterritoryCode,world.popData2018,world.continentExp,world.notRate] = textread(filename1,...
-    '%s%s%d%d%s%s%s%d%s%f','delimiter',',','headerlines',1);
 
 
-l=[];
-l_i=0;
-world.dateNum=nan(size(world.dateRep,1),1);
-for k = 1: size(world.dateRep,1)    
-    try
-    world.dateNum(k,1) = datenum(char(world.dateRep(k)),'dd/mm/yyyy');
-    catch
-        l_i=l_i+1;
-        l(l_i)=k;
-    end
-end
+% [world.dateRep,world.day,world.month,world.year,world.cases,world.deaths,world.countriesAndTerritories,world.geoId,world.countryterritoryCode,world.popData2018,world.continentExp,world.cumnum] = textread(filename1,...
+%     '%s%d%d%d%d%d%s%s%s%d%s%f','delimiter',',','headerlines',1);
+
+
+[world.iso_code,world.continent,world.location,world.date,world.total_cases,world.new_cases,world.new_cases_smoothed,world.total_deaths,world.new_deaths,new_deaths_smoothed,world.total_cases_per_million,world.new_cases_per_million,world.new_cases_smoothed_per_million,world.total_deaths_per_million,world.new_deaths_per_million,world.new_deaths_smoothed_per_million,world.reproduction_rate,world.icu_patients,world.icu_patients_per_million,world.hosp_patients,world.hosp_patients_per_million,world.weekly_icu_admissions,world.weekly_icu_admissions_per_million,world.weekly_hosp_admissions,world.weekly_hosp_admissions_per_million,world.new_tests,world.total_tests,world.total_tests_per_thousand,world.new_tests_per_thousand,world.new_tests_smoothed,world.new_tests_smoothed_per_thousand,world.positive_rate,world.tests_per_case,world.tests_units,world.total_vaccinations,world.people_vaccinated,world.people_fully_vaccinated,world.new_vaccinations,world.new_vaccinations_smoothed,world.total_vaccinations_per_hundred,world.people_vaccinated_per_hundred,world.people_fully_vaccinated_per_hundred,world.new_vaccinations_smoothed_per_million,world.stringency_index,world.population,world.population_density,world.median_age,world.aged_65_older,world.aged_70_older,world.gdp_per_capita,world.extreme_poverty,world.cardiovasc_death_rate,world.diabetes_prevalence,world.female_smokers,world.male_smokers,world.handwashing_facilities,world.hospital_beds_per_thousand,world.life_expectancy,world.human_development_index] = textread(filename1,...
+    '%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s','delimiter',',','headerlines',1);
+
+
+world.dateNum=datenum(char(world.date));
+world.population=str2num(char(world.population));
 
 
 % cut for minimum population
 pop_tresh = 5000000;
 
 
-indexOk = find(isfinite(world.dateNum) &world.popData2018>pop_tresh);
+indexOk = find(isfinite(world.dateNum) &world.population>pop_tresh);
 list_country =unique(world.countriesAndTerritories(indexOk));
 list_day=unique(world.dateNum(indexOk));
 
