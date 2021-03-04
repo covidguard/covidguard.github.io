@@ -7707,7 +7707,7 @@ for reg = 1:size(Regione_lista)
 %     sigla_prov=sigla_prov(ixs);
     
     
-     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione\/aggiornamento'));
+    [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione\/aggiornamento'));
     sigla_prov=sigla_prov(ixs);   
     
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr('In fase di definizione/aggiornamento'));
@@ -7728,19 +7728,22 @@ for reg = 1:size(Regione_lista)
     [RegioneTot, ixs]=setdiff(RegioneTot,cellstr(''));
     sigla_prov=sigla_prov(ixs);
     
-    [sigla_prov]=setdiff(sigla_prov,cellstr(''));
+%     [sigla_prov]=setdiff(sigla_prov,cellstr(''));
     
     
-    % find population
-    [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov));
+    
+    
     
     for h=1:size(RegioneTot,1) 
+        % find population
+        [~,idx_pop] = intersect(pop.sigla,cell(sigla_prov(h)));
+        
         regione = char(RegioneTot(h));
         index = find(strcmp(dataReg.denominazione_provincia,cellstr(regione))&strcmp(dataReg.denominazione_regione,cellstr(Regione_lista(reg,:))));
         ppt=ppt+1;
         province_totale.nome(ppt,1)=cellstr(regione);
-        province_totale.datoUltimo(ppt,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-1)))./pop.number(idx_pop(h))*1000;
-        province_totale.datoLastDays(ppt,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-n_days_comp+1)))./pop.number(idx_pop(h))*1000;
+        province_totale.datoUltimo(ppt,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-1)))./pop.number(idx_pop)*1000;
+        province_totale.datoLastDays(ppt,1)=(dataReg.totale_casi(index(end))-dataReg.totale_casi(index(end-n_days_comp+1)))./pop.number(idx_pop)*1000;
      end
 end
 
@@ -7758,12 +7761,33 @@ for i = 1 : size(worstProvName,1)
     regione_leg(strfind(regione_leg,'ì'))='i';
     regione_leg(strfind(regione_leg,'Ã'))='i';
     regione_leg(strfind(regione_leg,'¬'))='';
+    regione_leg=strrep(regione_leg,'iu00ec','ì');
+    regione_leg=strrep(regione_leg,'\u00ec','ì');
+    
     worstProvName(i)=cellstr(regione_leg);
 end
 
 
 
-n_bars=15;
+
+
+
+
+
+for i = 1 : size(worstProvName_day,1)
+    regione_leg=char(worstProvName_day(i));
+    regione_leg(strfind(regione_leg,''''))=' ';
+    regione_leg(strfind(regione_leg,'ì'))='i';
+    regione_leg(strfind(regione_leg,'Ã'))='i';
+    regione_leg(strfind(regione_leg,'¬'))='';
+    regione_leg=strrep(regione_leg,'iu00ec','ì');
+    regione_leg=strrep(regione_leg,'\u00ec','ì');
+    
+    worstProvName_day(i)=cellstr(regione_leg);
+end
+
+
+n_bars=20;
 figure;
 id_f = gcf;
 set(id_f, 'Name', sprintf('Italia: province con più nuovi contagi il %s',datestr(max(datenum(dataReg.data)),'dd mmm')));
@@ -7834,7 +7858,7 @@ close(gcf);
 
 
 %best province
-n_bars=15;
+n_bars=20;
 figure;
 id_f = gcf;
 set(id_f, 'Name', sprintf('Italia: province con meno nuovi contagi il %s',datestr(max(datenum(dataReg.data)),'dd mmm')));
@@ -7907,7 +7931,7 @@ close(gcf);
 
 
 
-n_bars=15;
+n_bars=20;
 figure;
 id_f = gcf;
 set(id_f, 'Name', sprintf('Italia: province con più nuovi contagi dal %s al %s',datestr(max(datenum(dataReg.data))-n_days_comp+1,'dd mmm'), datestr(max(datenum(dataReg.data)),'dd mmm')));
