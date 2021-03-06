@@ -936,3 +936,416 @@ annotation(gcf,'textbox',...
 % %     cd([WORKroot,'/assets/img/regioni']);
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_',regione, '_extrap-casi_giorn.PNG']);
 close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%% tabellone incrementi
+
+start_t=300;
+regione_list = (unique(dataReg.denominazione_regione));
+dataReg.data_num=datenum(dataReg.data);
+% for reg=1:size(unique(dataReg.codice_regione),1)
+%     
+%     regione_reg = struct;
+%     regione_reg.datanum=timeTot_datenum;
+%     regione_reg.totale_casi = [];
+%     regione_reg.nuovi_positivi = [];
+%     
+%     regione = regione_list(reg);
+%     
+%     regione_reg.datanum=unique(datenum(dataReg.data));
+%     for k = 1:size(regione_reg.datanum,1)
+%         index = find(dataReg.data_num==regione_reg.datanum(k) & strcmp(dataReg.denominazione_regione,cellstr(regione)));
+%         regione_reg.totale_casi(k)=sum(dataReg.totale_casi(index));
+%         regione_reg.nuovi_positivi(k)=sum(dataReg.nuovi_positivi(index));
+%         regione_reg.ti(k)=sum(dataReg.terapia_intensiva(index));
+%         regione_reg.deceduti(k)=sum(dataReg.deceduti(index));
+%         regione_reg.ricoverati(k)=sum(dataReg.ricoverati_con_sintomi(index));
+%     end
+%     
+%     for k=start_t:size(regione_reg.datanum,1)
+%         regione_reg.progSett(k)=(regione_reg.totale_casi(k)-regione_reg.totale_casi(k-7))/(regione_reg.totale_casi(k-7)-regione_reg.totale_casi(k-13))*100-100;
+%         regione_reg.progSett_n(k)=(regione_reg.nuovi_positivi(k)-regione_reg.nuovi_positivi(k-7))/(regione_reg.nuovi_positivi(k-7)-regione_reg.nuovi_positivi(k-13))*100-100;
+%         regione_reg.progSett_terapia_intensiva(k)=(regione_reg.ti(k)-regione_reg.ti(k-7))/(regione_reg.ti(k-7)-regione_reg.ti(k-13))*100-100;
+%         regione_reg.progSett_deceduti(k)=(regione_reg.deceduti(k)-regione_reg.deceduti(k-7))/(regione_reg.deceduti(k-7)-regione_reg.deceduti(k-13))*100-100;
+%         regione_reg.progSett_ricoverati(k)=(regione_reg.ricoverati(k)-regione_reg.ricoverati(k-7))/(regione_reg.ricoverati(k-7)-regione_reg.ricoverati(k-13))*100-100;
+%     end
+%     
+% end
+
+    
+
+
+
+%% incremento casi 7-giorni /100000 abitanti
+figure
+datetickFormat = 'dd mmm';
+id_f = gcf;
+set(id_f, 'Name', ['Incrementi settimanali']);
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[73 82 1812 966]);
+
+for reg=1:size(unique(dataReg.codice_regione),1)   
+    regione_reg = struct;
+    regione_reg.datanum=timeTot_datenum;
+    regione_reg.totale_casi = [];
+    regione_reg.nuovi_positivi = [];
+    
+    regione = regione_list(reg);
+    
+    regione_reg.datanum=unique(datenum(dataReg.data));
+    for k = 1:size(regione_reg.datanum,1)
+        index = find(dataReg.data_num==regione_reg.datanum(k) & strcmp(dataReg.denominazione_regione,cellstr(regione)));
+        regione_reg.totale_casi(k)=sum(dataReg.totale_casi(index));
+    end
+    
+    for k=start_t:size(regione_reg.datanum,1)
+        regione_reg.progSett(k)=(regione_reg.totale_casi(k)-regione_reg.totale_casi(k-7));
+    end
+    regione_reg.progSett=regione_reg.progSett./pop.popolazioneRegioniPop(reg)*100000;
+
+    subplot(7,3,reg)
+    hold on
+    grid on
+
+    inc = round(size(regione_reg.datanum,1)-start_t)/25;
+    
+    a=bar(timeTot_datenum,regione_reg.progSett);
+    a.BarWidth=1.1;
+    set(gca,'XTick',timeTot_datenum(1:inc:end))
+    set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+    datetick('x', datetickFormat, 'keepticks') ;
+    set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+    ylabel(regione);
+    xlim([timeTot_datenum(start_t) timeTot_datenum(end)]);
+    ylim([0,600]);
+    
+end
+annotation(gcf,'textbox',...
+    [0.377379690949227 0.955486542443065 0.349441501103753 0.0351966873706017],...
+    'String','Incremento 7 giorni dei Nuovi Casi Positivi su 100.000 abitanti',...
+    'LineStyle','none',...
+    'FontSize',14,...
+    'FontName','Tahoma',...
+    'FitBoxToText','off');
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_increm_settimanaleNuoviPositivi7g.PNG']);
+close(gcf);
+
+
+
+
+
+%% nuovi positivi
+figure
+datetickFormat = 'dd mmm';
+id_f = gcf;
+set(id_f, 'Name', ['Incrementi settimanali']);
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[73 82 1812 966]);
+
+for reg=1:size(unique(dataReg.codice_regione),1)   
+    regione_reg = struct;
+    regione_reg.datanum=timeTot_datenum;
+    regione_reg.totale_casi = [];
+    regione_reg.nuovi_positivi = [];
+    
+    regione = regione_list(reg);
+    
+    regione_reg.datanum=unique(datenum(dataReg.data));
+    for k = 1:size(regione_reg.datanum,1)
+        index = find(dataReg.data_num==regione_reg.datanum(k) & strcmp(dataReg.denominazione_regione,cellstr(regione)));
+        regione_reg.totale_casi(k)=sum(dataReg.totale_casi(index));
+    end
+    
+    for k=start_t:size(regione_reg.datanum,1)
+        regione_reg.progSett(k)=(regione_reg.totale_casi(k)-regione_reg.totale_casi(k-7))/(regione_reg.totale_casi(k-7)-regione_reg.totale_casi(k-13))*100-100;
+    end
+
+
+    subplot(7,3,reg)
+    hold on
+    grid on
+
+    inc = round(size(regione_reg.datanum,1)-start_t)/25;
+    
+    a=bar(timeTot_datenum,regione_reg.progSett);
+    a.BarWidth=1.1;
+    set(gca,'XTick',timeTot_datenum(1:inc:end))
+    set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+    datetick('x', datetickFormat, 'keepticks') ;
+    set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+    ylabel(regione);
+    xlim([timeTot_datenum(start_t) timeTot_datenum(end)]);
+    ylim([-50,200]);
+    
+end
+annotation(gcf,'textbox',...
+    [0.377379690949227 0.955486542443065 0.349441501103753 0.0351966873706017],...
+    'String','Incremento percentuale a 7 giorni dei Nuovi Casi Positivi',...
+    'LineStyle','none',...
+    'FontSize',14,...
+    'FontName','Tahoma',...
+    'FitBoxToText','off');
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_increm_settimanaleNuoviPositivi.PNG']);
+close(gcf);
+
+
+
+
+
+%terapie intensive
+figure
+datetickFormat = 'dd mmm';
+id_f = gcf;
+set(id_f, 'Name', ['Incrementi terapie intensive']);
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[73 82 1812 966]);
+
+for reg=1:size(unique(dataReg.codice_regione),1)   
+    regione_reg = struct;
+    regione_reg.datanum=timeTot_datenum;
+    regione_reg.totale_casi = [];
+    regione_reg.nuovi_positivi = [];
+    
+    regione = regione_list(reg);
+    
+    regione_reg.datanum=unique(datenum(dataReg.data));
+    for k = 1:size(regione_reg.datanum,1)
+        index = find(dataReg.data_num==regione_reg.datanum(k) & strcmp(dataReg.denominazione_regione,cellstr(regione)));
+        regione_reg.ti(k)=sum(dataReg.terapia_intensiva(index));
+    end
+    
+    for k=start_t:size(regione_reg.datanum,1)
+        regione_reg.progSett_terapia_intensiva(k)=(regione_reg.ti(k)-regione_reg.ti(k-7))/(regione_reg.ti(k-7)-regione_reg.ti(k-13))*100-100;
+    end
+    
+ 
+    subplot(7,3,reg)
+    hold on
+    grid on
+
+    inc = round(size(regione_reg.datanum,1)-start_t)/25;
+    
+    a=bar(timeTot_datenum,regione_reg.progSett_terapia_intensiva);
+    a.BarWidth=1.1;
+    set(gca,'XTick',timeTot_datenum(1:inc:end))
+    set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+    datetick('x', datetickFormat, 'keepticks') ;
+    set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+    ylabel(regione);
+    xlim([timeTot_datenum(start_t) timeTot_datenum(end)]);
+    ylim([-500,1000]);
+    
+end
+annotation(gcf,'textbox',...
+    [0.377379690949227 0.955486542443065 0.349441501103753 0.0351966873706017],...
+    'String','Incremento percentuale a 7 giorni delle T.I.',...
+    'LineStyle','none',...
+    'FontSize',14,...
+    'FontName','Tahoma',...
+    'FitBoxToText','off');
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_increm_settimanaleTI.PNG']);
+close(gcf);
+
+
+
+
+
+%ricoverati
+figure
+datetickFormat = 'dd mmm';
+id_f = gcf;
+set(id_f, 'Name', ['Incrementi ricoverati']);
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[73 82 1812 966]);
+
+for reg=1:size(unique(dataReg.codice_regione),1)   
+    regione_reg = struct;
+    regione_reg.datanum=timeTot_datenum;
+    regione_reg.totale_casi = [];
+    regione_reg.nuovi_positivi = [];
+    
+    regione = regione_list(reg);
+    
+    regione_reg.datanum=unique(datenum(dataReg.data));
+    for k = 1:size(regione_reg.datanum,1)
+        index = find(dataReg.data_num==regione_reg.datanum(k) & strcmp(dataReg.denominazione_regione,cellstr(regione)));
+        regione_reg.ricoverati(k)=sum(dataReg.ricoverati_con_sintomi(index));
+    end
+    
+    for k=start_t:size(regione_reg.datanum,1)
+        regione_reg.progSett_ricoverati(k)=(regione_reg.ricoverati(k)-regione_reg.ricoverati(k-7))/(regione_reg.ricoverati(k-7)-regione_reg.ricoverati(k-13))*100-100;
+    end
+    
+ 
+    subplot(7,3,reg)
+    hold on
+    grid on
+
+    inc = round(size(regione_reg.datanum,1)-start_t)/25;
+    
+    a=bar(timeTot_datenum,regione_reg.progSett_ricoverati);
+    a.BarWidth=1.1;
+    set(gca,'XTick',timeTot_datenum(1:inc:end))
+    set(gca,'XTickLabel',datestr(timeTot_datenum(1:inc:end),'dd mmm'))
+    datetick('x', datetickFormat, 'keepticks') ;
+    set(gca,'XTickLabelRotation',90,'FontSize',6.5);
+    ylabel(regione);
+    xlim([timeTot_datenum(start_t) timeTot_datenum(end)]);
+    ylim([-500,1000]);
+    
+end
+annotation(gcf,'textbox',...
+    [0.377379690949227 0.955486542443065 0.349441501103753 0.0351966873706017],...
+    'String','Incremento percentuale a 7 giorni dei ricoverati',...
+    'LineStyle','none',...
+    'FontSize',14,...
+    'FontName','Tahoma',...
+    'FitBoxToText','off');
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+% %     cd([WORKroot,'/assets/img/regioni']);
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/2ond_reg_increm_settimanaleRicoverati.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+

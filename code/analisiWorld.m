@@ -48,6 +48,14 @@ world.dateNum=datenum(world.date);
 world.population=str2double(world.population);
 world.total_cases_per_million=str2double(world.total_cases_per_million);
 world.total_deaths_per_million=str2double(world.total_deaths_per_million);
+world.new_cases_smoothed_per_million=str2double(world.new_cases_smoothed_per_million);
+world.new_tests_smoothed_per_thousand=str2double(world.new_tests_smoothed_per_thousand);
+world.positive_rate=str2double(world.positive_rate);
+world.new_deaths_smoothed_per_million=str2double(world.new_deaths_smoothed_per_million);
+world.hosp_patients_per_million=str2double(world.hosp_patients_per_million);
+world.new_vaccinations_smoothed_per_million=str2double(world.new_vaccinations_smoothed_per_million);
+
+
 
 
 % cut for minimum population
@@ -61,6 +69,13 @@ worldData=struct;
 worldData.timeNum(:,1) = list_day;
 worldData.total_cases_per_million=nan(numel(list_day), numel(list_country));
 worldData.total_deaths_per_million=nan(numel(list_day), numel(list_country));
+worldData.new_cases_smoothed_per_million=nan(numel(list_day), numel(list_country));
+worldData.new_tests_smoothed_per_thousand=nan(numel(list_day), numel(list_country));
+worldData.positive_rate=nan(numel(list_day), numel(list_country));
+worldData.new_deaths_smoothed_per_million=nan(numel(list_day), numel(list_country));
+worldData.hosp_patients_per_million=nan(numel(list_day), numel(list_country));
+worldData.new_vaccinations_smoothed_per_million=nan(numel(list_day), numel(list_country));
+
 
 for k = 1 : size(list_country,1)
     idx_k=find(strcmp(world.location,list_country(k)));
@@ -71,6 +86,12 @@ for k = 1 : size(list_country,1)
         idx_l=find(list_day==date_l);
         worldData.total_cases_per_million(idx_l,k)=world.total_cases_per_million(idx_k(l));
         worldData.total_deaths_per_million(idx_l,k)=world.total_deaths_per_million(idx_k(l));
+        worldData.new_cases_smoothed_per_million(idx_l,k)=world.new_cases_smoothed_per_million(idx_k(l)); 
+        worldData.new_tests_smoothed_per_thousand(idx_l,k)=world.new_tests_smoothed_per_thousand(idx_k(l)); 
+        worldData.positive_rate(idx_l,k)=world.positive_rate(idx_k(l)); 
+        worldData.new_deaths_smoothed_per_million(idx_l,k)=world.new_deaths_smoothed_per_million(idx_k(l));
+        worldData.hosp_patients_per_million(idx_l,k)=world.hosp_patients_per_million(idx_k(l));
+        worldData.new_vaccinations_smoothed_per_million(idx_l,k)=world.hosp_patients_per_million(idx_k(l));
     end
 end
 
@@ -91,9 +112,6 @@ colors={};
 for k=1:n_lines
     colors{k}=Cmap.getColor(k, n_lines);
 end
-
-
-
 
 %% confronto tra stati: casi totali allineato da 20 casi su 100.000
 
@@ -269,7 +287,7 @@ xlim([worldData.timeNum(1),x_lim(2)]);
 % xlim([-10,120]);
 
 y_lim=get(gca,'ylim');
-ylim([10,y_lim(2)*1.1]);
+ylim([0,y_lim(2)*1.1]);
 
 xlabel('date');
 
@@ -306,6 +324,936 @@ close(gcf);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%% daily cases
+n_lines=10;
+
+
+[worstWeight,idx]=sort(worldData.new_cases_smoothed_per_million(end,:),'descend');
+idx_country_worst=idx(1:n_lines);
+list_country(idx(1:n_lines))
+worldData.population(idx(1:n_lines))
+
+
+colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+colors={};
+for k=1:n_lines
+    colors{k}=Cmap.getColor(k, n_lines);
+end
+
+%% confronto tra stati: casi giornalieri 
+
+date_s=list_day;
+h = figure;
+set(h,'NumberTitle','Off');
+title(sprintf('Nazioni con maggior numero di casi settimanali ogni 100.000 abitanti (%s)',datestr(date_s(end),'dd/mm/yyyy')));
+set(h,'Position',[26 79 1632 886]);
+
+hold on; grid on; grid minor;
+% xlabel('Giorni dal caso 10/100.000 ab');
+ylabel('Casi giornalieri per 100.000 abitanti')
+a=[];
+
+last_days=size(worldData.timeNum,1)-1;
+
+
+for reg = 1:size(idx_country_worst,2)
+    reg
+    regione = char(list_country(idx_country_worst(reg),1))
+    
+    y=(worldData.new_cases_smoothed_per_million(:,idx_country_worst(reg))./10);
+    y(isnan(y))=0;
+%     y=cumsum(y);
+    
+       try
+
+        a(reg)=plot(worldData.timeNum(end-last_days:end), y(end-last_days:end),'LineWidth', 2.0, 'Color', colors{reg});
+        
+        idxx=find(~isnan(y));idxx=idxx(end);
+        i = round(idxx/1)-1;
+        
+        % Get the local slope
+        d = (y(i+1)-y(i-3))/4;
+        X = diff(get(gca, 'xlim'));
+        Y = diff(get(gca, 'ylim'));
+        p = pbaspect;
+        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+        if ~isfinite(a)
+            a=90;
+        end
+        
+        % Display the text
+        count = char(list_country(idx(reg)));
+        count=strrep(count,'_',' ');
+        
+        
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        
+       catch
+           fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
+       end
+end
+
+
+
+x_lim=get(gca,'xlim');
+xlim([worldData.timeNum(1),x_lim(2)]);
+% xlim([-10,120]);
+
+y_lim=get(gca,'ylim');
+ylim([0,y_lim(2)*1.1]);
+
+xlabel('date');
+
+ax.XTick = (worldData.timeNum(1):5:x_lim(2));
+datetick('x', 'dd/mm/yyyy', 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://raw.githubusercontent.com']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiAndamento_mediamobile.PNG']);
+close(gcf);
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%% daily cases: specific
+n_lines=10;
+
+custom_list = {'Italy';'Israel'};
+
+
+
+colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+colors={};
+for k=1:n_lines
+    colors{k}=Cmap.getColor(k, n_lines);
+end
+
+%% confronto tra stati: casi giornalieri 
+
+date_s=list_day;
+h = figure;
+set(h,'NumberTitle','Off');
+title(sprintf('Casi giornalieri ogni 100.000 abitanti (%s)',datestr(date_s(end),'dd/mm/yyyy')));
+set(h,'Position',[26 79 1632 886]);
+
+hold on; grid on; grid minor;
+% xlabel('Giorni dal caso 10/100.000 ab');
+ylabel('Casi giornalieri per 100.000 abitanti')
+a=[];
+
+last_days=size(worldData.timeNum,1)-1;
+
+
+for reg = 1:size(custom_list,1)
+    reg
+    regione = char(custom_list(reg));
+    idx_country_worst(reg)=find(strcmp(list_country,regione));
+    
+    y=(worldData.new_cases_smoothed_per_million(:,idx_country_worst(reg))./10);
+    y(isnan(y))=0;
+%     y=cumsum(y);
+    
+       try
+
+        a(reg)=plot(worldData.timeNum(end-last_days:end), y(end-last_days:end),'LineWidth', 2.0, 'Color', colors{reg});
+        
+        idxx=find(~isnan(y));idxx=idxx(end);
+        i = round(idxx/1)-1;
+        
+        % Get the local slope
+        d = (y(i+1)-y(i-3))/4;
+        X = diff(get(gca, 'xlim'));
+        Y = diff(get(gca, 'ylim'));
+        p = pbaspect;
+        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+        if ~isfinite(a)
+            a=90;
+        end
+        
+        % Display the text
+        count = char(regione);
+        count=strrep(count,'_',' ');
+        
+        
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        
+       catch
+           fprintf('error on %d: %s\n', reg, char(regione));           
+       end
+end
+
+
+
+x_lim=get(gca,'xlim');
+xlim([worldData.timeNum(1),x_lim(2)]);
+% xlim([-10,120]);
+
+y_lim=get(gca,'ylim');
+ylim([00,y_lim(2)*1.1]);
+
+xlabel('date');
+
+ax.XTick = (worldData.timeNum(1):5:x_lim(2));
+datetick('x', 'dd/mm/yyyy', 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://raw.githubusercontent.com']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiSpecific.PNG']);
+close(gcf);
+  
+
+
+
+
+% 
+% 
+% %% confronto tra stati: casi giornalieri 
+% 
+% date_s=list_day;
+% h = figure;
+% set(h,'NumberTitle','Off');
+% title(sprintf('Nuove vaccinazioni ogni 100.000 abitanti (%s)',datestr(date_s(end),'dd/mm/yyyy')));
+% set(h,'Position',[26 79 1632 886]);
+% 
+% hold on; grid on; grid minor;
+% % xlabel('Giorni dal caso 10/100.000 ab');
+% ylabel('Persone vaccinate ogni 100.000 abitanti')
+% a=[];
+% 
+% last_days=size(worldData.timeNum,1)-1;
+% 
+% 
+% for reg = 1:size(custom_list,1)
+%     reg
+%     regione = char(custom_list(reg));
+%     idx_country_worst(reg)=find(strcmp(list_country,regione));
+%     
+%     y=(worldData.new_vaccinations_smoothed_per_million(:,idx_country_worst(reg)))./10;
+% %     y=cumsum(y);
+%     
+%        try
+% 
+%         a(reg)=plot(worldData.timeNum(end-last_days:end), y(end-last_days:end),'LineWidth', 2.0, 'Color', colors{reg});
+%         
+%         idxx=find(~isnan(y));idxx=idxx(end);
+%         i = round(idxx/1)-1;
+%         
+%         % Get the local slope
+%         d = (y(i+1)-y(i-3))/4;
+%         X = diff(get(gca, 'xlim'));
+%         Y = diff(get(gca, 'ylim'));
+%         p = pbaspect;
+%         a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+%         if ~isfinite(a)
+%             a=90;
+%         end
+%         
+%         % Display the text
+%         count = char(regione);
+%         count=strrep(count,'_',' ');
+%         
+%         
+%         %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+%         text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+%         
+%        catch
+%            fprintf('error on %d: %s\n', reg, char(regione));           
+%        end
+% end
+% 
+% 
+% 
+% x_lim=get(gca,'xlim');
+% xlim([worldData.timeNum(1),x_lim(2)]);
+% % xlim([-10,120]);
+% 
+% y_lim=get(gca,'ylim');
+% ylim([00,y_lim(2)*1.1]);
+% 
+% xlabel('date');
+% 
+% ax.XTick = (worldData.timeNum(1):5:x_lim(2));
+% datetick('x', 'dd/mm/yyyy', 'keepticks') ;
+% set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+% 
+% 
+% 
+% % overlap copyright info
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+%     'String',{['Fonte: https://raw.githubusercontent.com']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% annotation(gcf,'textbox',...
+%     [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+%     'String',{'https://covidguard.github.io/#covid-19-italia'},...
+%     'LineStyle','none',...
+%     'HorizontalAlignment','left',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off');
+% 
+% 
+% print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleCasiSpecific.PNG']);
+% close(gcf);
+%   
+
+
+%% daily death: specific
+n_lines=10;
+
+custom_list = {'Italy';'Israel'};
+
+
+
+colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+colors={};
+for k=1:n_lines
+    colors{k}=Cmap.getColor(k, n_lines);
+end
+
+%% confronto tra stati: deceduti giornalieri 
+
+date_s=list_day;
+h = figure;
+set(h,'NumberTitle','Off');
+title(sprintf('Deceduti giornalieri ogni 100.000 abitanti (%s)',datestr(date_s(end),'dd/mm/yyyy')));
+set(h,'Position',[26 79 1632 886]);
+
+hold on; grid on; grid minor;
+% xlabel('Giorni dal caso 10/100.000 ab');
+ylabel('Deceduti giornalieri per 100.000 abitanti')
+a=[];
+
+last_days=size(worldData.timeNum,1)-1;
+
+
+for reg = 1:size(custom_list,1)
+    reg
+    regione = char(custom_list(reg));
+    idx_country_worst(reg)=find(strcmp(list_country,regione));
+    
+    y=(worldData.new_deaths_smoothed_per_million(:,idx_country_worst(reg))./10);
+    y(isnan(y))=0;
+%     y=cumsum(y);
+    
+       try
+
+        a(reg)=plot(worldData.timeNum(end-last_days:end), y(end-last_days:end),'LineWidth', 2.0, 'Color', colors{reg});
+        
+        idxx=find(~isnan(y));idxx=idxx(end);
+        i = round(idxx/1)-1;
+        
+        % Get the local slope
+        d = (y(i+1)-y(i-3))/4;
+        X = diff(get(gca, 'xlim'));
+        Y = diff(get(gca, 'ylim'));
+        p = pbaspect;
+        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+        if ~isfinite(a)
+            a=90;
+        end
+        
+        % Display the text
+        count = char(regione);
+        count=strrep(count,'_',' ');
+        
+        
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        
+       catch
+           fprintf('error on %d: %s\n', reg, char(regione));           
+       end
+end
+
+
+
+x_lim=get(gca,'xlim');
+xlim([worldData.timeNum(1),x_lim(2)]);
+% xlim([-10,120]);
+
+y_lim=get(gca,'ylim');
+ylim([00,y_lim(2)*1.1]);
+
+xlabel('date');
+
+ax.XTick = (worldData.timeNum(1):5:x_lim(2));
+datetick('x', 'dd/mm/yyyy', 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://raw.githubusercontent.com']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleDecedutiDaySpecific.PNG']);
+close(gcf);
+  
+
+
+
+
+
+%% hosp: specific
+n_lines=10;
+
+custom_list = {'Italy';'Israel'};
+
+
+
+colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+colors={};
+for k=1:n_lines
+    colors{k}=Cmap.getColor(k, n_lines);
+end
+
+%% confronto tra stati: ospedalizzati
+
+date_s=list_day;
+h = figure;
+set(h,'NumberTitle','Off');
+title(sprintf('Ospedalizzati  ogni 100.000 abitanti (%s)',datestr(date_s(end),'dd/mm/yyyy')));
+set(h,'Position',[26 79 1632 886]);
+
+hold on; grid on; grid minor;
+% xlabel('Giorni dal caso 10/100.000 ab');
+ylabel('Ospedalizzati per 100.000 abitanti')
+a=[];
+
+last_days=size(worldData.timeNum,1)-1;
+
+
+for reg = 1:size(custom_list,1)
+    reg
+    regione = char(custom_list(reg));
+    idx_country_worst(reg)=find(strcmp(list_country,regione));
+    
+    y=(worldData.hosp_patients_per_million(:,idx_country_worst(reg))./10);
+
+%     y=cumsum(y);
+    
+       try
+
+        a(reg)=plot(worldData.timeNum(end-last_days:end), y(end-last_days:end),'LineWidth', 2.0, 'Color', colors{reg});
+        
+        idxx=find(~isnan(y));idxx=idxx(end);
+        i = round(idxx/1)-1;
+        
+        % Get the local slope
+        d = (y(i+1)-y(i-3))/4;
+        X = diff(get(gca, 'xlim'));
+        Y = diff(get(gca, 'ylim'));
+        p = pbaspect;
+        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+        if ~isfinite(a)
+            a=90;
+        end
+        
+        % Display the text
+        count = char(regione);
+        count=strrep(count,'_',' ');
+        
+        
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        
+       catch
+           fprintf('error on %d: %s\n', reg, char(regione));           
+       end
+end
+
+
+
+x_lim=get(gca,'xlim');
+xlim([worldData.timeNum(1),x_lim(2)]);
+% xlim([-10,120]);
+
+y_lim=get(gca,'ylim');
+ylim([00,y_lim(2)*1.1]);
+
+xlabel('date');
+
+ax.XTick = (worldData.timeNum(1):5:x_lim(2));
+datetick('x', 'dd/mm/yyyy', 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://raw.githubusercontent.com']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleOspedalizzatiDaySpecific.PNG']);
+close(gcf);
+  
+
+
+
+
+%% daily test: specific
+n_lines=10;
+
+custom_list = {'Italy';'Israel'};
+
+
+
+colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+colors={};
+for k=1:n_lines
+    colors{k}=Cmap.getColor(k, n_lines);
+end
+
+%% confronto tra stati: casi giornalieri 
+
+date_s=list_day;
+h = figure;
+set(h,'NumberTitle','Off');
+title(sprintf('Test giornalieri ogni 100.000 abitanti (%s)',datestr(date_s(end),'dd/mm/yyyy')));
+set(h,'Position',[26 79 1632 886]);
+
+hold on; grid on; grid minor;
+% xlabel('Giorni dal caso 10/100.000 ab');
+ylabel('Test giornalieri per 100.000 abitanti')
+a=[];
+
+last_days=size(worldData.timeNum,1)-1;
+
+
+for reg = 1:size(custom_list,1)
+    reg
+    regione = char(custom_list(reg));
+    idx_country_worst(reg)=find(strcmp(list_country,regione));
+    
+    y=(worldData.new_tests_smoothed_per_thousand(:,idx_country_worst(reg))./10);
+
+%     y=cumsum(y);
+    
+       try
+
+        a(reg)=plot(worldData.timeNum(end-last_days:end), y(end-last_days:end),'LineWidth', 2.0, 'Color', colors{reg});
+        
+        idxx=find(~isnan(y));idxx=idxx(end);
+        i = round(idxx/1)-1;
+        
+        % Get the local slope
+        d = (y(i+1)-y(i-3))/4;
+        X = diff(get(gca, 'xlim'));
+        Y = diff(get(gca, 'ylim'));
+        p = pbaspect;
+        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+        if ~isfinite(a)
+            a=90;
+        end
+        
+        % Display the text
+        count = char(regione);
+        count=strrep(count,'_',' ');
+        
+        
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        
+       catch
+           fprintf('error on %d: %s\n', reg, char(regione));           
+       end
+end
+
+
+
+x_lim=get(gca,'xlim');
+xlim([worldData.timeNum(1),x_lim(2)]);
+% xlim([-10,120]);
+
+y_lim=get(gca,'ylim');
+ylim([00,y_lim(2)*1.1]);
+
+xlabel('date');
+
+ax.XTick = (worldData.timeNum(1):5:x_lim(2));
+datetick('x', 'dd/mm/yyyy', 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://raw.githubusercontent.com']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleTestDaySpecific.PNG']);
+close(gcf);
+  
+
+
+
+%% daily test: positive_rate
+n_lines=10;
+
+custom_list = {'Italy';'Israel'};
+
+
+
+colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+colors={};
+for k=1:n_lines
+    colors{k}=Cmap.getColor(k, n_lines);
+end
+
+%% confronto tra stati: casi giornalieri 
+
+date_s=list_day;
+h = figure;
+set(h,'NumberTitle','Off');
+title(sprintf('Postive rate (%s)',datestr(date_s(end),'dd/mm/yyyy')));
+set(h,'Position',[26 79 1632 886]);
+
+hold on; grid on; grid minor;
+% xlabel('Giorni dal caso 10/100.000 ab');
+ylabel('Positive rate (%)')
+a=[];
+
+last_days=size(worldData.timeNum,1)-1;
+
+
+for reg = 1:size(custom_list,1)
+    reg
+    regione = char(custom_list(reg));
+    idx_country_worst(reg)=find(strcmp(list_country,regione));
+    
+    y=(worldData.positive_rate(:,idx_country_worst(reg))*100);
+%     y=cumsum(y);
+    
+       try
+
+        a(reg)=plot(worldData.timeNum(end-last_days:end), y(end-last_days:end),'LineWidth', 2.0, 'Color', colors{reg});
+        
+        idxx=find(~isnan(y));idxx=idxx(end);
+        i = round(idxx/1)-1;
+        
+        % Get the local slope
+        d = (y(i+1)-y(i-3))/4;
+        X = diff(get(gca, 'xlim'));
+        Y = diff(get(gca, 'ylim'));
+        p = pbaspect;
+        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+        if ~isfinite(a)
+            a=90;
+        end
+        
+        % Display the text
+        count = char(regione);
+        count=strrep(count,'_',' ');
+        
+        
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        
+       catch
+           fprintf('error on %d: %s\n', reg, char(regione));           
+       end
+end
+
+
+
+x_lim=get(gca,'xlim');
+xlim([worldData.timeNum(1),x_lim(2)]);
+% xlim([-10,120]);
+
+y_lim=get(gca,'ylim');
+ylim([00,y_lim(2)*1.1]);
+
+xlabel('date');
+
+ax.XTick = (worldData.timeNum(1):5:x_lim(2));
+datetick('x', 'dd/mm/yyyy', 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://raw.githubusercontent.com']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_Positive rateSpecific.PNG']);
+close(gcf);
+  
+
+
+
+
+
+
+
+
+
+
+
+
+%% deceduti
+
+[worstWeight,idx]=sort(worldData.total_deaths_per_million(end,:),'descend');
+idx_country_worst=idx(1:n_lines);
+list_country(idx(1:n_lines))
+worldData.population(idx(1:n_lines))
+
+
+
+date_s=list_day;
+h = figure;
+set(h,'NumberTitle','Off');
+title(sprintf('Nazioni con maggior numero di deceduti ogni 100.000 abitanti (%s)',datestr(date_s(end),'dd/mm/yyyy')));
+set(h,'Position',[26 79 1632 886]);
+
+hold on; grid on; grid minor;
+% xlabel('Giorni dal caso 10/100.000 ab');
+ylabel('Deceduti per 100.000 abitanti')
+a=[];
+
+last_days=120;
+
+last_days=length(worldData.timeNum)-1;
+
+for reg = 1:size(idx_country_worst,2)
+    reg
+    regione = char(list_country(idx_country_worst(reg),1))
+    
+    y=(worldData.total_deaths_per_million(:,idx_country_worst(reg))./10);
+
+    
+    if y(end)~=nan
+%     y=cumsum(y);
+    
+       try
+
+        a(reg)=plot(worldData.timeNum(end-last_days:end), y(end-last_days:end),'LineWidth', 2.0, 'Color', colors{reg});
+        
+        idxx=find(~isnan(y));idxx=idxx(end);
+        i = round(idxx/1)-1;
+        
+        % Get the local slope
+        d = (y(i+1)-y(i-3))/4;
+        X = diff(get(gca, 'xlim'));
+        Y = diff(get(gca, 'ylim'));
+        p = pbaspect;
+        a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+        if ~isfinite(a)
+            a=90;
+        end
+        
+        % Display the text
+        count = char(list_country(idx(reg)));
+        count=strrep(count,'_',' ');
+        
+        
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        
+       catch
+           fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
+       end
+    end
+end
+
+
+
+x_lim=get(gca,'xlim');
+xlim([worldData.timeNum(1),x_lim(2)]);
+% xlim([-10,120]);
+
+y_lim=get(gca,'ylim');
+ylim([10,y_lim(2)*1.1]);
+
+xlabel('date');
+
+ax.XTick = (worldData.timeNum(1):5:x_lim(2));
+datetick('x', 'dd/mm/yyyy', 'keepticks') ;
+set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://raw.githubusercontent.com']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleDecessiAndamento.PNG']);
+close(gcf);
 
 
 
