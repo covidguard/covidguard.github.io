@@ -135,7 +135,7 @@ data.dataReg=dataReg;
 
 %% 2nda ondata
 Analyse_gompertz_2ond
-
+Analyse_gompertz_2ond_prov
 
 
 
