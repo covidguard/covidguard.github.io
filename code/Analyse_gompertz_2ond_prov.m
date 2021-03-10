@@ -96,7 +96,7 @@ for k=1:n_prv
     xlim([timeTot_datenum(start_t) timeTot_datenum(end)]);
     ylim([0,600]);
     
-    plot([timeTot_datenum(7) timeTot_datenum(end)],[350 350],'-r');
+    plot([timeTot_datenum(7) timeTot_datenum(end)],[250 250],'-r');
     
 end
 annotation(gcf,'textbox',...
