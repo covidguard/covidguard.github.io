@@ -194,7 +194,7 @@ for reg=1:length(listaRegioni)
         xlim([timeTot_datenum(start_t) timeTot_datenum(end)]);
         ylim([0,600]);
         
-        plot([timeTot_datenum(7) timeTot_datenum(end)],[350 350],'-r');
+        plot([timeTot_datenum(7) timeTot_datenum(end)],[250 250],'-r');
         
     end
     annotation(gcf,'textbox',...
@@ -296,7 +296,7 @@ for reg=1:length(listaRegioni)
         xlim([timeTot_datenum(start_t) timeTot_datenum(end)]);
        ylim([-50,100]);
         
-        plot([timeTot_datenum(7) timeTot_datenum(end)],[350 350],'-r');
+        plot([timeTot_datenum(7) timeTot_datenum(end)],[250 250],'-r');
         
     end
     annotation(gcf,'textbox',...

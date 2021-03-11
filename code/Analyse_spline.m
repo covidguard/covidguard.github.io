@@ -111,6 +111,8 @@ for kk = 1:size(Regione_lista,1)
     end
 end
 
+save todaydata
+
 
 %% report pdf
 % analisiReportPdf
