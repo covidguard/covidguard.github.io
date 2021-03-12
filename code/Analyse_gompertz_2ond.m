@@ -434,6 +434,7 @@ datetick('x', datetickFormat, 'keepticks') ;
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ylabel('% incremento settimanale ricoverati con sintomi');
 xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+ylim([-1000 1000]);
 
 subplot(2,2,3)
 grid on
@@ -446,6 +447,7 @@ datetick('x', datetickFormat, 'keepticks') ;
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ylabel('% incremento settimanale terapie intensive');
 xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+ylim([-1000 1000]);
 
 subplot(2,2,4)
 grid on
@@ -458,7 +460,7 @@ datetick('x', datetickFormat, 'keepticks') ;
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ylabel('% incremento settimanale deceduti');
 xlim([timeTot_datenum(150) timeTot_datenum(end)]);
-
+ylim([-1000 1000]);
 
 % overlap copyright info
 datestr_now = datestr(now);
@@ -498,7 +500,7 @@ close(gcf);
 
 
 
-
+id_inizio2ondata=335;
 lombardia2O = struct;
 lombardia2O.datanum=lombardia.datanum(id_inizio2ondata:end);
 lombardia2O.totale_casi=lombardia.totale_casi(id_inizio2ondata:end);
@@ -721,6 +723,7 @@ datetick('x', datetickFormat, 'keepticks') ;
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ylabel('% incremento settimanale ricoverati con sintomi');
 xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+ylim([-1000 1000]);
 
 subplot(2,2,3)
 grid on
@@ -733,6 +736,7 @@ datetick('x', datetickFormat, 'keepticks') ;
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ylabel('% incremento settimanale terapie intensive');
 xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+ylim([-1000 1000]);
 
 subplot(2,2,4)
 grid on
@@ -745,6 +749,7 @@ datetick('x', datetickFormat, 'keepticks') ;
 set(gca,'XTickLabelRotation',90,'FontSize',6.5);
 ylabel('% incremento settimanale deceduti');
 xlim([timeTot_datenum(150) timeTot_datenum(end)]);
+ylim([-1000 1000]);
 
 
 % overlap copyright info

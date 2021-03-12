@@ -2022,7 +2022,7 @@ end
 
  %% CONFRONTO DUE REGIONI STESSO GRAFICO REGIONE
 
-for type=1:4
+for type=1:5
     
    
     datetickFormat = 'dd mmm';
@@ -2039,6 +2039,10 @@ for type=1:4
         set(id_f(type), 'Name', [regione ': deceduti']);
         title(sprintf([regione ': deceduti\\fontsize{5}\n ']))
     elseif type==4
+        set(id_f(type), 'Name', [regione ': nuove T.I.']);
+        title(sprintf([regione ': nuove T.I.\\fontsize{5}\n ']))        
+        
+    elseif type==5
         set(id_f(type), 'Name', [regione ': casi giornalieri']);
         title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
     end
@@ -2078,8 +2082,13 @@ for type=1:4
          data=dataReg.deceduti(index,1);
 
     end
-
+    
      if type==4
+        data=dataReg.ingressi_terapia_intensiva(index,1);
+        time_num=time_num(1:end);
+    end    
+
+     if type==5
         data=dataReg.totale_casi(index,1);
         data=diff(data);
         time_num=time_num(2:end);
@@ -2143,10 +2152,12 @@ for type=1:4
         %              data=dataReg.dimessi_guariti(index,1);
     end
     %         data=dataReg.deceduti(index,1);
-    if type==3
-        data=dataReg.deceduti(index,1);
-    end
-    if type==4
+     if type==4
+        data=dataReg.ingressi_terapia_intensiva(index,1);
+        time_num=time_num(1:end);
+    end    
+
+     if type==5
         data=dataReg.totale_casi(index,1);
         data=diff(data);
         time_num=time_num(2:end);
@@ -2238,14 +2249,16 @@ for type=1:4
 end
 
 
-for type=1:4   
+for type=1:5   
     if type==1
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoAttPositivi_',regione, '_cumulati.PNG']);
     elseif type==2
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoTotaleCasi_',regione, '_cumulati.PNG']);
     elseif type==3
-        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoDeceduti_',regione, '_cumulati.PNG']);        
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoDeceduti_',regione, '_cumulati.PNG']);    
     elseif type==4
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoNuoveTI_',regione, '_cumulati.PNG']);          
+    elseif type==5
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoNuoviGiornalieri_',regione, '_cumulati.PNG']);
     end
     close(id_f(type));
@@ -2278,6 +2291,9 @@ for type=1:4
         set(id_f(type), 'Name', [regione ': deceduti ogni 100.000 ab.']);
         title(sprintf([regione ': deceduti\\fontsize{5}\n ']))    
     elseif type==4
+        set(id_f(type), 'Name', [regione ': nuove T.I. 100.000 ab.']);
+        title(sprintf([regione ':  nuove T.I.\\fontsize{5}\n ']))   
+    elseif type==5
         set(id_f(type), 'Name', [regione ': casi giornalieri ogni 100.000 ab.']);
         title(sprintf([regione ': casi giornalieri\\fontsize{5}\n ']))
     end
@@ -2318,9 +2334,19 @@ for type=1:4
         %         data=dataReg.totale_casi(index,1);
         %          data=diff(data);
     end
+    if type==4 %gauss su attualmente positivi
+        data=dataReg.ingressi_terapia_intensiva(index,1);
+        data(isnan(data))=0;
+        
+        data=cumsum(data);
+        data(data==0)=NaN;
+        %         data=dataReg.totale_casi(index,1);
+        %          data=diff(data);
+    end    
+    
     
     %         data=dataReg.deceduti(index,1);
-    if type==4
+    if type==5
         data=diff(data);
         time_num=time_num(2:end);
     end
@@ -2385,11 +2411,19 @@ for type=1:4
     end
     %         data=dataReg.deceduti(index,1);
     
-    if type==3
-        data=dataReg.deceduti(index,1);
-
+    if type==4 %gauss su attualmente positivi
+        data=dataReg.ingressi_terapia_intensiva(index,1);
+        data(isnan(data))=0;
+        
+        data=cumsum(data);
+        data(data==0)=NaN;
+        %         data=dataReg.totale_casi(index,1);
+        %          data=diff(data);
     end    
-    if type==4
+    
+    
+    %         data=dataReg.deceduti(index,1);
+    if type==5
         data=diff(data);
         time_num=time_num(2:end);
     end
@@ -2437,13 +2471,24 @@ for type=1:4
     elseif type==2
         ylabel('Numero totale casi ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     elseif type==3
-        ylabel('Numero totale deceduti ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);       
-    elseif type==4    
+        ylabel('Numero totale deceduti ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8); 
+    elseif type==4
+        ylabel('Nuovi ingressi terapie intensive ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);         
+    elseif type==5    
         ylabel('Numero nuovi casi giornalieri ogni 100.000 ab.', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize',8);
     end
+    
+    if type==4
+        id=find(data>0);
+        set(gca,'xlim',([time_num(id(1))-1 time_num(end)]));
+        set(gca,'XTick',[time_num(id(1))-1:7:time_num(end)]);
+        set(gca,'XTickLabel',datestr([time_num(id-1):7:time_num(end)],'dd mmm'));
+    else
+    
     set(gca,'xlim',([time_num(1) time_num(end)]));
     set(gca,'XTick',[time_num(1):7:time_num(end)]);
     set(gca,'XTickLabel',datestr([time_num(1):7:time_num(end)],'dd mmm'));
+    end
     set(gca,'XTickLabelRotation',53,'FontSize',6.5);
     ax.FontSize = font_size;
     
@@ -2487,6 +2532,9 @@ for type=1:4
     elseif type==3
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoTotaleDecedutiPesata_',regione, '_cumulati.PNG']);        
     elseif type==4
+        print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoNuoveTIPesata_',regione, '_cumulati.PNG']);     
+    
+    elseif type==5
         print(id_f(type), '-dpng', [WORKroot,'/slides/img/regioni/_extra_regEMILOMB_stimapiccoNuoviGiornalieriPesata_',regione, '_cumulati.PNG']);
     end
     close(id_f(type));
