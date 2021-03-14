@@ -95,12 +95,6 @@ Il grafico riporta l'andamento della percentuale di casi testati positivi:
 Il grafico mostra l'andamento del numero cumulato di casi:
 ![Picco Italia Totale](/slides/img/regioni/reg_stimapiccoTotaleCasi_Italia_cumulati.PNG)
 
-La modellazione del numero totale di casi risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
-![Stima Picco Italia Totale](/slides/img/regioni/2ond_reg_Italia_extrap-casi_tot.PNG)
-
-### Italia: andamento casi giornalieri
-La modellazione del numero dei nuovi casi positivi giornalieri risulta poco accurata a causa della difformità nel tempo delle regole di somministrazione dei tamponi, del loro numero giornaliero e delle latenze nei risultati. Tuttavia può dare una informazione grossolana sul suo andamento:
-![Picco Italia NuoviPositivi](/slides/img/regioni/2ond_reg_Italia_extrap-casi_giorn.PNG)
 
 ### Italia: andamento numero positivi
 Il grafico riporta il numero di soggetti attualmente positivi:
@@ -143,6 +137,11 @@ Di seguito due rappresentazioni:
 ![confrontoRaceTotaleCasi](/code/Andamento_Regioni_Race.gif)
 ![confrontoRaceAttualmentePositivi](/code/Andamento_Regioni_Race_attPositivi.gif)
 ![confrontoRaceTamponi](/code/Andamento_Regioni_Race_Tamponi.gif)
+
+### Aumento settimanale
+Per ogni regione Italiana qui si possono vedere gli incrementi a 7 giorni del numero di nuovi casi ogni 100.000 abitanti
+![confrontoRegioniIncrementi](/slides/img/regioni/2ond_reg_increm_settimanaleNuoviPositivi7g.PNG)
+
 
 ### Confronto Regioni
 Per ogni regione Italiana qui si possono vedere i dati dei seguenti parametri osservati:
@@ -228,8 +227,8 @@ Rapporto deceduti su casi totali:
 Per le province di ogni regione Italiana al momento sono disponibili solo i casi positivi totali.
 
 
-### Stato attuale delle Province
-Stato delle Province per ogni Regione nell'ultima settimana: più la Provincia è nella parte alta più i casi stanno aumentando; più le Province sono verso destra, maggiore è il numero di casi identificati. N.B.: le conclusioni sono puramente indicative.
+### Incrementi a 7 giorni delle province
+Per ogni Regione viene mostrato l'andamento degli incrementi a 7 giorni dei nuovi casi ogni 100.000 abitanti. 
 <iframe class="slideshow-iframe" src="/slides/province_status.html" 
 style="width:100%" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 
