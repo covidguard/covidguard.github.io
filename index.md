@@ -226,6 +226,9 @@ Rapporto deceduti su casi totali:
 
 Per le province di ogni regione Italiana al momento sono disponibili solo i casi positivi totali.
 
+### Le 20 Province con maggior incremento settimanale di nuovi casi ogni 100.000 abitanti
+![Province con più contagi week](slides/img/regioni/2ond_reg_increm_settimanaleNuoviPositivi7g_PROVINCEWORST.PNG)
+
 
 ### Incrementi a 7 giorni delle province
 Per ogni Regione viene mostrato l'andamento degli incrementi a 7 giorni dei nuovi casi ogni 100.000 abitanti. 
