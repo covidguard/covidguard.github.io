@@ -1366,6 +1366,155 @@ close(gcf);
 
 
 
+% death last 15 days and cases from 30 to 15 days
+world_an=struct;
+for k = 30:size(worldData.timeNum,1)
+    
+    world_an.cases15(k,:)=worldData.total_cases_per_million(k-15,:)-worldData.total_cases_per_million(k-29,:);
+    world_an.death15(k,:)=worldData.total_deaths_per_million(k,:)-worldData.total_deaths_per_million(k-14,:);
+    
+
+end
+world_an.ratio=world_an.death15./world_an.cases15;
+
+
+customC_list = {'Italy'; 'Israel';'United States';'United Kingdom'};
+
+
+testo = struct;
+datetickFormat = 'dd mmm';
+figure;
+id_f = gcf;
+title('Confronto % mortalità nuovi casi (15gg shift)')
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+clear a1_tot t_tot;
+
+
+for reg = 1:size(customC_list,1)    
+    regione = char(customC_list{reg});    
+    idx_cR = find(strcmp(list_country,regione));
+    
+    y=world_an.ratio(300:end,idx_cR)*100;
+    t1=worldData.timeNum(300:end);
+
+    t_tot{reg}=t1;
+    b1(reg)=plot(t1,y,'-','LineWidth', 3,'color',Cmap.getColor(reg, size(customC_list,1)));
+    window=7;
+%     b(reg)=plot(t,a1,'-','LineWidth', 3.0,'color',Cmap.getColor(reg, size(customC_list,1)));
+    
+    testo.sigla(reg,:)=(customC_list(reg));
+%     testo.pos(reg,:)=[t(end)+((t(end)-t(40)))*0.01, sf(end)];
+    a1_tot{reg}=y;
+    
+end
+string_legend='l=legend([b]';
+for reg = 1:size(customC_list,1)
+    regione = char(customC_list{reg});    
+    regione_leg=strrep(regione,'_', ' ');
+    string_legend=sprintf('%s,''%s''',string_legend,regione_leg);
+end
+string_legend=sprintf('%s);',string_legend);
+% eval(string_legend)
+
+
+font_size = 6.5;
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', font_size);
+
+% ylim([0 max(a1_tot(:))*1.1]);
+ylabel('% deceduti 15 gg su casi di 15 gg prima', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
+
+set(gca, 'Xlim', [t1(1), t1(end)]);
+datetick('x', datetickFormat) ;
+set(gca, 'Xlim', [t1(1), t1(end)]);
+ax.FontSize = font_size;
+
+y_lim=ylim;
+y_lim(1)=0;
+ylim(y_lim);
+
+
+for h=1:size(customC_list,1)
+    a1_tot_h=[a1_tot{h}];
+    idx_max=find(a1_tot_h==max(a1_tot_h))-10;
+    i = idx_max(1);
+    
+    t_h=[t_tot{h}];
+    % Get the local slope
+    dy=a1_tot_h(i+1)-a1_tot_h(i-1);
+    dx=t_h(i+1)-t_h(i-1);
+    d = dy/dx;
+    
+    
+    X = diff(get(gca, 'xlim'));
+    Y = diff(get(gca, 'ylim'));
+    p = pbaspect;
+    a = atan(d*p(2)*X/p(1)/Y)*180/pi;
+  
+    text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
+
+    
+    end
+
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+    'String',{['Fonte: https://data.europa.eu']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+% ylim([0 40]);
+
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_andamentopercdec15.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 last10DaysIncrement=worldData.dataWeight(end,:)-worldData.dataWeight(end-10,:);
