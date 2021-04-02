@@ -69,6 +69,76 @@ fornitore_tot = unique(dataVax.fornitore);
 
 
 
+%% prima e seconda dose
+nvax_prima_dose_per_eta = NaN(length(regioni_tot), length(fascia_anagrafica_tot));
+nvax_seconda_dose_per_eta = NaN(length(regioni_tot), length(fascia_anagrafica_tot));
+for reg = 1:length(regioni_tot)
+    idx_reg = find(strcmp(dataVax.nome_area, regioni_tot(reg)));
+    
+    
+    for classe = 1:length(fascia_anagrafica_tot)
+            idx = find(strcmp(dataVax.nome_area, regioni_tot(reg)) & strcmp(dataVax.fascia_anagrafica, fascia_anagrafica_tot(classe)));
+            nvax_prima_dose_per_eta(reg,classe)=sum(dataVax.prima_dose(idx));
+            nvax_seconda_dose_per_eta(reg,classe)=sum(dataVax.seconda_dose(idx));
+            
+    end    
+    nvax_prima_dose_per_eta(reg,:) = nvax_prima_dose_per_eta(reg,:)./pop.popolazioneRegioniPop(reg);
+    nvax_seconda_dose_per_eta(reg,:) = nvax_seconda_dose_per_eta(reg,:)./pop.popolazioneRegioniPop(reg);    
+    
+end
+
+% 
+% figure;
+% id_f = gcf;
+% set(id_f, 'Name', sprintf('Prima e seconda dose'));
+% title(sprintf('Prima e seconda dose'));
+% set(gcf,'NumberTitle','Off');
+% set(gcf,'Position',[26 79 967 603]);
+% grid on
+% hold on
+% 
+% a=barh([sum(nvax_prima_dose_per_eta,2)-sum(nvax_seconda_dose_per_eta,2) sum(nvax_seconda_dose_per_eta,2)]*100000,'stacked');
+% xl=get(gca,'xlim');
+% grid minor
+% 
+% % id = gca;
+% % ylim([0.5 9.5])
+% id.YTickLabel=fascia_anagrafica_tot;
+% xlabel('Numero vaccinazioni ogni 100.000 abitanti')
+% 
+% l= legend(a, fornitore_tot,'Location','SouthEast');
+% 
+% 
+% % overlap copyright info
+% datestr_now = datestr(now);
+% annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+%     'String',{['Fonte: https://raw.githubusercontent.com/covid19-opendata-vaccini']},...
+%     'HorizontalAlignment','center',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none',...
+%     'Color',[0 0 0]);
+% 
+% annotation(gcf,'textbox',...
+%     [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+%     'String',{'https://covidguard.github.io/#covid-19-italia'},...
+%     'LineStyle','none',...
+%     'HorizontalAlignment','left',...
+%     'FontSize',6,...
+%     'FontName','Verdana',...
+%     'FitBoxToText','off');
+% 
+% print(gcf, '-dpng', sprintf('%s/slides/img/vaccini/01_%02d_%s_vaccini_eta.PNG', WORKroot,reg,char(regioni_tot(reg))));
+% close(gcf);
+% 
+% 
+
+
+
+
+
+
 
 %% numero vaccinati per classe d'età rispetto alla popolazione
 nvax_per_eta=[];
