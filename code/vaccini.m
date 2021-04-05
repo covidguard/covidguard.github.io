@@ -211,6 +211,83 @@ end
 
 
 
+%categorie per fornitore
+categoria_per_fornitore=[];
+categoria_per_fornitore_popol=[];
+for reg = 1:length(regioni_tot)   
+    
+    for fornitore = 1:length(fornitore_tot)
+            idx = find(strcmp(dataVax.nome_area, regioni_tot(reg)) & strcmp(dataVax.fornitore, fornitore_tot(fornitore)));
+            categoria_per_fornitore(fornitore,reg,1)=sum(dataVax.categoria_operatori_sanitari_sociosanitari(idx));
+            categoria_per_fornitore(fornitore,reg,2)=sum(dataVax.categoria_personale_non_sanitario(idx));
+            categoria_per_fornitore(fornitore,reg,3)=sum(dataVax.categoria_ospiti_rsa(idx));
+            categoria_per_fornitore(fornitore,reg,4)=sum(dataVax.categoria_forze_armate(idx));
+            categoria_per_fornitore(fornitore,reg,5)=sum(dataVax.categoria_personale_scolastico(idx));
+            categoria_per_fornitore(fornitore,reg,6)=sum(dataVax.categoria_over80(idx));        
+            categoria_per_fornitore(fornitore,reg,7)=sum(dataVax.categoria_altro(idx));        
+    end    
+    categoria_per_fornitore_popol(:,reg,:) = categoria_per_fornitore(:,reg,:)./pop.popolazioneRegioniPop(reg);
+    
+    
+end
+
+for reg=1:length(regioni_tot)
+    figure;
+    id_f = gcf;
+    set(id_f, 'Name', sprintf('%s: categorie per fornitore', char(regioni_tot(reg))));
+    title(sprintf('%s: categorie per fornitore', char(regioni_tot(reg))));
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    
+    
+    
+    a=barh([[squeeze([categoria_per_fornitore_popol(1,reg,:)]) squeeze([categoria_per_fornitore_popol(2,reg,:)]) squeeze([categoria_per_fornitore_popol(3,reg,:)])]./(sum(sum(sum(sum(squeeze(categoria_per_fornitore_popol(:,reg,:)))))))*100]','stacked');
+    xl=get(gca,'xlim');    
+    
+    grid minor
+    
+    id = gca;
+    ylim([0.5 3.5])   
+    id.YTick=1:3;
+    
+    id.YTickLabel=fornitore_tot;
+    xlim([0 100]);
+    
+    
+    legend(a,{'operatori sanitari sociosanitari'; 'personale non sanitario'; 'ospiti rsa'; 'forze armate'; 'personale scolastico'; 'over80'; 'altro'},'Location','SouthEast');
+    xlabel('Vaccino usato ogni 100 vaccinazioni')
+    
+    
+    
+    datestr_now = datestr(now);
+    annotation(gcf,'textbox',[0.0822617786970022 0.0281923714759542 0.238100000000001 0.04638],...
+        'String',{['Fonte: https://raw.githubusercontent.com/covid19-opendata-vaccini']},...
+        'HorizontalAlignment','center',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off',...
+        'LineStyle','none',...
+        'Color',[0 0 0]);
+    
+    annotation(gcf,'textbox',...
+        [0.715146990692874 0.0298507462686594 0.238100000000001 0.0463800000000001],...
+        'String',{'https://covidguard.github.io/#covid-19-italia'},...
+        'LineStyle','none',...
+        'HorizontalAlignment','left',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off');
+    
+    print(gcf, '-dpng', sprintf('%s/slides/img/vaccini/05_%02d_%s_categorie_per_fornitore.PNG', WORKroot,reg,char(regioni_tot(reg))));
+    close(gcf);
+    
+    
+    
+end
+
 
 
 
@@ -238,6 +315,7 @@ a1=sum(nvax_per_categoria_popol,3);
 a2=max(a1(:))*100000;
 
 
+lista_giorni = unique(dataVax.data_somministrazione);
 for reg = 1:length(regioni_tot)
     figure;
     id_f = gcf;
@@ -256,9 +334,23 @@ for reg = 1:length(regioni_tot)
     id = gca;
     ylim([0.5 9.5])
     id.YTickLabel=fascia_anagrafica_tot;
-    xlabel('Numero vaccinazioni ogni 100.000 abitanti')
+
     
     l= legend(a, {'operatori sanitari sociosanitari'; 'personale non sanitario'; 'ospiti rsa'; 'forze armate'; 'personale scolastico'; 'over80'; 'altro'},'Location','SouthEast');
+    
+    
+    id = get(gca);
+    
+    set(gca,'XTick', (1:round(length(lista_giorni)/20)   : length(lista_giorni)));
+%     ylim([0.5 9.5])
+    ll = char(lista_giorni(1:round(length(lista_giorni)/20): length(lista_giorni)));
+    ll=ll(:,1:10);
+    
+    
+    
+    
+    
+    
     
     xlim([0, a2]);
     % overlap copyright info

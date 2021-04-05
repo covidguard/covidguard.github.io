@@ -99,7 +99,7 @@ end
 
 
 %% TOTAL CASES
-n_lines=20;
+n_lines=10;
 
 [worstWeight,idx]=sort(worldData.total_cases_per_million(end,:),'descend');
 idx_country_worst=idx(1:n_lines);
@@ -481,7 +481,7 @@ close(gcf);
 %% daily cases: specific
 n_lines=10;
 
-custom_list = {'Italy';'Israel'};
+custom_list = {'Israel';'United Kingdom'};
 
 
 
@@ -693,7 +693,7 @@ close(gcf);
 %% daily death: specific
 n_lines=10;
 
-custom_list = {'Italy';'Israel'};
+custom_list = {'United Kingdom';'Israel'};
 
 
 
@@ -807,7 +807,7 @@ close(gcf);
 %% hosp: specific
 n_lines=10;
 
-custom_list = {'Italy';'Israel'};
+custom_list = {'United Kingdom';'Israel'};
 
 
 
@@ -920,7 +920,7 @@ close(gcf);
 %% daily test: specific
 n_lines=10;
 
-custom_list = {'Italy';'Israel'};
+custom_list = {'United Kingdom';'Israel'};
 
 
 
@@ -1032,7 +1032,7 @@ close(gcf);
 %% daily test: positive_rate
 n_lines=10;
 
-custom_list = {'Italy';'Israel'};
+custom_list = {'United Kingdom';'Israel'};
 
 
 
@@ -1379,7 +1379,7 @@ world_an.ratio=world_an.death15./world_an.cases15;
 
 
 customC_list = {'Italy'; 'Israel';'United States';'United Kingdom'};
-
+customC_list = {'United Kingdom';'Israel'};
 
 testo = struct;
 datetickFormat = 'dd mmm';
