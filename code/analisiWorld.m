@@ -161,7 +161,7 @@ for reg = 1:size(idx_country_worst,2)
         
         
         %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
@@ -178,10 +178,11 @@ y_lim=get(gca,'ylim');
 ylim([10,y_lim(2)*1.1]);
 
 xlabel('date');
+ax=get(gca);
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'FontSize',10);
 
 
 
@@ -271,8 +272,8 @@ for reg = 1:size(idx_country_worst,2)
         count=strrep(count,'_',' ');
         
         
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
@@ -293,7 +294,7 @@ xlabel('date');
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'FontSize',10);
 
 
 
@@ -415,8 +416,8 @@ for reg = 1:size(idx_country_worst,2)
         count=strrep(count,'_',' ');
         
         
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
@@ -436,7 +437,7 @@ xlabel('date');
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'FontSize',10);
 
 
 
@@ -538,8 +539,8 @@ for reg = 1:size(custom_list,1)
         count=strrep(count,'_',' ');
         
         
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(regione));           
@@ -559,7 +560,7 @@ xlabel('date');
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'FontSize',10);
 
 
 
@@ -639,8 +640,8 @@ close(gcf);
 %         count=strrep(count,'_',' ');
 %         
 %         
-%         %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-%         text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+%         %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+%         text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
 %         
 %        catch
 %            fprintf('error on %d: %s\n', reg, char(regione));           
@@ -660,7 +661,7 @@ close(gcf);
 % 
 % ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 % datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-% set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+% set(gca,'XTickLabelRotation',53,'FontSize',10);
 % 
 % 
 % 
@@ -750,8 +751,8 @@ for reg = 1:size(custom_list,1)
         count=strrep(count,'_',' ');
         
         
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(regione));           
@@ -771,7 +772,7 @@ xlabel('date');
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'FontSize',10);
 
 
 
@@ -864,8 +865,8 @@ for reg = 1:size(custom_list,1)
         count=strrep(count,'_',' ');
         
         
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(regione));           
@@ -885,7 +886,7 @@ xlabel('date');
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'FontSize',10);
 
 
 
@@ -977,8 +978,8 @@ for reg = 1:size(custom_list,1)
         count=strrep(count,'_',' ');
         
         
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(regione));           
@@ -998,7 +999,7 @@ xlabel('date');
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'fontSize',10);
 
 
 
@@ -1088,8 +1089,8 @@ for reg = 1:size(custom_list,1)
         count=strrep(count,'_',' ');
         
         
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(regione));           
@@ -1109,7 +1110,7 @@ xlabel('date');
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'fontSize',10);
 
 
 
@@ -1205,8 +1206,8 @@ for reg = 1:size(idx_country_worst,2)
         count=strrep(count,'_',' ');
         
         
-        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',7);
-        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',7, 'color',  colors{reg});
+        %     text(i+1.2, y(i)+d, sprintf('%s (t0: %s)', regione, datestr(datenum(date_s(idx(1))),'dd-mmm')), 'rotation', a,'fontSize',10);
+        text(worldData.timeNum(end)-1+0.5, y(i)+d, sprintf('%s', count), 'rotation', a,'fontSize',10, 'color',  colors{reg});
         
        catch
            fprintf('error on %d: %s\n', reg, char(list_country(idx(reg))));           
@@ -1227,7 +1228,7 @@ xlabel('date');
 
 ax.XTick = (worldData.timeNum(1):5:x_lim(2));
 datetick('x', 'dd/mm/yyyy', 'keepticks') ;
-set(gca,'XTickLabelRotation',53,'FontSize',6.5);
+set(gca,'XTickLabelRotation',53,'fontSize',10);
 
 
 
@@ -1421,7 +1422,7 @@ string_legend=sprintf('%s);',string_legend);
 % eval(string_legend)
 
 
-font_size = 6.5;
+font_size = 10;
 ax = gca;
 set(ax, 'FontName', 'Verdana');
 set(ax, 'FontSize', font_size);
@@ -1589,7 +1590,7 @@ string_legend=sprintf('%s);',string_legend);
 % eval(string_legend)
 
 
-font_size = 6.5;
+font_size = 10;
 ax = gca;
 set(ax, 'FontName', 'Verdana');
 set(ax, 'FontSize', font_size);
@@ -1745,7 +1746,7 @@ string_legend=sprintf('%s,''location'',''NorthWest'');',string_legend);
  eval(string_legend)
 
 
-font_size = 6.5;
+font_size = 10;
 ax = gca;
 set(ax, 'FontName', 'Verdana');
 set(ax, 'FontSize', font_size);
@@ -1875,7 +1876,7 @@ string_legend=sprintf('%s,''location'',''NorthWest'');',string_legend);
 eval(string_legend)
 
 
-font_size = 6.5;
+font_size = 10;
 ax = gca;
 set(ax, 'FontName', 'Verdana');
 set(ax, 'FontSize', font_size);
