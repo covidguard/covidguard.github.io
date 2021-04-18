@@ -1399,8 +1399,8 @@ for reg = 1:size(customC_list,1)
     regione = char(customC_list{reg});    
     idx_cR = find(strcmp(list_country,regione));
     
-    y=world_an.ratio(300:end,idx_cR)*100;
-    t1=worldData.timeNum(300:end);
+    y=world_an.ratio(1:end,idx_cR)*100;
+    t1=worldData.timeNum(1:end);
 
     t_tot{reg}=t1;
     b1(reg)=plot(t1,y,'-','LineWidth', 3,'color',Cmap.getColor(reg, size(customC_list,1)));
