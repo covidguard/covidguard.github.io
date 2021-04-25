@@ -1369,7 +1369,7 @@ close(gcf);
 
 % death last 15 days and cases from 30 to 15 days
 world_an=struct;
-for k = 30:size(worldData.timeNum,1)
+for k = 300:size(worldData.timeNum,1)
     
     world_an.cases15(k,:)=worldData.total_cases_per_million(k-15,:)-worldData.total_cases_per_million(k-29,:);
     world_an.death15(k,:)=worldData.total_deaths_per_million(k,:)-worldData.total_deaths_per_million(k-14,:);
@@ -1430,9 +1430,13 @@ set(ax, 'FontSize', font_size);
 % ylim([0 max(a1_tot(:))*1.1]);
 ylabel('% deceduti 15 gg su casi di 15 gg prima', 'FontName', 'Verdana', 'FontWeight', 'Bold','FontSize', font_size);
 
-set(gca, 'Xlim', [t1(1), t1(end)]);
+goo = find(isfinite(y));
+
+
+
+set(gca, 'Xlim', [t1(goo(1)), t1(end)]);
 datetick('x', datetickFormat) ;
-set(gca, 'Xlim', [t1(1), t1(end)]);
+set(gca, 'Xlim', [t1(goo(1)), t1(end)]);
 ax.FontSize = font_size;
 
 y_lim=ylim;
@@ -1460,9 +1464,7 @@ for h=1:size(customC_list,1)
     text(t_h(i), a1_tot_h(i), strrep(upper(char(customC_list(h))),'_',' '),'HorizontalAlignment','center', 'rotation', a, 'fontsize',6,'backgroundcolor','w', 'margin',0.001,'color',Cmap.getColor(h, size(customC_list,1)));
 
     
-    end
-
-
+end
 
 
 % overlap copyright info
