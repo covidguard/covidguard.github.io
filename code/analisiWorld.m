@@ -43,18 +43,29 @@ filename1 = sprintf('%s/_json/world.csv',WORKroot);
 [world.iso_code,world.continent,world.location,world.date,world.total_cases,world.new_cases,world.new_cases_smoothed,world.total_deaths,world.new_deaths,new_deaths_smoothed,world.total_cases_per_million,world.new_cases_per_million,world.new_cases_smoothed_per_million,world.total_deaths_per_million,world.new_deaths_per_million,world.new_deaths_smoothed_per_million,world.reproduction_rate,world.icu_patients,world.icu_patients_per_million,world.hosp_patients,world.hosp_patients_per_million,world.weekly_icu_admissions,world.weekly_icu_admissions_per_million,world.weekly_hosp_admissions,world.weekly_hosp_admissions_per_million,world.new_tests,world.total_tests,world.total_tests_per_thousand,world.new_tests_per_thousand,world.new_tests_smoothed,world.new_tests_smoothed_per_thousand,world.positive_rate,world.tests_per_case,world.tests_units,world.total_vaccinations,world.people_vaccinated,world.people_fully_vaccinated,world.new_vaccinations,world.new_vaccinations_smoothed,world.total_vaccinations_per_hundred,world.people_vaccinated_per_hundred,world.people_fully_vaccinated_per_hundred,world.new_vaccinations_smoothed_per_million,world.stringency_index,world.population,world.population_density,world.median_age,world.aged_65_older,world.aged_70_older,world.gdp_per_capita,world.extreme_poverty,world.cardiovasc_death_rate,world.diabetes_prevalence,world.female_smokers,world.male_smokers,world.handwashing_facilities,world.hospital_beds_per_thousand,world.life_expectancy,world.human_development_index] = textread(filename1,...
     '%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s','delimiter',',','headerlines',1);
 
+index=char(world.date);
 
-world.dateNum=datenum(world.date);
-world.population=str2double(world.population);
-world.total_cases_per_million=str2double(world.total_cases_per_million);
-world.total_deaths_per_million=str2double(world.total_deaths_per_million);
-world.new_cases_smoothed_per_million=str2double(world.new_cases_smoothed_per_million);
-world.new_tests_smoothed_per_thousand=str2double(world.new_tests_smoothed_per_thousand);
-world.positive_rate=str2double(world.positive_rate);
-world.new_deaths_smoothed_per_million=str2double(world.new_deaths_smoothed_per_million);
-world.hosp_patients_per_million=str2double(world.hosp_patients_per_million);
-world.new_vaccinations_smoothed_per_million=str2double(world.new_vaccinations_smoothed_per_million);
+index = find(index(:,1)==' ');
 
+
+temp=char(world.date);
+temp(index,:)='';
+
+world.dateNum=datenum(temp);
+
+
+
+index=setdiff(1:length(world.total_cases_per_million),index);
+world.population=str2double(world.population(index));
+world.total_cases_per_million=str2double(world.total_cases_per_million(index));
+world.total_deaths_per_million=str2double(world.total_deaths_per_million(index));
+world.new_cases_smoothed_per_million=str2double(world.new_cases_smoothed_per_million(index));
+world.new_tests_smoothed_per_thousand=str2double(world.new_tests_smoothed_per_thousand(index));
+world.positive_rate=str2double(world.positive_rate(index));
+world.new_deaths_smoothed_per_million=str2double(world.new_deaths_smoothed_per_million(index));
+world.hosp_patients_per_million=str2double(world.hosp_patients_per_million(index));
+world.new_vaccinations_smoothed_per_million=str2double(world.new_vaccinations_smoothed_per_million(index));
+world.location=world.location(index);
 
 
 
@@ -800,6 +811,110 @@ annotation(gcf,'textbox',...
 print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/World_totaleDecedutiDaySpecific.PNG']);
 close(gcf);
   
+
+
+
+
+
+
+
+%% daily death: stagionalità
+n_lines=10;
+
+custom_list = {'Israel';'Italy';'United Kingdom';'Sweden';'France';'Spain';'Belgium';'United States'};
+
+
+
+colors={[0 0.4470 0.7410],[0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],[0.4940 0.1840 0.5560],[0.4660 0.6740 0.1880],[0.3010 0.7450 0.9330],[0.6350 0.0780 0.1840]};
+colors={};
+for k=1:n_lines
+    colors{k}=Cmap.getColor(k, n_lines);
+end
+
+%% deceduti giornalieri stagonalità
+
+
+
+for reg = 1:size(custom_list,1)
+    reg
+    regione = char(custom_list(reg));
+    date_s=list_day;
+    h = figure;
+    set(h,'NumberTitle','Off');
+    title(sprintf('%s: deceduti giornalieri ogni 100.000 abitanti (%s)',regione,datestr(date_s(end),'dd/mm/yyyy')));
+    set(h,'Position',[26 79 1632 886]);
+    
+    hold on; grid on; grid minor;
+    % xlabel('Giorni dal caso 10/100.000 ab');
+    ylabel('Deceduti giornalieri per 100.000 abitanti')
+    a=[];
+    
+    last_days=size(worldData.timeNum,1)-1;
+
+    
+    
+    
+    
+    idx_country_worst(reg)=find(strcmp(list_country,regione));
+    
+    y=(worldData.new_deaths_smoothed_per_million(:,idx_country_worst(reg))./10);
+    y(isnan(y))=0;
+    %     y=cumsum(y);
+    
+    
+    clear a
+    yearall = str2num(datestr(worldData.timeNum,'yyyy'));
+    years = unique(yearall);
+    y(y==0)=NaN;
+    for yy = 1: size(years,1)
+        idx = yearall==years(yy);
+        
+        a(yy)=plot(worldData.timeNum(idx)-datenum(sprintf('01/01/%04d',years(yy)))+1, y(idx),'LineWidth', 2.0);
+    end
+    
+    xlim([1 365]);
+    datetick('x', 'dd-mmm') ;
+    
+    y_lim=get(gca,'ylim');
+    ylim([0,y_lim(2)]);
+    xlabel('date');
+    
+    lll=legend(a,'2020','2021');
+    
+    
+    
+    
+    
+    
+    
+    % overlap copyright info
+    datestr_now = datestr(now);
+    annotation(gcf,'textbox',[0.72342 0.00000 0.2381 0.04638],...
+        'String',{['Fonte: https://raw.githubusercontent.com']},...
+        'HorizontalAlignment','center',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off',...
+        'LineStyle','none',...
+        'Color',[0 0 0]);
+    
+    annotation(gcf,'textbox',...
+        [0.125695077559464 0.00165837479270315 0.238100000000001 0.04638],...
+        'String',{'https://covidguard.github.io/#covid-19-italia'},...
+        'LineStyle','none',...
+        'HorizontalAlignment','left',...
+        'FontSize',6,...
+        'FontName','Verdana',...
+        'FitBoxToText','off');
+    
+    
+    print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/',regione,'_DecedutiAnno.PNG']);
+    close(gcf);
+    
+end
+
+
+
 
 
 

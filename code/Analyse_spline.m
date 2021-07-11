@@ -157,6 +157,471 @@ animated_gif_reg_gara(data,pop,'A');
 
 
 
+
+
+%% annualità deceduti
+dataReg.date.year = datestr(dataReg.data,'yyyy');
+
+for reg = 1:length(regioni_tot)
+    
+
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    
+    year_tot = str2double(unique(cellstr(dataReg.date.year)));
+    
+    if reg==1
+         big_table=zeros(366, size(year_tot,1));
+    end
+   
+    figure;
+    id_f = gcf;
+    set(id_f, 'Name', sprintf('%s: deceduti stagionalità','regione'));
+    title(sprintf(sprintf('%s: deceduti stagionalità', regione)))
+    
+    
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    for yy= 1:size(year_tot,1)
+        year=year_tot(yy);
+        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)) & str2num(dataReg.date.year)==year);
+        
+        doy=fix(datenum(dataReg.data(index))-datenum(sprintf('01/01/%04d 17:00:00',year)));
+        
+        ll(yy)= plot(doy(2:end),diff(dataReg.deceduti(index)),'-');
+        
+        big_table(doy(2:end),yy)=big_table(doy(2:end),yy)+diff(dataReg.deceduti(index));
+        
+    end
+    
+    
+    l=legend(ll,'2020','2021');
+    
+
+        hold on; grid minor
+        set(gca,'XLim',[1 364])
+        ylabel('deceduti giornalieri', 'FontName', 'Verdana', 'FontSize', 11);
+        ax = gca;
+        set(ax, 'FontName', 'Verdana');
+        set(ax, 'FontSize', 10);
+        datetick('x', 'dd-mmm') ;
+        
+        li=get(gca,'ylim');
+        ylim([0,li(2)]);
+        
+        
+        
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        annotation(gcf,'textbox',...
+            [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/',regione,'_stagionalita_deceduti.PNG']);
+        close(gcf);
+    
+
+    
+end
+
+
+% italia
+figure;
+id_f = gcf;
+set(id_f, 'Name', sprintf('%s: deceduti stagionalità','Italia'));
+title(sprintf(sprintf('%s: deceduti stagionalità', 'Italia')))
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+big_table(big_table==0)=nan;
+for yy= 1:size(year_tot,1)
+    
+    
+    ll(yy)= plot(big_table(:,yy),'-');
+    
+    
+    
+end
+
+
+l=legend(ll,'2020','2021');
+
+
+hold on; grid minor
+set(gca,'XLim',[1 364])
+ylabel('deceduti giornalieri', 'FontName', 'Verdana', 'FontSize', 11);
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', 10);
+datetick('x', 'dd-mmm') ;
+
+li=get(gca,'ylim');
+ylim([0,li(2)]);
+
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/','italia','_stagionalita_deceduti.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+%% annualità t.i.
+dataReg.date.year = datestr(dataReg.data,'yyyy');
+
+for reg = 1:length(regioni_tot)
+    
+
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    
+    year_tot = str2double(unique(cellstr(dataReg.date.year)));
+    
+    if reg==1
+         big_table=zeros(366, size(year_tot,1));
+    end
+   
+    figure;
+    id_f = gcf;
+    set(id_f, 'Name', sprintf('%s: t.i. stagionalità','regione'));
+    title(sprintf(sprintf('%s: t.i. stagionalità', regione)))
+    
+    
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    for yy= 1:size(year_tot,1)
+        year=year_tot(yy);
+        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)) & str2num(dataReg.date.year)==year);
+        
+        doy=fix(datenum(dataReg.data(index))-datenum(sprintf('01/01/%04d 17:00:00',year)))+1;
+        
+        ll(yy)= plot(doy(1:end),(dataReg.terapia_intensiva(index)),'-');
+        
+        big_table(doy(1:end),yy)=big_table(doy(1:end),yy)+(dataReg.terapia_intensiva(index));
+        
+    end
+    
+    
+    l=legend(ll,'2020','2021');
+    
+
+        hold on; grid minor
+        set(gca,'XLim',[1 364])
+        ylabel('t.i.', 'FontName', 'Verdana', 'FontSize', 11);
+        ax = gca;
+        set(ax, 'FontName', 'Verdana');
+        set(ax, 'FontSize', 10);
+        datetick('x', 'dd-mmm') ;
+        
+        li=get(gca,'ylim');
+        ylim([0,li(2)]);
+        
+        
+        
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        annotation(gcf,'textbox',...
+            [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/',regione,'_ti_deceduti.PNG']);
+        close(gcf);
+    
+
+    
+end
+
+
+% italia
+figure;
+id_f = gcf;
+set(id_f, 'Name', sprintf('%s: t.i. stagionalità','Italia'));
+title(sprintf(sprintf('%s: t.i. stagionalità', 'Italia')))
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+big_table(big_table==0)=nan;
+for yy= 1:size(year_tot,1)
+    
+    ll(yy)= plot(big_table(:,yy),'-');
+
+end
+
+
+l=legend(ll,'2020','2021');
+
+
+hold on; grid minor
+set(gca,'XLim',[1 364])
+ylabel('t.i. attive', 'FontName', 'Verdana', 'FontSize', 11);
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', 10);
+datetick('x', 'dd-mmm') ;
+
+li=get(gca,'ylim');
+ylim([0,li(2)]);
+
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/','italia','_stagionalita_ti.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+%% annualità casi
+dataReg.date.year = datestr(dataReg.data,'yyyy');
+
+for reg = 1:length(regioni_tot)
+    
+
+    regione = char(regioni_tot(reg,1));
+    index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)));
+    
+    year_tot = str2double(unique(cellstr(dataReg.date.year)));
+    
+    if reg==1
+         big_table=zeros(366, size(year_tot,1));
+    end
+   
+    figure;
+    id_f = gcf;
+    set(id_f, 'Name', sprintf('%s: casi stagionalità','regione'));
+    title(sprintf(sprintf('%s: casi stagionalità', regione)))
+    
+    
+    set(gcf,'NumberTitle','Off');
+    set(gcf,'Position',[26 79 967 603]);
+    grid on
+    hold on
+    
+    for yy= 1:size(year_tot,1)
+        year=year_tot(yy);
+        index = find(strcmp(dataReg.denominazione_regione,cellstr(regione)) & str2num(dataReg.date.year)==year);
+        
+        doy=fix(datenum(dataReg.data(index))-datenum(sprintf('01/01/%04d 17:00:00',year)))+1;
+        
+        ll(yy)= plot(doy(1:end),(dataReg.nuovi_positivi(index))./pop.popolazioneRegioniPop(reg)*100000,'-');
+        
+        big_table(doy(1:end),yy)=big_table(doy(1:end),yy)+(dataReg.nuovi_positivi(index))./pop.popolazioneRegioniPop(reg)*100000;
+        
+    end
+    
+    
+    l=legend(ll,'2020','2021');
+    
+
+        hold on; grid minor
+        set(gca,'XLim',[1 364])
+        ylabel('nuovi casi ogni 100.000 ab', 'FontName', 'Verdana', 'FontSize', 11);
+        ax = gca;
+        set(ax, 'FontName', 'Verdana');
+        set(ax, 'FontSize', 10);
+        datetick('x', 'dd-mmm') ;
+        
+        li=get(gca,'ylim');
+        ylim([0,li(2)]);
+        
+        
+        
+        
+        % overlap copyright info
+        datestr_now = datestr(now);
+        annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+            'String',{['Fonte: https://github.com/pcm-dpc']},...
+            'HorizontalAlignment','center',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off',...
+            'LineStyle','none',...
+            'Color',[0 0 0]);
+        
+        annotation(gcf,'textbox',...
+            [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+            'String',{'https://covidguard.github.io/#covid-19-italia'},...
+            'LineStyle','none',...
+            'HorizontalAlignment','left',...
+            'FontSize',6,...
+            'FontName','Verdana',...
+            'FitBoxToText','off');
+        
+        print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/',regione,'_casi_deceduti.PNG']);
+        close(gcf);
+    
+
+    
+end
+
+
+% italia
+figure;
+id_f = gcf;
+set(id_f, 'Name', sprintf('%s: nuovi casi stagionalità','Italia'));
+title(sprintf(sprintf('%s: nuovi casi stagionalità', 'Italia')))
+
+
+set(gcf,'NumberTitle','Off');
+set(gcf,'Position',[26 79 967 603]);
+grid on
+hold on
+big_table(big_table==0)=nan;
+for yy= 1:size(year_tot,1)
+    
+    ll(yy)= plot(big_table(:,yy),'-');
+
+end
+
+
+l=legend(ll,'2020','2021');
+
+
+hold on; grid minor
+set(gca,'XLim',[1 364])
+ylabel('nuovi casi ogni 100.000 ab', 'FontName', 'Verdana', 'FontSize', 11);
+ax = gca;
+set(ax, 'FontName', 'Verdana');
+set(ax, 'FontSize', 10);
+datetick('x', 'dd-mmm') ;
+
+li=get(gca,'ylim');
+ylim([0,li(2)]);
+
+
+
+
+% overlap copyright info
+datestr_now = datestr(now);
+annotation(gcf,'textbox',[0.709976359875908 0.923714759535656 0.238100000000001 0.0463800000000001],...
+    'String',{['Fonte: https://github.com/pcm-dpc']},...
+    'HorizontalAlignment','center',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off',...
+    'LineStyle','none',...
+    'Color',[0 0 0]);
+
+annotation(gcf,'textbox',...
+    [0.708942233712513 0.903814262023218 0.2381 0.04638],...
+    'String',{'https://covidguard.github.io/#covid-19-italia'},...
+    'LineStyle','none',...
+    'HorizontalAlignment','left',...
+    'FontSize',6,...
+    'FontName','Verdana',...
+    'FitBoxToText','off');
+
+print(gcf, '-dpng', [WORKroot,'/slides/img/regioni/','italia','_stagionalita_casi.PNG']);
+close(gcf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %% status settimanale
 
 

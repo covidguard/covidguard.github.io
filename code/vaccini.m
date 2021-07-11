@@ -171,7 +171,7 @@ for reg = 1:length(regioni_tot)
     grid on
     hold on
     
-    a=barh([nvax_per_eta_popol(:,reg,1) nvax_per_eta_popol(:,reg,2) nvax_per_eta_popol(:,reg,3)]*100000,'stacked');
+    a=barh([nvax_per_eta_popol(:,reg,1) nvax_per_eta_popol(:,reg,2) nvax_per_eta_popol(:,reg,3) nvax_per_eta_popol(:,reg,4)]*100000,'stacked');
     xl=get(gca,'xlim');
     xlim([0, a2]);
     grid minor
@@ -244,14 +244,14 @@ for reg=1:length(regioni_tot)
     
     
     
-    a=barh([[squeeze([categoria_per_fornitore_popol(1,reg,:)]) squeeze([categoria_per_fornitore_popol(2,reg,:)]) squeeze([categoria_per_fornitore_popol(3,reg,:)])]./(sum(sum(sum(sum(squeeze(categoria_per_fornitore_popol(:,reg,:)))))))*100]','stacked');
+    a=barh([[squeeze([categoria_per_fornitore_popol(1,reg,:)]) squeeze([categoria_per_fornitore_popol(2,reg,:)]) squeeze([categoria_per_fornitore_popol(3,reg,:)]) squeeze([categoria_per_fornitore_popol(4,reg,:)])]./(sum(sum(sum(sum(squeeze(categoria_per_fornitore_popol(:,reg,:)))))))*100]','stacked');
     xl=get(gca,'xlim');    
     
     grid minor
     
     id = gca;
-    ylim([0.5 3.5])   
-    id.YTick=1:3;
+    ylim([0.5 4.5])   
+    id.YTick=1:4;
     
     id.YTickLabel=fornitore_tot;
     xlim([0 100]);
@@ -453,7 +453,7 @@ for reg = 1:length(regioni_tot)
     l= legend(a, [fascia_anagrafica_tot(1); fascia_anagrafica_tot(2); fascia_anagrafica_tot(3); fascia_anagrafica_tot(4); fascia_anagrafica_tot(5); fascia_anagrafica_tot(6); fascia_anagrafica_tot(7); fascia_anagrafica_tot(8); fascia_anagrafica_tot(9)],'Location','SouthEastOutside');
     ylabel('vaccinati ogni 100.000 abitanti');
     
-    ylim([0 900]);
+    ylim([0 1400]);
     
 %     xlim([0, a2]);
     % overlap copyright info
